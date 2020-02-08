@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-
+#include <SFML/Graphics.hpp>
 
 int main(int argc, char** argv) {
     std::ifstream file_buffer("roms/Pokemon_Blue_Version.gb", std::ios::in|std::ios::binary);
