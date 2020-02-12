@@ -1,9 +1,9 @@
-set(BINARY ${CMAKE_PROJECT_NAME})
+project(GameBoy)
 
 add_subdirectory(display)
 
-add_executable(${BINARY}_run main.cpp)
-add_library(${BINARY}_lib STATIC main.cpp)
+add_library(${PROJECT_NAME}_lib STATIC main.cpp)
+target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(${BINARY}_run ${BINARY}_display_lib)
-target_link_libraries(${BINARY}_lib ${BINARY}_display_lib)
+add_executable(${PROJECT_NAME}_run main.cpp)
+target_link_libraries(${PROJECT_NAME}_run display_lib)
