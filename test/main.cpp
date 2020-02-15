@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "file_parser_tests.h"
-
+#include "memory_tests.h"
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
