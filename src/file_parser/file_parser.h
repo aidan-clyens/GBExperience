@@ -11,6 +11,7 @@ class FileParser {
     
         bool load_rom(const std::string &);
 
+        uint8_t *get_buffer_ptr();
         uint8_t get_byte(int) const;
         int get_buffer_size() const;
 
