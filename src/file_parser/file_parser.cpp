@@ -29,6 +29,10 @@ bool FileParser::load_rom(const std::string &file_name) {
     return true;
 }
 
+uint8_t *FileParser::get_buffer_ptr() {
+    return m_buffer;
+}
+
 uint8_t FileParser::get_byte(int index) const {
     if (index > m_buffer_size) {
         throw new std::exception;

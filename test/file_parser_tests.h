@@ -82,3 +82,25 @@ TEST(FileParser, GetTitle) {
 
     EXPECT_EQ(title, std::string(buffer));
 }
+
+TEST(FileParser, GetEntireBuffer) {
+    int buffer_size = 16384;
+    std::string rom_file = "../../roms/Tetris.gb";
+    std::string title = "TETRIS";
+    uint8_t *buffer_ptr;
+
+    FileParser file_parser(buffer_size);
+
+    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    buffer_ptr = file_parser.get_buffer_ptr();
+    
+    char buffer[0x142 - 0x134];
+    EXPECT_EQ(0x54, buffer_ptr[0x134]);
+    EXPECT_EQ(0x0, buffer_ptr[0x142]);
+    
+    for (int i=0x134; i<= 0x142; i++) {
+        buffer[i - 0x134] = static_cast<char>(static_cast<int>(buffer_ptr[i]));
+    }
+
+    EXPECT_EQ(title, std::string(buffer));
+}
