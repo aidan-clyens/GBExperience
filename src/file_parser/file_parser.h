@@ -15,6 +15,8 @@ class FileParser {
         uint8_t get_byte(int) const;
         int get_buffer_size() const;
 
+        std::string get_rom_name() const;
+
         void print_to_file();
     
     private:
