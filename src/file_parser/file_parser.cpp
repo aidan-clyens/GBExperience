@@ -45,6 +45,16 @@ int FileParser::get_buffer_size() const {
     return m_buffer_size;
 }
 
+std::string FileParser::get_rom_name() const {
+    char buffer[0x142 - 0x134];
+
+    for (int i=0x134; i<= 0x142; i++) {
+        buffer[i - 0x134] = static_cast<char>(static_cast<int>(this->get_byte(i)));
+    }
+
+    return std::string(buffer);
+}
+
 void FileParser::print_to_file() {
     std::ofstream output("../../bytes.txt", std::ios::out | std::ios::binary);
     output.write((char*)m_buffer, m_buffer_size);

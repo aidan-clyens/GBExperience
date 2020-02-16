@@ -71,16 +71,10 @@ TEST(FileParser, GetTitle) {
 
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     
-    char buffer[0x142 - 0x134];
-
     EXPECT_EQ(0x54, file_parser.get_byte(0x134));
     EXPECT_EQ(0x0, file_parser.get_byte(0x142));
-    
-    for (int i=0x134; i<= 0x142; i++) {
-        buffer[i - 0x134] = static_cast<char>(static_cast<int>(file_parser.get_byte(i)));
-    }
 
-    EXPECT_EQ(title, std::string(buffer));
+    EXPECT_EQ(title, file_parser.get_rom_name());
 }
 
 TEST(FileParser, GetEntireBuffer) {
@@ -94,13 +88,6 @@ TEST(FileParser, GetEntireBuffer) {
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     buffer_ptr = file_parser.get_buffer_ptr();
     
-    char buffer[0x142 - 0x134];
     EXPECT_EQ(0x54, buffer_ptr[0x134]);
     EXPECT_EQ(0x0, buffer_ptr[0x142]);
-    
-    for (int i=0x134; i<= 0x142; i++) {
-        buffer[i - 0x134] = static_cast<char>(static_cast<int>(buffer_ptr[i]));
-    }
-
-    EXPECT_EQ(title, std::string(buffer));
 }
