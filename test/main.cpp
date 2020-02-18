@@ -2,6 +2,8 @@
 #include "file_parser_tests.h"
 #include "memory_map_tests.h"
 #include "memory_tests.h"
+#include "cpu_tests.h"
+
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
