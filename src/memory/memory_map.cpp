@@ -29,6 +29,7 @@ MemoryMap::MemoryMap() {
 }
 
 MemoryMap::~MemoryMap() {
+    delete (Memory *)m_memory_map.find(2)->second;
     delete (Memory *)m_memory_map.find(3)->second;
     delete (Memory *)m_memory_map.find(4)->second;
 }
@@ -36,11 +37,15 @@ MemoryMap::~MemoryMap() {
 bool MemoryMap::init_memory_map(void *file_parser_buffer) {
     m_memory_map.insert(std::pair<int, void *>(0, file_parser_buffer));
 
-    Memory *switchable_ram = new Memory(0x2000);
+    Memory *video_ram = new Memory(m_address_space[3] - m_address_space[2]);
+    video_ram->init_memory();
+    m_memory_map.insert(std::pair<int, Memory *>(2, video_ram));
+
+    Memory *switchable_ram = new Memory(m_address_space[4] - m_address_space[3]);
     switchable_ram->init_memory();
     m_memory_map.insert(std::pair<int, Memory *>(3, switchable_ram));
 
-    Memory *internal_ram  = new Memory(0x2000);
+    Memory *internal_ram  = new Memory(m_address_space[5] - m_address_space[4]);
     internal_ram->init_memory();
     m_memory_map.insert(std::pair<int, Memory *>(4, internal_ram));
 
@@ -55,6 +60,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             std::cerr << "Cannot write to ROM" << std::endl;
             throw new std::exception;
 
+        case 2:
         case 3:
         case 4: {
                 Memory *mem = (Memory*)m_memory_map.find(index)->second;
@@ -76,6 +82,7 @@ uint8_t MemoryMap::read(uint16_t address) {
                 return rom[address];
             }
 
+        case 2:
         case 3:
         case 4: {
                 Memory *mem = (Memory*)m_memory_map.find(index)->second;
