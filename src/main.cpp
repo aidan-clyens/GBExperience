@@ -3,6 +3,7 @@
 
 #include "display/display.h"
 #include "file_parser/file_parser.h"
+#include "memory/memory_map.h"
 #include "memory/memory.h"
 
 
@@ -14,8 +15,8 @@ int main(int argc, char** argv) {
     FileParser file_parser(rom_size);
     file_parser.load_rom(rom_file);
     
-    Memory memory(ram_size);
-    memory.init_memory();
+    MemoryMap memory_map;
+    memory_map.init_memory_map(file_parser.get_buffer_ptr());
 
     Display main_display(file_parser.get_rom_name());
 
