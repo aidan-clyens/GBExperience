@@ -121,3 +121,13 @@ TEST(MemoryMap, WriteToRom) {
     EXPECT_EQ(0, mem_map.get_index(address_1));
     EXPECT_ANY_THROW(mem_map.write(address_1, data_1));
 }
+
+TEST(MemoryMap, ReadFromUnimplementedSpace) {
+    MemoryMap mem_map;
+    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
+
+    uint16_t address = 0xFEAF;
+
+    EXPECT_EQ(7, mem_map.get_index(address));
+    EXPECT_ANY_THROW(mem_map.read(address));
+}
