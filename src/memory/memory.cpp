@@ -17,16 +17,20 @@ bool Memory::init_memory() {
     return m_memory != nullptr;
 }
 
-void Memory::write_memory(uint16_t address, uint8_t data) {
+uint16_t Memory::write_memory(uint16_t address, uint8_t data) {
     if (address > m_memory_size) {
+        std::cerr << "Address out of range: address: " << address << " size: " << m_memory_size  << std::endl;
         throw new std::exception;
     }
     
     m_memory[address] = data;
+
+    return address;
 }
 
 uint8_t Memory::read_memory(uint16_t address) {
     if (address > m_memory_size) {
+        std::cerr << "Address out of range: address: " << address << " size: " << m_memory_size  << std::endl;
         throw new std::exception;
     }
     
