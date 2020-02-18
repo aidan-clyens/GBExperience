@@ -9,7 +9,6 @@
 
 int main(int argc, char** argv) {
     int rom_size = 32*1024;
-    int ram_size = 8*1024;
     std::string rom_file = "roms/Tetris.gb";
 
     FileParser file_parser(rom_size);
