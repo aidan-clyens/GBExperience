@@ -5,10 +5,12 @@
 #include <string>
 #include <map>
 
+#include "../memory/memory_map.h"
+
 
 class CPU {
     public:
-        CPU();
+        CPU(MemoryMap &);
         virtual ~CPU();
 
         void write_register(const std::string &, uint16_t);
@@ -16,4 +18,6 @@ class CPU {
 
     private:
         std::map<std::string, uint16_t> m_registers;
+
+        MemoryMap &m_memory_map;
 };
