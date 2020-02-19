@@ -5,6 +5,7 @@
 #include "file_parser/file_parser.h"
 #include "memory/memory_map.h"
 #include "memory/memory.h"
+#include "cpu/cpu.h"
 
 
 int main(int argc, char** argv) {
@@ -16,6 +17,8 @@ int main(int argc, char** argv) {
     
     MemoryMap memory_map;
     memory_map.init_memory_map(file_parser.get_buffer_ptr());
+
+    CPU cpu(memory_map);
 
     Display main_display(file_parser.get_rom_name());
 

@@ -1,9 +1,12 @@
 #include "gtest/gtest.h"
 #include "cpu/cpu.h"
+#include "memory/memory_map.h"
 
 
 TEST(CPU, InitCPU) {
-    CPU cpu;
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
 
     EXPECT_EQ(0x0, cpu.read_register("AF"));
     EXPECT_EQ(0x0, cpu.read_register("BC"));
@@ -14,13 +17,17 @@ TEST(CPU, InitCPU) {
 }
 
 TEST(CPU, ReadInvalidRegister) {
-    CPU cpu;
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
 
     EXPECT_ANY_THROW(cpu.read_register("ABC"));
 }
 
 TEST(CPU, WriteValidRegister) {
-    CPU cpu;
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
 
     uint16_t data = 0xABCD;
 
@@ -29,7 +36,9 @@ TEST(CPU, WriteValidRegister) {
 }
 
 TEST(CPU, WriteInvalidRegister) {
-    CPU cpu;
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
 
     uint16_t data = 0xABCD;
 

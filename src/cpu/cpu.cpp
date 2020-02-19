@@ -1,7 +1,9 @@
 #include "cpu.h"
 
 
-CPU::CPU() {
+CPU::CPU(MemoryMap &mem_map):
+m_memory_map(mem_map)
+{
     m_registers.insert(std::pair<std::string, uint16_t>("AF", 0x0));
     m_registers.insert(std::pair<std::string, uint16_t>("BC", 0x0));
     m_registers.insert(std::pair<std::string, uint16_t>("DE", 0x0));
