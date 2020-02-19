@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "cpu/cpu.h"
 #include "memory/memory_map.h"
+#include "file_parser/file_parser.h"
 
 
 TEST(CPU, InitCPU) {
@@ -43,4 +44,20 @@ TEST(CPU, WriteInvalidRegister) {
     uint16_t data = 0xABCD;
 
     EXPECT_ANY_THROW(cpu.write_register("ABC", data));
+}
+
+TEST(CPU, FetchOpcodeFromRom) {
+    int buffer_size = 16384;
+    std::string rom_file = "../../roms/Tetris.gb";
+
+    FileParser file_parser(buffer_size);
+    EXPECT_TRUE(file_parser.load_rom(rom_file));
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(file_parser.get_buffer_ptr());
+    CPU cpu(mem_map);
+
+    EXPECT_EQ(0x100, cpu.read_register("PC"));
+    EXPECT_EQ(file_parser.get_byte(0x100), cpu.fetch_op());
+    EXPECT_EQ(file_parser.get_byte(0x101), cpu.fetch_op());
 }
