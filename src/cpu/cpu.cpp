@@ -16,6 +16,13 @@ CPU::~CPU() {
 
 }
 
+uint8_t CPU::fetch_op() {
+    uint16_t address = this->read_register("PC");
+    this->write_register("PC", address + 1);
+
+    return m_memory_map.read(address);
+}
+
 void CPU::write_register(const std::string &reg, uint16_t data) {
     if (m_registers.count(reg) > 0) {
         m_registers.find(reg)->second = data;
