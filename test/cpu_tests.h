@@ -9,12 +9,36 @@ TEST(CPU, InitCPU) {
     mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
+    EXPECT_EQ(0x0, cpu.read_register("A"));
+    EXPECT_EQ(0x0, cpu.read_register("F"));
     EXPECT_EQ(0x0, cpu.read_register("AF"));
+    EXPECT_EQ(0x0, cpu.read_register("B"));
+    EXPECT_EQ(0x0, cpu.read_register("C"));
     EXPECT_EQ(0x0, cpu.read_register("BC"));
+    EXPECT_EQ(0x0, cpu.read_register("D"));
+    EXPECT_EQ(0x0, cpu.read_register("E"));
     EXPECT_EQ(0x0, cpu.read_register("DE"));
+    EXPECT_EQ(0x0, cpu.read_register("H"));
+    EXPECT_EQ(0x0, cpu.read_register("L"));
     EXPECT_EQ(0x0, cpu.read_register("HL"));
     EXPECT_EQ(0x0, cpu.read_register("SP"));
     EXPECT_EQ(0x100, cpu.read_register("PC"));
+}
+
+TEST(CPU, ReadInvalid8BitRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_ANY_THROW(cpu.read_register("X"));
+}
+
+TEST(CPU, ReadInvalid16BitRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_ANY_THROW(cpu.read_register("AB"));
 }
 
 TEST(CPU, ReadInvalidRegister) {
@@ -25,7 +49,17 @@ TEST(CPU, ReadInvalidRegister) {
     EXPECT_ANY_THROW(cpu.read_register("ABC"));
 }
 
-TEST(CPU, WriteValidRegister) {
+TEST(CPU, WriteValid8BitRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    uint16_t data = 0xAB;
+
+    EXPECT_NO_THROW(cpu.write_register("A", data));
+    EXPECT_EQ(data, cpu.read_register("A"));
+}
+TEST(CPU, WriteValid16BitRegister) {
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
@@ -34,6 +68,26 @@ TEST(CPU, WriteValidRegister) {
 
     EXPECT_NO_THROW(cpu.write_register("AF", data));
     EXPECT_EQ(data, cpu.read_register("AF"));
+}
+
+TEST(CPU, WriteInvalid8BitRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    uint16_t data = 0xAB;
+
+    EXPECT_ANY_THROW(cpu.write_register("X", data));
+}
+
+TEST(CPU, WriteInvalid16BitRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    uint16_t data = 0xABCD;
+
+    EXPECT_ANY_THROW(cpu.write_register("AB", data));
 }
 
 TEST(CPU, WriteInvalidRegister) {
