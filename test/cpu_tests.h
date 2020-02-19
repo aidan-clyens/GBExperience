@@ -80,6 +80,18 @@ TEST(CPU, WriteInvalid8BitRegister) {
     EXPECT_ANY_THROW(cpu.write_register("X", data));
 }
 
+TEST(CPU, Write8BitRegisterInvalidData) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    uint16_t data = 0xABCD;
+
+    EXPECT_NO_THROW(cpu.write_register("A", data));
+    EXPECT_NE(data, cpu.read_register("A"));
+    EXPECT_EQ(data & 0xFF, cpu.read_register("A"));
+}
+
 TEST(CPU, WriteInvalid16BitRegister) {
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
