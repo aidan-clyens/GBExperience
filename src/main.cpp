@@ -25,6 +25,9 @@ int main(int argc, char** argv) {
     main_display.init_display();
     
     while (main_display.is_display_open()) {
+        uint8_t opcode =  cpu.fetch_op();
+        cpu.decode_op(opcode);
+
         main_display.poll_events();
         main_display.render();
     }
