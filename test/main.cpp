@@ -4,6 +4,7 @@
 #include "memory_tests.h"
 #include "cpu_tests.h"
 #include "instruction_tests.h"
+#include "cpu_registers_tests.h"
 
 
 int main(int argc, char** argv) {
