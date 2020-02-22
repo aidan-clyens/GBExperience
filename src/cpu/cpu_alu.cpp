@@ -29,12 +29,18 @@ void CPU::alu_sub(const std::string &reg, bool carry) {
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
 
+    if (carry) std::cout << "SBC A, " << reg << std::endl;
+    else std::cout << "SUB A, " << reg << std::endl;
+
     this->write_register("A", A - n);
     // TODO Implement carry
 }
 
 void CPU::alu_sub(uint8_t n, bool carry) {
     uint8_t A = this->read_register("A");
+
+    if (carry) std::cout << "SBC A, " << n << std::endl;
+    else std::cout << "SUB A, " << n << std::endl;
 
     this->write_register("A", A - n);
     // TODO Implement carry
