@@ -51,11 +51,15 @@ void CPU::alu_and(const std::string &reg) {
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
 
+    std::cout << "AND A, " << reg << std::endl;
+
     this->write_register("A", A & n);
 }
 
 void CPU::alu_and(uint8_t n) {
     uint8_t A = this->read_register("A");
+
+    std::cout << "AND A, " << n << std::endl;
 
     this->write_register("A", A & n);
 }
