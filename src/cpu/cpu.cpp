@@ -293,9 +293,32 @@ bool CPU::decode_op(uint8_t opcode) {
             // TODO
             break;
         // OR n
-        case 0xB7: case 0xB0: case 0xB1: case 0xB2: case 0xB3: case 0xB4: case 0xB5: case 0xB6:
+        case 0xB7:
+            this->alu_or("A");
+            break;
+        case 0xB0:
+            this->alu_or("B");
+            break;
+        case 0xB1:
+            this->alu_or("C");
+            break;
+        case 0xB2:
+            this->alu_or("D");
+            break;
+        case 0xB3:
+            this->alu_or("E");
+            break;
+        case 0xB4:
+            this->alu_or("H");
+            break;
+        case 0xB5:
+            this->alu_or("L");
+            break;
+        case 0xB6:
+            this->alu_or("HL");
+            break;
         case 0xF6:
-            std::cout << "OR n" << std::endl;
+            // TODO
             break;
         // XOR n
         case 0xAF: case 0xA8: case 0xA9: case 0xAA: case 0xAB: case 0xAC: case 0xAD: case 0xAE:
