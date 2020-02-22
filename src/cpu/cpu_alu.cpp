@@ -83,8 +83,23 @@ void CPU::alu_or(uint8_t n) {
 }
 
 // XOR n
-void alu_xor(const std::string &);
-void alu_xor(uint8_t);
+void CPU::alu_xor(const std::string &reg) {
+    uint8_t A = this->read_register("A");
+    uint8_t n = this->read_register(reg);
+
+    std::cout << "XOR A, " << reg << std::endl;
+
+    this->write_register("A", A ^ n);
+}
+
+void CPU::alu_xor(uint8_t n) {
+    uint8_t A = this->read_register("A");
+
+    std::cout << "XOR A, " << n << std::endl;
+
+    this->write_register("A", A ^ n);
+}
+
 // CP n
 void alu_cp(const std::string &);
 void alu_cp(uint8_t);
