@@ -321,9 +321,32 @@ bool CPU::decode_op(uint8_t opcode) {
             // TODO
             break;
         // XOR n
-        case 0xAF: case 0xA8: case 0xA9: case 0xAA: case 0xAB: case 0xAC: case 0xAD: case 0xAE:
+        case 0xAF:
+            this->alu_xor("A");
+            break;
+        case 0xA8:
+            this->alu_xor("B");
+            break;
+        case 0xA9:
+            this->alu_xor("C");
+            break;
+        case 0xAA:
+            this->alu_xor("D");
+            break;
+        case 0xAB:
+            this->alu_xor("E");
+            break;
+        case 0xAC:
+            this->alu_xor("H");
+            break;
+        case 0xAD:
+            this->alu_xor("L");
+            break;
+        case 0xAE:
+            this->alu_xor("HL");
+            break;
         case 0xEE:
-            std::cout << "XOR n" << std::endl;
+            // TODO
             break;
         // CP n
         case 0xBF: case 0xB8: case 0xB9: case 0xBA: case 0xBB: case 0xBC: case 0xBD: case 0xBE:
