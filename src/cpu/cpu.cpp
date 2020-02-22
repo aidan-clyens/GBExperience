@@ -265,9 +265,32 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_sub("HL", true);
             break;
         // AND n
-        case 0xA7: case 0xA0: case 0xA1: case 0xA2: case 0xA3: case 0xA4: case 0xA5: case 0xA6:
+        case 0xA7:
+            this->alu_and("A");
+            break;
+        case 0xA0:
+            this->alu_and("B");
+            break;
+        case 0xA1:
+            this->alu_and("C");
+            break;
+        case 0xA2:
+            this->alu_and("D");
+            break;
+        case 0xA3:
+            this->alu_and("E");
+            break;
+        case 0xA4:
+            this->alu_and("H");
+            break;
+        case 0xA5:
+            this->alu_and("L");
+            break;
+        case 0xA6:
+            this->alu_and("HL");
+            break;
         case 0xE6:
-            std::cout << "AND n" << std::endl;
+            // TODO
             break;
         // OR n
         case 0xB7: case 0xB0: case 0xB1: case 0xB2: case 0xB3: case 0xB4: case 0xB5: case 0xB6:
