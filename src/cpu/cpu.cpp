@@ -212,13 +212,57 @@ bool CPU::decode_op(uint8_t opcode) {
             // TODO
             break;
         // SUB n
-        case 0x97: case 0x90: case 0x91: case 0x92: case 0x93: case 0x94: case 0x95: case 0x96:
+        case 0x97:
+            this->alu_sub("A", false);
+            break;
+        case 0x90:
+            this->alu_sub("B", false);
+            break;
+        case 0x91:
+            this->alu_sub("C", false);
+            break;
+        case 0x92:
+            this->alu_sub("D", false);
+            break;
+        case 0x93:
+            this->alu_sub("E", false);
+            break;
+        case 0x94:
+            this->alu_sub("H", false);
+            break;
+        case 0x95:
+            this->alu_sub("L", false);
+            break;
+        case 0x96:
+            this->alu_sub("HL", false);
+            break;
         case 0xD6:
-            std::cout << "SUB n" << std::endl;
+            // TODO
             break;
         // SBC n
-        case 0x9F: case 0x98: case 0x99: case 0x9A: case 0x9B: case 0x9C: case 0x9D: case 0x9E:
-            std::cout << "SBC n" << std::endl;
+        case 0x9F:
+            this->alu_sub("A", true);
+            break;
+        case 0x98:
+            this->alu_sub("B", true);
+            break;
+        case 0x99:
+            this->alu_sub("C", true);
+            break;
+        case 0x9A:
+            this->alu_sub("D", true);
+            break;
+        case 0x9B:
+            this->alu_sub("E", true);
+            break;
+        case 0x9C:
+            this->alu_sub("H", true);
+            break;
+        case 0x9D:
+            this->alu_sub("L", true);
+            break;
+        case 0x9E:
+            this->alu_sub("HL", true);
             break;
         // AND n
         case 0xA7: case 0xA0: case 0xA1: case 0xA2: case 0xA3: case 0xA4: case 0xA5: case 0xA6:
