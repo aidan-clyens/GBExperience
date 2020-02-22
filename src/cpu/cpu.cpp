@@ -156,14 +156,60 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         /****    8-Bit ALU    ****/
         // ADD A, n
-        case 0x87: case 0x80: case 0x81: case 0x82: case 0x83: case 0x84: case 0x85: case 0x86:
+        case 0x87:
+            this->alu_add("A", false);
+            break;
+        case 0x80:
+            this->alu_add("B", false);
+            break;
+        case 0x81:
+            this->alu_add("C", false);
+            break;
+        case 0x82:
+            this->alu_add("D", false);
+            break;
+        case 0x83:
+            this->alu_add("E", false);
+            break;
+        case 0x84:
+            this->alu_add("H", false);
+            break;
+        case 0x85:
+            this->alu_add("L", false);
+            break;
+        case 0x86:
+            this->alu_add("HL", false);
+            break;
         case 0xC6:
-            std::cout << "ADD A, " << static_cast<int>(arg_1) << std::endl;
+            // TODO
             break;
         // ADC A, n
-        case 0x8F: case 0x88: case 0x89: case 0x8A: case 0x8B: case 0x8C: case 0x8D: case 0x8E:
+        case 0x8F:
+            this->alu_add("A", true);
+            break;
+        case 0x88:
+            this->alu_add("B", true);
+            break;
+        case 0x89:
+            this->alu_add("C", true);
+            break;
+        case 0x8A:
+            this->alu_add("D", true);
+            break;
+        case 0x8B:
+            this->alu_add("E", true);
+            break;
+        case 0x8C:
+            this->alu_add("H", true);
+            break;
+        case 0x8D:
+            this->alu_add("L", true);
+            break;
+        case 0x8E:
+            this->alu_add("HL", true);
+            break;
         case 0xCE:
-            std::cout << "ADC A, n" << std::endl;
+            // TODO
             break;
         // SUB n
         case 0x97: case 0x90: case 0x91: case 0x92: case 0x93: case 0x94: case 0x95: case 0x96:
