@@ -23,7 +23,7 @@ TEST(InstructionDecoder, CheckAllOpcodes) {
 }
 
 TEST(InstructionExecuter, ADD) {
-    uint8_t opcode = 0x90;
+    uint8_t opcode = 0x80;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
 
