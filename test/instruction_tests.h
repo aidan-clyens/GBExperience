@@ -237,3 +237,20 @@ TEST(InstructionExecuter, DEC) {
 
     EXPECT_EQ(val - 1, cpu.read_register("A"));
 }
+
+TEST(InstructionExecuter, DEC_16Bit) {
+    uint8_t opcode = 0x35;
+    uint16_t val = 0x1312;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", val);
+
+    EXPECT_EQ(val, cpu.read_register("HL"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val - 1, cpu.read_register("HL"));
+}

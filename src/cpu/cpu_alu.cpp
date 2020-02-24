@@ -113,4 +113,10 @@ void CPU::alu_inc(const std::string &reg) {
 }
 
 // DEC n
-void alu_dec(const std::string &reg);
+void CPU::alu_dec(const std::string &reg) {
+    uint16_t N = this->read_register(reg);
+
+    std::cout << "DEC " << reg << std::endl;
+
+    this->write_register(reg, N - 1);
+}

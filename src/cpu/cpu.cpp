@@ -379,8 +379,29 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_inc("HL");
             break;
         // DEC n
-        case 0x3D: case 0x05: case 0x0D: case 0x15: case 0x1D: case 0x25: case 0x2D: case 0x35:
-            std::cout << "DEC n" << std::endl;
+        case 0x3D:
+            this->alu_dec("A");
+            break;
+        case 0x05:
+            this->alu_dec("B");
+            break;
+        case 0x0D:
+            this->alu_dec("C");
+            break;
+        case 0x15:
+            this->alu_dec("D");
+            break;
+        case 0x1D:
+            this->alu_dec("E");
+            break;
+        case 0x25:
+            this->alu_dec("H");
+            break;
+        case 0x2D:
+            this->alu_dec("L");
+            break;
+        case 0x35:
+            this->alu_dec("HL");
             break;
         /****    16-Bit Arithmetic    ****/
         // ADD HL, n
