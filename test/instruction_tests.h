@@ -204,6 +204,23 @@ TEST(InstructionExecuter, INC) {
     EXPECT_EQ(val + 1, cpu.read_register("A"));
 }
 
+TEST(InstructionExecuter, INC_16Bit) {
+    uint8_t opcode = 0x34;
+    uint16_t val = 0x1312;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", val);
+
+    EXPECT_EQ(val, cpu.read_register("HL"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val + 1, cpu.read_register("HL"));
+}
+
 TEST(InstructionExecuter, DEC) {
     uint8_t opcode = 0x3D;
     uint8_t val = 0x13;
