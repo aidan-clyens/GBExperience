@@ -104,6 +104,13 @@ void CPU::alu_xor(uint8_t n) {
 void alu_cp(const std::string &);
 void alu_cp(uint8_t);
 // INC n
-void alu_inc(const std::string &);
+void CPU::alu_inc(const std::string &reg) {
+    uint16_t N = this->read_register(reg);
+
+    std::cout << "INC " << reg << std::endl;
+
+    this->write_register(reg, N + 1);
+}
+
 // DEC n
-void alu_dec(const std::string &);
+void alu_dec(const std::string &reg);
