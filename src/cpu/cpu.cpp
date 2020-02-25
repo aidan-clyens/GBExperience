@@ -573,3 +573,23 @@ void CPU::write_register(const std::string &reg, uint16_t data) {
 uint16_t CPU::read_register(const std::string &reg) {
     return m_registers.read_register(reg);
 }
+
+void CPU::set_flag_register(CPUFlag_t flag, bool value) {
+    uint8_t flag_register_val = this->read_register("F");
+    uint8_t val = (value) ? flag : 0;
+
+    // Reset flag value to 0
+    flag_register_val &= ~flag;
+    this->write_register("F", flag_register_val);
+    // Set new flag value
+    flag_register_val |= val;
+    this->write_register("F", flag_register_val);
+}
+
+bool CPU::read_flag_register(CPUFlag_t flag) {
+    return (this->read_register("F") & flag) == flag;
+}
+
+void CPU::reset_flag_register() {
+    this->write_register("F", 0);
+}
