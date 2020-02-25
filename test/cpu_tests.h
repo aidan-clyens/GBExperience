@@ -40,3 +40,97 @@ TEST(CPU, FetchOpcodeFromRom) {
     EXPECT_EQ(file_parser.get_byte(0x100), cpu.fetch_op());
     EXPECT_EQ(file_parser.get_byte(0x101), cpu.fetch_op());
 }
+
+TEST(CPU, InitialFlagRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_EQ(0, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(0, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(0, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(0, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU, WriteZeroFlag) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_NO_THROW(cpu.set_flag_register(ZERO_FLAG, true));
+    EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
+
+    EXPECT_NO_THROW(cpu.set_flag_register(ZERO_FLAG, false));
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+}
+
+TEST(CPU, WriteSubtractFlag) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, true));
+    EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
+
+    EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, false));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+}
+
+TEST(CPU, WriteHalfCarryFlag) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_NO_THROW(cpu.set_flag_register(HALF_CARRY_FLAG, true));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+
+    EXPECT_NO_THROW(cpu.set_flag_register(HALF_CARRY_FLAG, false));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+}
+
+TEST(CPU, WriteCarryFlag) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_NO_THROW(cpu.set_flag_register(CARRY_FLAG, true));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+
+    EXPECT_NO_THROW(cpu.set_flag_register(CARRY_FLAG, false));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU, SetMultipleFlags) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, true));
+    EXPECT_NO_THROW(cpu.set_flag_register(CARRY_FLAG, true));
+    
+    EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+
+    EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, false));
+
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU, ResetFlagRegister) {
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    EXPECT_NO_THROW(cpu.set_flag_register(ZERO_FLAG, true));
+    EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, true));
+    EXPECT_NO_THROW(cpu.set_flag_register(HALF_CARRY_FLAG, true));
+    EXPECT_NO_THROW(cpu.set_flag_register(CARRY_FLAG, true));
+
+    cpu.reset_flag_register();
+
+    EXPECT_EQ(0, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(0, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(0, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(0, cpu.read_flag_register(CARRY_FLAG));
+}
