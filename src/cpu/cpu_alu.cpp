@@ -101,8 +101,47 @@ void CPU::alu_xor(uint8_t n) {
 }
 
 // CP n
-void alu_cp(const std::string &);
-void alu_cp(uint8_t);
+void CPU::alu_cp(const std::string &reg) {
+    this->reset_flag_register();
+    this->set_flag_register(SUBTRACT_FLAG, true);
+
+    uint8_t A = this->read_register("A");
+    uint8_t n = this->read_register(reg);
+    uint8_t result = A - n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
+
+    if (A < n) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+    
+    // TODO Implement half carry flag
+
+    std::cout << "CP A, " << reg << std::endl;
+}
+
+void CPU::alu_cp(uint8_t n) {
+    this->reset_flag_register();
+    this->set_flag_register(SUBTRACT_FLAG, true);
+
+    uint8_t A = this->read_register("A");
+    uint8_t result = A - n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
+
+    if (A < n) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+    
+    // TODO Implement half carry flag
+
+    std::cout << "CP A, " << n << std::endl;
+}
+
 // INC n
 void CPU::alu_inc(const std::string &reg) {
     uint16_t N = this->read_register(reg);
