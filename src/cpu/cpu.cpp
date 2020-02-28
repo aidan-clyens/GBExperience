@@ -349,9 +349,32 @@ bool CPU::decode_op(uint8_t opcode) {
             // TODO
             break;
         // CP n
-        case 0xBF: case 0xB8: case 0xB9: case 0xBA: case 0xBB: case 0xBC: case 0xBD: case 0xBE:
+        case 0xBF:
+            this->alu_cp("A");
+            break;
+        case 0xB8:
+            this->alu_cp("B");
+            break;
+        case 0xB9:
+            this->alu_cp("C");
+            break;
+        case 0xBA:
+            this->alu_cp("D");
+            break;
+        case 0xBB:
+            this->alu_cp("E");
+            break;
+        case 0xBC:
+            this->alu_cp("H");
+            break;
+        case 0xBD:
+            this->alu_cp("L");
+            break;
+        case 0xBE:
+            this->alu_cp("HL");
+            break;
         case 0xFE:
-            std::cout << "CP n" << std::endl;
+            // TODO
             break;
         // INC n
         case 0x3C:
