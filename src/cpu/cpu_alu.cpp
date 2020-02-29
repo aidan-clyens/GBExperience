@@ -86,56 +86,100 @@ void CPU::alu_sub(uint8_t n, bool carry) {
 
 // AND n
 void CPU::alu_and(const std::string &reg) {
+    this->reset_flag_register();
+    this->set_flag_register(HALF_CARRY_FLAG, true);
+
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
+    uint8_t result = A & n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
 
     std::cout << "AND A, " << reg << std::endl;
 
-    this->write_register("A", A & n);
+    this->write_register("A", result);
 }
 
 void CPU::alu_and(uint8_t n) {
+    this->reset_flag_register();
+    this->set_flag_register(HALF_CARRY_FLAG, true);
+
     uint8_t A = this->read_register("A");
+    uint8_t result = A & n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
 
     std::cout << "AND A, " << n << std::endl;
 
-    this->write_register("A", A & n);
+    this->write_register("A", result);
 }
 
 // OR n
 void CPU::alu_or(const std::string &reg) {
+    this->reset_flag_register();
+
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
+    uint8_t result = A | n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
 
     std::cout << "OR A, " << reg << std::endl;
 
-    this->write_register("A", A | n);
+    this->write_register("A", result);
 }
 
 void CPU::alu_or(uint8_t n) {
+    this->reset_flag_register();
+
     uint8_t A = this->read_register("A");
+    uint8_t result = A | n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
 
     std::cout << "OR A, " << n << std::endl;
 
-    this->write_register("A", A | n);
+    this->write_register("A", result);
 }
 
 // XOR n
 void CPU::alu_xor(const std::string &reg) {
+    this->reset_flag_register();
+
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
+    uint8_t result = A ^ n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
 
     std::cout << "XOR A, " << reg << std::endl;
 
-    this->write_register("A", A ^ n);
+    this->write_register("A", result);
 }
 
 void CPU::alu_xor(uint8_t n) {
+    this->reset_flag_register();
+
     uint8_t A = this->read_register("A");
+    uint8_t result = A ^ n;
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
 
     std::cout << "XOR A, " << n << std::endl;
 
-    this->write_register("A", A ^ n);
+    this->write_register("A", result);
 }
 
 // CP n
