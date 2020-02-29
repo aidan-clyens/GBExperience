@@ -22,7 +22,7 @@ TEST(InstructionDecoder, CheckAllOpcodes) {
     }
 }
 
-TEST(InstructionExecuter, ADD) {
+TEST(CPU_ALU, ADD) {
     uint8_t opcode = 0x80;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
@@ -48,7 +48,7 @@ TEST(InstructionExecuter, ADD) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADDCarry) {
+TEST(CPU_ALU, ADDCarry) {
     uint8_t opcode = 0x80;
     uint8_t val = 0xFF;
     uint8_t n = 0x10;
@@ -74,7 +74,7 @@ TEST(InstructionExecuter, ADDCarry) {
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADDZero) {
+TEST(CPU_ALU, ADDZero) {
     uint8_t opcode = 0x80;
     uint8_t val = 0x0;
     uint8_t n = 0x0;
@@ -100,7 +100,7 @@ TEST(InstructionExecuter, ADDZero) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADDHalfCarry) {
+TEST(CPU_ALU, ADDHalfCarry) {
     uint8_t opcode = 0x80;
     uint8_t val = 0x0F;
     uint8_t n = 0x01;
@@ -126,7 +126,7 @@ TEST(InstructionExecuter, ADDHalfCarry) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADC) {
+TEST(CPU_ALU, ADC) {
     uint8_t opcode = 0x80;
     uint8_t val = 0xFF;
     uint8_t n = 0x10;
@@ -166,7 +166,7 @@ TEST(InstructionExecuter, ADC) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADCZero) {
+TEST(CPU_ALU, ADCZero) {
     uint8_t opcode = 0x88;
     uint8_t val = 0x0;
     uint8_t n = 0x0;
@@ -194,7 +194,7 @@ TEST(InstructionExecuter, ADCZero) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADCCarry) {
+TEST(CPU_ALU, ADCCarry) {
     uint8_t opcode = 0x88;
     uint8_t val = 0xFF;
     uint8_t n = 0x02;
@@ -233,7 +233,7 @@ TEST(InstructionExecuter, ADCCarry) {
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ADCHalfCarry) {
+TEST(CPU_ALU, ADCHalfCarry) {
     uint8_t opcode = 0x88;
     uint8_t val = 0x0F;
     uint8_t n = 0x01;
@@ -259,7 +259,7 @@ TEST(InstructionExecuter, ADCHalfCarry) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SUB) {
+TEST(CPU_ALU, SUB) {
     uint8_t opcode = 0x90;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
@@ -285,7 +285,7 @@ TEST(InstructionExecuter, SUB) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SUBZero) {
+TEST(CPU_ALU, SUBZero) {
     uint8_t opcode = 0x90;
     uint8_t val = 0x20;
     uint8_t n = 0x20;
@@ -311,7 +311,7 @@ TEST(InstructionExecuter, SUBZero) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SUBCarry) {
+TEST(CPU_ALU, SUBCarry) {
     uint8_t opcode = 0x90;
     uint8_t val = 0x60;
     uint8_t n = 0x80;
@@ -337,7 +337,7 @@ TEST(InstructionExecuter, SUBCarry) {
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SUBHalfCarry) {
+TEST(CPU_ALU, SUBHalfCarry) {
     uint8_t opcode = 0x90;
     uint8_t val = 0x06;
     uint8_t n = 0x08;
@@ -363,7 +363,7 @@ TEST(InstructionExecuter, SUBHalfCarry) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SBC) {
+TEST(CPU_ALU, SBC) {
     uint8_t opcode = 0x98;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
@@ -389,7 +389,7 @@ TEST(InstructionExecuter, SBC) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SBCZero) {
+TEST(CPU_ALU, SBCZero) {
     uint8_t opcode = 0x98;
     uint8_t val = 0x20;
     uint8_t n = 0x20;
@@ -417,7 +417,7 @@ TEST(InstructionExecuter, SBCZero) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SBCCarry) {
+TEST(CPU_ALU, SBCCarry) {
     uint8_t opcode = 0x98;
     uint8_t val = 0x60;
     uint8_t n = 0x80;
@@ -450,7 +450,7 @@ TEST(InstructionExecuter, SBCCarry) {
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, SBCHalfCarry) {
+TEST(CPU_ALU, SBCHalfCarry) {
     uint8_t opcode = 0x98;
     uint8_t val = 0x06;
     uint8_t n = 0x08;
@@ -483,7 +483,7 @@ TEST(InstructionExecuter, SBCHalfCarry) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, AND) {
+TEST(CPU_ALU, AND) {
     uint8_t opcode = 0xA0;
     uint8_t val = 0x10;
     uint8_t n = 0x10;
@@ -509,7 +509,7 @@ TEST(InstructionExecuter, AND) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ANDZero) {
+TEST(CPU_ALU, ANDZero) {
     uint8_t opcode = 0xA0;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
@@ -535,7 +535,7 @@ TEST(InstructionExecuter, ANDZero) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, OR) {
+TEST(CPU_ALU, OR) {
     uint8_t opcode = 0xB0;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
@@ -561,7 +561,7 @@ TEST(InstructionExecuter, OR) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, ORZero) {
+TEST(CPU_ALU, ORZero) {
     uint8_t opcode = 0xB0;
     uint8_t val = 0x0;
     uint8_t n = 0x0;
@@ -587,7 +587,7 @@ TEST(InstructionExecuter, ORZero) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, XOR) {
+TEST(CPU_ALU, XOR) {
     uint8_t opcode = 0xA8;
     uint8_t val = 0x20;
     uint8_t n = 0x10;
@@ -613,7 +613,7 @@ TEST(InstructionExecuter, XOR) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, XORZero) {
+TEST(CPU_ALU, XORZero) {
     uint8_t opcode = 0xA8;
     uint8_t val = 0x10;
     uint8_t n = 0x10;
@@ -640,7 +640,7 @@ TEST(InstructionExecuter, XORZero) {
 }
 
 
-TEST(InstructionExecuter, CPNoMatch) {
+TEST(CPU_ALU, CPNoMatch) {
     uint8_t opcode = 0xB8;
     uint8_t val = 0x10;
     uint8_t n = 0x20;
@@ -664,7 +664,7 @@ TEST(InstructionExecuter, CPNoMatch) {
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, CPMatch) {
+TEST(CPU_ALU, CPMatch) {
     uint8_t opcode = 0xB8;
     uint8_t val = 0x20;
     uint8_t n = 0x20;
@@ -688,7 +688,7 @@ TEST(InstructionExecuter, CPMatch) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, INC) {
+TEST(CPU_ALU, INC) {
     uint8_t opcode = 0x3C;
     uint8_t val = 0x13;
 
@@ -710,7 +710,7 @@ TEST(InstructionExecuter, INC) {
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, INCHalfCarry) {
+TEST(CPU_ALU, INCHalfCarry) {
     uint8_t opcode = 0x3C;
     uint8_t val = 0x1F;
 
@@ -732,7 +732,7 @@ TEST(InstructionExecuter, INCHalfCarry) {
     EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, INC_16Bit) {
+TEST(CPU_ALU, INC_16Bit) {
     uint8_t opcode = 0x34;
     uint16_t val = 0x1312;
 
@@ -749,7 +749,7 @@ TEST(InstructionExecuter, INC_16Bit) {
     EXPECT_EQ(val + 1, cpu.read_register("HL"));
 }
 
-TEST(InstructionExecuter, DEC) {
+TEST(CPU_ALU, DEC) {
     uint8_t opcode = 0x3D;
     uint8_t val = 0x13;
 
@@ -771,7 +771,7 @@ TEST(InstructionExecuter, DEC) {
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, DECZero) {
+TEST(CPU_ALU, DECZero) {
     uint8_t opcode = 0x3D;
     uint8_t val = 0x01;
 
@@ -793,7 +793,7 @@ TEST(InstructionExecuter, DECZero) {
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
-TEST(InstructionExecuter, DEC_16Bit) {
+TEST(CPU_ALU, DEC_16Bit) {
     uint8_t opcode = 0x35;
     uint16_t val = 0x1312;
 
