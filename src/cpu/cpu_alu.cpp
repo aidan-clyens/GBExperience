@@ -198,8 +198,10 @@ void CPU::alu_cp(const std::string &reg) {
     if (A < n) {
         this->set_flag_register(CARRY_FLAG, true);
     }
-    
-    // TODO Implement half carry flag
+
+    if ((A & 0x0F) < (n & 0xF)) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
 
     std::cout << "CP A, " << reg << std::endl;
 }
@@ -218,8 +220,10 @@ void CPU::alu_cp(uint8_t n) {
     if (A < n) {
         this->set_flag_register(CARRY_FLAG, true);
     }
-    
-    // TODO Implement half carry flag
+
+    if ((A & 0x0F) < (n & 0xF)) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
 
     std::cout << "CP A, " << n << std::endl;
 }

@@ -657,8 +657,6 @@ TEST(InstructionExecuter, CPNoMatch) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val - n, cpu.read_register("A"));
-
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
@@ -682,8 +680,6 @@ TEST(InstructionExecuter, CPMatch) {
     EXPECT_EQ(n, cpu.read_register("B"));
 
     cpu.decode_op(opcode);
-
-    EXPECT_EQ(val - n, cpu.read_register("A"));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
