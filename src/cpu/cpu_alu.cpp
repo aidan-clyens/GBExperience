@@ -231,10 +231,25 @@ void CPU::alu_cp(uint8_t n) {
 // INC n
 void CPU::alu_inc(const std::string &reg) {
     uint16_t N = this->read_register(reg);
+    uint16_t result = N + 1;
+
+    if (N < 0xFF) {
+        this->set_flag_register(ZERO_FLAG, false);
+        this->set_flag_register(SUBTRACT_FLAG, false);
+        this->set_flag_register(HALF_CARRY_FLAG, false);
+    }    
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
+
+    if ((N & 0xF) + 1 > 0x0F) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
 
     std::cout << "INC " << reg << std::endl;
 
-    this->write_register(reg, N + 1);
+    this->write_register(reg, result);
 }
 
 // DEC n
