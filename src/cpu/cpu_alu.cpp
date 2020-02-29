@@ -5,22 +5,60 @@
 void CPU::alu_add(const std::string &reg, bool carry) {
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
+    uint8_t result = A + n;
+
+    if (carry) {
+        result += (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
+    }
+
+    this->reset_flag_register();
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
+
+    if (A + n > 0xFF) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+
+    if ((A & 0xF) + (n & 0xF) > 0x0F) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
 
     if (carry) std::cout << "ADC A, " << reg << std::endl;
     else std::cout << "ADD A, " << reg << std::endl;
 
-    this->write_register("A", A + n);
-    // TODO Implement carry
+
+    this->write_register("A", result);
 }
 
 void CPU::alu_add(uint8_t n, bool carry) {
     uint8_t A = this->read_register("A");
+    uint8_t result = A + n;
+
+    if (carry) {
+        result += (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
+    }
+
+    this->reset_flag_register();
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
+
+    if (A + n > 0xFF) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+
+    if ((A & 0xF) + (n & 0xF) > 0x0F) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
 
     if (carry) std::cout << "ADC A, " << n << std::endl;
     else std::cout << "ADD A, " << n << std::endl;
 
-    this->write_register("A", A + n);
-    // TODO Implement carry
+
+    this->write_register("A", result);
 }
 
 // SUB n
