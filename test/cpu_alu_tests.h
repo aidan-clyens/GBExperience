@@ -127,13 +127,27 @@ TEST(InstructionExecuter, ADDHalfCarry) {
 }
 
 TEST(InstructionExecuter, ADC) {
-    uint8_t opcode = 0x88;
-    uint8_t val = 0x20;
+    uint8_t opcode = 0x80;
+    uint8_t val = 0xFF;
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
+
+    // First operation sets carry flag
+    cpu.write_register("A", val);
+    cpu.write_register("B", n);
+
+    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(n, cpu.read_register("B"));
+
+    cpu.decode_op(opcode);
+
+    // Second operation uses carry flag
+    opcode = 0x88;
+    val = 0x20;
+    n = 0x10;
 
     cpu.write_register("A", val);
     cpu.write_register("B", n);
@@ -143,7 +157,7 @@ TEST(InstructionExecuter, ADC) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(val + n + 1, cpu.read_register("A"));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -183,11 +197,24 @@ TEST(InstructionExecuter, ADCZero) {
 TEST(InstructionExecuter, ADCCarry) {
     uint8_t opcode = 0x88;
     uint8_t val = 0xFF;
-    uint8_t n = 0x10;
+    uint8_t n = 0x02;
 
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
+    
+    // First operation ensures that carry flag is set
+    cpu.write_register("A", val);
+    cpu.write_register("B", n);
+
+    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(n, cpu.read_register("B"));
+    cpu.decode_op(opcode);
+
+    // Second operation uses carry flag
+    opcode = 0x88;
+    val = 0xFF;
+    n = 0x10;
 
     cpu.write_register("A", val);
     cpu.write_register("B", n);
@@ -195,11 +222,9 @@ TEST(InstructionExecuter, ADCCarry) {
     EXPECT_EQ(val, cpu.read_register("A"));
     EXPECT_EQ(n, cpu.read_register("B"));
 
-    // Run twice to ensure flag register is reset
-    cpu.decode_op(opcode);
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(((val + n) & 0xFF) + 1, cpu.read_register("A"));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
