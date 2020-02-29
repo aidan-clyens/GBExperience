@@ -59,4 +59,6 @@ class CPU {
         void alu_inc(const std::string &);
         // DEC n
         void alu_dec(const std::string &);
+
+        // TODO Add jump instructions
 };
