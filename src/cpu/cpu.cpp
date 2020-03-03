@@ -463,29 +463,76 @@ bool CPU::decode_op(uint8_t opcode) {
         /****    Jumps    ****/
         // JP nn
         case 0xC3:
+            // LSB
             arg_1 = this->fetch_op();
+            // MSB
             arg_2 = this->fetch_op();
-            std::cout << "JP " << static_cast<int>(arg_1) << static_cast<int>(arg_2) << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->jump(arg16bit);
             break;
         // JP cc, nn
-        case 0xC2: case 0xCA: case 0xD2: case 0xDA:
+        case 0xC2:
+            // LSB
             arg_1 = this->fetch_op();
+            // MSB
             arg_2 = this->fetch_op();
-            std::cout << "JP cc, " << static_cast<int>(arg_1) << static_cast<int>(arg_2) << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->jump_conditional(arg16bit, ZERO_FLAG, false);
+            break;
+        case 0xCA:
+            // LSB
+            arg_1 = this->fetch_op();
+            // MSB
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->jump_conditional(arg16bit, ZERO_FLAG, true);
+            break;
+        case 0xD2:
+            // LSB
+            arg_1 = this->fetch_op();
+            // MSB
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->jump_conditional(arg16bit, CARRY_FLAG, false);
+            break;
+        case 0xDA:
+            // LSB
+            arg_1 = this->fetch_op();
+            // MSB
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->jump_conditional(arg16bit, CARRY_FLAG, true);
             break;
         // JP HL
         case 0xE9:
-            std::cout << "JP HL" << std::endl;
+            this->jump_hl();
             break;
         // JP n
         case 0x18:
             arg_1 = this->fetch_op();
-            std::cout << "JP " << static_cast<int>(arg_1) << std::endl;
+            this->jump_add(arg_1);
             break;
         // JR cc, n
-        case 0x20: case 0x28: case 0x30: case 0x38:
+        case 0x20:
             arg_1 = this->fetch_op();
-            std::cout << "JR cc, " << static_cast<int>(arg_1) << std::endl;
+            this->jump_add_conditional(arg_1, ZERO_FLAG, false);
+            break;
+        case 0x28:
+            arg_1 = this->fetch_op();
+            this->jump_add_conditional(arg_1, ZERO_FLAG, true);
+            break;
+        case 0x30:
+            arg_1 = this->fetch_op();
+            this->jump_add_conditional(arg_1, CARRY_FLAG, false);
+            break;
+        case 0x38:
+            arg_1 = this->fetch_op();
+            this->jump_add_conditional(arg_1, CARRY_FLAG, true);
             break;
         /****    Calls    ****/
         // CALL nn
