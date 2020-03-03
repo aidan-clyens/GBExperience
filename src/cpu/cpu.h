@@ -60,5 +60,15 @@ class CPU {
         // DEC n
         void alu_dec(const std::string &);
 
-        // TODO Add jump instructions
+        /****    Jumps    ****/
+        // JP nn
+        void jump(uint16_t);
+        // JP cc, nn
+        void jump_conditional(uint16_t, CPUFlag_t, bool);
+        // JP (HL)
+        void jump_hl();
+        // JR n
+        void jump_add(uint8_t);
+        // JR cc, n
+        void jump_add_conditional(uint8_t, CPUFlag_t, bool);
 };
