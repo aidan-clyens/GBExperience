@@ -914,14 +914,14 @@ TEST(CPU_ALU_16Bit, ADD_SP) {
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
     uint8_t opcode = 0xE8;
     uint16_t val = 0xFFFF;
-    uint8_t n = 0x03;
+    uint8_t n = 0xFF;
 
     uint16_t PC = 0xA000;
 
@@ -945,7 +945,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
