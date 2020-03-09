@@ -864,8 +864,8 @@ TEST(CPU_ALU_16Bit, ADDCarry) {
 
 TEST(CPU_ALU_16Bit, ADDHalfCarry) {
     uint8_t opcode = 0x09;
-    uint16_t val = 0x0F00;
-    uint16_t n = 0x0100;
+    uint16_t val = 0x00F0;
+    uint16_t n = 0x0010;
 
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
