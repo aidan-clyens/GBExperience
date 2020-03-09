@@ -60,6 +60,16 @@ class CPU {
         // DEC n
         void alu_dec(const std::string &);
 
+        /****    16-Bit ALU    ****/
+        // ADD HL, nn
+        void alu_add_HL(const std::string &);
+        // ADD SP, e
+        void alu_add_SP(uint8_t);
+        // INC nn
+        void alu_inc_16bit(const std::string &);
+        // DEC nn
+        void alu_dec_16bit(const std::string &);
+
         /****    Jumps    ****/
         // JP nn
         void jump(uint16_t);
