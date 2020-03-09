@@ -22,6 +22,7 @@ TEST(InstructionDecoder, CheckAllOpcodes) {
     }
 }
 
+/****    8-Bit ALU    ****/
 TEST(CPU_ALU, ADD) {
     uint8_t opcode = 0x80;
     uint8_t val = 0x20;
@@ -808,4 +809,207 @@ TEST(CPU_ALU, DEC_16Bit) {
     cpu.decode_op(opcode);
 
     EXPECT_EQ(val - 1, cpu.read_register("HL"));
+}
+
+/****    16-Bit ALU    ****/
+TEST(CPU_ALU_16Bit, ADD) {
+    uint8_t opcode = 0x09;
+    uint16_t val = 0x1020;
+    uint16_t n = 0x0314;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", val);
+    cpu.write_register("BC", n);
+    
+    EXPECT_EQ(val, cpu.read_register("HL"));
+    EXPECT_EQ(n, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val + n, cpu.read_register("HL"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU_ALU_16Bit, ADDCarry) {
+    uint8_t opcode = 0x09;
+    uint16_t val = 0xFFFF;
+    uint16_t n = 0x1000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", val);
+    cpu.write_register("BC", n);
+
+    EXPECT_EQ(val, cpu.read_register("HL"));
+    EXPECT_EQ(n, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("HL"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU_ALU_16Bit, ADDHalfCarry) {
+    uint8_t opcode = 0x09;
+    uint16_t val = 0x0F00;
+    uint16_t n = 0x0100;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", val);
+    cpu.write_register("BC", n);
+
+    EXPECT_EQ(val, cpu.read_register("HL"));
+    EXPECT_EQ(n, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("HL"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU_ALU_16Bit, ADD_SP) {
+    uint8_t opcode = 0xE8;
+    uint16_t val = 0x1020;
+    uint8_t n = 0x03;
+
+    uint16_t PC = 0xA000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, n);
+
+    EXPECT_EQ(n, mem_map.read(PC));
+
+    CPU cpu(mem_map);
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", val);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(val, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("SP"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
+    uint8_t opcode = 0xE8;
+    uint16_t val = 0xFFFF;
+    uint8_t n = 0x03;
+
+    uint16_t PC = 0xA000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, n);
+
+    EXPECT_EQ(n, mem_map.read(PC));
+
+    CPU cpu(mem_map);
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", val);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(val, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("SP"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU_ALU_16Bit, ADD_SP_HalfCarry) {
+    uint8_t opcode = 0xE8;
+    uint16_t val = 0x10FF;
+    uint8_t n = 0x03;
+
+    uint16_t PC = 0xA000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, n);
+
+    EXPECT_EQ(n, mem_map.read(PC));
+
+    CPU cpu(mem_map);
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", val);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(val, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("SP"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
+TEST(CPU_ALU_16Bit, INC) {
+    uint8_t opcode = 0x03;
+    uint16_t val = 0x1312;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("BC", val);
+
+    EXPECT_EQ(val, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val + 1, cpu.read_register("BC"));
+}
+
+TEST(CPU_ALU_16Bit, DEC_16) {
+    uint8_t opcode = 0x0B;
+    uint16_t val = 0x1312;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("BC", val);
+
+    EXPECT_EQ(val, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val - 1, cpu.read_register("BC"));
 }
