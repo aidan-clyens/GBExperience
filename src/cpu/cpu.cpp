@@ -672,6 +672,16 @@ uint16_t CPU::read_register(const std::string &reg) {
     return m_registers.read_register(reg);
 }
 
+void CPU::write_memory(uint8_t data) {
+    uint16_t address = this->read_register("HL");
+    this->m_memory_map.write(address, data);
+}
+
+uint8_t CPU::read_memory() {
+    uint16_t address = this->read_register("HL");
+    return this->m_memory_map.read(address);
+}
+
 void CPU::set_flag_register(CPUFlag_t flag, bool value) {
     uint8_t flag_register_val = this->read_register("F");
     uint8_t val = (value) ? flag : 0;

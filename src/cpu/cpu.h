@@ -26,6 +26,9 @@ class CPU {
         void write_register(const std::string &, uint16_t);
         uint16_t read_register(const std::string &);
 
+        void write_memory(uint8_t);
+        uint8_t read_memory();
+
         void set_flag_register(CPUFlag_t, bool);
         bool read_flag_register(CPUFlag_t);
         void reset_flag_register();
