@@ -428,20 +428,48 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         /****    16-Bit Arithmetic    ****/
         // ADD HL, n
-        case 0x09: case 0x19: case 0x29: case 0x39:
-            std::cout << "ADD HL, n" << std::endl;
+        case 0x09:
+            this->alu_add_HL("BC");
+            break;
+        case 0x19:
+            this->alu_add_HL("DE");
+            break;
+        case 0x29:
+            this->alu_add_HL("HL");
+            break;
+        case 0x39:
+            this->alu_add_HL("SP");
             break;
         // ADD SP, n
         case 0xE8:
-            std::cout << "ADD SP, n" << std::endl;
+            arg_1 = this->fetch_op();
+            this->alu_add_SP(arg_1);
             break;
         // INC nn
-        case 0x03: case 0x13: case 0x23: case 0x33:
-            std::cout << "INC nn" << std::endl;
+        case 0x03:
+            this->alu_inc_16bit("BC");
+            break;
+        case 0x13:
+            this->alu_inc_16bit("DE");
+            break;
+        case 0x23:
+            this->alu_inc_16bit("HL");
+            break;
+        case 0x33:
+            this->alu_inc_16bit("SP");
             break;
         // DEC nn
-        case 0x0B: case 0x1B: case 0x2B: case 0x3B:
-            std::cout << "DEC nn" << std::endl;
+        case 0x0B:
+            this->alu_dec_16bit("BC");
+            break;
+        case 0x1B:
+            this->alu_dec_16bit("DE");
+            break;
+        case 0x2B:
+            this->alu_dec_16bit("HL");
+            break;
+        case 0x3B:
+            this->alu_dec_16bit("SP");
             break;
         /****    Rotates and Shifts    ****/
         // RLCA
