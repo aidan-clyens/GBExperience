@@ -298,8 +298,22 @@ void CPU::alu_add_HL(const std::string &reg) {
 
 // ADD SP, e
 void CPU::alu_add_SP(uint8_t n) {
-    // TODO
-    std::cout << "ADD SP, " << n << std::endl;
+    uint16_t SP = this->read_register("SP");
+    uint16_t result = SP + n;
+
+    this->reset_flag_register();
+
+    if (SP + n > 0xFFFF) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+
+    if ((SP & 0xFF) + (n & 0xFF) > 0x00FF) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
+
+    std::cout << "ADD SP, " << static_cast<int>(n) << std::endl;
+
+    this->write_register("SP", result);
 }
 
 // INC nn
