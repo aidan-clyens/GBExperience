@@ -255,8 +255,46 @@ void CPU::alu_inc(const std::string &reg) {
 // DEC n
 void CPU::alu_dec(const std::string &reg) {
     uint16_t N = this->read_register(reg);
+    uint16_t result = N - 1;
+
+    if (N < 0xFF) {
+        this->set_flag_register(ZERO_FLAG, false);
+        this->set_flag_register(SUBTRACT_FLAG, true);
+        this->set_flag_register(HALF_CARRY_FLAG, false);
+    }    
+
+    if (result == 0) {
+        this->set_flag_register(ZERO_FLAG, true);
+    }
+
+    // TODO Implement half carry flag
 
     std::cout << "DEC " << reg << std::endl;
 
-    this->write_register(reg, N - 1);
+    this->write_register(reg, result);
+}
+
+/****    16-Bit ALU    ****/
+// ADD HL, nn
+void CPU::alu_add_HL(const std::string &reg) {
+    // TODO
+    std::cout << "ADD HL, " << reg << std::endl;
+}
+
+// ADD SP, e
+void CPU::alu_add_SP(uint8_t n) {
+    // TODO
+    std::cout << "ADD SP, " << n << std::endl;
+}
+
+// INC nn
+void CPU::alu_inc_16bit(const std::string &reg) {
+    // TODO
+    std::cout << "INC " << reg << std::endl;
+}
+
+// DEC nn
+void CPU::alu_dec_16bit(const std::string &reg) {
+    // TODO    
+    std::cout << "DEC" << reg << std::endl;
 }
