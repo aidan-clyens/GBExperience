@@ -733,21 +733,24 @@ TEST(CPU_ALU, INCHalfCarry) {
     EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
-TEST(CPU_ALU, INC_16Bit) {
+TEST(CPU_ALU, INC_HL) {
     uint8_t opcode = 0x34;
-    uint16_t val = 0x1312;
+    uint16_t address = 0xA0FF;
+    uint8_t val = 0x15;
 
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", val);
+    cpu.write_register("HL", address);
+    cpu.write_memory(val);
 
-    EXPECT_EQ(val, cpu.read_register("HL"));
+    EXPECT_EQ(address, cpu.read_register("HL"));
+    EXPECT_EQ(val, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + 1, cpu.read_register("HL"));
+    EXPECT_EQ(val + 1, cpu.read_memory());
 }
 
 TEST(CPU_ALU, DEC) {
@@ -794,21 +797,24 @@ TEST(CPU_ALU, DECZero) {
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
-TEST(CPU_ALU, DEC_16Bit) {
+TEST(CPU_ALU, DEC_HL) {
     uint8_t opcode = 0x35;
-    uint16_t val = 0x1312;
+    uint16_t address = 0xA0FF;
+    uint16_t val = 0x13;
 
     MemoryMap mem_map;
     mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", val);
+    cpu.write_register("HL", address);
+    cpu.write_memory(val);
 
-    EXPECT_EQ(val, cpu.read_register("HL"));
+    EXPECT_EQ(address, cpu.read_register("HL"));
+    EXPECT_EQ(val, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val - 1, cpu.read_register("HL"));
+    EXPECT_EQ(val - 1, cpu.read_memory());
 }
 
 /****    16-Bit ALU    ****/

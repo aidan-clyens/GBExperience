@@ -4,7 +4,12 @@
 // ADC A, n
 void CPU::alu_add(const std::string &reg, bool carry) {
     uint8_t A = this->read_register("A");
-    uint8_t n = this->read_register(reg);
+    uint16_t n = this->read_register(reg);
+    
+    if (reg == "HL") {
+        n = this->read_memory();
+    }
+
     uint8_t result = A + n;
 
     if (carry) {
@@ -90,7 +95,12 @@ void CPU::alu_and(const std::string &reg) {
     this->set_flag_register(HALF_CARRY_FLAG, true);
 
     uint8_t A = this->read_register("A");
-    uint8_t n = this->read_register(reg);
+    uint16_t n = this->read_register(reg);
+    
+    if (reg == "HL") {
+        n = this->read_memory();
+    }
+
     uint8_t result = A & n;
 
     if (result == 0) {
@@ -123,7 +133,12 @@ void CPU::alu_or(const std::string &reg) {
     this->reset_flag_register();
 
     uint8_t A = this->read_register("A");
-    uint8_t n = this->read_register(reg);
+    uint16_t n = this->read_register(reg);
+    
+    if (reg == "HL") {
+        n = this->read_memory();
+    }
+    
     uint8_t result = A | n;
 
     if (result == 0) {
@@ -155,7 +170,12 @@ void CPU::alu_xor(const std::string &reg) {
     this->reset_flag_register();
 
     uint8_t A = this->read_register("A");
-    uint8_t n = this->read_register(reg);
+    uint16_t n = this->read_register(reg);
+    
+    if (reg == "HL") {
+        n = this->read_memory();
+    }
+    
     uint8_t result = A ^ n;
 
     if (result == 0) {
@@ -188,7 +208,12 @@ void CPU::alu_cp(const std::string &reg) {
     this->set_flag_register(SUBTRACT_FLAG, true);
 
     uint8_t A = this->read_register("A");
-    uint8_t n = this->read_register(reg);
+    uint16_t n = this->read_register(reg);
+    
+    if (reg == "HL") {
+        n = this->read_memory();
+    }
+
     uint8_t result = A - n;
 
     if (result == 0) {
@@ -231,7 +256,12 @@ void CPU::alu_cp(uint8_t n) {
 // INC n
 void CPU::alu_inc(const std::string &reg) {
     uint16_t N = this->read_register(reg);
-    uint16_t result = N + 1;
+    
+    if (reg == "HL") {
+        N = this->read_memory();
+    }
+
+    uint8_t result = N + 1;
 
     if (N < 0xFF) {
         this->set_flag_register(ZERO_FLAG, false);
@@ -249,13 +279,23 @@ void CPU::alu_inc(const std::string &reg) {
 
     std::cout << "INC " << reg << std::endl;
 
-    this->write_register(reg, result);
+    if (reg == "HL") {
+        this->write_memory(result);
+    }
+    else {
+        this->write_register(reg, result);
+    }
 }
 
 // DEC n
 void CPU::alu_dec(const std::string &reg) {
-    uint16_t N = this->read_register(reg);
-    uint16_t result = N - 1;
+    uint8_t N = this->read_register(reg);
+
+    if (reg == "HL") {
+        N = this->read_memory();
+    }
+
+    uint8_t result = N - 1;
 
     if (N < 0xFF) {
         this->set_flag_register(ZERO_FLAG, false);
@@ -271,7 +311,12 @@ void CPU::alu_dec(const std::string &reg) {
 
     std::cout << "DEC " << reg << std::endl;
 
-    this->write_register(reg, result);
+    if (reg == "HL") {
+        this->write_memory(result);
+    }
+    else {
+        this->write_register(reg, result);
+    }
 }
 
 /****    16-Bit ALU    ****/
