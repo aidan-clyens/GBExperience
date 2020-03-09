@@ -318,12 +318,20 @@ void CPU::alu_add_SP(uint8_t n) {
 
 // INC nn
 void CPU::alu_inc_16bit(const std::string &reg) {
-    // TODO
+    uint16_t N = this->read_register(reg);
+    uint16_t result = N + 1;
+
     std::cout << "INC " << reg << std::endl;
+
+    this->write_register(reg, result);
 }
 
 // DEC nn
 void CPU::alu_dec_16bit(const std::string &reg) {
-    // TODO    
-    std::cout << "DEC" << reg << std::endl;
+    uint16_t N = this->read_register(reg);
+    uint16_t result = N - 1;
+
+    std::cout << "DECs " << reg << std::endl;
+
+    this->write_register(reg, result);
 }
