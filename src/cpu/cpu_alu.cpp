@@ -277,8 +277,23 @@ void CPU::alu_dec(const std::string &reg) {
 /****    16-Bit ALU    ****/
 // ADD HL, nn
 void CPU::alu_add_HL(const std::string &reg) {
-    // TODO
+    uint16_t HL = this->read_register("HL");
+    uint16_t nn = this->read_register(reg);
+    uint16_t result = HL + nn;
+
+    this->reset_flag_register();
+
+    if (HL + nn > 0xFFFF) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+
+    if ((HL & 0xFF) + (nn & 0xFF) > 0x00FF) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
+
     std::cout << "ADD HL, " << reg << std::endl;
+
+    this->write_register("HL", result);
 }
 
 // ADD SP, e
