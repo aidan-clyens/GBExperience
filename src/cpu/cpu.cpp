@@ -68,16 +68,177 @@ bool CPU::decode_op(uint8_t opcode) {
             std::cout << "LD nn, " << static_cast<int>(arg_1) << std::endl;
             break;
         // LD r1, r2
-        case 0x7F: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
-        case 0x40: case 0x41: case 0x42: case 0x43: case 0x44: case 0x45: case 0x46:
-        case 0x48: case 0x49: case 0x4A: case 0x4B: case 0x4C: case 0x4D: case 0x4E:
-        case 0x50: case 0x51: case 0x52: case 0x53: case 0x54: case 0x55: case 0x56:
-        case 0x58: case 0x59: case 0x5A: case 0x5B: case 0x5C: case 0x5D: case 0x5E:
-        case 0x60: case 0x61: case 0x62: case 0x63: case 0x64: case 0x65: case 0x66:
-        case 0x68: case 0x69: case 0x6A: case 0x6B: case 0x6C: case 0x6D: case 0x6E:
-        case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75:
+        case 0x7F:
+            this->load("A", "A");
+            break;
+        case 0x78:
+            this->load("A", "B");
+            break;
+        case 0x79:
+            this->load("A", "C");
+            break;
+        case 0x7A:
+            this->load("A", "D");
+            break;
+        case 0x7B:
+            this->load("A", "E");
+            break;
+        case 0x7C:
+            this->load("A", "H");
+            break;
+        case 0x7D:
+            this->load("A", "L");
+            break;
+        case 0x7E:
+            this->load("A", "HL");
+            break;
+        case 0x40:
+            this->load("B", "B");
+            break;
+        case 0x41:
+            this->load("B", "C");
+            break;
+        case 0x42:
+            this->load("B", "D");
+            break;
+        case 0x43:
+            this->load("B", "E");
+            break;
+        case 0x44:
+            this->load("B", "H");
+            break;
+        case 0x45:
+            this->load("B", "L");
+            break;
+        case 0x46:
+            this->load("B", "HL");
+            break;
+        case 0x48:
+            this->load("C", "B");
+            break;
+        case 0x49:
+            this->load("C", "C");
+            break;
+        case 0x4A:
+            this->load("C", "D");
+            break;
+        case 0x4B:
+            this->load("C", "E");
+            break;
+        case 0x4C:
+            this->load("C", "H");
+            break;
+        case 0x4D:
+            this->load("C", "L");
+            break;
+        case 0x4E:
+            this->load("C", "HL");
+            break;
+        case 0x50:
+            this->load("D", "B");
+            break;
+        case 0x51:
+            this->load("D", "C");
+            break;
+        case 0x52:
+            this->load("D", "D");
+            break;
+        case 0x53:
+            this->load("D", "E");
+            break;
+        case 0x54:
+            this->load("D", "H");
+            break;
+        case 0x55:
+            this->load("D", "L");
+            break;
+        case 0x56:
+            this->load("D", "HL");
+            break;
+        case 0x58:
+            this->load("E", "B");
+            break;
+        case 0x59:
+            this->load("E", "C");
+            break;
+        case 0x5A:
+            this->load("E", "D");
+            break;
+        case 0x5B:
+            this->load("E", "E");
+            break;
+        case 0x5C:
+            this->load("E", "H");
+            break;
+        case 0x5D:
+            this->load("E", "L");
+            break;
+        case 0x5E:
+            this->load("E", "HL");
+            break;
+        case 0x60:
+            this->load("H", "B");
+            break;
+        case 0x61:
+            this->load("H", "C");
+            break;
+        case 0x62:
+            this->load("H", "D");
+            break;
+        case 0x63:
+            this->load("H", "E");
+            break;
+        case 0x64:
+            this->load("H", "H");
+            break;
+        case 0x65:
+            this->load("H", "L");
+            break;
+        case 0x66:
+            this->load("H", "HL");
+            break;
+        case 0x68:
+            this->load("L", "B");
+            break;
+        case 0x69:
+            this->load("L", "C");
+            break;
+        case 0x6A:
+            this->load("L", "D");
+            break;
+        case 0x6B:
+            this->load("L", "E");
+            break;
+        case 0x6C:
+            this->load("L", "H");
+            break;
+        case 0x6D:
+            this->load("L", "L");
+            break;
+        case 0x6E:
+            this->load("L", "HL");
+            break;
+        case 0x70:
+            this->load("HL", "B");
+            break;
+        case 0x71:
+            this->load("HL", "C");
+            break;
+        case 0x72:
+            this->load("HL", "D");
+            break;
+        case 0x73:
+            this->load("HL", "E");
+            break;
+        case 0x74:
+            this->load("HL", "H");
+            break;
+        case 0x75:
+            this->load("HL", "L");
+            break;
         case 0x36:
-            std::cout << "LD r1, r2" << std::endl;
+            arg_1 = this->fetch_op();
+            this->load(arg_1);
             break;
         // LD A, n
         case 0x0A: case 0x1A: case 0xFA: case 0x3E:
