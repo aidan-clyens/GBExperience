@@ -181,7 +181,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_add("HL", false);
             break;
         case 0xC6:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_add(arg_1, false);
             break;
         // ADC A, n
         case 0x8F:
@@ -209,7 +210,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_add("HL", true);
             break;
         case 0xCE:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_add(arg_1, true);
             break;
         // SUB n
         case 0x97:
@@ -237,7 +239,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_sub("HL", false);
             break;
         case 0xD6:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_sub(arg_1, false);
             break;
         // SBC n
         case 0x9F:
@@ -290,7 +293,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_and("HL");
             break;
         case 0xE6:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_sub(arg_1, true);
             break;
         // OR n
         case 0xB7:
@@ -318,7 +322,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_or("HL");
             break;
         case 0xF6:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_or(arg_1);
             break;
         // XOR n
         case 0xAF:
@@ -346,7 +351,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_xor("HL");
             break;
         case 0xEE:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_xor(arg_1);
             break;
         // CP n
         case 0xBF:
@@ -374,7 +380,8 @@ bool CPU::decode_op(uint8_t opcode) {
             this->alu_cp("HL");
             break;
         case 0xFE:
-            // TODO
+            arg_1 = this->fetch_op();
+            this->alu_cp(arg_1);
             break;
         // INC n
         case 0x3C:
