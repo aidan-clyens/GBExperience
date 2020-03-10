@@ -37,6 +37,11 @@ class CPU {
         CPURegisters m_registers;
         MemoryMap &m_memory_map;
 
+        /****    8-Bit Loads    ****/
+        // LD r1, r2
+        void load(const std::string &, const std::string &);
+        void load(uint8_t);
+
         /****    8-Bit ALU    ****/
         // ADD A, n
         // ADC A, n
