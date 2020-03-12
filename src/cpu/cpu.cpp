@@ -279,10 +279,39 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("A", arg_1);
             break;
         // LD n, A
-        case 0x47: case 0x4F: case 0x57: case 0x5F: case 0x67: case 0x6F: case 0x02: case 0x12: case 0x77: case 0xEA:
+        case 0x47:
+            this->load("B", "A");
+            break;
+        case 0x4F:
+            this->load("C", "A");
+            break;
+        case 0x57:
+            this->load("D", "A");
+            break;
+        case 0x5F:
+            this->load("E", "A");
+            break;
+        case 0x67:
+            this->load("H", "A");
+            break;
+        case 0x6F:
+            this->load("L", "A");
+            break;
+        case 0x02:
+            this->load_to_mem("BC", "A");
+            break;
+        case 0x12:
+            this->load_to_mem("DE", "A");
+            break;
+        case 0x77:
+            this->load_to_mem("HL", "A");
+            break;
+        case 0xEA:
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
-            std::cout << "LD n, A" << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->load_to_mem(arg16bit, "A");
             break;
         // LD A, (C)
         case 0xF2:
