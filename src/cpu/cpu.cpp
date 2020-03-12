@@ -345,13 +345,13 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         // LDH (n), A
         case 0xE0:
-            arg_1 = this->fetch_op();
-            std::cout << "LDH (" << static_cast<int>(arg_1) << "), A" << std::endl;
+            arg16bit = 0xFF00 + this->fetch_op();
+            this->load_to_mem(arg16bit, "A");
             break;
         // LDH A, (n)
         case 0xF0:
-            arg_1 = this->fetch_op();
-            std::cout << "LDH A, (" << static_cast<int>(arg_1) << ")" << std::endl;
+            arg16bit = 0xFF00 + this->fetch_op();
+            this->load_from_mem("A", arg16bit);
             break;
         /****    16-Bit Loads    ****/
         // LD n, nn
