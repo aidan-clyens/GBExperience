@@ -40,9 +40,10 @@ class CPU {
         MemoryMap &m_memory_map;
 
         /****    8-Bit Loads    ****/
-        // LD r1, r2
         void load(const std::string &, const std::string &);
-        void load(uint8_t);
+        void load(const std::string &, uint8_t);
+        void load_from_mem(const std::string &, const std::string &);
+        void load_from_mem(const std::string &, uint16_t);
 
         /****    8-Bit ALU    ****/
         // ADD A, n
