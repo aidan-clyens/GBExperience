@@ -90,7 +90,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("A", "L");
             break;
         case 0x7E:
-            this->load("A", "HL");
+            this->load_from_mem("A", "HL");
             break;
         case 0x40:
             this->load("B", "B");
@@ -111,7 +111,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("B", "L");
             break;
         case 0x46:
-            this->load("B", "HL");
+            this->load_from_mem("B", "HL");
             break;
         case 0x48:
             this->load("C", "B");
@@ -132,7 +132,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("C", "L");
             break;
         case 0x4E:
-            this->load("C", "HL");
+            this->load_from_mem("C", "HL");
             break;
         case 0x50:
             this->load("D", "B");
@@ -153,7 +153,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("D", "L");
             break;
         case 0x56:
-            this->load("D", "HL");
+            this->load_from_mem("D", "HL");
             break;
         case 0x58:
             this->load("E", "B");
@@ -174,7 +174,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("E", "L");
             break;
         case 0x5E:
-            this->load("E", "HL");
+            this->load_from_mem("E", "HL");
             break;
         case 0x60:
             this->load("H", "B");
@@ -195,7 +195,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("H", "L");
             break;
         case 0x66:
-            this->load("H", "HL");
+            this->load_from_mem("H", "HL");
             break;
         case 0x68:
             this->load("L", "B");
@@ -216,7 +216,7 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load("L", "L");
             break;
         case 0x6E:
-            this->load("L", "HL");
+            this->load_from_mem("L", "HL");
             break;
         case 0x70:
             this->load("HL", "B");
@@ -238,13 +238,25 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         case 0x36:
             arg_1 = this->fetch_op();
-            this->load(arg_1);
+            this->load("HL", arg_1);
             break;
         // LD A, n
-        case 0x0A: case 0x1A: case 0xFA: case 0x3E:
+        case 0x0A:
+            this->load_from_mem("A", "BC");
+            break;
+        case 0x1A:
+            this->load_from_mem("A", "DE");
+            break;
+        case 0xFA:
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
-            std::cout << "LD A, " << static_cast<int>(arg_1) << static_cast<int>(arg_2) << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->load_from_mem("A", arg16bit);
+            break;
+        case 0x3E:
+            arg_1 = this->fetch_op();
+            this->load("A", arg_1);
             break;
         // LD n, A
         case 0x47: case 0x4F: case 0x57: case 0x5F: case 0x67: case 0x6F: case 0x02: case 0x12: case 0x77: case 0xEA:
