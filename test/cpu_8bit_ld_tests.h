@@ -3,6 +3,29 @@
 #include "memory/memory_map.h"
 
 
+// LD B, #
+TEST(CPU_LD, LD_NN_N) {
+    uint8_t opcode = 0x06;
+    uint8_t val_1 = 0x20;
+    uint8_t val_2 = 0xAC;
+    uint16_t PC = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val_2);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    
+    cpu.write_register("B", val_1);
+    EXPECT_EQ(val_1, cpu.read_register("B"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_2, cpu.read_register("B"));  
+}
+
 // LD A, E
 TEST(CPU_LD, LD_R1_R2) {
     uint8_t opcode = 0x7B;

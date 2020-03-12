@@ -63,9 +63,29 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         /****    8-Bit Loads    ****/
         // LD nn, n
-        case 0x06: case 0x0E: case 0x16: case 0x1E: case 0x26: case 0x2E:
+        case 0x06:
             arg_1 = this->fetch_op();
-            std::cout << "LD nn, " << static_cast<int>(arg_1) << std::endl;
+            this->load("B", arg_1);
+            break;
+        case 0x0E:
+            arg_1 = this->fetch_op();
+            this->load("C", arg_1);
+            break;
+        case 0x16:
+            arg_1 = this->fetch_op();
+            this->load("D", arg_1);
+            break;
+        case 0x1E:
+            arg_1 = this->fetch_op();
+            this->load("E", arg_1);
+            break;
+        case 0x26:
+            arg_1 = this->fetch_op();
+            this->load("H", arg_1);
+            break;
+        case 0x2E:
+            arg_1 = this->fetch_op();
+            this->load("L", arg_1);
             break;
         // LD r1, r2
         case 0x7F:
