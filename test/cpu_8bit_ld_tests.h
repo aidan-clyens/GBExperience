@@ -322,3 +322,56 @@ TEST(CPU_LD, LD_C_A) {
     cpu.write_register("DE", address);
     EXPECT_EQ(val_2, cpu.read_memory("DE"));
 }
+
+// LDD A, (HL)
+TEST(CPU_LD, LDD_A_HL) {
+    uint8_t opcode = 0x3A;
+    uint8_t val_1 = 0x20;
+    uint8_t val_2 = 0xAC;
+    uint16_t address = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("A", val_1);
+    cpu.write_register("HL", address);
+    cpu.write_memory("HL", val_2);
+
+    EXPECT_EQ(val_1, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_memory("HL"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_2, cpu.read_register("A"));
+
+    EXPECT_EQ(address - 1, cpu.read_register("HL"));
+}
+
+// LDD (HL), A
+TEST(CPU_LD, LDD_HL_A) {
+    uint8_t opcode = 0x32;
+    uint8_t val_1 = 0x20;
+    uint8_t val_2 = 0xAC;
+    uint16_t address = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", address);
+    cpu.write_memory("HL", val_1);
+    cpu.write_register("A", val_2);
+
+    cpu.write_register("BC", address);
+
+    EXPECT_EQ(val_1, cpu.read_memory("HL"));
+    EXPECT_EQ(val_2, cpu.read_register("A"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_2, cpu.read_memory("BC"));
+    EXPECT_EQ(val_2, cpu.read_register("A"));
+
+    EXPECT_EQ(address - 1, cpu.read_register("HL"));
+}
