@@ -335,11 +335,13 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         // LDI A, (HL)
         case 0x2A:
-            std::cout << "LDI A, (HL)" << std::endl;
+            this->load_from_mem("A", "HL");
+            this->alu_inc_16bit("HL");
             break;
         // LDI (HL), A
         case 0x22:
-            std::cout << "LDI (HL), A" << std::endl;
+            this->load_to_mem("HL", "A");
+            this->alu_inc_16bit("HL");
             break;
         // LDH (n), A
         case 0xE0:
