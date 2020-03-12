@@ -428,3 +428,61 @@ TEST(CPU_LD, LDI_HL_A) {
 
     EXPECT_EQ(address + 1, cpu.read_register("HL"));
 }
+
+// LDH (n), A
+TEST(CPU_LD, LD_n_A) {
+    // TODO Fix when memory-mapped I/O is implemented
+    uint8_t opcode = 0xE0;
+    uint8_t val_1 = 0x20;
+    uint8_t val_2 = 0xAC;
+    uint8_t val_n = 0x14;
+    uint16_t address = 0xFF00 + val_n;
+    uint16_t PC = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val_n);
+    mem_map.write(address, val_1);
+    CPU cpu(mem_map);
+    
+    cpu.write_register("PC", PC);
+    cpu.write_register("A", val_2);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(val_2, cpu.read_register("A"));
+
+    cpu.decode_op(opcode);
+
+    cpu.write_register("DE", address);
+    EXPECT_EQ(val_2, cpu.read_memory("DE"));
+}
+
+// LD A, (n)
+TEST(CPU_LD, LD_A_n) {
+    // TODO Fix when memory-mapped I/O is implemented
+    uint8_t opcode = 0xF0;
+    uint8_t val_1 = 0x20;
+    uint8_t val_2 = 0xAC;
+    uint8_t val_n = 0x14;
+    uint16_t address = 0xFF00 + val_n;
+    uint16_t PC = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val_n);
+    mem_map.write(address, val_2);
+    
+    EXPECT_EQ(val_2, mem_map.read(address));
+    
+    CPU cpu(mem_map);
+    
+    cpu.write_register("PC", PC);
+    cpu.write_register("A", val_1);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(val_1, cpu.read_register("A"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_2, cpu.read_register("A"));
+}
