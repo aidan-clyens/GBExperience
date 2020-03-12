@@ -44,6 +44,8 @@ class CPU {
         void load(const std::string &, uint8_t);
         void load_from_mem(const std::string &, const std::string &);
         void load_from_mem(const std::string &, uint16_t);
+        void load_to_mem(const std::string &, const std::string &);
+        void load_to_mem(uint16_t, const std::string &);
 
         /****    8-Bit ALU    ****/
         // ADD A, n
