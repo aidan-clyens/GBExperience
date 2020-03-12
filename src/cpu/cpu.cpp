@@ -315,11 +315,13 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         // LD A, (C)
         case 0xF2:
-            std::cout << "LD A, (C)" << std::endl;
+            arg16bit = 0xFF00 + this->read_register("C");
+            this->load_from_mem("A", arg16bit);
             break;
         // LD (C), A
         case 0xE2:
-            std::cout << "LD (C), A" << std::endl;
+            arg16bit = 0xFF00 + this->read_register("C");
+            this->load_to_mem(arg16bit, "A");
             break;
         // LDD A, (HL)
         case 0x3A:
