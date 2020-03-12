@@ -841,12 +841,20 @@ uint16_t CPU::read_register(const std::string &reg) {
 }
 
 void CPU::write_memory(uint8_t data) {
-    uint16_t address = this->read_register("HL");
+    this->write_memory("HL", data);
+}
+
+void CPU::write_memory(const std::string &reg, uint8_t data) {
+    uint16_t address = this->read_register(reg);
     this->m_memory_map.write(address, data);
 }
 
 uint8_t CPU::read_memory() {
-    uint16_t address = this->read_register("HL");
+    return this->read_memory("HL");
+}
+
+uint8_t CPU::read_memory(const std::string &reg) {
+    uint16_t address = this->read_register(reg);
     return this->m_memory_map.read(address);
 }
 
