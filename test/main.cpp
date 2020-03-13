@@ -6,7 +6,7 @@
 #include "cpu_alu_tests.h"
 #include "cpu_registers_tests.h"
 #include "cpu_jumps_tests.h"
-#include "cpu_8bit_ld_tests.h"
+#include "cpu_ld_tests.h"
 
 
 int main(int argc, char** argv) {
