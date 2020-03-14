@@ -486,3 +486,28 @@ TEST(CPU_LD, LD_A_n) {
 
     EXPECT_EQ(val_2, cpu.read_register("A"));
 }
+
+// LD BC, nn
+TEST(CPU_LD_16Bit, LD_N_NN) {
+    uint8_t opcode = 0x01;
+    uint16_t val_1 = 0x1234;
+    uint16_t val_2 = 0xABCD;
+    uint16_t PC = 0xA200;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val_2 & 0xFF);
+    mem_map.write(PC + 1, val_2 >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    cpu.write_register("BC", val_1);
+
+    EXPECT_EQ(val_1, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_2, cpu.read_register("BC"));
+}
