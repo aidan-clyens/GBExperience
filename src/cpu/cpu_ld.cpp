@@ -6,23 +6,13 @@ void CPU::load(const std::string &r1, const std::string &r2) {
 
     std::cout << "LD " << r1 << ", " << r2 << std::endl;
 
-    if (r1 == "HL") {
-        this->write_memory(val);
-    }
-    else {
-        this->write_register(r1, val);
-    }
+    this->write_register(r1, val);
 }
 
-void CPU::load(const std::string &r1, uint8_t n) {
+void CPU::load(const std::string &r1, uint16_t n) {
     std::cout << "LD " << r1 << ", " << n << std::endl;
 
-    if (r1 == "HL") {
-        this->write_memory(n);
-    }
-    else {
-        this->write_register(r1, n);
-    }
+    this->write_register(r1, n);
 }
 
 void CPU::load_from_mem(const std::string &r1, const std::string &r2) {
@@ -30,12 +20,7 @@ void CPU::load_from_mem(const std::string &r1, const std::string &r2) {
 
     std::cout << "LD " << r1 << ", " << r2 << std::endl;
 
-    if (r1 == "HL") {
-        this->write_memory(val);
-    }
-    else {
-        this->write_register(r1, val);
-    }
+    this->write_register(r1, val);
 }
 
 void CPU::load_from_mem(const std::string &r1, uint16_t nn) {
@@ -43,12 +28,7 @@ void CPU::load_from_mem(const std::string &r1, uint16_t nn) {
 
     std::cout << "LD " << r1 << ", (" << nn << ")" << std::endl;
 
-    if (r1 == "HL") {
-        this->write_memory(val);
-    }
-    else {
-        this->write_register(r1, val);
-    }
+    this->write_register(r1, val);
 }
 
 void CPU::load_to_mem(const std::string &r1, const std::string &r2) {
@@ -57,6 +37,12 @@ void CPU::load_to_mem(const std::string &r1, const std::string &r2) {
     std::cout << "LD " << r1 << ", " << r2 << std::endl;
 
     this->write_memory(r1, val);
+}
+
+void CPU::load_to_mem(const std::string &r1, uint16_t n) {
+    std::cout << "LD " << r1 << ", " << n << std::endl;
+
+    this->write_memory(r1, n);
 }
 
 void CPU::load_to_mem(uint16_t nn, const std::string &r2) {
