@@ -355,10 +355,34 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         /****    16-Bit Loads    ****/
         // LD n, nn
-        case 0x01: case 0x11: case 0x21: case 0x31:
+        case 0x01:
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
-            std::cout << "LD n, " << static_cast<int>(arg_1) << static_cast<int>(arg_2) << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+            std::cout << arg16bit << std::endl;
+
+            this->load("BC", arg16bit);
+            break;
+        case 0x11:
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->load("DE", arg16bit);
+            break;
+        case 0x21:
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->load("HL", arg16bit);
+            break;
+        case 0x31:
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->load("SP", arg16bit);
             break;
         // LD SP, HL
         case 0xF9:
