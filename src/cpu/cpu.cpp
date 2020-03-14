@@ -396,7 +396,7 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         // LD (nn), SP
         case 0x08:
-            arg_1 = this->fetch_op();
+            // TODO Learn how to implement this instruction
             std::cout << "LD " << static_cast<int>(arg_1) << ", SP" << std::endl;
             break;
         // PUSH nn
