@@ -511,3 +511,24 @@ TEST(CPU_LD_16Bit, LD_N_NN) {
 
     EXPECT_EQ(val_2, cpu.read_register("BC"));
 }
+
+// LD SP, HL
+TEST(CPU_LD_16Bit, LD_SP_HL) {
+    uint8_t opcode = 0xF9;
+    uint16_t val_1 = 0x1234;
+    uint16_t val_2 = 0xABCD;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("SP", val_1);
+    cpu.write_register("HL", val_2);
+
+    EXPECT_EQ(val_1, cpu.read_register("SP"));
+    EXPECT_EQ(val_2, cpu.read_register("HL"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_2, cpu.read_register("SP"));
+}

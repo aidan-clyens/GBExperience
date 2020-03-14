@@ -386,7 +386,7 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         // LD SP, HL
         case 0xF9:
-            std::cout << "LD SP, HL" << std::endl;
+            this->load("SP", "HL");
             break;
         // LDHL SP, n
         case 0xF8:
