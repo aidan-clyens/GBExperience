@@ -239,26 +239,26 @@ bool CPU::decode_op(uint8_t opcode) {
             this->load_from_mem("L", "HL");
             break;
         case 0x70:
-            this->load("HL", "B");
+            this->load_to_mem("HL", "B");
             break;
         case 0x71:
-            this->load("HL", "C");
+            this->load_to_mem("HL", "C");
             break;
         case 0x72:
-            this->load("HL", "D");
+            this->load_to_mem("HL", "D");
             break;
         case 0x73:
-            this->load("HL", "E");
+            this->load_to_mem("HL", "E");
             break;
         case 0x74:
-            this->load("HL", "H");
+            this->load_to_mem("HL", "H");
             break;
         case 0x75:
-            this->load("HL", "L");
+            this->load_to_mem("HL", "L");
             break;
         case 0x36:
             arg_1 = this->fetch_op();
-            this->load("HL", arg_1);
+            this->load_to_mem("HL", arg_1);
             break;
         // LD A, n
         case 0x0A:
