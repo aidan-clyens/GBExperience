@@ -607,3 +607,68 @@ TEST(CPU_LD_16Bit, LD_NN_SP) {
 
     EXPECT_TRUE(false);
 }
+
+// PUSH BC
+TEST(CPU_LD_16Bit, LD_PUSH_NN) {
+    uint8_t opcode = 0xC5;
+    uint16_t val_1 = 0xABCD;
+    uint16_t SP = 0xC000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.write_register("BC", val_1);
+
+    EXPECT_EQ(val_1, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(val_1 >> 8, cpu.read_memory("HL"));
+}
+
+// POP BC
+TEST(CPU_LD_16Bit, LD_POP_NN) {
+    uint8_t opcode = 0xC5;
+    uint16_t val_1 = 0xABCD;
+    uint16_t SP = 0xC000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.write_register("BC", val_1);
+
+    EXPECT_EQ(val_1, cpu.read_register("BC"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(val_1 >> 8, cpu.read_memory("HL"));
+
+    opcode = 0xD1;
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(val_1, cpu.read_register("DE"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+}

@@ -400,12 +400,30 @@ bool CPU::decode_op(uint8_t opcode) {
             std::cout << "LD " << static_cast<int>(arg_1) << ", SP" << std::endl;
             break;
         // PUSH nn
-        case 0xF5: case 0xC5: case 0xD5: case 0xE5:
-            std::cout << "PUSH nn" << std::endl;
+        case 0xF5:
+            this->push_stack("AF");
+            break;
+        case 0xC5:
+            this->push_stack("BC");
+            break;
+        case 0xD5:
+            this->push_stack("DE");
+            break;
+        case 0xE5:
+            this->push_stack("HL");
             break;
         // POP nn
-        case 0xF1: case 0xC1: case 0xD1: case 0xE1:
-            std::cout << "POP nn" << std::endl;
+        case 0xF1:
+            this->pop_stack("AF");
+            break;
+        case 0xC1:
+            this->pop_stack("BC");
+            break;
+        case 0xD1:
+            this->pop_stack("DE");
+            break;
+        case 0xE1:
+            this->pop_stack("HL");
             break;
         /****    8-Bit ALU    ****/
         // ADD A, n

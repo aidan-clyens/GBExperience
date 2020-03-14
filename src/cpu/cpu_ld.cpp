@@ -71,3 +71,31 @@ void CPU::load_HL(uint8_t n) {
 
     this->load("HL", result);
 }
+
+void CPU::push_stack(const std::string &reg) {
+    uint16_t val = this->read_register(reg);
+    uint16_t SP = this->read_register("SP");
+
+    std::cout << "PUSH " << reg << std::endl;
+
+    this->write_register("SP", SP - 1);
+    this->write_memory("SP", val & 0xFF);
+    
+    this->write_register("SP", SP - 2);
+    this->write_memory("SP", val >> 8);
+}
+
+void CPU::pop_stack(const std::string &reg) {
+    uint16_t SP = this->read_register("SP");
+
+    std::cout << "POP " << reg << std::endl;
+
+    uint8_t val_1 = this->read_memory("SP");
+    this->write_register("SP", SP + 1);
+
+    uint8_t val_2 = this->read_memory("SP");
+    this->write_register("SP", SP + 2);
+
+    uint16_t val = (val_1 << 8) | val_2;
+    this->write_register(reg, val);
+}

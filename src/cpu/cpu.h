@@ -49,6 +49,11 @@ class CPU {
         void load_to_mem(uint16_t, const std::string &);
         void load_HL(uint8_t);
 
+        // PUSH nn
+        void push_stack(const std::string &);
+        // POP nn
+        void pop_stack(const std::string &);
+
         /****    8-Bit ALU    ****/
         // ADD A, n
         // ADC A, n
