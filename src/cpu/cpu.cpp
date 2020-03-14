@@ -391,7 +391,8 @@ bool CPU::decode_op(uint8_t opcode) {
         // LDHL SP, n
         case 0xF8:
             arg_1 = this->fetch_op();
-            std::cout << "LDHL SP, " << static_cast<int>(arg_1) << std::endl;
+
+            this->load_HL(arg_1);
             break;
         // LD (nn), SP
         case 0x08:

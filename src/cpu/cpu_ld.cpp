@@ -52,3 +52,22 @@ void CPU::load_to_mem(uint16_t nn, const std::string &r2) {
 
     this->m_memory_map.write(nn, val);
 }
+
+void CPU::load_HL(uint8_t n) {
+    uint16_t SP = this->read_register("SP");
+    uint16_t result = SP + n;
+    
+    std::cout << "LDHL SP, " << n << std::endl;
+    
+    this->reset_flag_register();
+    
+    if (SP + n > 0xFFFF) {
+        this->set_flag_register(CARRY_FLAG, true);
+    }
+
+    if ((SP & 0xFF) + (n & 0xFF) > 0xFF) {
+        this->set_flag_register(HALF_CARRY_FLAG, true);
+    }
+
+    this->load("HL", result);
+}
