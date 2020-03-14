@@ -532,3 +532,71 @@ TEST(CPU_LD_16Bit, LD_SP_HL) {
 
     EXPECT_EQ(val_2, cpu.read_register("SP"));
 }
+
+// LDHL SP, n
+TEST(CPU_LD_16Bit, LDHL_SP_N) {
+    uint8_t opcode = 0xF8;
+    uint16_t val_1 = 0x1234;
+    uint16_t SP = 0xABFF;
+    uint8_t n = 0x02;
+    uint16_t PC = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, n);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    cpu.write_register("HL", val_1);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(val_1, cpu.read_register("HL"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((SP + n) & 0xFFFF, cpu.read_register("HL"));
+
+    // Check flags
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
+// LDHL SP, n
+TEST(CPU_LD_16Bit, LDHL_SP_N_Carry) {
+    uint8_t opcode = 0xF8;
+    uint16_t val_1 = 0x1234;
+    uint16_t SP = 0xFFFF;
+    uint8_t n = 0x02;
+    uint16_t PC = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, n);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    cpu.write_register("HL", val_1);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(val_1, cpu.read_register("HL"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((SP + n) & 0xFFFF, cpu.read_register("HL"));
+
+    // Check flags
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+}
