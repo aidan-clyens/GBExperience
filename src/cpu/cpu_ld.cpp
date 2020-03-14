@@ -2,7 +2,7 @@
 
 
 void CPU::load(const std::string &r1, const std::string &r2) {
-    uint8_t val = this->read_register(r2);
+    uint16_t val = this->read_register(r2);
 
     std::cout << "LD " << r1 << ", " << r2 << std::endl;
 
