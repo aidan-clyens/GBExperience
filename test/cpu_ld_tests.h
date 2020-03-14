@@ -600,3 +600,10 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Carry) {
     EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
+
+// LD (nn), SP
+TEST(CPU_LD_16Bit, LD_NN_SP) {
+    // TODO Learn how to implement this instruction
+
+    EXPECT_TRUE(false);
+}
