@@ -39,3 +39,10 @@ void CPU::jump_add_conditional(uint8_t value, CPUFlag_t flag, bool set) {
         this->write_register("PC", pc + value - 1);
     }
 }
+
+void CPU::restart(uint8_t n) {
+    // Push current address to stack    
+    this->push_stack("PC");
+    // Jump to address n
+    this->jump(n);
+}
