@@ -7,7 +7,6 @@
 #include "cpu_registers_tests.h"
 #include "cpu_jumps_tests.h"
 #include "cpu_ld_tests.h"
-#include "cpu_restart_tests.h"
 
 
 int main(int argc, char** argv) {
