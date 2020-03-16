@@ -437,4 +437,167 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
     EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
 
     EXPECT_EQ(val, cpu.read_register("PC"));
-} 
+}
+
+// RET
+TEST(CPU_RETURNS, RET) {
+    uint8_t opcode = 0xCD;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    // CALL nn
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+
+    // RET
+    opcode = 0xC9;
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+}
+
+// RET cc
+TEST(CPU_RETURNS, RET_CC_NoFlags) {
+    uint8_t opcode = 0xCD;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    // CALL nn
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+
+    // RET cc
+    cpu.set_flag_register(CARRY_FLAG, false);
+
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+
+    opcode = 0xD8;
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(val, cpu.read_register("PC"));
+}
+
+// RET cc
+TEST(CPU_RETURNS, RET_CC_Carry) {
+    uint8_t opcode = 0xCD;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    // CALL nn
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+
+    // RET cc
+    cpu.set_flag_register(CARRY_FLAG, true);
+
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+
+    opcode = 0xD8;
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+}
+
+// RETI
+TEST(CPU_RETURNS, RETI) {
+    uint8_t opcode = 0xCD;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    // CALL nn
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+
+    // RETI
+    opcode = 0xD9;
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    // TODO Check if interrupts are enabled
+    EXPECT_TRUE(false);
+}
