@@ -107,6 +107,16 @@ class CPU {
         void restart(uint8_t);
 
         /****    Calls    ****/
+        // CALL nn
         void call(uint16_t);
+        // CALL cc, nn
         void call(uint16_t, CPUFlag_t, bool);
+
+        /****    Returns    ****/
+        // RET
+        void ret();
+        // RET cc
+        void ret(CPUFlag_t, bool);
+        // RETI
+        void ret_enable_interrupts();
 };
