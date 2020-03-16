@@ -855,8 +855,29 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         /****    Restarts    ****/
         // RST n
-        case 0xC7: case 0xCF: case 0xD7: case 0xDF: case 0xE7: case 0xEF: case 0xF7: case 0xFF:
-            std::cout << "RST n" << std::endl;
+        case 0xC7:
+            this->restart(0x00);
+            break;
+        case 0xCF:
+            this->restart(0x08);
+            break;
+        case 0xD7:
+            this->restart(0x10);
+            break;
+        case 0xDF:
+            this->restart(0x18);
+            break;
+        case 0xE7:
+            this->restart(0x20);
+            break;
+        case 0xEF:
+            this->restart(0x28);
+            break;
+        case 0xF7:
+            this->restart(0x30);
+            break;
+        case 0xFF:
+            this->restart(0x38);
             break;
         /****    Returns    ****/
         // RET

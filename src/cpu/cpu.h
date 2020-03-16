@@ -101,4 +101,7 @@ class CPU {
         void jump_add(uint8_t);
         // JR cc, n
         void jump_add_conditional(uint8_t, CPUFlag_t, bool);
+
+        /****    Restarts    ****/
+        void restart(uint8_t);
 };
