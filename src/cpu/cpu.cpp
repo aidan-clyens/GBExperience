@@ -845,13 +845,38 @@ bool CPU::decode_op(uint8_t opcode) {
         case 0xCD:
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
-            std::cout << "CALL " << static_cast<int>(arg_1) << static_cast<int>(arg_2) << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->call(arg16bit);
             break;
         // CALL cc, nn
-        case 0xC4: case 0xCC: case 0xD4: case 0xDC:
+        case 0xC4:
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
-            std::cout << "CALL cc, " << static_cast<int>(arg_1) << static_cast<int>(arg_2) << std::endl;
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->call(arg16bit, ZERO_FLAG, false);
+            break;
+        case 0xCC:
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->call(arg16bit, ZERO_FLAG, true);
+            break;
+        case 0xD4:
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->call(arg16bit, CARRY_FLAG, false);
+            break;
+        case 0xDC:
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->call(arg16bit, CARRY_FLAG, true);
             break;
         /****    Restarts    ****/
         // RST n
