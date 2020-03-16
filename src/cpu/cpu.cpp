@@ -907,15 +907,24 @@ bool CPU::decode_op(uint8_t opcode) {
         /****    Returns    ****/
         // RET
         case 0xC9:
-            std::cout << "RET" << std::endl;
+            this->ret();
             break;
         // RET cc
-        case 0xC0: case 0xC8: case 0xD0: case 0xD8:
-            std::cout << "RET cc" << std::endl;
+        case 0xC0:
+            this->ret(ZERO_FLAG, false);
+            break;
+        case 0xC8:
+            this->ret(ZERO_FLAG, true);
+            break;
+        case 0xD0:
+            this->ret(CARRY_FLAG, false);
+            break;
+        case 0xD8:
+            this->ret(CARRY_FLAG, true);
             break;
         // RETI
         case 0xD9:
-            std::cout << "RETI" << std::endl;
+            this->ret_enable_interrupts();
             break;
         
         // CB

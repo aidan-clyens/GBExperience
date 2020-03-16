@@ -46,3 +46,55 @@ void CPU::restart(uint8_t n) {
     // Jump to address n
     this->jump(n);
 }
+
+void CPU::call(uint16_t nn) {
+    uint16_t PC = this->read_register("PC");
+    this->write_register("PC", PC - 2);
+    // Push current address to stack
+    this->push_stack("PC");
+    this->write_register("PC", PC);
+    
+    std::cout << "CALL " << static_cast<int>(nn) << std::endl;
+
+    // Jump to address nn
+    this->jump(nn);
+}
+
+void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
+    std::cout << "CALL cc, " << static_cast<int>(nn) << std::endl;
+
+    if (!(this->read_flag_register(flag) ^ is_set)) {
+        uint16_t PC = this->read_register("PC");
+        this->write_register("PC", PC - 2);
+        // Push current address to stack
+        this->push_stack("PC");
+        this->write_register("PC", PC);
+
+        // Jump to address nn
+        this->jump(nn);
+    }
+}
+
+// RET
+void CPU::ret() {
+    std::cout << "RET" << std::endl;
+
+    this->pop_stack("PC");
+}
+
+// RET cc
+void CPU::ret(CPUFlag_t flag, bool is_set) {
+    std::cout << "RET cc" << std::endl;
+
+    if (!(this->read_flag_register(flag) ^ is_set)) {
+        this->pop_stack("PC");
+    }
+}
+
+// RETI
+void CPU::ret_enable_interrupts() {
+    std::cout << "RETI" << std::endl;
+
+    this->pop_stack("PC");
+    // TODO Enable interrupts
+}
