@@ -103,5 +103,10 @@ class CPU {
         void jump_add_conditional(uint8_t, CPUFlag_t, bool);
 
         /****    Restarts    ****/
+        // RST nn
         void restart(uint8_t);
+
+        /****    Calls    ****/
+        void call(uint16_t);
+        void call(uint16_t, CPUFlag_t, bool);
 };

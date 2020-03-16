@@ -342,3 +342,99 @@ TEST(CPU_RST, RST) {
     EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
     EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
 }
+
+// CALL nn
+TEST(CPU_CALL, CALL_NN) {
+    uint8_t opcode = 0xCD;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+
+    EXPECT_EQ(val, cpu.read_register("PC"));
+}
+
+// CALL cc, nn
+TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
+    uint8_t opcode = 0xDC;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.set_flag_register(CARRY_FLAG, false);
+
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(PC + 2, cpu.read_register("PC"));
+}
+
+// CALL cc, nn
+TEST(CPU_CALL, CALL_CC_NN_Carry) {
+    uint8_t opcode = 0xDC;
+    uint16_t PC = 0xA000;
+    uint16_t SP = 0xC000;
+    uint16_t val = 0xA0FF;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, val & 0xFF);
+    mem_map.write(PC + 1, val >> 8);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", SP);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register("SP"));
+
+    cpu.set_flag_register(CARRY_FLAG, true);
+
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+
+    cpu.write_register("DE", SP - 1);
+    cpu.write_register("HL", SP - 2);
+
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+
+    EXPECT_EQ(val, cpu.read_register("PC"));
+} 
