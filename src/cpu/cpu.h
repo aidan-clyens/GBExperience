@@ -122,4 +122,5 @@ class CPU {
 
         /****    Rotates and Shifts    ****/
         void rotate_left(bool);
+        void rotate_right(bool);
 };
