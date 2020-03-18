@@ -752,11 +752,11 @@ bool CPU::decode_op(uint8_t opcode) {
         /****    Rotates and Shifts    ****/
         // RLCA
         case 0x07:
-            std::cout << "RLCA" << std::endl;
+            this->rotate_left(false);
             break;
         // RLA
         case 0x17:
-            std::cout << "RLA" << std::endl;
+            this->rotate_left(true);
             break;
         // RRCA
         case 0x0F:
