@@ -119,4 +119,7 @@ class CPU {
         void ret(CPUFlag_t, bool);
         // RETI
         void ret_enable_interrupts();
+
+        /****    Rotates and Shifts    ****/
+        void rotate_left(bool);
 };
