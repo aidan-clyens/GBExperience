@@ -760,11 +760,11 @@ bool CPU::decode_op(uint8_t opcode) {
             break;
         // RRCA
         case 0x0F:
-            std::cout << "RRCA" << std::endl;
+            this->rotate_right(false);
             break;
         // RRA
         case 0x1F:
-            std::cout << "RRA" << std::endl;
+            this->rotate_right(true);
             break;
         /****    Jumps    ****/
         // JP nn
