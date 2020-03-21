@@ -12,7 +12,7 @@ class TimingAnalyzer {
         virtual ~TimingAnalyzer();
 
         void get_start_time();
-        float get_time_difference_ms();
+        float get_time_difference_us();
 
         void log_cycle_time(uint8_t, long int);
         void save_cycle_times();
