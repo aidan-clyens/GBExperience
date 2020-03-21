@@ -15,7 +15,7 @@ void TimingAnalyzer::get_start_time() {
     m_last_time = get_time();
 }
 
-float TimingAnalyzer::get_time_difference_ms() {
+float TimingAnalyzer::get_time_difference_us() {
     std::chrono::steady_clock::time_point end = get_time();
     return std::chrono::duration_cast<std::chrono::microseconds>(end - m_last_time).count();    
 }

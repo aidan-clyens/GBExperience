@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
         main_display.poll_events();
         main_display.render();
 
-        long int dt = timing_analyzer.get_time_difference_ms();
+        long int dt = timing_analyzer.get_time_difference_us();
         timing_analyzer.log_cycle_time(opcode, dt);
     }
 
