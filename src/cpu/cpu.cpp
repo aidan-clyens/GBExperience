@@ -18,10 +18,12 @@ uint8_t CPU::fetch_op() {
     return m_memory_map.read(address);
 }
 
-bool CPU::decode_op(uint8_t opcode) {
+int CPU::decode_op(uint8_t opcode) {
     uint8_t arg_1;
     uint8_t arg_2;
     uint16_t arg16bit;
+
+    int cycle_count = 1;
 
     switch (opcode) {
         /****    Misc    ****/
@@ -66,174 +68,223 @@ bool CPU::decode_op(uint8_t opcode) {
         case 0x06:
             arg_1 = this->fetch_op();
             this->load("B", arg_1);
+            cycle_count = 4;
             break;
         case 0x0E:
             arg_1 = this->fetch_op();
             this->load("C", arg_1);
+            cycle_count = 4;
             break;
         case 0x16:
             arg_1 = this->fetch_op();
             this->load("D", arg_1);
+            cycle_count = 4;
             break;
         case 0x1E:
             arg_1 = this->fetch_op();
             this->load("E", arg_1);
+            cycle_count = 4;
             break;
         case 0x26:
             arg_1 = this->fetch_op();
             this->load("H", arg_1);
+            cycle_count = 4;
             break;
         case 0x2E:
             arg_1 = this->fetch_op();
             this->load("L", arg_1);
+            cycle_count = 4;
             break;
         // LD r1, r2
         case 0x7F:
             this->load("A", "A");
+            cycle_count = 4;
             break;
         case 0x78:
             this->load("A", "B");
+            cycle_count = 4;
             break;
         case 0x79:
             this->load("A", "C");
+            cycle_count = 4;
             break;
         case 0x7A:
             this->load("A", "D");
+            cycle_count = 4;
             break;
         case 0x7B:
             this->load("A", "E");
+            cycle_count = 4;
             break;
         case 0x7C:
             this->load("A", "H");
+            cycle_count = 4;
             break;
         case 0x7D:
             this->load("A", "L");
+            cycle_count = 4;
             break;
         case 0x7E:
             this->load_from_mem("A", "HL");
             break;
         case 0x40:
             this->load("B", "B");
+            cycle_count = 4;
             break;
         case 0x41:
             this->load("B", "C");
+            cycle_count = 4;
             break;
         case 0x42:
             this->load("B", "D");
+            cycle_count = 4;
             break;
         case 0x43:
             this->load("B", "E");
+            cycle_count = 4;
             break;
         case 0x44:
             this->load("B", "H");
+            cycle_count = 4;
             break;
         case 0x45:
             this->load("B", "L");
+            cycle_count = 4;
             break;
         case 0x46:
             this->load_from_mem("B", "HL");
             break;
         case 0x48:
             this->load("C", "B");
+            cycle_count = 4;
             break;
         case 0x49:
             this->load("C", "C");
+            cycle_count = 4;
             break;
         case 0x4A:
             this->load("C", "D");
+            cycle_count = 4;
             break;
         case 0x4B:
             this->load("C", "E");
+            cycle_count = 4;
             break;
         case 0x4C:
             this->load("C", "H");
+            cycle_count = 4;
             break;
         case 0x4D:
             this->load("C", "L");
+            cycle_count = 4;
             break;
         case 0x4E:
             this->load_from_mem("C", "HL");
             break;
         case 0x50:
             this->load("D", "B");
+            cycle_count = 4;
             break;
         case 0x51:
             this->load("D", "C");
+            cycle_count = 4;
             break;
         case 0x52:
             this->load("D", "D");
+            cycle_count = 4;
             break;
         case 0x53:
             this->load("D", "E");
+            cycle_count = 4;
             break;
         case 0x54:
             this->load("D", "H");
+            cycle_count = 4;
             break;
         case 0x55:
             this->load("D", "L");
+            cycle_count = 4;
             break;
         case 0x56:
             this->load_from_mem("D", "HL");
             break;
         case 0x58:
             this->load("E", "B");
+            cycle_count = 4;
             break;
         case 0x59:
             this->load("E", "C");
+            cycle_count = 4;
             break;
         case 0x5A:
             this->load("E", "D");
+            cycle_count = 4;
             break;
         case 0x5B:
             this->load("E", "E");
+            cycle_count = 4;
             break;
         case 0x5C:
             this->load("E", "H");
+            cycle_count = 4;
             break;
         case 0x5D:
             this->load("E", "L");
+            cycle_count = 4;
             break;
         case 0x5E:
             this->load_from_mem("E", "HL");
             break;
         case 0x60:
             this->load("H", "B");
+            cycle_count = 4;
             break;
         case 0x61:
             this->load("H", "C");
+            cycle_count = 4;
             break;
         case 0x62:
             this->load("H", "D");
+            cycle_count = 4;
             break;
         case 0x63:
             this->load("H", "E");
+            cycle_count = 4;
             break;
         case 0x64:
             this->load("H", "H");
+            cycle_count = 4;
             break;
         case 0x65:
             this->load("H", "L");
+            cycle_count = 4;
             break;
         case 0x66:
             this->load_from_mem("H", "HL");
             break;
         case 0x68:
             this->load("L", "B");
+            cycle_count = 4;
             break;
         case 0x69:
             this->load("L", "C");
+            cycle_count = 4;
             break;
         case 0x6A:
             this->load("L", "D");
+            cycle_count = 4;
             break;
         case 0x6B:
             this->load("L", "E");
+            cycle_count = 4;
             break;
         case 0x6C:
             this->load("L", "H");
+            cycle_count = 4;
             break;
         case 0x6D:
             this->load("L", "L");
+            cycle_count = 4;
             break;
         case 0x6E:
             this->load_from_mem("L", "HL");
@@ -983,7 +1034,6 @@ bool CPU::decode_op(uint8_t opcode) {
                 // Default, opcode not implemented
                 default:
                     std::cerr << "CB opcode " << static_cast<int>(opcode) << " not implemented" << std::endl;
-                    return false;
             }
 
             break;
@@ -991,10 +1041,9 @@ bool CPU::decode_op(uint8_t opcode) {
         // Default, opcode not implemented
         default:
             std::cerr << "Opcode " << static_cast<int>(opcode) << " not implemented" << std::endl;
-            return false;
     }
 
-    return true;
+    return cycle_count;
 }
 
 void CPU::write_register(const std::string &reg, uint16_t data) {
