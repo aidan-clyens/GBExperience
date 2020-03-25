@@ -126,6 +126,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x7E:
             this->load_from_mem("A", "HL");
+            cycle_count = 8;
             break;
         case 0x40:
             this->load("B", "B");
@@ -153,6 +154,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x46:
             this->load_from_mem("B", "HL");
+            cycle_count = 8;
             break;
         case 0x48:
             this->load("C", "B");
@@ -180,6 +182,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x4E:
             this->load_from_mem("C", "HL");
+            cycle_count = 8;
             break;
         case 0x50:
             this->load("D", "B");
@@ -207,6 +210,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x56:
             this->load_from_mem("D", "HL");
+            cycle_count = 8;
             break;
         case 0x58:
             this->load("E", "B");
@@ -234,6 +238,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x5E:
             this->load_from_mem("E", "HL");
+            cycle_count = 8;
             break;
         case 0x60:
             this->load("H", "B");
@@ -261,6 +266,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x66:
             this->load_from_mem("H", "HL");
+            cycle_count = 8;
             break;
         case 0x68:
             this->load("L", "B");
@@ -288,35 +294,45 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0x6E:
             this->load_from_mem("L", "HL");
+            cycle_count = 8;
             break;
         case 0x70:
             this->load_to_mem("HL", "B");
+            cycle_count = 8;
             break;
         case 0x71:
             this->load_to_mem("HL", "C");
+            cycle_count = 8;
             break;
         case 0x72:
             this->load_to_mem("HL", "D");
+            cycle_count = 8;
             break;
         case 0x73:
             this->load_to_mem("HL", "E");
+            cycle_count = 8;
             break;
         case 0x74:
             this->load_to_mem("HL", "H");
+            cycle_count = 8;
             break;
         case 0x75:
             this->load_to_mem("HL", "L");
+            cycle_count = 8;
             break;
         case 0x36:
             arg_1 = this->fetch_op();
             this->load_to_mem("HL", arg_1);
+            cycle_count = 12;
             break;
         // LD A, n
         case 0x0A:
             this->load_from_mem("A", "BC");
+            cycle_count = 8;
             break;
         case 0x1A:
             this->load_from_mem("A", "DE");
+            cycle_count = 8;
             break;
         case 0xFA:
             arg_1 = this->fetch_op();
@@ -324,38 +340,49 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->load_from_mem("A", arg16bit);
+            cycle_count = 16;
             break;
         case 0x3E:
             arg_1 = this->fetch_op();
             this->load("A", arg_1);
+            cycle_count = 8;
             break;
         // LD n, A
         case 0x47:
             this->load("B", "A");
+            cycle_count = 4;
             break;
         case 0x4F:
             this->load("C", "A");
+            cycle_count = 4;
             break;
         case 0x57:
             this->load("D", "A");
+            cycle_count = 4;
             break;
         case 0x5F:
             this->load("E", "A");
+            cycle_count = 4;
             break;
         case 0x67:
             this->load("H", "A");
+            cycle_count = 4;
             break;
         case 0x6F:
             this->load("L", "A");
+            cycle_count = 4;
             break;
         case 0x02:
             this->load_to_mem("BC", "A");
+            cycle_count = 8;
             break;
         case 0x12:
             this->load_to_mem("DE", "A");
+            cycle_count = 8;
             break;
         case 0x77:
             this->load_to_mem("HL", "A");
+            cycle_count = 8;
             break;
         case 0xEA:
             arg_1 = this->fetch_op();
@@ -363,46 +390,55 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->load_to_mem(arg16bit, "A");
+            cycle_count = 16;
             break;
         // LD A, (C)
         case 0xF2:
             arg16bit = 0xFF00 + this->read_register("C");
             this->load_from_mem("A", arg16bit);
+            cycle_count = 8;
             break;
         // LD (C), A
         case 0xE2:
             arg16bit = 0xFF00 + this->read_register("C");
             this->load_to_mem(arg16bit, "A");
+            cycle_count = 8;
             break;
         // LDD A, (HL)
         case 0x3A:
             this->load_from_mem("A", "HL");
             this->alu_dec_16bit("HL");
+            cycle_count = 8;
             break;
         // LDD (HL), A
         case 0x32:
             this->load_to_mem("HL", "A");
             this->alu_dec_16bit("HL");
+            cycle_count = 8;
             break;
         // LDI A, (HL)
         case 0x2A:
             this->load_from_mem("A", "HL");
             this->alu_inc_16bit("HL");
+            cycle_count = 8;
             break;
         // LDI (HL), A
         case 0x22:
             this->load_to_mem("HL", "A");
             this->alu_inc_16bit("HL");
+            cycle_count = 8;
             break;
         // LDH (n), A
         case 0xE0:
             arg16bit = 0xFF00 + this->fetch_op();
             this->load_to_mem(arg16bit, "A");
+            cycle_count = 12;
             break;
         // LDH A, (n)
         case 0xF0:
             arg16bit = 0xFF00 + this->fetch_op();
             this->load_from_mem("A", arg16bit);
+            cycle_count = 12;
             break;
         /****    16-Bit Loads    ****/
         // LD n, nn
