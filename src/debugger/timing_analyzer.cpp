@@ -33,8 +33,8 @@ void TimingAnalyzer::log_cycle_time(uint8_t opcode, long int dt) {
     m_operation_times.emplace(opcode, dt);
 }
 
-void TimingAnalyzer::log_time(long int dt) {
-    m_times.push_back(dt);
+void TimingAnalyzer::log_time(long int expected_dt, long int dt) {
+    m_times.push_back(std::make_pair(expected_dt, dt));
 }
 
 void TimingAnalyzer::save_cycle_times() {
@@ -56,14 +56,13 @@ void TimingAnalyzer::save_cycle_times() {
 }
 
 void TimingAnalyzer::save_times() {
-    std::list<long int>::iterator it;
-
     std::ofstream result_file;
     result_file.open(m_file_name);
 
-    for (it = m_times.begin(); it != m_times.end(); it++) {
-        long int dt = *it;
-        result_file << dt << "\n";
+    for (auto it = m_times.begin(); it != m_times.end(); it++) {
+        long int expected_dt = it->first;
+        long int dt = it->second;
+        result_file << expected_dt << "," << dt << "\n";
     }
 
     result_file.close();
