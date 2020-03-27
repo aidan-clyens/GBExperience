@@ -175,11 +175,16 @@ void CPU::shift_right(const std::string &reg, bool keep_msb) {
     bool bit_0 = (val & 0x01) == 0x01;
     bool bit_7 = (val & 0x80) == 0x80;
 
-    if (keep_msb && bit_7) {
-        result |= 0x80;
-    }
+    if (keep_msb) {
+        if (bit_7) {
+            result |= 0x80;
+        }
 
-    std::cout << "SRA n" << std::endl;
+        std::cout << "SRA n" << std::endl;
+    }
+    else {
+        std::cout << "SRL n" << std::endl;
+    }
 
     // Set flags
     this->set_flag_register(ZERO_FLAG, (result == 0));
