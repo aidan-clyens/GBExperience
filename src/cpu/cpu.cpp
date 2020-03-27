@@ -1076,12 +1076,54 @@ int CPU::decode_op(uint8_t opcode) {
                     this->rotate_left("HL", true);
                     break;
                 // RRC n
-                case 0x0F: case 0x08: case 0x09: case 0x0A: case 0x0B: case 0x0C: case 0x0D: case 0x0E:
-                    std::cout << "RRC n" << std::endl;
+                case 0x0F:
+                    this->rotate_right("A", false);
+                    break;
+                case 0x08:
+                    this->rotate_right("B", false);
+                    break;
+                case 0x09:
+                    this->rotate_right("C", false);
+                    break;
+                case 0x0A:
+                    this->rotate_right("D", false);
+                    break;
+                case 0x0B:
+                    this->rotate_right("E", false);
+                    break;
+                case 0x0C:
+                    this->rotate_right("H", false);
+                    break;
+                case 0x0D:
+                    this->rotate_right("L", false);
+                    break;
+                case 0x0E:
+                    this->rotate_right("HL", false);
                     break;
                 // RR n
-                case 0x1F: case 0x18: case 0x19: case 0x1A: case 0x1B: case 0x1C: case 0x1D: case 0x1E:
-                    std::cout << "RR n" << std::endl;
+                case 0x1F:
+                    this->rotate_right("A", true);
+                    break;
+                case 0x18:
+                    this->rotate_right("B", true);
+                    break;
+                case 0x19:
+                    this->rotate_right("C", true);
+                    break;
+                case 0x1A:
+                    this->rotate_right("D", true);
+                    break;
+                case 0x1B:
+                    this->rotate_right("E", true);
+                    break;
+                case 0x1C:
+                    this->rotate_right("H", true);
+                    break;
+                case 0x1D:
+                    this->rotate_right("L", true);
+                    break;
+                case 0x1E:
+                    this->rotate_right("HL", true);
                     break;
                 // SLA n
                 case 0x27: case 0x20: case 0x21: case 0x22: case 0x23: case 0x24: case 0x25: case 0x26:
