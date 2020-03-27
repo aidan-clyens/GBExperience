@@ -456,3 +456,34 @@ TEST(CPU_ROTATES, RR_N_CarrySet) {
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
+
+// SLA B
+TEST(CPU_ROTATES, SLA_N) {
+    uint16_t PC = 0xA000;
+    uint8_t opcode = 0x20;
+    uint8_t B = 0xC5;      // 1100 0101
+    uint8_t result = 0x8A; // 1000 1010
+    bool bit_7 = true;
+
+    MemoryMap mem_map = setup_cb_instruction(PC, opcode);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("B", B);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(B, cpu.read_register("B"));
+
+    opcode = cpu.fetch_op();
+    EXPECT_EQ(0xCB, opcode);
+
+    cpu.decode_op(opcode);
+
+    // Check value of B register
+    EXPECT_EQ(result, cpu.read_register("B"));
+    // Check carry flag for old bit 7
+    EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
+    // Check zero, subtract, and half-carry flags
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+}
