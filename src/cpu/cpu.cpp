@@ -1151,8 +1151,29 @@ int CPU::decode_op(uint8_t opcode) {
                     this->shift_left("HL");
                     break;
                 // SRA n
-                case 0x2F: case 0x28: case 0x29: case 0x2A: case 0x2B: case 0x2C: case 0x2D: case 0x2E:
-                    std::cout << "SRA n" << std::endl;
+                case 0x2F:
+                    this->shift_right("A", true);
+                    break;
+                case 0x28:
+                    this->shift_right("B", true);
+                    break;
+                case 0x29:
+                    this->shift_right("C", true);
+                    break;
+                case 0x2A:
+                    this->shift_right("D", true);
+                    break;
+                case 0x2B:
+                    this->shift_right("E", true);
+                    break;
+                case 0x2C:
+                    this->shift_right("H", true);
+                    break;
+                case 0x2D:
+                    this->shift_right("L", true);
+                    break;
+                case 0x2E:
+                    this->shift_right("HL", true);
                     break;
                 // SRL n
                 case 0x3F: case 0x38: case 0x39: case 0x3A: case 0x3B: case 0x3C: case 0x3D: case 0x3E:
