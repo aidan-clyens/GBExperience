@@ -1026,8 +1026,29 @@ int CPU::decode_op(uint8_t opcode) {
                     break;
                 /****    Rotates and Shifts    ****/
                 // RLC n
-                case 0x07: case 0x00: case 0x01: case 0x02: case 0x03: case 0x04: case 0x05: case 0x06:
-                    std::cout << "RLC n" << std::endl;
+                case 0x07:
+                    this->rotate_left("A", false);
+                    break;
+                case 0x00:
+                    this->rotate_left("B", false);
+                    break;
+                case 0x01:
+                    this->rotate_left("C", false);
+                    break;
+                case 0x02:
+                    this->rotate_left("D", false);
+                    break;
+                case 0x03:
+                    this->rotate_left("E", false);
+                    break;
+                case 0x04:
+                    this->rotate_left("H", false);
+                    break;
+                case 0x05:
+                    this->rotate_left("L", false);
+                    break;
+                case 0x06:
+                    this->rotate_left("HL", false);
                     break;
                 // RL n
                 case 0x17: case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16:
