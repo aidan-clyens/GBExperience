@@ -251,3 +251,73 @@ TEST(CPU_ROTATES, RLC_N_HL) {
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
+
+// RL B
+TEST(CPU_ROTATES, RL_N_CarryNotSet) {
+    uint16_t PC = 0xA000;
+    uint8_t opcode = 0x10;
+    uint8_t B = 0xC6;       // 1100 0110
+    uint8_t result = 0x8C;  // 1000 1100
+    bool bit_7 = true;
+
+    MemoryMap mem_map = setup_cb_instruction(PC, opcode);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("B", B);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(B, cpu.read_register("B"));
+
+    // Set carry flag to false
+    cpu.set_flag_register(CARRY_FLAG, false);
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+
+    opcode = cpu.fetch_op();
+    EXPECT_EQ(0xCB, opcode);
+
+    cpu.decode_op(opcode);
+
+    // Check value of B register
+    EXPECT_EQ(result, cpu.read_register("B"));
+    // Check carry flag for old bit 7
+    EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
+    // Check zero, subtract, and half-carry flags
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+}
+
+// RL B
+TEST(CPU_ROTATES, RL_N_CarrySet) {
+    uint16_t PC = 0xA000;
+    uint8_t opcode = 0x10;
+    uint8_t B = 0xC6;       // 1100 0110
+    uint8_t result = 0x8D;  // 1000 1101
+    bool bit_7 = true;
+
+    MemoryMap mem_map = setup_cb_instruction(PC, opcode);
+    CPU cpu(mem_map);
+
+    cpu.write_register("PC", PC);
+    cpu.write_register("B", B);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(B, cpu.read_register("B"));
+
+    // Set carry flag to true
+    cpu.set_flag_register(CARRY_FLAG, true);
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+
+    opcode = cpu.fetch_op();
+    EXPECT_EQ(0xCB, opcode);
+
+    cpu.decode_op(opcode);
+
+    // Check value of B register
+    EXPECT_EQ(result, cpu.read_register("B"));
+    // Check carry flag for old bit 7
+    EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
+    // Check zero, subtract, and half-carry flags
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+}

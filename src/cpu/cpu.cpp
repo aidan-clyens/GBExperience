@@ -1051,8 +1051,29 @@ int CPU::decode_op(uint8_t opcode) {
                     this->rotate_left("HL", false);
                     break;
                 // RL n
-                case 0x17: case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16:
-                    std::cout << "RL n" << std::endl;
+                case 0x17:
+                    this->rotate_left("A", true);
+                    break;
+                case 0x10:
+                    this->rotate_left("B", true);
+                    break;
+                case 0x11:
+                    this->rotate_left("C", true);
+                    break;
+                case 0x12:
+                    this->rotate_left("D", true);
+                    break;
+                case 0x13:
+                    this->rotate_left("E", true);
+                    break;
+                case 0x14:
+                    this->rotate_left("H", true);
+                    break;
+                case 0x15:
+                    this->rotate_left("L", true);
+                    break;
+                case 0x16:
+                    this->rotate_left("HL", true);
                     break;
                 // RRC n
                 case 0x0F: case 0x08: case 0x09: case 0x0A: case 0x0B: case 0x0C: case 0x0D: case 0x0E:
