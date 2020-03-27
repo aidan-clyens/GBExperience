@@ -69,9 +69,17 @@ void CPU::rotate_right(bool use_carry) {
 }
 
 void CPU::rotate_right(const std::string &reg, bool use_carry) {
-    uint8_t A = this->read_register(reg);
-    uint8_t result = A >> 1;
-    bool bit_0 = (A & 0x01) == 0x01;
+    uint8_t val;
+
+    if (reg == "HL") {
+        val = this->read_memory();
+    }
+    else {
+        val = this->read_register(reg);
+    }
+
+    uint8_t result = val >> 1;
+    bool bit_0 = (val & 0x01) == 0x01;
 
     // Set flags
     this->set_flag_register(ZERO_FLAG, (result == 0));
@@ -84,6 +92,9 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
 
         if (reg == "A") {
             std::cout << "RRA" << std::endl;
+        }
+        else if (reg == "HL") {
+            std::cout << "RR (HL)" << std::endl;
         }
         else {
             std::cout << "RR " << reg << std::endl;
@@ -98,6 +109,9 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
         if (reg == "A") {
             std::cout << "RRCA" << std::endl;
         }
+        else if (reg == "HL") {
+            std::cout << "RRC (HL)" << std::endl;
+        }
         else {
             std::cout << "RRC " << reg << std::endl;
         }
@@ -107,6 +121,12 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
         }
     }
 
-    this->write_register(reg, result);
+    if (reg == "HL") {
+        this->write_memory(result);
+    }
+    else {
+        this->write_register(reg, result);
+    }
+
     this->set_flag_register(CARRY_FLAG, bit_0);
 }
