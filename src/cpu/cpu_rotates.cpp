@@ -1,10 +1,21 @@
 #include "cpu.h"
 
-
 void CPU::rotate_left(bool use_carry) {
-    uint8_t A = this->read_register("A");
-    uint8_t result = A << 1;
-    bool bit_7 = (A & 0x80) == 0x80;
+    this->rotate_left("A", use_carry);
+}
+
+void CPU::rotate_left(const std::string &reg, bool use_carry) {
+    uint8_t val;
+
+    if (reg == "HL") {
+        val = this->read_memory();
+    }
+    else {
+        val = this->read_register(reg);
+    }
+    
+    uint8_t result = val << 1;
+    bool bit_7 = (val & 0x80) == 0x80;
 
     // Set flags
     this->set_flag_register(ZERO_FLAG, (result == 0));
@@ -15,7 +26,12 @@ void CPU::rotate_left(bool use_carry) {
     if (use_carry)  {
         bool old_bit_7 = this->read_flag_register(CARRY_FLAG);
 
-        std::cout << "RLA" << std::endl;
+        if (reg == "A") {
+            std::cout << "RLA" << std::endl;
+        }
+        else {
+            std::cout << "RL " << reg << std::endl;
+        }
 
         if (old_bit_7) {
             result |= 0x01;
@@ -23,19 +39,37 @@ void CPU::rotate_left(bool use_carry) {
     }
     // RLCA
     else {
-        std::cout << "RLCA" << std::endl;
+        if (reg == "A") {
+            std::cout << "RLCA" << std::endl;
+        }
+        else if (reg == "HL") {
+            std::cout << "RLC (HL)" << std::endl;
+        }
+        else {
+            std::cout << "RLC " << reg << std::endl;
+        }
 
         if (bit_7) {
             result |= 0x01;
         }
     }
 
-    this->write_register("A", result);
+    if (reg == "HL") {
+        this->write_memory(result);
+    }
+    else {
+        this->write_register(reg, result);
+    }
+
     this->set_flag_register(CARRY_FLAG, bit_7);
 }
 
 void CPU::rotate_right(bool use_carry) {
-    uint8_t A = this->read_register("A");
+    rotate_right("A", use_carry);
+}
+
+void CPU::rotate_right(const std::string &reg, bool use_carry) {
+    uint8_t A = this->read_register(reg);
     uint8_t result = A >> 1;
     bool bit_0 = (A & 0x01) == 0x01;
 
@@ -48,7 +82,12 @@ void CPU::rotate_right(bool use_carry) {
     if (use_carry)  {
         bool old_bit_0 = this->read_flag_register(CARRY_FLAG);
 
-        std::cout << "RRA" << std::endl;
+        if (reg == "A") {
+            std::cout << "RRA" << std::endl;
+        }
+        else {
+            std::cout << "RR " << reg << std::endl;
+        }
 
         if (old_bit_0) {
             result |= 0x80;
@@ -56,13 +95,18 @@ void CPU::rotate_right(bool use_carry) {
     }
     // RRCA
     else {
-        std::cout << "RRCA" << std::endl;
+        if (reg == "A") {
+            std::cout << "RRCA" << std::endl;
+        }
+        else {
+            std::cout << "RRC " << reg << std::endl;
+        }
 
         if (bit_0) {
             result |= 0x80;
         }
     }
 
-    this->write_register("A", result);
+    this->write_register(reg, result);
     this->set_flag_register(CARRY_FLAG, bit_0);
 }
