@@ -1176,8 +1176,29 @@ int CPU::decode_op(uint8_t opcode) {
                     this->shift_right("HL", true);
                     break;
                 // SRL n
-                case 0x3F: case 0x38: case 0x39: case 0x3A: case 0x3B: case 0x3C: case 0x3D: case 0x3E:
-                    std::cout << "SRL n" << std::endl;
+                case 0x3F:
+                    this->shift_right("A", false);
+                    break;
+                case 0x38:
+                    this->shift_right("B", false);
+                    break;
+                case 0x39:
+                    this->shift_right("C", false);
+                    break;
+                case 0x3A:
+                    this->shift_right("D", false);
+                    break;
+                case 0x3B:
+                    this->shift_right("E", false);
+                    break;
+                case 0x3C:
+                    this->shift_right("H", false);
+                    break;
+                case 0x3D:
+                    this->shift_right("L", false);
+                    break;
+                case 0x3E:
+                    this->shift_right("HL", false);
                     break;
                 /****    Bit Opcodes    ****/
                 // BIT b, r
