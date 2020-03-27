@@ -160,3 +160,38 @@ void CPU::shift_left(const std::string &reg) {
 
     this->set_flag_register(CARRY_FLAG, bit_7);
 }
+
+void CPU::shift_right(const std::string &reg, bool keep_msb) {
+    uint8_t val;
+
+    if (reg == "HL") {
+        val = this->read_memory();
+    }
+    else {
+        val = this->read_register(reg);
+    }
+    
+    uint8_t result = val >> 1;
+    bool bit_0 = (val & 0x01) == 0x01;
+    bool bit_7 = (val & 0x80) == 0x80;
+
+    if (keep_msb && bit_7) {
+        result |= 0x80;
+    }
+
+    std::cout << "SRA n" << std::endl;
+
+    // Set flags
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(SUBTRACT_FLAG, false);
+    this->set_flag_register(HALF_CARRY_FLAG, false);
+
+    if (reg == "HL") {
+        this->write_memory(result);
+    }
+    else {
+        this->write_register(reg, result);
+    }
+
+    this->set_flag_register(CARRY_FLAG, bit_0);
+}
