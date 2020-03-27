@@ -126,5 +126,5 @@ class CPU {
         void rotate_right(bool);
         void rotate_right(const std::string &, bool);
         void shift_left(const std::string &);
-        void shift_right(const std::string &);
+        void shift_right(const std::string &, bool);
 };
