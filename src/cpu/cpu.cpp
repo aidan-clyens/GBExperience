@@ -1126,8 +1126,29 @@ int CPU::decode_op(uint8_t opcode) {
                     this->rotate_right("HL", true);
                     break;
                 // SLA n
-                case 0x27: case 0x20: case 0x21: case 0x22: case 0x23: case 0x24: case 0x25: case 0x26:
-                    std::cout << "SLA n" << std::endl;
+                case 0x27:
+                    this->shift_left("A");
+                    break;
+                case 0x20:
+                    this->shift_left("B");
+                    break;
+                case 0x21:
+                    this->shift_left("C");
+                    break;
+                case 0x22:
+                    this->shift_left("D");
+                    break;
+                case 0x23:
+                    this->shift_left("E");
+                    break;
+                case 0x24:
+                    this->shift_left("H");
+                    break;
+                case 0x25:
+                    this->shift_left("L");
+                    break;
+                case 0x26:
+                    this->shift_left("HL");
                     break;
                 // SRA n
                 case 0x2F: case 0x28: case 0x29: case 0x2A: case 0x2B: case 0x2C: case 0x2D: case 0x2E:
