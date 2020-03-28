@@ -55,7 +55,8 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // SCF
         case 0x37:
-            std::cout << "SCF" << std::endl;
+            this->set_carry();
+            cycle_count = 4;
             break;
         // DI
         case 0xF3:

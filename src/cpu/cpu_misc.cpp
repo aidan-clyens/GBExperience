@@ -53,3 +53,9 @@ void CPU::complement_carry() {
     
     this->set_flag_register(CARRY_FLAG, !carry);
 }
+
+void CPU::set_carry() {
+    std::cout << "SCF" << std::endl;
+
+    this->set_flag_register(CARRY_FLAG, true);
+}

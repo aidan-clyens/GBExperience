@@ -135,4 +135,6 @@ class CPU {
         void complement();
         // CCF
         void complement_carry();
+        // SCF
+        void set_carry();
 };
