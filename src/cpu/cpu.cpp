@@ -1027,27 +1027,35 @@ int CPU::decode_op(uint8_t opcode) {
                 // SWAP n
                 case 0x37:
                     this->swap("A");
+                    cycle_count = 8;
                     break;
                 case 0x30:
                     this->swap("B");
+                    cycle_count = 8;
                     break;
                 case 0x31:
                     this->swap("C");
+                    cycle_count = 8;
                     break;
                 case 0x32:
                     this->swap("D");
+                    cycle_count = 8;
                     break;
                 case 0x33:
                     this->swap("E");
+                    cycle_count = 8;
                     break;
                 case 0x34:
                     this->swap("H");
+                    cycle_count = 8;
                     break;
                 case 0x35:
                     this->swap("L");
+                    cycle_count = 8;
                     break;
                 case 0x36:
                     this->swap("HL");
+                    cycle_count = 16;
                     break;
                 /****    Rotates and Shifts    ****/
                 // RLC n
