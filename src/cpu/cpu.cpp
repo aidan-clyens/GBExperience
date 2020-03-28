@@ -1025,8 +1025,29 @@ int CPU::decode_op(uint8_t opcode) {
             switch (opcode) {
                 /****    Misc    ****/
                 // SWAP n
-                case 0x37: case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36:
-                    std::cout << "SWAP n" << std::endl;
+                case 0x37:
+                    this->swap("A");
+                    break;
+                case 0x30:
+                    this->swap("B");
+                    break;
+                case 0x31:
+                    this->swap("C");
+                    break;
+                case 0x32:
+                    this->swap("D");
+                    break;
+                case 0x33:
+                    this->swap("E");
+                    break;
+                case 0x34:
+                    this->swap("H");
+                    break;
+                case 0x35:
+                    this->swap("L");
+                    break;
+                case 0x36:
+                    this->swap("HL");
                     break;
                 /****    Rotates and Shifts    ****/
                 // RLC n
