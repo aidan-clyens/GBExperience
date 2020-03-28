@@ -59,3 +59,9 @@ void CPU::set_carry() {
 
     this->set_flag_register(CARRY_FLAG, true);
 }
+
+void CPU::halt() {
+    std::cout << "HALT" << std::endl;
+
+    m_running = false;
+}
