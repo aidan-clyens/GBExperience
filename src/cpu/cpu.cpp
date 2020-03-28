@@ -45,7 +45,8 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // CPL
         case 0x2F:
-            std::cout << "CPL" << std::endl;
+            this->complement();
+            cycle_count = 4;
             break;
         // CCF
         case 0x3F:
