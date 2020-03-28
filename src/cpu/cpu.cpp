@@ -530,280 +530,367 @@ int CPU::decode_op(uint8_t opcode) {
         // ADD A, n
         case 0x87:
             this->alu_add("A", false);
+            cycle_count = 4;
             break;
         case 0x80:
             this->alu_add("B", false);
+            cycle_count = 4;
             break;
         case 0x81:
             this->alu_add("C", false);
+            cycle_count = 4;
             break;
         case 0x82:
             this->alu_add("D", false);
+            cycle_count = 4;
             break;
         case 0x83:
             this->alu_add("E", false);
+            cycle_count = 4;
             break;
         case 0x84:
             this->alu_add("H", false);
+            cycle_count = 4;
             break;
         case 0x85:
             this->alu_add("L", false);
+            cycle_count = 4;
             break;
         case 0x86:
             this->alu_add("HL", false);
+            cycle_count = 8;
             break;
         case 0xC6:
             arg_1 = this->fetch_op();
             this->alu_add(arg_1, false);
+            cycle_count = 8;
             break;
         // ADC A, n
         case 0x8F:
             this->alu_add("A", true);
+            cycle_count = 4;
             break;
         case 0x88:
             this->alu_add("B", true);
+            cycle_count = 4;
             break;
         case 0x89:
             this->alu_add("C", true);
+            cycle_count = 4;
             break;
         case 0x8A:
             this->alu_add("D", true);
+            cycle_count = 4;
             break;
         case 0x8B:
             this->alu_add("E", true);
+            cycle_count = 4;
             break;
         case 0x8C:
             this->alu_add("H", true);
+            cycle_count = 4;
             break;
         case 0x8D:
             this->alu_add("L", true);
+            cycle_count = 4;
             break;
         case 0x8E:
             this->alu_add("HL", true);
+            cycle_count = 8;
             break;
         case 0xCE:
             arg_1 = this->fetch_op();
             this->alu_add(arg_1, true);
+            cycle_count = 8;
             break;
         // SUB n
         case 0x97:
             this->alu_sub("A", false);
+            cycle_count = 4;
             break;
         case 0x90:
             this->alu_sub("B", false);
+            cycle_count = 4;
             break;
         case 0x91:
             this->alu_sub("C", false);
+            cycle_count = 4;
             break;
         case 0x92:
             this->alu_sub("D", false);
+            cycle_count = 4;
             break;
         case 0x93:
             this->alu_sub("E", false);
+            cycle_count = 4;
             break;
         case 0x94:
             this->alu_sub("H", false);
+            cycle_count = 4;
             break;
         case 0x95:
             this->alu_sub("L", false);
+            cycle_count = 4;
             break;
         case 0x96:
             this->alu_sub("HL", false);
+            cycle_count = 8;
             break;
         case 0xD6:
             arg_1 = this->fetch_op();
             this->alu_sub(arg_1, false);
+            cycle_count = 8;
             break;
         // SBC n
         case 0x9F:
             this->alu_sub("A", true);
+            cycle_count = 4;
             break;
         case 0x98:
             this->alu_sub("B", true);
+            cycle_count = 4;
             break;
         case 0x99:
             this->alu_sub("C", true);
+            cycle_count = 4;
             break;
         case 0x9A:
             this->alu_sub("D", true);
+            cycle_count = 4;
             break;
         case 0x9B:
             this->alu_sub("E", true);
+            cycle_count = 4;
             break;
         case 0x9C:
             this->alu_sub("H", true);
+            cycle_count = 4;
             break;
         case 0x9D:
             this->alu_sub("L", true);
+            cycle_count = 4;
             break;
         case 0x9E:
             this->alu_sub("HL", true);
+            cycle_count = 8;
             break;
         // AND n
         case 0xA7:
             this->alu_and("A");
+            cycle_count = 4;
             break;
         case 0xA0:
             this->alu_and("B");
+            cycle_count = 4;
             break;
         case 0xA1:
             this->alu_and("C");
+            cycle_count = 4;
             break;
         case 0xA2:
             this->alu_and("D");
+            cycle_count = 4;
             break;
         case 0xA3:
             this->alu_and("E");
+            cycle_count = 4;
             break;
         case 0xA4:
             this->alu_and("H");
+            cycle_count = 4;
             break;
         case 0xA5:
             this->alu_and("L");
+            cycle_count = 4;
             break;
         case 0xA6:
             this->alu_and("HL");
+            cycle_count = 8;
             break;
         case 0xE6:
             arg_1 = this->fetch_op();
             this->alu_sub(arg_1, true);
+            cycle_count = 8;
             break;
         // OR n
         case 0xB7:
             this->alu_or("A");
+            cycle_count = 4;
             break;
         case 0xB0:
             this->alu_or("B");
+            cycle_count = 4;
             break;
         case 0xB1:
             this->alu_or("C");
+            cycle_count = 4;
             break;
         case 0xB2:
             this->alu_or("D");
+            cycle_count = 4;
             break;
         case 0xB3:
             this->alu_or("E");
+            cycle_count = 4;
             break;
         case 0xB4:
             this->alu_or("H");
+            cycle_count = 4;
             break;
         case 0xB5:
             this->alu_or("L");
+            cycle_count = 4;
             break;
         case 0xB6:
             this->alu_or("HL");
+            cycle_count = 8;
             break;
         case 0xF6:
             arg_1 = this->fetch_op();
             this->alu_or(arg_1);
+            cycle_count = 8;
             break;
         // XOR n
         case 0xAF:
             this->alu_xor("A");
+            cycle_count = 4;
             break;
         case 0xA8:
             this->alu_xor("B");
+            cycle_count = 4;
             break;
         case 0xA9:
             this->alu_xor("C");
+            cycle_count = 4;
             break;
         case 0xAA:
             this->alu_xor("D");
+            cycle_count = 4;
             break;
         case 0xAB:
             this->alu_xor("E");
+            cycle_count = 4;
             break;
         case 0xAC:
             this->alu_xor("H");
+            cycle_count = 4;
             break;
         case 0xAD:
             this->alu_xor("L");
+            cycle_count = 4;
             break;
         case 0xAE:
             this->alu_xor("HL");
+            cycle_count = 8;
             break;
         case 0xEE:
             arg_1 = this->fetch_op();
             this->alu_xor(arg_1);
+            cycle_count = 8;
             break;
         // CP n
         case 0xBF:
             this->alu_cp("A");
+            cycle_count = 4;
             break;
         case 0xB8:
             this->alu_cp("B");
+            cycle_count = 4;
             break;
         case 0xB9:
             this->alu_cp("C");
+            cycle_count = 4;
             break;
         case 0xBA:
             this->alu_cp("D");
+            cycle_count = 4;
             break;
         case 0xBB:
             this->alu_cp("E");
+            cycle_count = 4;
             break;
         case 0xBC:
             this->alu_cp("H");
+            cycle_count = 4;
             break;
         case 0xBD:
             this->alu_cp("L");
+            cycle_count = 4;
             break;
         case 0xBE:
             this->alu_cp("HL");
+            cycle_count = 8;
             break;
         case 0xFE:
             arg_1 = this->fetch_op();
             this->alu_cp(arg_1);
+            cycle_count = 8;
             break;
         // INC n
         case 0x3C:
             this->alu_inc("A");
+            cycle_count = 4;
             break;
         case 0x04:
             this->alu_inc("B");
+            cycle_count = 4;
             break;
         case 0x0C:
             this->alu_inc("C");
+            cycle_count = 4;
             break;
         case 0x14:
             this->alu_inc("D");
+            cycle_count = 4;
             break;
         case 0x1C:
             this->alu_inc("E");
+            cycle_count = 4;
             break;
         case 0x24:
             this->alu_inc("H");
+            cycle_count = 4;
             break;
         case 0x2C:
             this->alu_inc("L");
+            cycle_count = 4;
             break;
         case 0x34:
             this->alu_inc("HL");
+            cycle_count = 12;
             break;
         // DEC n
         case 0x3D:
             this->alu_dec("A");
+            cycle_count = 4;
             break;
         case 0x05:
             this->alu_dec("B");
+            cycle_count = 4;
             break;
         case 0x0D:
             this->alu_dec("C");
+            cycle_count = 4;
             break;
         case 0x15:
             this->alu_dec("D");
+            cycle_count = 4;
             break;
         case 0x1D:
             this->alu_dec("E");
+            cycle_count = 4;
             break;
         case 0x25:
             this->alu_dec("H");
+            cycle_count = 4;
             break;
         case 0x2D:
             this->alu_dec("L");
+            cycle_count = 4;
             break;
         case 0x35:
             this->alu_dec("HL");
+            cycle_count = 12;
             break;
         /****    16-Bit Arithmetic    ****/
         // ADD HL, n
