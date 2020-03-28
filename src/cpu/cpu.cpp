@@ -495,28 +495,36 @@ int CPU::decode_op(uint8_t opcode) {
         // PUSH nn
         case 0xF5:
             this->push_stack("AF");
+            cycle_count = 16;
             break;
         case 0xC5:
             this->push_stack("BC");
+            cycle_count = 16;
             break;
         case 0xD5:
             this->push_stack("DE");
+            cycle_count = 16;
             break;
         case 0xE5:
             this->push_stack("HL");
+            cycle_count = 16;
             break;
         // POP nn
         case 0xF1:
             this->pop_stack("AF");
+            cycle_count = 12;
             break;
         case 0xC1:
             this->pop_stack("BC");
+            cycle_count = 12;
             break;
         case 0xD1:
             this->pop_stack("DE");
+            cycle_count = 12;
             break;
         case 0xE1:
             this->pop_stack("HL");
+            cycle_count = 12;
             break;
         /****    8-Bit ALU    ****/
         // ADD A, n
