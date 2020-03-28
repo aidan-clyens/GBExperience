@@ -840,18 +840,22 @@ int CPU::decode_op(uint8_t opcode) {
         // RLCA
         case 0x07:
             this->rotate_left(false);
+            cycle_count = 4;
             break;
         // RLA
         case 0x17:
             this->rotate_left(true);
+            cycle_count = 4;
             break;
         // RRCA
         case 0x0F:
             this->rotate_right(false);
+            cycle_count = 4;
             break;
         // RRA
         case 0x1F:
             this->rotate_right(true);
+            cycle_count = 4;
             break;
         /****    Jumps    ****/
         // JP nn
@@ -1028,177 +1032,233 @@ int CPU::decode_op(uint8_t opcode) {
                 // RLC n
                 case 0x07:
                     this->rotate_left("A", false);
+                    cycle_count = 8;
                     break;
                 case 0x00:
                     this->rotate_left("B", false);
+                    cycle_count = 8;
                     break;
                 case 0x01:
                     this->rotate_left("C", false);
+                    cycle_count = 8;
                     break;
                 case 0x02:
                     this->rotate_left("D", false);
+                    cycle_count = 8;
                     break;
                 case 0x03:
                     this->rotate_left("E", false);
+                    cycle_count = 8;
                     break;
                 case 0x04:
                     this->rotate_left("H", false);
+                    cycle_count = 8;
                     break;
                 case 0x05:
                     this->rotate_left("L", false);
+                    cycle_count = 8;
                     break;
                 case 0x06:
                     this->rotate_left("HL", false);
+                    cycle_count = 16;
                     break;
                 // RL n
                 case 0x17:
                     this->rotate_left("A", true);
+                    cycle_count = 8;
                     break;
                 case 0x10:
                     this->rotate_left("B", true);
+                    cycle_count = 8;
                     break;
                 case 0x11:
                     this->rotate_left("C", true);
+                    cycle_count = 8;
                     break;
                 case 0x12:
                     this->rotate_left("D", true);
+                    cycle_count = 8;
                     break;
                 case 0x13:
                     this->rotate_left("E", true);
+                    cycle_count = 8;
                     break;
                 case 0x14:
                     this->rotate_left("H", true);
+                    cycle_count = 8;
                     break;
                 case 0x15:
                     this->rotate_left("L", true);
+                    cycle_count = 8;
                     break;
                 case 0x16:
                     this->rotate_left("HL", true);
+                    cycle_count = 16;
                     break;
                 // RRC n
                 case 0x0F:
                     this->rotate_right("A", false);
+                    cycle_count = 8;
                     break;
                 case 0x08:
                     this->rotate_right("B", false);
+                    cycle_count = 8;
                     break;
                 case 0x09:
                     this->rotate_right("C", false);
+                    cycle_count = 8;
                     break;
                 case 0x0A:
                     this->rotate_right("D", false);
+                    cycle_count = 8;
                     break;
                 case 0x0B:
                     this->rotate_right("E", false);
+                    cycle_count = 8;
                     break;
                 case 0x0C:
                     this->rotate_right("H", false);
+                    cycle_count = 8;
                     break;
                 case 0x0D:
                     this->rotate_right("L", false);
+                    cycle_count = 8;
                     break;
                 case 0x0E:
                     this->rotate_right("HL", false);
+                    cycle_count = 16;
                     break;
                 // RR n
                 case 0x1F:
                     this->rotate_right("A", true);
+                    cycle_count = 8;
                     break;
                 case 0x18:
                     this->rotate_right("B", true);
+                    cycle_count = 8;
                     break;
                 case 0x19:
                     this->rotate_right("C", true);
+                    cycle_count = 8;
                     break;
                 case 0x1A:
                     this->rotate_right("D", true);
+                    cycle_count = 8;
                     break;
                 case 0x1B:
                     this->rotate_right("E", true);
+                    cycle_count = 8;
                     break;
                 case 0x1C:
                     this->rotate_right("H", true);
+                    cycle_count = 8;
                     break;
                 case 0x1D:
                     this->rotate_right("L", true);
+                    cycle_count = 8;
                     break;
                 case 0x1E:
                     this->rotate_right("HL", true);
+                    cycle_count = 16;
                     break;
                 // SLA n
                 case 0x27:
                     this->shift_left("A");
+                    cycle_count = 8;
                     break;
                 case 0x20:
                     this->shift_left("B");
+                    cycle_count = 8;
                     break;
                 case 0x21:
                     this->shift_left("C");
+                    cycle_count = 8;
                     break;
                 case 0x22:
                     this->shift_left("D");
+                    cycle_count = 8;
                     break;
                 case 0x23:
                     this->shift_left("E");
+                    cycle_count = 8;
                     break;
                 case 0x24:
                     this->shift_left("H");
+                    cycle_count = 8;
                     break;
                 case 0x25:
                     this->shift_left("L");
+                    cycle_count = 8;
                     break;
                 case 0x26:
                     this->shift_left("HL");
+                    cycle_count = 16;
                     break;
                 // SRA n
                 case 0x2F:
                     this->shift_right("A", true);
+                    cycle_count = 8;
                     break;
                 case 0x28:
                     this->shift_right("B", true);
+                    cycle_count = 8;
                     break;
                 case 0x29:
                     this->shift_right("C", true);
+                    cycle_count = 8;
                     break;
                 case 0x2A:
                     this->shift_right("D", true);
+                    cycle_count = 8;
                     break;
                 case 0x2B:
                     this->shift_right("E", true);
+                    cycle_count = 8;
                     break;
                 case 0x2C:
                     this->shift_right("H", true);
+                    cycle_count = 8;
                     break;
                 case 0x2D:
                     this->shift_right("L", true);
+                    cycle_count = 8;
                     break;
                 case 0x2E:
                     this->shift_right("HL", true);
+                    cycle_count = 16;
                     break;
                 // SRL n
                 case 0x3F:
                     this->shift_right("A", false);
+                    cycle_count = 8;
                     break;
                 case 0x38:
                     this->shift_right("B", false);
+                    cycle_count = 8;
                     break;
                 case 0x39:
                     this->shift_right("C", false);
+                    cycle_count = 8;
                     break;
                 case 0x3A:
                     this->shift_right("D", false);
+                    cycle_count = 8;
                     break;
                 case 0x3B:
                     this->shift_right("E", false);
+                    cycle_count = 8;
                     break;
                 case 0x3C:
                     this->shift_right("H", false);
+                    cycle_count = 8;
                     break;
                 case 0x3D:
                     this->shift_right("L", false);
+                    cycle_count = 8;
                     break;
                 case 0x3E:
                     this->shift_right("HL", false);
+                    cycle_count = 16;
                     break;
                 /****    Bit Opcodes    ****/
                 // BIT b, r
