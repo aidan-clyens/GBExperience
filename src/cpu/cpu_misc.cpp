@@ -30,3 +30,15 @@ void CPU::swap(const std::string &reg) {
         this->write_register(reg, result);
     }
 }
+
+void CPU::complement() {
+    uint8_t val = this->read_register("A");
+    uint8_t result = ~val;
+
+    std::cout << "CPL" << std::endl;
+
+    this->set_flag_register(SUBTRACT_FLAG, true);
+    this->set_flag_register(HALF_CARRY_FLAG, true);
+
+    this->write_register("A", result);
+}

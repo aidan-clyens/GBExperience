@@ -66,3 +66,25 @@ TEST(CPU_MISC, SWAP_HL) {
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
+
+// CPL
+TEST(CPU_MISC, CPL) {
+    uint8_t opcode = 0x2F;
+    uint8_t A = 0xAB;       // 1010 1011
+    uint8_t result = 0x54;  // 0101 0100
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("A", A);
+    EXPECT_EQ(A, cpu.read_register("A"));
+
+    cpu.decode_op(opcode);
+
+    // Check value of A register
+    EXPECT_EQ(result, cpu.read_register("A"));
+    // Check zero, subtract, and half-carry flags
+    EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+}

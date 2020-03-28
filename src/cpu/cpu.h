@@ -130,4 +130,5 @@ class CPU {
 
         /****    Misc.    ****/
         void swap(const std::string &);
+        void complement();
 };
