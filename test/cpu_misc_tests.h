@@ -84,7 +84,27 @@ TEST(CPU_MISC, CPL) {
 
     // Check value of A register
     EXPECT_EQ(result, cpu.read_register("A"));
-    // Check zero, subtract, and half-carry flags
+    // Check subtract and half-carry flags
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+}
+
+// CCF
+TEST(CPU_MISC, CCF) {
+    uint8_t opcode = 0x3F;
+    bool carry = true;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.set_flag_register(CARRY_FLAG, carry);
+    EXPECT_EQ(carry, cpu.read_flag_register(CARRY_FLAG));
+
+    cpu.decode_op(opcode);
+
+    // Check zero, subtract, and half-carry flags
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(!carry, cpu.read_flag_register(CARRY_FLAG));
 }
