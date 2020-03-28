@@ -30,6 +30,7 @@ int CPU::decode_op(uint8_t opcode) {
         // NOP
         case 0x00:
             std::cout << "NOP" << std::endl;
+            cycle_count = 4;
             break;
         // HALT
         case 0x76:

@@ -128,3 +128,16 @@ TEST(CPU_MISC, SCF) {
     EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
+
+// NOP
+TEST(CPU_MISC, NOP) {
+    uint8_t opcode = 0x00;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    int count = cpu.decode_op(opcode);
+
+    EXPECT_EQ(4, count);
+}
