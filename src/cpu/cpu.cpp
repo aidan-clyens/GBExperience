@@ -896,46 +896,59 @@ int CPU::decode_op(uint8_t opcode) {
         // ADD HL, n
         case 0x09:
             this->alu_add_HL("BC");
+            cycle_count = 8;
             break;
         case 0x19:
             this->alu_add_HL("DE");
+            cycle_count = 8;
             break;
         case 0x29:
             this->alu_add_HL("HL");
+            cycle_count = 8;
             break;
         case 0x39:
             this->alu_add_HL("SP");
+            cycle_count = 8;
             break;
         // ADD SP, n
         case 0xE8:
             arg_1 = this->fetch_op();
             this->alu_add_SP(arg_1);
+            cycle_count = 16;
             break;
         // INC nn
         case 0x03:
             this->alu_inc_16bit("BC");
+            cycle_count = 8;
             break;
         case 0x13:
             this->alu_inc_16bit("DE");
+            cycle_count = 8;
             break;
         case 0x23:
             this->alu_inc_16bit("HL");
+            cycle_count = 8;
             break;
         case 0x33:
             this->alu_inc_16bit("SP");
+            cycle_count = 8;
             break;
         // DEC nn
         case 0x0B:
             this->alu_dec_16bit("BC");
+            cycle_count = 8;
             break;
         case 0x1B:
             this->alu_dec_16bit("DE");
+            cycle_count = 8;
             break;
         case 0x2B:
             this->alu_dec_16bit("HL");
+            cycle_count = 8;
             break;
         case 0x3B:
             this->alu_dec_16bit("SP");
+            cycle_count = 8;
             break;
         /****    Rotates and Shifts    ****/
         // RLCA
