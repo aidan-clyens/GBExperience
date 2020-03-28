@@ -9,6 +9,7 @@
 #include "cpu_ld_tests.h"
 #include "cpu_rotates_tests.h"
 #include "cpu_misc_tests.h"
+#include "cpu_bit_ops_tests.h"
 
 
 int main(int argc, char** argv) {
