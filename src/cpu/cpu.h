@@ -129,6 +129,10 @@ class CPU {
         void shift_right(const std::string &, bool);
 
         /****    Misc.    ****/
+        // SWAP n
         void swap(const std::string &);
+        // CPL
         void complement();
+        // CCF
+        void complement_carry();
 };

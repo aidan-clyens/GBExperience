@@ -42,3 +42,14 @@ void CPU::complement() {
 
     this->write_register("A", result);
 }
+
+void CPU::complement_carry() {
+    bool carry = this->read_flag_register(CARRY_FLAG);
+
+    std::cout << "CCF" << std::endl;
+
+    this->set_flag_register(SUBTRACT_FLAG, false);
+    this->set_flag_register(HALF_CARRY_FLAG, false);
+    
+    this->set_flag_register(CARRY_FLAG, !carry);
+}
