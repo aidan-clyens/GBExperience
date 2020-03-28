@@ -8,6 +8,7 @@
 #include "cpu_jumps_tests.h"
 #include "cpu_ld_tests.h"
 #include "cpu_rotates_tests.h"
+#include "cpu_misc_tests.h"
 
 
 int main(int argc, char** argv) {
