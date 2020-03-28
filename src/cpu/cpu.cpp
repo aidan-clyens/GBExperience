@@ -50,7 +50,8 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // CCF
         case 0x3F:
-            std::cout << "CCF" << std::endl;
+            this->complement_carry();
+            cycle_count = 4;
             break;
         // SCF
         case 0x37:
