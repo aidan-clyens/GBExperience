@@ -2,7 +2,8 @@
 
 
 CPU::CPU(MemoryMap &mem_map):
-m_memory_map(mem_map)
+m_memory_map(mem_map),
+m_running(true)
 {
 
 }
@@ -34,7 +35,8 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // HALT
         case 0x76:
-            std::cout << "HALT" << std::endl;
+            this->halt();
+            cycle_count = 4;
             break;
         // STOP
         case 0x10:
@@ -1366,4 +1368,8 @@ bool CPU::read_flag_register(CPUFlag_t flag) {
 
 void CPU::reset_flag_register() {
     this->write_register("F", 0);
+}
+
+bool CPU::is_running() const {
+    return m_running;
 }

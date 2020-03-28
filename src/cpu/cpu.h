@@ -35,9 +35,13 @@ class CPU {
         bool read_flag_register(CPUFlag_t);
         void reset_flag_register();
 
+        bool is_running() const;
+
     private:
         CPURegisters m_registers;
         MemoryMap &m_memory_map;
+
+        bool m_running;
 
         /****    8-Bit and 16-Bit Loads    ****/
         void load(const std::string &, const std::string &);
@@ -137,4 +141,6 @@ class CPU {
         void complement_carry();
         // SCF
         void set_carry();
+        // HALT
+        void halt();
 };
