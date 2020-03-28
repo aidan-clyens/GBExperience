@@ -141,3 +141,19 @@ TEST(CPU_MISC, NOP) {
 
     EXPECT_EQ(4, count);
 }
+
+// HALT
+TEST(CPU_MISC, HALT) {
+    uint8_t opcode = 0x76;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.decode_op(opcode);
+
+    EXPECT_FALSE(cpu.is_running());
+
+    // TODO Wait for interrupt to continue CPU
+    EXPECT_TRUE(false);
+}
