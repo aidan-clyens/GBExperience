@@ -5,7 +5,7 @@ import csv
 expected_vals = []
 vals = []
 
-with open("../output/timing_analysis.csv", "r") as f:
+with open("output/timing_analysis.csv", "r") as f:
     reader = csv.reader(f)
 
     for row in reader:
