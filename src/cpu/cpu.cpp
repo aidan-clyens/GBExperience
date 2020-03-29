@@ -455,6 +455,7 @@ int CPU::decode_op(uint8_t opcode) {
             std::cout << arg16bit << std::endl;
 
             this->load("BC", arg16bit);
+            cycle_count = 12;
             break;
         case 0x11:
             arg_1 = this->fetch_op();
@@ -462,6 +463,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->load("DE", arg16bit);
+            cycle_count = 12;
             break;
         case 0x21:
             arg_1 = this->fetch_op();
@@ -469,6 +471,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->load("HL", arg16bit);
+            cycle_count = 12;
             break;
         case 0x31:
             arg_1 = this->fetch_op();
@@ -476,21 +479,25 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->load("SP", arg16bit);
+            cycle_count = 12;
             break;
         // LD SP, HL
         case 0xF9:
             this->load("SP", "HL");
+            cycle_count = 8;
             break;
         // LDHL SP, n
         case 0xF8:
             arg_1 = this->fetch_op();
 
             this->load_HL(arg_1);
+            cycle_count = 12;
             break;
         // LD (nn), SP
         case 0x08:
             // TODO Learn how to implement this instruction
             std::cout << "LD " << static_cast<int>(arg_1) << ", SP" << std::endl;
+            cycle_count = 20;
             break;
         // PUSH nn
         case 0xF5:
