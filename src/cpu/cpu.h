@@ -132,6 +132,9 @@ class CPU {
         void shift_left(const std::string &);
         void shift_right(const std::string &, bool);
 
+        /****    Bit Opcodes    ****/
+        void test_bit(int, const std::string &);
+
         /****    Misc.    ****/
         // SWAP n
         void swap(const std::string &);
