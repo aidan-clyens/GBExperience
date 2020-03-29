@@ -30,7 +30,9 @@ int CPU::decode_op(uint8_t opcode) {
         /****    Misc    ****/
         // NOP
         case 0x00:
+            #ifdef DEBUG
             std::cout << "NOP" << std::endl;
+            #endif
             cycle_count = 4;
             break;
         // HALT
@@ -40,11 +42,15 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // STOP
         case 0x10:
+            #ifdef DEBUG
             std::cout << "STOP" << std::endl;
+            #endif
             break;
         // DAA
         case 0x27:
+            #ifdef DEBUG
             std::cout << "DAA" << std::endl;
+            #endif
             break;
         // CPL
         case 0x2F:
@@ -63,11 +69,15 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // DI
         case 0xF3:
+            #ifdef DEBUG
             std::cout << "DI" << std::endl;
+            #endif
             break;
         // EI
         case 0xFB:
+            #ifdef DEBUG
             std::cout << "EI" << std::endl;
+            #endif
             break;
         /****    8-Bit Loads    ****/
         // LD nn, n
@@ -452,7 +462,6 @@ int CPU::decode_op(uint8_t opcode) {
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
-            std::cout << arg16bit << std::endl;
 
             this->load("BC", arg16bit);
             cycle_count = 12;
@@ -496,7 +505,9 @@ int CPU::decode_op(uint8_t opcode) {
         // LD (nn), SP
         case 0x08:
             // TODO Learn how to implement this instruction
+            #ifdef DEBUG
             std::cout << "LD " << static_cast<int>(arg_1) << ", SP" << std::endl;
+            #endif
             cycle_count = 20;
             break;
         // PUSH nn
@@ -1443,15 +1454,21 @@ int CPU::decode_op(uint8_t opcode) {
                 /****    Bit Opcodes    ****/
                 // BIT b, r
                 case 0x47: case 0x40: case 0x41: case 0x42: case 0x43: case 0x44: case 0x45: case 0x46:
+                    #ifdef DEBUG
                     std::cout << "BIT b, r" << std::endl;
+                    #endif
                     break;
                 // SET b, r
                 case 0xC7: case 0xC0: case 0xC1: case 0xC2: case 0xC3: case 0xC4: case 0xC5: case 0xC6:
+                    #ifdef DEBUG
                     std::cout << "SET b, r" << std::endl;
+                    #endif
                     break;
                 // RES b, r
                 case 0x87: case 0x80: case 0x81: case 0x82: case 0x83: case 0x84: case 0x85: case 0x86:
+                    #ifdef DEBUG
                     std::cout << "RES b, r" << std::endl;
+                    #endif
                     break;
 
                 // Default, opcode not implemented

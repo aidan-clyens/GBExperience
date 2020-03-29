@@ -17,7 +17,9 @@ void CPU::swap(const std::string &reg) {
 
     this->reset_flag_register();
 
+    #ifdef DEBUG
     std::cout << "SWAP " << reg << std::endl;
+    #endif
 
     if (result == 0) {
         this->set_flag_register(ZERO_FLAG, true);
@@ -35,7 +37,9 @@ void CPU::complement() {
     uint8_t val = this->read_register("A");
     uint8_t result = ~val;
 
+    #ifdef DEBUG
     std::cout << "CPL" << std::endl;
+    #endif
 
     this->set_flag_register(SUBTRACT_FLAG, true);
     this->set_flag_register(HALF_CARRY_FLAG, true);
@@ -46,7 +50,9 @@ void CPU::complement() {
 void CPU::complement_carry() {
     bool carry = this->read_flag_register(CARRY_FLAG);
 
+    #ifdef DEBUG
     std::cout << "CCF" << std::endl;
+    #endif
 
     this->set_flag_register(SUBTRACT_FLAG, false);
     this->set_flag_register(HALF_CARRY_FLAG, false);
@@ -55,13 +61,19 @@ void CPU::complement_carry() {
 }
 
 void CPU::set_carry() {
+
+    #ifdef DEBUG
     std::cout << "SCF" << std::endl;
+    #endif
 
     this->set_flag_register(CARRY_FLAG, true);
 }
 
 void CPU::halt() {
+
+    #ifdef DEBUG
     std::cout << "HALT" << std::endl;
+    #endif
 
     m_running = false;
 }
