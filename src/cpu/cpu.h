@@ -133,7 +133,10 @@ class CPU {
         void shift_right(const std::string &, bool);
 
         /****    Bit Opcodes    ****/
+        // BIT b, r
         void test_bit(int, const std::string &);
+        // SET b, r
+        void set_bit(int, const std::string &);
 
         /****    Misc.    ****/
         // SWAP n
