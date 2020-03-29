@@ -30,8 +30,10 @@ void CPU::alu_add(const std::string &reg, bool carry) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     if (carry) std::cout << "ADC A, " << reg << std::endl;
     else std::cout << "ADD A, " << reg << std::endl;
+    #endif
 
 
     this->write_register("A", result);
@@ -59,8 +61,10 @@ void CPU::alu_add(uint8_t n, bool carry) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     if (carry) std::cout << "ADC A, " << n << std::endl;
     else std::cout << "ADD A, " << n << std::endl;
+    #endif
 
 
     this->write_register("A", result);
@@ -71,9 +75,10 @@ void CPU::alu_add(uint8_t n, bool carry) {
 void CPU::alu_sub(const std::string &reg, bool carry) {
     uint8_t A = this->read_register("A");
     uint8_t n = this->read_register(reg);
-
+    #ifdef DEBUG
     if (carry) std::cout << "SBC A, " << reg << std::endl;
     else std::cout << "SUB A, " << reg << std::endl;
+    #endif
 
     this->write_register("A", A - n);
     // TODO Implement carry
@@ -81,9 +86,11 @@ void CPU::alu_sub(const std::string &reg, bool carry) {
 
 void CPU::alu_sub(uint8_t n, bool carry) {
     uint8_t A = this->read_register("A");
-
+    
+    #ifdef DEBUG
     if (carry) std::cout << "SBC A, " << n << std::endl;
     else std::cout << "SUB A, " << n << std::endl;
+    #endif
 
     this->write_register("A", A - n);
     // TODO Implement carry
@@ -107,7 +114,9 @@ void CPU::alu_and(const std::string &reg) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "AND A, " << reg << std::endl;
+    #endif
 
     this->write_register("A", result);
 }
@@ -123,7 +132,9 @@ void CPU::alu_and(uint8_t n) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "AND A, " << n << std::endl;
+    #endif
 
     this->write_register("A", result);
 }
@@ -145,7 +156,9 @@ void CPU::alu_or(const std::string &reg) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "OR A, " << reg << std::endl;
+    #endif
 
     this->write_register("A", result);
 }
@@ -160,7 +173,9 @@ void CPU::alu_or(uint8_t n) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "OR A, " << n << std::endl;
+    #endif
 
     this->write_register("A", result);
 }
@@ -182,7 +197,9 @@ void CPU::alu_xor(const std::string &reg) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "XOR A, " << reg << std::endl;
+    #endif
 
     this->write_register("A", result);
 }
@@ -196,8 +213,10 @@ void CPU::alu_xor(uint8_t n) {
     if (result == 0) {
         this->set_flag_register(ZERO_FLAG, true);
     }
-
+    
+    #ifdef DEBUG
     std::cout << "XOR A, " << n << std::endl;
+    #endif
 
     this->write_register("A", result);
 }
@@ -228,7 +247,9 @@ void CPU::alu_cp(const std::string &reg) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "CP A, " << reg << std::endl;
+    #endif
 }
 
 void CPU::alu_cp(uint8_t n) {
@@ -250,7 +271,9 @@ void CPU::alu_cp(uint8_t n) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "CP A, " << n << std::endl;
+    #endif
 }
 
 // INC n
@@ -277,7 +300,9 @@ void CPU::alu_inc(const std::string &reg) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "INC " << reg << std::endl;
+    #endif
 
     if (reg == "HL") {
         this->write_memory(result);
@@ -308,8 +333,9 @@ void CPU::alu_dec(const std::string &reg) {
     }
 
     // TODO Implement half carry flag
-
+    #ifdef DEBUG
     std::cout << "DEC " << reg << std::endl;
+    #endif
 
     if (reg == "HL") {
         this->write_memory(result);
@@ -336,7 +362,9 @@ void CPU::alu_add_HL(const std::string &reg) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "ADD HL, " << reg << std::endl;
+    #endif
 
     this->write_register("HL", result);
 }
@@ -356,7 +384,9 @@ void CPU::alu_add_SP(uint8_t n) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
+    #ifdef DEBUG
     std::cout << "ADD SP, " << static_cast<int>(n) << std::endl;
+    #endif
 
     this->write_register("SP", result);
 }
@@ -366,7 +396,9 @@ void CPU::alu_inc_16bit(const std::string &reg) {
     uint16_t N = this->read_register(reg);
     uint16_t result = N + 1;
 
+    #ifdef DEBUG
     std::cout << "INC " << reg << std::endl;
+    #endif
 
     this->write_register(reg, result);
 }
@@ -376,7 +408,9 @@ void CPU::alu_dec_16bit(const std::string &reg) {
     uint16_t N = this->read_register(reg);
     uint16_t result = N - 1;
 
+    #ifdef DEBUG
     std::cout << "DECs " << reg << std::endl;
+    #endif
 
     this->write_register(reg, result);
 }
