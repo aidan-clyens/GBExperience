@@ -1103,27 +1103,35 @@ int CPU::decode_op(uint8_t opcode) {
         // RST n
         case 0xC7:
             this->restart(0x00);
+            cycle_count = 32;
             break;
         case 0xCF:
             this->restart(0x08);
+            cycle_count = 32;
             break;
         case 0xD7:
             this->restart(0x10);
+            cycle_count = 32;
             break;
         case 0xDF:
             this->restart(0x18);
+            cycle_count = 32;
             break;
         case 0xE7:
             this->restart(0x20);
+            cycle_count = 32;
             break;
         case 0xEF:
             this->restart(0x28);
+            cycle_count = 32;
             break;
         case 0xF7:
             this->restart(0x30);
+            cycle_count = 32;
             break;
         case 0xFF:
             this->restart(0x38);
+            cycle_count = 32;
             break;
         /****    Returns    ****/
         // RET
