@@ -3,4 +3,5 @@ docs
 roms
 build
 Testing
+venv
 *.csv
