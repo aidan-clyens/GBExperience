@@ -1137,23 +1137,29 @@ int CPU::decode_op(uint8_t opcode) {
         // RET
         case 0xC9:
             this->ret();
+            cycle_count = 8;
             break;
         // RET cc
         case 0xC0:
             this->ret(ZERO_FLAG, false);
+            cycle_count = 8;
             break;
         case 0xC8:
             this->ret(ZERO_FLAG, true);
+            cycle_count = 8;
             break;
         case 0xD0:
             this->ret(CARRY_FLAG, false);
+            cycle_count = 8;
             break;
         case 0xD8:
             this->ret(CARRY_FLAG, true);
+            cycle_count = 8;
             break;
         // RETI
         case 0xD9:
             this->ret_enable_interrupts();
+            cycle_count = 8;
             break;
         
         // CB
