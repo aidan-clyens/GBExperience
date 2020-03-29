@@ -1452,11 +1452,269 @@ int CPU::decode_op(uint8_t opcode) {
                     cycle_count = 16;
                     break;
                 /****    Bit Opcodes    ****/
-                // BIT b, r
-                case 0x47: case 0x40: case 0x41: case 0x42: case 0x43: case 0x44: case 0x45: case 0x46:
-                    #ifdef DEBUG
-                    std::cout << "BIT b, r" << std::endl;
-                    #endif
+                // BIT 0, r
+                case 0x40:
+                    this->test_bit(0, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x41:
+                    this->test_bit(0, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x42:
+                    this->test_bit(0, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x43:
+                    this->test_bit(0, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x44:
+                    this->test_bit(0, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x45:
+                    this->test_bit(0, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x46:
+                    this->test_bit(0, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x47:
+                    this->test_bit(0, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 1, r
+                case 0x48:
+                    this->test_bit(1, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x49:
+                    this->test_bit(1, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x4A:
+                    this->test_bit(1, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x4B:
+                    this->test_bit(1, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x4C:
+                    this->test_bit(1, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x4D:
+                    this->test_bit(1, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x4E:
+                    this->test_bit(1, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x4F:
+                    this->test_bit(1, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 2, r
+                case 0x50:
+                    this->test_bit(2, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x51:
+                    this->test_bit(2, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x52:
+                    this->test_bit(2, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x53:
+                    this->test_bit(2, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x54:
+                    this->test_bit(2, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x55:
+                    this->test_bit(2, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x56:
+                    this->test_bit(2, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x57:
+                    this->test_bit(2, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 3, r
+                case 0x58:
+                    this->test_bit(3, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x59:
+                    this->test_bit(3, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x5A:
+                    this->test_bit(3, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x5B:
+                    this->test_bit(3, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x5C:
+                    this->test_bit(3, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x5D:
+                    this->test_bit(3, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x5E:
+                    this->test_bit(3, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x5F:
+                    this->test_bit(3, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 4, r
+                case 0x60:
+                    this->test_bit(4, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x61:
+                    this->test_bit(4, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x62:
+                    this->test_bit(4, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x63:
+                    this->test_bit(4, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x64:
+                    this->test_bit(4, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x65:
+                    this->test_bit(4, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x66:
+                    this->test_bit(4, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x67:
+                    this->test_bit(4, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 5, r
+                case 0x68:
+                    this->test_bit(5, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x69:
+                    this->test_bit(5, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x6A:
+                    this->test_bit(5, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x6B:
+                    this->test_bit(5, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x6C:
+                    this->test_bit(5, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x6D:
+                    this->test_bit(5, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x6E:
+                    this->test_bit(5, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x6F:
+                    this->test_bit(5, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 6, r
+                case 0x70:
+                    this->test_bit(6, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x71:
+                    this->test_bit(6, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x72:
+                    this->test_bit(6, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x73:
+                    this->test_bit(6, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x74:
+                    this->test_bit(6, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x75:
+                    this->test_bit(6, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x76:
+                    this->test_bit(6, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x77:
+                    this->test_bit(6, "A");
+                    cycle_count = 8;
+                    break;
+                // BIT 7, r
+                case 0x78:
+                    this->test_bit(7, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x79:
+                    this->test_bit(7, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x7A:
+                    this->test_bit(7, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x7B:
+                    this->test_bit(7, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x7C:
+                    this->test_bit(7, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x7D:
+                    this->test_bit(7, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x7E:
+                    this->test_bit(7, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x7F:
+                    this->test_bit(7, "A");
+                    cycle_count = 8;
                     break;
                 // SET b, r
                 case 0xC7: case 0xC0: case 0xC1: case 0xC2: case 0xC3: case 0xC4: case 0xC5: case 0xC6:
