@@ -134,3 +134,36 @@ TEST(CPU, ResetFlagRegister) {
     EXPECT_EQ(0, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(0, cpu.read_flag_register(CARRY_FLAG));
 }
+
+TEST(CPU, WriteMemoryHL) {
+    uint16_t HL = 0xA000;
+    uint8_t val = 0xAB;
+    
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("HL", HL);
+    EXPECT_EQ(HL, cpu.read_register("HL"));
+
+    cpu.write_memory(val);
+
+    EXPECT_EQ(val, cpu.read_memory());
+    EXPECT_EQ(val, cpu.read_memory("HL"));
+}
+
+TEST(CPU, WriteMemory) {
+    uint16_t BC = 0xA000;
+    uint8_t val = 0xAB;
+    
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.write_register("BC", BC);
+    EXPECT_EQ(BC, cpu.read_register("BC"));
+
+    cpu.write_memory("BC", val);
+
+    EXPECT_EQ(val, cpu.read_memory("BC"));
+}
