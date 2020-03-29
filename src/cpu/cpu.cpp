@@ -981,6 +981,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->jump(arg16bit);
+            cycle_count = 12;
             break;
         // JP cc, nn
         case 0xC2:
@@ -991,6 +992,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->jump_conditional(arg16bit, ZERO_FLAG, false);
+            cycle_count = 12;
             break;
         case 0xCA:
             // LSB
@@ -1000,6 +1002,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->jump_conditional(arg16bit, ZERO_FLAG, true);
+            cycle_count = 12;
             break;
         case 0xD2:
             // LSB
@@ -1009,6 +1012,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->jump_conditional(arg16bit, CARRY_FLAG, false);
+            cycle_count = 12;
             break;
         case 0xDA:
             // LSB
@@ -1018,32 +1022,39 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->jump_conditional(arg16bit, CARRY_FLAG, true);
+            cycle_count = 12;
             break;
         // JP HL
         case 0xE9:
             this->jump_hl();
+            cycle_count = 4;
             break;
-        // JP n
+        // JR n
         case 0x18:
             arg_1 = this->fetch_op();
             this->jump_add(arg_1);
+            cycle_count = 8;
             break;
         // JR cc, n
         case 0x20:
             arg_1 = this->fetch_op();
             this->jump_add_conditional(arg_1, ZERO_FLAG, false);
+            cycle_count = 8;
             break;
         case 0x28:
             arg_1 = this->fetch_op();
             this->jump_add_conditional(arg_1, ZERO_FLAG, true);
+            cycle_count = 8;
             break;
         case 0x30:
             arg_1 = this->fetch_op();
             this->jump_add_conditional(arg_1, CARRY_FLAG, false);
+            cycle_count = 8;
             break;
         case 0x38:
             arg_1 = this->fetch_op();
             this->jump_add_conditional(arg_1, CARRY_FLAG, true);
+            cycle_count = 8;
             break;
         /****    Calls    ****/
         // CALL nn
