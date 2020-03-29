@@ -1064,6 +1064,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->call(arg16bit);
+            cycle_count = 12;
             break;
         // CALL cc, nn
         case 0xC4:
@@ -1072,6 +1073,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->call(arg16bit, ZERO_FLAG, false);
+            cycle_count = 12;
             break;
         case 0xCC:
             arg_1 = this->fetch_op();
@@ -1079,6 +1081,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->call(arg16bit, ZERO_FLAG, true);
+            cycle_count = 12;
             break;
         case 0xD4:
             arg_1 = this->fetch_op();
@@ -1086,6 +1089,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->call(arg16bit, CARRY_FLAG, false);
+            cycle_count = 12;
             break;
         case 0xDC:
             arg_1 = this->fetch_op();
@@ -1093,6 +1097,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             this->call(arg16bit, CARRY_FLAG, true);
+            cycle_count = 12;
             break;
         /****    Restarts    ****/
         // RST n
