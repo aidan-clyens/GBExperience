@@ -137,6 +137,8 @@ class CPU {
         void test_bit(int, const std::string &);
         // SET b, r
         void set_bit(int, const std::string &);
+        // RES b, r
+        void reset_bit(int, const std::string &);
 
         /****    Misc.    ****/
         // SWAP n
