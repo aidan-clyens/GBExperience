@@ -1980,13 +1980,270 @@ int CPU::decode_op(uint8_t opcode) {
                     this->set_bit(7, "A");
                     cycle_count = 8;
                     break;
-                // RES b, r
-                case 0x87: case 0x80: case 0x81: case 0x82: case 0x83: case 0x84: case 0x85: case 0x86:
-                    #ifdef DEBUG
-                    std::cout << "RES b, r" << std::endl;
-                    #endif
+                // RES 0, r
+                case 0x80:
+                    this->reset_bit(0, "B");
+                    cycle_count = 8;
                     break;
-
+                case 0x81:
+                    this->reset_bit(0, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x82:
+                    this->reset_bit(0, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x83:
+                    this->reset_bit(0, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x84:
+                    this->reset_bit(0, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x85:
+                    this->reset_bit(0, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x86:
+                    this->reset_bit(0, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x87:
+                    this->reset_bit(0, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 1, r
+                case 0x88:
+                    this->reset_bit(1, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x89:
+                    this->reset_bit(1, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x8A:
+                    this->reset_bit(1, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x8B:
+                    this->reset_bit(1, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x8C:
+                    this->reset_bit(1, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x8D:
+                    this->reset_bit(1, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x8E:
+                    this->reset_bit(1, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x8F:
+                    this->reset_bit(1, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 2, r
+                case 0x90:
+                    this->reset_bit(2, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x91:
+                    this->reset_bit(2, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x92:
+                    this->reset_bit(2, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x93:
+                    this->reset_bit(2, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x94:
+                    this->reset_bit(2, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x95:
+                    this->reset_bit(2, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x96:
+                    this->reset_bit(2, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x97:
+                    this->reset_bit(2, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 3, r
+                case 0x98:
+                    this->reset_bit(3, "B");
+                    cycle_count = 8;
+                    break;
+                case 0x99:
+                    this->reset_bit(3, "C");
+                    cycle_count = 8;
+                    break;
+                case 0x9A:
+                    this->reset_bit(3, "D");
+                    cycle_count = 8;
+                    break;
+                case 0x9B:
+                    this->reset_bit(3, "E");
+                    cycle_count = 8;
+                    break;
+                case 0x9C:
+                    this->reset_bit(3, "H");
+                    cycle_count = 8;
+                    break;
+                case 0x9D:
+                    this->reset_bit(3, "L");
+                    cycle_count = 8;
+                    break;
+                case 0x9E:
+                    this->reset_bit(3, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0x9F:
+                    this->reset_bit(3, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 4, r
+                case 0xA0:
+                    this->reset_bit(4, "B");
+                    cycle_count = 8;
+                    break;
+                case 0xA1:
+                    this->reset_bit(4, "C");
+                    cycle_count = 8;
+                    break;
+                case 0xA2:
+                    this->reset_bit(4, "D");
+                    cycle_count = 8;
+                    break;
+                case 0xA3:
+                    this->reset_bit(4, "E");
+                    cycle_count = 8;
+                    break;
+                case 0xA4:
+                    this->reset_bit(4, "H");
+                    cycle_count = 8;
+                    break;
+                case 0xA5:
+                    this->reset_bit(4, "L");
+                    cycle_count = 8;
+                    break;
+                case 0xA6:
+                    this->reset_bit(4, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0xA7:
+                    this->reset_bit(4, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 5, r
+                case 0xA8:
+                    this->reset_bit(5, "B");
+                    cycle_count = 8;
+                    break;
+                case 0xA9:
+                    this->reset_bit(5, "C");
+                    cycle_count = 8;
+                    break;
+                case 0xAA:
+                    this->reset_bit(5, "D");
+                    cycle_count = 8;
+                    break;
+                case 0xAB:
+                    this->reset_bit(5, "E");
+                    cycle_count = 8;
+                    break;
+                case 0xAC:
+                    this->reset_bit(5, "H");
+                    cycle_count = 8;
+                    break;
+                case 0xAD:
+                    this->reset_bit(5, "L");
+                    cycle_count = 8;
+                    break;
+                case 0xAE:
+                    this->reset_bit(5, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0xAF:
+                    this->reset_bit(5, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 6, r
+                case 0xB0:
+                    this->reset_bit(6, "B");
+                    cycle_count = 8;
+                    break;
+                case 0xB1:
+                    this->reset_bit(6, "C");
+                    cycle_count = 8;
+                    break;
+                case 0xB2:
+                    this->reset_bit(6, "D");
+                    cycle_count = 8;
+                    break;
+                case 0xB3:
+                    this->reset_bit(6, "E");
+                    cycle_count = 8;
+                    break;
+                case 0xB4:
+                    this->reset_bit(6, "H");
+                    cycle_count = 8;
+                    break;
+                case 0xB5:
+                    this->reset_bit(6, "L");
+                    cycle_count = 8;
+                    break;
+                case 0xB6:
+                    this->reset_bit(6, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0xB7:
+                    this->reset_bit(6, "A");
+                    cycle_count = 8;
+                    break;
+                // RES 7, r
+                case 0xB8:
+                    this->reset_bit(7, "B");
+                    cycle_count = 8;
+                    break;
+                case 0xB9:
+                    this->reset_bit(7, "C");
+                    cycle_count = 8;
+                    break;
+                case 0xBA:
+                    this->reset_bit(7, "D");
+                    cycle_count = 8;
+                    break;
+                case 0xBB:
+                    this->reset_bit(7, "E");
+                    cycle_count = 8;
+                    break;
+                case 0xBC:
+                    this->reset_bit(7, "H");
+                    cycle_count = 8;
+                    break;
+                case 0xBD:
+                    this->reset_bit(7, "L");
+                    cycle_count = 8;
+                    break;
+                case 0xBE:
+                    this->reset_bit(7, "HL");
+                    cycle_count = 16;
+                    break;
+                case 0xBF:
+                    this->reset_bit(7, "A");
+                    cycle_count = 8;
+                    break;
                 // Default, opcode not implemented
                 default:
                     std::cerr << "CB opcode " << static_cast<int>(opcode) << " not implemented" << std::endl;
