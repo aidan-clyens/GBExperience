@@ -4,10 +4,13 @@
 // ADC A, n
 void CPU::alu_add(const std::string &reg, bool carry) {
     uint8_t A = this->read_register("A");
-    uint16_t n = this->read_register(reg);
-    
+    uint16_t n;
+
     if (reg == "HL") {
         n = this->read_memory();
+    }
+    else {
+        n = this->read_register(reg);
     }
 
     uint8_t result = A + n;
@@ -34,7 +37,6 @@ void CPU::alu_add(const std::string &reg, bool carry) {
     if (carry) std::cout << "ADC A, " << reg << std::endl;
     else std::cout << "ADD A, " << reg << std::endl;
     #endif
-
 
     this->write_register("A", result);
 }
@@ -74,26 +76,84 @@ void CPU::alu_add(uint8_t n, bool carry) {
 // SBC n
 void CPU::alu_sub(const std::string &reg, bool carry) {
     uint8_t A = this->read_register("A");
-    uint8_t n = this->read_register(reg);
+    uint8_t n;
+
+    if (reg == "HL") {
+        n = this->read_memory();
+    }
+    else {
+        n = this->read_register(reg);
+    }
+
+    if (carry & this->read_flag_register(CARRY_FLAG)) {
+        n++;
+    }
+
+    uint8_t result = A - n;
+
     #ifdef DEBUG
     if (carry) std::cout << "SBC A, " << reg << std::endl;
     else std::cout << "SUB A, " << reg << std::endl;
     #endif
 
-    this->write_register("A", A - n);
-    // TODO Implement carry
+    this->write_register("A", result);
+    
+    bool borrow = false;
+    bool half_borrow = false;
+
+    for (int i = 0; i < 8; i++) {
+        if ((A & (1 << i)) < (n & (1 << i))) {
+            if (i < 4) {
+                half_borrow = true;
+            }
+            
+            borrow = true;
+        }
+    }
+
+    this->reset_flag_register();
+
+    this->set_flag_register(SUBTRACT_FLAG, true);
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
+    this->set_flag_register(CARRY_FLAG, !borrow);
 }
 
 void CPU::alu_sub(uint8_t n, bool carry) {
     uint8_t A = this->read_register("A");
-    
+
+    if (carry & this->read_flag_register(CARRY_FLAG)) {
+        n++;
+    }
+
+    uint8_t result = A - n;
+
     #ifdef DEBUG
     if (carry) std::cout << "SBC A, " << n << std::endl;
     else std::cout << "SUB A, " << n << std::endl;
     #endif
 
-    this->write_register("A", A - n);
-    // TODO Implement carry
+    this->write_register("A", result);
+    
+    bool borrow = false;
+    bool half_borrow = false;
+
+    for (int i = 0; i < 8; i++) {
+        if ((A & (1 << i)) < (n & (1 << i))) {
+            if (i < 4) {
+                half_borrow = true;
+            }
+
+            borrow = true;
+        }
+    }
+
+    this->reset_flag_register();
+
+    this->set_flag_register(SUBTRACT_FLAG, true);
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
+    this->set_flag_register(CARRY_FLAG, !borrow);
 }
 
 // AND n
@@ -322,20 +382,23 @@ void CPU::alu_dec(const std::string &reg) {
 
     uint8_t result = N - 1;
 
-    if (N < 0xFF) {
-        this->set_flag_register(ZERO_FLAG, false);
-        this->set_flag_register(SUBTRACT_FLAG, true);
-        this->set_flag_register(HALF_CARRY_FLAG, false);
-    }    
-
-    if (result == 0) {
-        this->set_flag_register(ZERO_FLAG, true);
-    }
-
-    // TODO Implement half carry flag
     #ifdef DEBUG
     std::cout << "DEC " << reg << std::endl;
     #endif
+
+    bool half_borrow = false;
+
+    for (int i = 0; i < 4; i++) {
+        if ((N & (1 << i)) < (1 & (1 << i))) {
+            half_borrow = true;
+        }
+    }
+
+    this->reset_flag_register();
+
+    this->set_flag_register(SUBTRACT_FLAG, true);
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
 
     if (reg == "HL") {
         this->write_memory(result);
