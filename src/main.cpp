@@ -25,7 +25,13 @@ int main(int argc, char** argv) {
 
     CPU cpu(memory_map);
 
-    Display main_display(file_parser.get_rom_name());
+    std::string rom_name = file_parser.get_rom_name();
+    cartridge_type_t cartridge_type = file_parser.get_cartridge_type();
+
+    Display main_display(rom_name);
+
+    std::cout << "Title: " << rom_name << std::endl;
+    std::cout << "Cartridge Type: " << cartridge_type << std::endl << std::endl;
 
     main_display.init_display();
     
