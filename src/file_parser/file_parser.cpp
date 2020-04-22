@@ -60,6 +60,14 @@ cartridge_type_t FileParser::get_cartridge_type() const {
     return static_cast<cartridge_type_t>(cartridge_type_index);
 }
 
+bool FileParser::is_gb_color() const {
+    return this->get_byte(0x143) == 0x80;
+}
+
+bool FileParser::is_sgb() const {
+    return this->get_byte(0x146) == 0x03;
+}
+
 void FileParser::print_to_file() {
     std::ofstream output("../../bytes.txt", std::ios::out | std::ios::binary);
     output.write((char*)m_buffer, m_buffer_size);

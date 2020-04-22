@@ -31,7 +31,9 @@ int main(int argc, char** argv) {
     Display main_display(rom_name);
 
     std::cout << "Title: " << rom_name << std::endl;
-    std::cout << "Cartridge Type: " << cartridge_type << std::endl << std::endl;
+    std::cout << "Cartridge Type: " << cartridge_type << std::endl;
+    std::cout << "GameBoy Color: " << file_parser.is_gb_color() << std::endl;
+    std::cout << "Super GameBoy: " << file_parser.is_sgb() << std::endl << std::endl;
 
     main_display.init_display();
     
