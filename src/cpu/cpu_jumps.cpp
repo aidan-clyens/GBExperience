@@ -144,5 +144,5 @@ void CPU::ret_enable_interrupts() {
     #endif
 
     this->pop_stack("PC");
-    // TODO Enable interrupts
+    this->enable_interrupts();
 }
