@@ -32,6 +32,7 @@ MemoryMap::~MemoryMap() {
     delete (Memory *)m_memory_map.find(2)->second;
     delete (Memory *)m_memory_map.find(3)->second;
     delete (Memory *)m_memory_map.find(4)->second;
+    delete (Memory *)m_memory_map.find(10)->second;
 }
 
 bool MemoryMap::init_memory_map(void *file_parser_buffer) {
@@ -49,6 +50,10 @@ bool MemoryMap::init_memory_map(void *file_parser_buffer) {
     internal_ram->init_memory();
     m_memory_map.insert(std::pair<int, Memory *>(4, internal_ram));
 
+    Memory *high_ram = new Memory(m_address_space[11] - m_address_space[10]);
+    high_ram->init_memory();
+    m_memory_map.insert(std::pair<int, Memory*>(10, high_ram));
+
     return true;
 }
 
@@ -62,7 +67,8 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
 
         case 2:
         case 3:
-        case 4: {
+        case 4:
+        case 10: {
                 Memory *mem = (Memory*)m_memory_map.find(index)->second;
                 return mem->write_memory(address - m_address_space[index], data);
             }
@@ -84,7 +90,8 @@ uint8_t MemoryMap::read(uint16_t address) {
 
         case 2:
         case 3:
-        case 4: {
+        case 4:
+        case 10: {
                 Memory *mem = (Memory*)m_memory_map.find(index)->second;
                 return mem->read_memory(address - m_address_space[index]);
             }
