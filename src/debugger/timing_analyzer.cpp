@@ -1,7 +1,6 @@
 #include "timing_analyzer.h"
 
 TimingAnalyzer::TimingAnalyzer(const std::string &file_name):
-m_last_time(get_time()),
 m_file_name(file_name)
 {
 
@@ -9,24 +8,6 @@ m_file_name(file_name)
 
 TimingAnalyzer::~TimingAnalyzer() {
 
-}
-
-void TimingAnalyzer::get_start_time() {
-    m_last_time = get_time();
-}
-
-float TimingAnalyzer::get_time_difference_us() {
-    std::chrono::steady_clock::time_point end = get_time();
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - m_last_time).count();    
-}
-
-float TimingAnalyzer::get_time_difference_ns() {
-    std::chrono::steady_clock::time_point end = get_time();
-    return std::chrono::duration_cast<std::chrono::nanoseconds>(end - m_last_time).count();    
-}
-
-std::chrono::steady_clock::time_point TimingAnalyzer::get_time() {
-    return std::chrono::steady_clock::now();
 }
 
 void TimingAnalyzer::log_cycle_time(uint8_t opcode, long int dt) {
