@@ -55,6 +55,11 @@ std::string FileParser::get_rom_name() const {
     return std::string(buffer);
 }
 
+cartridge_type_t FileParser::get_cartridge_type() const {
+    uint8_t cartridge_type_index = this->get_byte(0x147);
+    return static_cast<cartridge_type_t>(cartridge_type_index);
+}
+
 void FileParser::print_to_file() {
     std::ofstream output("../../bytes.txt", std::ios::out | std::ios::binary);
     output.write((char*)m_buffer, m_buffer_size);

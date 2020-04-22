@@ -62,6 +62,17 @@ TEST(FileParser, GetRAMSize) {
     EXPECT_EQ(ram_size, file_parser.get_byte(0x149));
 }
 
+TEST(FileParser, GetCartridgeType) {
+    int buffer_size = 16384;
+    std::string rom_file = "../../roms/Tetris.gb";
+    cartridge_type_t type = ROM_RAM;
+
+    FileParser file_parser(buffer_size);
+
+    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_EQ(type, file_parser.get_cartridge_type());
+}
+
 TEST(FileParser, GetTitle) {
     int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
