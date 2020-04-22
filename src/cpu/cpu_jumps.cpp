@@ -34,7 +34,7 @@ void CPU::jump_hl() {
 }
 
 // JR n
-void CPU::jump_add(uint8_t value) {
+void CPU::jump_add(int8_t value) {
     uint16_t pc = this->read_register("PC");
 
     #ifdef DEBUG
@@ -45,7 +45,7 @@ void CPU::jump_add(uint8_t value) {
 }
 
 // JR cc, n
-void CPU::jump_add_conditional(uint8_t value, CPUFlag_t flag, bool set) {
+void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
     uint16_t pc = this->read_register("PC");
     bool flag_set = this->read_flag_register(flag);
 
