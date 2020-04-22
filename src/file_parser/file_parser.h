@@ -47,6 +47,9 @@ class FileParser {
         std::string get_rom_name() const;
         cartridge_type_t get_cartridge_type() const;
 
+        bool is_gb_color() const;
+        bool is_sgb() const;
+
         void print_to_file();
     
     private:
