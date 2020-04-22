@@ -10,8 +10,6 @@
 
 
 const int ITERATION_COUNT = 5000;
-const float EXPECTED_FREQ_MHZ = 4.194304;
-const long int EXPECTED_CYCLE_TIME_NS = 1000.0 / EXPECTED_FREQ_MHZ;
 
 
 MemoryMap setup_mem_map(uint8_t opcode) {
@@ -28,28 +26,21 @@ MemoryMap setup_mem_map(uint8_t opcode) {
 
 int main(int argc, char** argv) {        
     TimingAnalyzer timing_analyzer("output/timing_analysis.csv");
+    uint8_t opcode = 0x68; // 4 cycles
+    int cycle_count = 4;
+    long int expected_time = cycle_count * EXPECTED_CYCLE_TIME_NS;
 
-    MemoryMap memory_map = setup_mem_map(0x68); // 4 cycles
+    MemoryMap memory_map = setup_mem_map(opcode);
 
     CPU cpu(memory_map);
     cpu.write_register("PC", 0xA000);
     cpu.write_register("HL", 0xA100);
 
+    long int dt; 
     for (int i = 0; i < ITERATION_COUNT; i++) {
-        timing_analyzer.get_start_time();
+        dt = cpu.tick();
 
-        uint8_t opcode = cpu.fetch_op();
-        int cycle_count = cpu.decode_op(opcode);
-
-        long int dt = timing_analyzer.get_time_difference_ns();
-
-        while (dt < cycle_count * EXPECTED_CYCLE_TIME_NS) {
-            // Wait until expected cycle time is reached
-            dt = timing_analyzer.get_time_difference_ns();
-        }
-
-
-        timing_analyzer.log_time(cycle_count * EXPECTED_CYCLE_TIME_NS, dt);
+        timing_analyzer.log_time(expected_time, dt);
     }
     
     timing_analyzer.save_times();

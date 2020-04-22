@@ -12,6 +12,22 @@ CPU::~CPU() {
 
 }
 
+long int CPU::tick() {
+    m_last_time = this->get_time();
+
+    uint8_t opcode = this->fetch_op();
+    int cycle_count = this->decode_op(opcode);
+
+    long int dt = this->get_time_difference_ns();
+
+    // Wait until expected cycle time is reached
+    while (dt < cycle_count * EXPECTED_CYCLE_TIME_NS) {
+        dt = this->get_time_difference_ns();
+    }
+
+    return dt;
+}
+
 uint8_t CPU::fetch_op() {
     uint16_t address = this->read_register("PC");
     this->write_register("PC", address + 1);
@@ -2307,4 +2323,13 @@ void CPU::reset_flag_register() {
 
 bool CPU::is_running() const {
     return m_running;
+}
+
+long int CPU::get_time_difference_ns() {
+    std::chrono::steady_clock::time_point end = get_time();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(end - m_last_time).count();
+}
+
+std::chrono::steady_clock::time_point CPU::get_time() {
+    return std::chrono::steady_clock::now();
 }
