@@ -41,7 +41,6 @@ void CPU::jump_add(uint8_t value) {
     std::cout << "JR " << static_cast<int>(value) << std::endl;
     #endif
 
-    // TODO Implement error checking for PC overflow
     this->write_register("PC", pc + value - 1);
 }
 
@@ -51,10 +50,25 @@ void CPU::jump_add_conditional(uint8_t value, CPUFlag_t flag, bool set) {
     bool flag_set = this->read_flag_register(flag);
 
     #ifdef DEBUG
-    std::cout << "JP " << static_cast<int>(value) << std::endl;
+    switch (flag) {
+        case ZERO_FLAG:
+            if (set) {
+                std::cout << "JR Z " << static_cast<int>(value) << std::endl;
+            } else {
+                std::cout << "JR NZ " << static_cast<int>(value) << std::endl;
+            }
+            break;
+
+        case CARRY_FLAG:
+            if (set) {
+                std::cout << "JR C " << static_cast<int>(value) << std::endl;
+            } else {
+                std::cout << "JR NC " << static_cast<int>(value) << std::endl;
+            }
+            break;
+    }
     #endif
 
-    // TODO Implement error checking for PC overflow
     if (!(flag_set ^ set)) {
         this->write_register("PC", pc + value - 1);
     }
