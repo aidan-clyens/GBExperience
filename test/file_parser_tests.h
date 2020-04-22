@@ -73,6 +73,28 @@ TEST(FileParser, GetCartridgeType) {
     EXPECT_EQ(type, file_parser.get_cartridge_type());
 }
 
+TEST(FileParser, CheckGameBoyColor) {
+    int buffer_size = 16384;
+    std::string rom_file = "../../roms/Tetris.gb";
+    bool is_gameboy_color = false;
+
+    FileParser file_parser(buffer_size);
+
+    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_EQ(is_gameboy_color, file_parser.is_gb_color());
+}
+
+TEST(FileParser, CheckSuperGameBoy) {
+    int buffer_size = 16384;
+    std::string rom_file = "../../roms/Tetris.gb";
+    bool is_super_gameboy = false;
+
+    FileParser file_parser(buffer_size);
+
+    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_EQ(is_super_gameboy, file_parser.is_sgb());
+}
+
 TEST(FileParser, GetTitle) {
     int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
