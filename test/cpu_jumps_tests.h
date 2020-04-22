@@ -616,6 +616,6 @@ TEST(CPU_RETURNS, RETI) {
     EXPECT_EQ(SP, cpu.read_register("SP"));
     EXPECT_EQ(PC, cpu.read_register("PC"));
 
-    // TODO Check if interrupts are enabled
-    EXPECT_TRUE(false);
+    // Check if interrupts are enabled
+    EXPECT_TRUE(cpu.interrupts_enabled());
 }
