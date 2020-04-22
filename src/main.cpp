@@ -10,7 +10,12 @@
 
 int main(int argc, char** argv) {
     int rom_size = 32*1024;
+
     std::string rom_file = "roms/Tetris.gb";
+    
+    if (argc > 1) {
+        rom_file = argv[1];
+    }
 
     FileParser file_parser(rom_size);
     file_parser.load_rom(rom_file);
