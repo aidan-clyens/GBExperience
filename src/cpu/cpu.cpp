@@ -13,10 +13,16 @@ CPU::~CPU() {
 }
 
 long int CPU::tick() {
+    // Get start time of CPU tick
     m_last_time = this->get_time();
 
-    uint8_t opcode = this->fetch_op();
-    int cycle_count = this->decode_op(opcode);
+    // Check if halted
+    int cycle_count = 4;
+    if (m_running) {
+        // Fetch next opcode and execute
+        uint8_t opcode = this->fetch_op();
+        cycle_count = this->decode_op(opcode);
+    } 
 
     long int dt = this->get_time_difference_ns();
 
