@@ -65,7 +65,7 @@ TEST(FileParser, GetRAMSize) {
 TEST(FileParser, GetCartridgeType) {
     int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
-    cartridge_type_t type = ROM_RAM;
+    cartridge_type_t type = ROM_ONLY;
 
     FileParser file_parser(buffer_size);
 
