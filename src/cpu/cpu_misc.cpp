@@ -77,3 +77,19 @@ void CPU::halt() {
 
     m_running = false;
 }
+
+void CPU::enable_interrupts() {
+    #ifdef DEBUG
+    std::cout << "EI" << std::endl;
+    #endif
+
+    m_interrupts_enabled = true;
+}
+
+void CPU::disable_interrupts() {
+    #ifdef DEBUG
+    std::cout << "DI" << std::endl;
+    #endif
+
+    m_interrupts_enabled = false;
+}

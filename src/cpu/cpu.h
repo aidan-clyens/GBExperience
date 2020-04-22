@@ -43,6 +43,7 @@ class CPU {
         void reset_flag_register();
 
         bool is_running() const;
+        bool interrupts_enabled() const;
 
     private:
         CPURegisters m_registers;
@@ -51,6 +52,7 @@ class CPU {
         std::chrono::steady_clock::time_point m_last_time;
 
         bool m_running;
+        bool m_interrupts_enabled;
         
         // CPU Timing
         long int get_time_difference_ns();
@@ -164,4 +166,8 @@ class CPU {
         void set_carry();
         // HALT
         void halt();
+        // EI
+        void enable_interrupts();
+        // DI
+        void disable_interrupts();
 };

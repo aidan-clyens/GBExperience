@@ -3,7 +3,8 @@
 
 CPU::CPU(MemoryMap &mem_map):
 m_memory_map(mem_map),
-m_running(true)
+m_running(true),
+m_interrupts_enabled(true)
 {
 
 }
@@ -91,15 +92,13 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // DI
         case 0xF3:
-            #ifdef DEBUG
-            std::cout << "DI" << std::endl;
-            #endif
+            this->disable_interrupts();
+            cycle_count = 4;
             break;
         // EI
         case 0xFB:
-            #ifdef DEBUG
-            std::cout << "EI" << std::endl;
-            #endif
+            this->enable_interrupts();
+            cycle_count = 4;
             break;
         /****    8-Bit Loads    ****/
         // LD nn, n
@@ -2329,6 +2328,10 @@ void CPU::reset_flag_register() {
 
 bool CPU::is_running() const {
     return m_running;
+}
+
+bool CPU::interrupts_enabled() const {
+    return m_interrupts_enabled;
 }
 
 long int CPU::get_time_difference_ns() {
