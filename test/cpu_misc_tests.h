@@ -157,3 +157,29 @@ TEST(CPU_MISC, HALT) {
     // TODO Wait for interrupt to continue CPU
     EXPECT_TRUE(false);
 }
+
+// EI
+TEST(CPU_MISC, EI) {
+    uint8_t opcode = 0xFB;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.decode_op(opcode);
+
+    EXPECT_TRUE(cpu.interrupts_enabled());
+}
+
+// DI
+TEST(CPU_MISC, DI) {
+    uint8_t opcode = 0xF3;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.decode_op(opcode);
+
+    EXPECT_FALSE(cpu.interrupts_enabled());
+}
