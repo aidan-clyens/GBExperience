@@ -173,25 +173,42 @@ TEST(CPU_JUMP, JP_HL) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JR) {
+TEST(CPU_JUMP, JR_Postive) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
+    int value_signed = 112;
     uint8_t opcode = 0x18;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
     cpu.write_register("PC", PC);
-    cpu.write_register("HL", value);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + value, cpu.read_register("PC"));
+    EXPECT_EQ(PC + value_signed, cpu.read_register("PC"));
+}
+
+TEST(CPU_JUMP, JR_Negative) {
+    uint16_t PC = 0xA000;
+    uint8_t value = 0xAB;
+    int value_signed = -85;
+    uint8_t opcode = 0x18;
+    uint16_t result = PC + value_signed;
+
+    MemoryMap mem_map = setup_mem_map(PC, value);
+
+    CPU cpu(mem_map);
+    cpu.write_register("PC", PC);
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(result, cpu.read_register("PC"));
 }
 
 TEST(CPU_JUMP, JR_NZ_False) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x20;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -207,7 +224,7 @@ TEST(CPU_JUMP, JR_NZ_False) {
 
 TEST(CPU_JUMP, JR_NZ_True) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x20;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -223,7 +240,7 @@ TEST(CPU_JUMP, JR_NZ_True) {
 
 TEST(CPU_JUMP, JR_Z_False) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x28;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -240,7 +257,7 @@ TEST(CPU_JUMP, JR_Z_False) {
 TEST(CPU_JUMP, JR_Z_True)
 {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x28;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -256,7 +273,7 @@ TEST(CPU_JUMP, JR_Z_True)
 
 TEST(CPU_JUMP, JR_NC_False) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x30;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -272,7 +289,7 @@ TEST(CPU_JUMP, JR_NC_False) {
 
 TEST(CPU_JUMP, JR_NC_True) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x30;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -288,7 +305,7 @@ TEST(CPU_JUMP, JR_NC_True) {
 
 TEST(CPU_JUMP, JR_C_False) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x38;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -304,7 +321,7 @@ TEST(CPU_JUMP, JR_C_False) {
 
 TEST(CPU_JUMP, JR_C_True) {
     uint16_t PC = 0xA000;
-    uint8_t value = 0xAB;
+    uint8_t value = 0x70;
     uint8_t opcode = 0x38;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
