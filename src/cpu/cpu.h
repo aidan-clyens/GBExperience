@@ -2,9 +2,14 @@
 
 #include <iostream>
 #include <exception>
+#include <chrono>
 
 #include "cpu_registers.h"
 #include "../memory/memory_map.h"
+
+
+const float EXPECTED_FREQ_MHZ = 4.194304;
+const long int EXPECTED_CYCLE_TIME_NS = 1000.0 / EXPECTED_FREQ_MHZ;
 
 
 typedef enum CPUFlag {
@@ -19,6 +24,8 @@ class CPU {
     public:
         CPU(MemoryMap &);
         virtual ~CPU();
+
+        long int tick();
 
         uint8_t fetch_op();
         int decode_op(uint8_t);
@@ -41,7 +48,13 @@ class CPU {
         CPURegisters m_registers;
         MemoryMap &m_memory_map;
 
+        std::chrono::steady_clock::time_point m_last_time;
+
         bool m_running;
+        
+        // CPU Timing
+        long int get_time_difference_ns();
+        std::chrono::steady_clock::time_point get_time();
 
         /****    8-Bit and 16-Bit Loads    ****/
         void load(const std::string &, const std::string &);
