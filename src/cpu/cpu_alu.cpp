@@ -380,7 +380,10 @@ void CPU::alu_dec(const std::string &reg) {
         N = this->read_memory();
     }
 
-    uint8_t result = N - 1;
+    uint8_t result = N;
+    if (N > 0) {
+        result--;
+    }
 
     #ifdef DEBUG
     std::cout << "DEC " << reg << std::endl;
@@ -469,10 +472,13 @@ void CPU::alu_inc_16bit(const std::string &reg) {
 // DEC nn
 void CPU::alu_dec_16bit(const std::string &reg) {
     uint16_t N = this->read_register(reg);
-    uint16_t result = N - 1;
+    uint16_t result = N;
+    if (N > 0) {
+        result--;
+    } 
 
     #ifdef DEBUG
-    std::cout << "DECs " << reg << std::endl;
+    std::cout << "DEC " << reg << std::endl;
     #endif
 
     this->write_register(reg, result);
