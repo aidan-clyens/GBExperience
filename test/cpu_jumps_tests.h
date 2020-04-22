@@ -14,7 +14,7 @@ MemoryMap setup_mem_map(uint16_t PC, uint16_t value) {
 }
 
 
-TEST(CPU_JUMP, JumpImmediateValue) {
+TEST(CPU_JUMP, JP_NN) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xC3;
@@ -29,7 +29,7 @@ TEST(CPU_JUMP, JumpImmediateValue) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueNotZeroFlagFalse) {
+TEST(CPU_JUMP, JP_NZ_NN_False) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xC2;
@@ -45,7 +45,7 @@ TEST(CPU_JUMP, JumpImmediateValueNotZeroFlagFalse) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueNotZeroFlagTrue) {
+TEST(CPU_JUMP, JP_NZ_NN_True) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xC2;
@@ -61,7 +61,7 @@ TEST(CPU_JUMP, JumpImmediateValueNotZeroFlagTrue) {
     EXPECT_EQ(PC + 2, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueZeroFlagFalse) {
+TEST(CPU_JUMP, JP_Z_NN_False) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xCA;
@@ -77,7 +77,7 @@ TEST(CPU_JUMP, JumpImmediateValueZeroFlagFalse) {
     EXPECT_EQ(PC + 2, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueZeroFlagTrue) {
+TEST(CPU_JUMP, JP_Z_NN_True) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xCA;
@@ -93,7 +93,7 @@ TEST(CPU_JUMP, JumpImmediateValueZeroFlagTrue) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueNotCarryFlagFalse) {
+TEST(CPU_JUMP, JP_NC_NN_False) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xD2;
@@ -109,7 +109,7 @@ TEST(CPU_JUMP, JumpImmediateValueNotCarryFlagFalse) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueNotCarryFlagTrue) {
+TEST(CPU_JUMP, JP_NC_NN_True) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xD2;
@@ -125,7 +125,7 @@ TEST(CPU_JUMP, JumpImmediateValueNotCarryFlagTrue) {
     EXPECT_EQ(PC + 2, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueCarryFlagFalse) {
+TEST(CPU_JUMP, JP_C_NN_False) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xDA;
@@ -141,7 +141,7 @@ TEST(CPU_JUMP, JumpImmediateValueCarryFlagFalse) {
     EXPECT_EQ(PC + 2, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpImmediateValueCarryFlagTrue) {
+TEST(CPU_JUMP, JP_C_NN_True) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xDA;
@@ -157,7 +157,7 @@ TEST(CPU_JUMP, JumpImmediateValueCarryFlagTrue) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpHL) {
+TEST(CPU_JUMP, JP_HL) {
     uint16_t PC = 0xA000;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xE9;
@@ -173,7 +173,7 @@ TEST(CPU_JUMP, JumpHL) {
     EXPECT_EQ(value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAdd) {
+TEST(CPU_JUMP, JR) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x18;
@@ -189,7 +189,7 @@ TEST(CPU_JUMP, JumpAdd) {
     EXPECT_EQ(PC + value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddNotZeroFlagFalse) {
+TEST(CPU_JUMP, JR_NZ_False) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x20;
@@ -205,7 +205,7 @@ TEST(CPU_JUMP, JumpAddNotZeroFlagFalse) {
     EXPECT_EQ(PC + value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddNotZeroFlagTrue) {
+TEST(CPU_JUMP, JR_NZ_True) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x20;
@@ -221,7 +221,7 @@ TEST(CPU_JUMP, JumpAddNotZeroFlagTrue) {
     EXPECT_EQ(PC + 1, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddZeroFlagFalse) {
+TEST(CPU_JUMP, JR_Z_False) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x28;
@@ -237,7 +237,8 @@ TEST(CPU_JUMP, JumpAddZeroFlagFalse) {
     EXPECT_EQ(PC + 1, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddZeroFlagTrue) {
+TEST(CPU_JUMP, JR_Z_True)
+{
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x28;
@@ -253,7 +254,7 @@ TEST(CPU_JUMP, JumpAddZeroFlagTrue) {
     EXPECT_EQ(PC + value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddNotCarryFlagFalse) {
+TEST(CPU_JUMP, JR_NC_False) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x30;
@@ -269,7 +270,7 @@ TEST(CPU_JUMP, JumpAddNotCarryFlagFalse) {
     EXPECT_EQ(PC + value, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddNotCarryFlagTrue) {
+TEST(CPU_JUMP, JR_NC_True) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x30;
@@ -285,7 +286,7 @@ TEST(CPU_JUMP, JumpAddNotCarryFlagTrue) {
     EXPECT_EQ(PC + 1, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddCarryFlagFalse) {
+TEST(CPU_JUMP, JR_C_False) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x38;
@@ -301,7 +302,7 @@ TEST(CPU_JUMP, JumpAddCarryFlagFalse) {
     EXPECT_EQ(PC + 1, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JumpAddCarryFlagTrue) {
+TEST(CPU_JUMP, JR_C_True) {
     uint16_t PC = 0xA000;
     uint8_t value = 0xAB;
     uint8_t opcode = 0x38;
