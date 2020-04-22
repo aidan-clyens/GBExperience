@@ -68,7 +68,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             }
         
         default:
-            std::cerr << "MemoryMap index not implemented: " << index << std::endl;
+            std::cerr << "MemoryMap index not implemented: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
     }
 }
