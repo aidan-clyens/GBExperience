@@ -66,7 +66,7 @@ class CPU {
         void load_to_mem(const std::string &, const std::string &);
         void load_to_mem(const std::string &, uint16_t);
         void load_to_mem(uint16_t, const std::string &);
-        void load_HL(uint8_t);
+        void load_HL(int8_t);
 
         // PUSH nn
         void push_stack(const std::string &);

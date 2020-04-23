@@ -67,7 +67,7 @@ void CPU::load_to_mem(uint16_t nn, const std::string &r2) {
     this->m_memory_map.write(nn, val);
 }
 
-void CPU::load_HL(uint8_t n) {
+void CPU::load_HL(int8_t n) {
     uint16_t SP = this->read_register("SP");
     uint16_t result = SP + n;
 
