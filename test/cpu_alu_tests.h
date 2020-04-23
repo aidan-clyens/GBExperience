@@ -1060,10 +1060,42 @@ TEST(CPU_ALU_16Bit, ADD_SP) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
+TEST(CPU_ALU_16Bit, ADD_SP_Negative) {
+    uint8_t opcode = 0xE8;
+    uint16_t val = 0xFFFF;
+    int8_t n = 0xFF;
+    int signed_n = -1;
+
+    uint16_t PC = 0xA000;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    mem_map.write(PC, n);
+
+    EXPECT_EQ((uint8_t)n, mem_map.read(PC));
+
+    CPU cpu(mem_map);
+    cpu.write_register("PC", PC);
+    cpu.write_register("SP", val);
+
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(val, cpu.read_register("SP"));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ((val + signed_n) & 0xFFFF, cpu.read_register("SP"));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
 TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
     uint8_t opcode = 0xE8;
     uint16_t val = 0xFFFF;
-    uint8_t n = 0xFF;
+    int8_t n = 0x2F;
 
     uint16_t PC = 0xA000;
 
