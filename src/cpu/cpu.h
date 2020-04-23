@@ -103,7 +103,7 @@ class CPU {
         // ADD HL, nn
         void alu_add_HL(const std::string &);
         // ADD SP, e
-        void alu_add_SP(uint8_t);
+        void alu_add_SP(int8_t);
         // INC nn
         void alu_inc_16bit(const std::string &);
         // DEC nn

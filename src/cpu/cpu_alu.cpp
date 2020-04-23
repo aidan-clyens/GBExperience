@@ -332,7 +332,7 @@ void CPU::alu_cp(uint8_t n) {
     }
 
     #ifdef DEBUG
-    std::cout << "CP A, " << n << std::endl;
+    std::cout << "CP A, " << static_cast<int>(n) << std::endl;
     #endif
 }
 
@@ -436,7 +436,7 @@ void CPU::alu_add_HL(const std::string &reg) {
 }
 
 // ADD SP, e
-void CPU::alu_add_SP(uint8_t n) {
+void CPU::alu_add_SP(int8_t n) {
     uint16_t SP = this->read_register("SP");
     uint16_t result = SP + n;
 
