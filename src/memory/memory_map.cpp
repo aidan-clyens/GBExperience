@@ -29,30 +29,23 @@ MemoryMap::MemoryMap() {
 }
 
 MemoryMap::~MemoryMap() {
-    delete (Memory *)m_memory_map.find(2)->second;
-    delete (Memory *)m_memory_map.find(3)->second;
-    delete (Memory *)m_memory_map.find(4)->second;
-    delete (Memory *)m_memory_map.find(10)->second;
+    for (int i = 1; i < m_memory_map.size(); i++) {
+        delete (Memory *)m_memory_map.find(i)->second;
+    }
 }
 
 bool MemoryMap::init_memory_map(void *file_parser_buffer) {
     m_memory_map.insert(std::pair<int, void *>(0, file_parser_buffer));
 
-    Memory *video_ram = new Memory(m_address_space[3] - m_address_space[2]);
-    video_ram->init_memory();
-    m_memory_map.insert(std::pair<int, Memory *>(2, video_ram));
+    for (int i = 1; i < 11; i++) {
+        Memory *ram = new Memory(m_address_space[i+1] - m_address_space[i]);
+        ram->init_memory();
+        m_memory_map.insert(std::pair<int, Memory*>(i, ram));
+    }
 
-    Memory *switchable_ram = new Memory(m_address_space[4] - m_address_space[3]);
-    switchable_ram->init_memory();
-    m_memory_map.insert(std::pair<int, Memory *>(3, switchable_ram));
-
-    Memory *internal_ram  = new Memory(m_address_space[5] - m_address_space[4]);
-    internal_ram->init_memory();
-    m_memory_map.insert(std::pair<int, Memory *>(4, internal_ram));
-
-    Memory *high_ram = new Memory(m_address_space[11] - m_address_space[10]);
-    high_ram->init_memory();
-    m_memory_map.insert(std::pair<int, Memory*>(10, high_ram));
+    Memory *io = new Memory(1);
+    io->init_memory();
+    m_memory_map.insert(std::pair<int, Memory *>(11, io));
 
     return true;
 }
@@ -64,18 +57,16 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 0:
             std::cerr << "Cannot write to ROM" << std::endl;
             throw new std::exception;
-
-        case 2:
-        case 3:
-        case 4:
-        case 10: {
-                Memory *mem = (Memory*)m_memory_map.find(index)->second;
-                return mem->write_memory(address - m_address_space[index], data);
-            }
-        
-        default:
-            std::cerr << "MemoryMap index not implemented: " << index << ". Address: " << static_cast<int>(address) << std::endl;
+        case 5:
+        case 7:
+        case 9: {
+            std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
+        }
+        default: {
+            Memory *mem = (Memory *)m_memory_map.find(index)->second;
+            return mem->write_memory(address - m_address_space[index], data);
+        }
     }
 }
 
@@ -88,17 +79,17 @@ uint8_t MemoryMap::read(uint16_t address) {
                 return rom[address];
             }
 
-        case 2:
-        case 3:
-        case 4:
-        case 10: {
-                Memory *mem = (Memory*)m_memory_map.find(index)->second;
-                return mem->read_memory(address - m_address_space[index]);
-            }
-        
-        default:
-            std::cerr << "MemoryMap index not implemented: " << index << std::endl;
+        case 5:
+        case 7:
+        case 9: {
+            std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
+        }
+        
+        default: {
+            Memory *mem = (Memory *)m_memory_map.find(index)->second;
+            return mem->read_memory(address - m_address_space[index]);
+        }
     }
 }
 
