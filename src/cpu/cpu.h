@@ -19,6 +19,7 @@ typedef enum CPUFlag {
     CARRY_FLAG = 0x10
 } CPUFlag_t;
 
+
 typedef enum IORegisters {
     P1 = 0xFF00,
     DIV = 0xFF04,
@@ -41,6 +42,16 @@ typedef enum IORegisters {
     IE = 0xFFFF
 } IORegisters_t;
 
+
+typedef enum InterruptFlag {
+    VBLANK = 0x01,
+    LCD_STAT = 0x02,
+    TIMER = 0x04,
+    SERIAL = 0x08,
+    JOYPAD = 0x10
+} InterruptFlag_t;
+
+
 class CPU {
     public:
         CPU(MemoryMap &);
@@ -62,6 +73,15 @@ class CPU {
         void set_flag_register(CPUFlag_t, bool);
         bool read_flag_register(CPUFlag_t);
         void reset_flag_register();
+
+        uint8_t read_io_register(IORegisters_t);
+        void write_io_register(IORegisters_t, uint8_t);
+
+        void handle_interrupts();
+        bool get_interrupt_enable_bit(InterruptFlag_t);
+        bool get_interrupt_flag_bit(InterruptFlag_t);
+        void set_interrupt_enable_bit(InterruptFlag_t, bool);
+        void set_interrupt_flag_bit(InterruptFlag_t, bool);
 
         bool is_running() const;
         bool interrupts_enabled() const;

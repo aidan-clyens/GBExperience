@@ -2326,6 +2326,14 @@ void CPU::reset_flag_register() {
     this->write_register("F", 0);
 }
 
+uint8_t CPU::read_io_register(IORegisters_t reg) {
+    return m_memory_map.read((uint16_t)reg);
+}
+
+void CPU::write_io_register(IORegisters_t reg, uint8_t data) {
+    m_memory_map.write((uint16_t)reg, data);
+}
+
 bool CPU::is_running() const {
     return !m_halted && !m_stopped;
 }
