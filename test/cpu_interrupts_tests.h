@@ -4,6 +4,10 @@
 
 TEST(Interrupts, InterruptsEnabledByDefault) {
     MemoryMap mem_map;
+<<<<<<< HEAD
+=======
+    mem_map.init_memory_map(nullptr);
+>>>>>>> Add CPU interrupt flags and add ability to set or reset bits in Interrupt Enable register and Interrupt Flag register
     CPU cpu(mem_map);
 
     EXPECT_TRUE(cpu.interrupts_enabled());
@@ -12,6 +16,10 @@ TEST(Interrupts, InterruptsEnabledByDefault) {
 
 TEST(Interrupts, ReadInterruptEnableRegister) {
     MemoryMap mem_map;
+<<<<<<< HEAD
+=======
+    mem_map.init_memory_map(nullptr);
+>>>>>>> Add CPU interrupt flags and add ability to set or reset bits in Interrupt Enable register and Interrupt Flag register
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x1F, cpu.read_io_register(IE));
@@ -20,6 +28,10 @@ TEST(Interrupts, ReadInterruptEnableRegister) {
 
 TEST(Interrupts, ReadInterruptFlagRegister) {
     MemoryMap mem_map;
+<<<<<<< HEAD
+=======
+    mem_map.init_memory_map(nullptr);
+>>>>>>> Add CPU interrupt flags and add ability to set or reset bits in Interrupt Enable register and Interrupt Flag register
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x0, cpu.read_io_register(IF));
@@ -29,6 +41,10 @@ TEST(Interrupts, WriteInterruptEnableRegister) {
     uint8_t value = 0xFF;
 
     MemoryMap mem_map;
+<<<<<<< HEAD
+=======
+    mem_map.init_memory_map(nullptr);
+>>>>>>> Add CPU interrupt flags and add ability to set or reset bits in Interrupt Enable register and Interrupt Flag register
     CPU cpu(mem_map);
 
     cpu.write_io_register(IE, value);
@@ -40,6 +56,10 @@ TEST(Interrupts, WriteInterruptFlagRegister) {
     uint8_t value = 0xFF;
 
     MemoryMap mem_map;
+<<<<<<< HEAD
+=======
+    mem_map.init_memory_map(nullptr);
+>>>>>>> Add CPU interrupt flags and add ability to set or reset bits in Interrupt Enable register and Interrupt Flag register
     CPU cpu(mem_map);
 
     cpu.write_io_register(IF, value);
@@ -48,6 +68,10 @@ TEST(Interrupts, WriteInterruptFlagRegister) {
 
 TEST(Interrupts, SetVBlankEnableBit) {
     MemoryMap mem_map;
+<<<<<<< HEAD
+=======
+    mem_map.init_memory_map(nullptr);
+>>>>>>> Add CPU interrupt flags and add ability to set or reset bits in Interrupt Enable register and Interrupt Flag register
     CPU cpu(mem_map);
 
     cpu.write_io_register(IE, 0x0);
