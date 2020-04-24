@@ -21,4 +21,6 @@ class MemoryMap {
     private:
         int m_address_space[12];
         std::map<int, void*> m_memory_map;
+
+        uint8_t m_interrupt_enable_register;
 };
