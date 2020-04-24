@@ -1,7 +1,9 @@
 #include "memory_map.h"
 
 
-MemoryMap::MemoryMap() {
+MemoryMap::MemoryMap():
+m_interrupt_enable_register(0x1F)
+{
     // 32 kB Cartridge ROM Bank #0
     m_address_space[0] = 0x0000;
     // 32 kB Cartridge Switchable ROM Bank
@@ -31,7 +33,7 @@ MemoryMap::MemoryMap() {
 }
 
 MemoryMap::~MemoryMap() {
-    for (int i = 1; i < m_memory_map.size(); i++) {
+    for (int i = 1; i < m_memory_map.size() - 1; i++) {
         delete (Memory *)m_memory_map.find(i)->second;
     }
 }
@@ -43,9 +45,7 @@ bool MemoryMap::init_memory_map() {
         m_memory_map.insert(std::pair<int, Memory*>(i, ram));
     }
 
-    Memory *io = new Memory(1);
-    io->init_memory();
-    m_memory_map.insert(std::pair<int, Memory *>(11, io));
+    this->write(0xFF0F, 0x0);
 
     return true;
 }
@@ -70,6 +70,9 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
         }
+        case 11:
+            m_interrupt_enable_register = data;
+            return 0xFFFF;
         default: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->write_memory(address - m_address_space[index], data);
@@ -94,6 +97,10 @@ uint8_t MemoryMap::read(uint16_t address) {
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
         }
+        
+        case 11:
+            return m_interrupt_enable_register;
+        
         default: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->read_memory(address - m_address_space[index]);
