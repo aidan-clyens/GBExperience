@@ -51,6 +51,13 @@ typedef enum InterruptFlag {
     JOYPAD = 0x10
 } InterruptFlag_t;
 
+typedef enum InteruptVector {
+    VBLANK_ISR = 0x40,
+    LCD_STAT_ISR = 0x48,
+    TIMER_ISR = 0x50,
+    SERIAL_ISR = 0x58,
+    JOYPAD_ISR = 0x60
+} InterruptVector_t;
 
 class CPU {
     public:
@@ -78,6 +85,7 @@ class CPU {
         void write_io_register(IORegisters_t, uint8_t);
 
         void handle_interrupts();
+        bool handle_interrupt(InterruptFlag_t, InterruptVector_t);
         bool get_interrupt_enable_bit(InterruptFlag_t);
         bool get_interrupt_flag_bit(InterruptFlag_t);
         void set_interrupt_enable_bit(InterruptFlag_t, bool);
