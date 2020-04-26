@@ -70,13 +70,22 @@ void CPU::set_carry() {
 }
 
 void CPU::halt() {
-
     #ifdef DEBUG
     std::cout << "HALT" << std::endl;
     #endif
 
-    m_running = false;
+    m_halted = true;
 }
+
+
+void CPU::stop() {
+    #ifdef DEBUG
+    std::cout << "STOP" << std::endl;
+    #endif
+
+    m_stopped = true;
+}
+
 
 void CPU::enable_interrupts() {
     #ifdef DEBUG

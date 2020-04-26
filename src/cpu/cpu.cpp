@@ -3,7 +3,8 @@
 
 CPU::CPU(MemoryMap &mem_map):
 m_memory_map(mem_map),
-m_running(true),
+m_halted(false),
+m_stopped(false),
 m_interrupts_enabled(true)
 {
 
@@ -19,7 +20,7 @@ long int CPU::tick() {
 
     // Check if halted
     int cycle_count = 4;
-    if (m_running) {
+    if (this->is_running()) {
         // Fetch next opcode and execute
         uint8_t opcode = this->fetch_op();
         cycle_count = this->decode_op(opcode);
@@ -65,9 +66,8 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // STOP
         case 0x10:
-            #ifdef DEBUG
-            std::cout << "STOP" << std::endl;
-            #endif
+            this->stop();
+            cycle_count = 4;
             break;
         // DAA
         case 0x27:
@@ -2327,7 +2327,7 @@ void CPU::reset_flag_register() {
 }
 
 bool CPU::is_running() const {
-    return m_running;
+    return !m_halted && !m_stopped;
 }
 
 bool CPU::interrupts_enabled() const {
