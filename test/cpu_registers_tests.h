@@ -17,7 +17,7 @@ TEST(CPURegisters, InitCPURegisters) {
     EXPECT_EQ(0x0, cpu_registers.read_register("H"));
     EXPECT_EQ(0x0, cpu_registers.read_register("L"));
     EXPECT_EQ(0x0, cpu_registers.read_register("HL"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("SP"));
+    EXPECT_EQ(0xE000, cpu_registers.read_register("SP"));
     EXPECT_EQ(0x100, cpu_registers.read_register("PC"));
 }
 
