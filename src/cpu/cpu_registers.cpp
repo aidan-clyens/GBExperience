@@ -3,7 +3,7 @@
 
 CPURegisters::CPURegisters():
 m_PC(0x100),
-m_SP(0x0)
+m_SP(0xE000)
 {
     m_valid_8bit_registers = {"A", "F", "B", "C", "D", "E", "H", "L"};
     m_valid_16bit_registers = {"AF", "BC", "DE", "HL"};

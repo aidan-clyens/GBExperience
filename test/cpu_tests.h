@@ -21,7 +21,7 @@ TEST(CPU, InitCPU) {
     EXPECT_EQ(0x0, cpu.read_register("H"));
     EXPECT_EQ(0x0, cpu.read_register("L"));
     EXPECT_EQ(0x0, cpu.read_register("HL"));
-    EXPECT_EQ(0x0, cpu.read_register("SP"));
+    EXPECT_EQ(0xE000, cpu.read_register("SP"));
     EXPECT_EQ(0x100, cpu.read_register("PC"));
 }
 
