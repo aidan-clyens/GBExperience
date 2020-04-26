@@ -158,6 +158,22 @@ TEST(CPU_MISC, HALT) {
     EXPECT_TRUE(false);
 }
 
+// STOP
+TEST(CPU_MISC, STOP) {
+    uint8_t opcode = 0x10;
+
+    MemoryMap mem_map;
+    mem_map.init_memory_map(nullptr);
+    CPU cpu(mem_map);
+
+    cpu.decode_op(opcode);
+
+    EXPECT_FALSE(cpu.is_running());
+
+    // TODO Wait for joypad interrupt to continue CPU
+    EXPECT_TRUE(false);
+}
+
 // EI
 TEST(CPU_MISC, EI) {
     uint8_t opcode = 0xFB;

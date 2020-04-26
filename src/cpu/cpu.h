@@ -51,7 +51,8 @@ class CPU {
 
         std::chrono::steady_clock::time_point m_last_time;
 
-        bool m_running;
+        bool m_halted;
+        bool m_stopped;
         bool m_interrupts_enabled;
         
         // CPU Timing
@@ -166,6 +167,8 @@ class CPU {
         void set_carry();
         // HALT
         void halt();
+        // STOP
+        void stop();
         // EI
         void enable_interrupts();
         // DI
