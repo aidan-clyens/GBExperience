@@ -66,10 +66,9 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             return mem->write_memory(address - m_address_space[index], data);
         }
         case 7:
-        case 9: {
+        case 9:
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
-        }
         case 11:
             m_interrupt_enable_register = data;
             return 0xFFFF;
@@ -93,10 +92,9 @@ uint8_t MemoryMap::read(uint16_t address) {
             return mem->read_memory(address - m_address_space[index]);
         }
         case 7:
-        case 9: {
+        case 9:
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
-        }
         
         case 11:
             return m_interrupt_enable_register;
