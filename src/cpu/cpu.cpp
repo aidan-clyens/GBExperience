@@ -18,6 +18,9 @@ long int CPU::tick() {
     // Get start time of CPU tick
     m_last_time = this->get_time();
 
+    // Handle interrupts
+    this->handle_interrupts();
+
     // Check if halted
     int cycle_count = 4;
     if (this->is_running()) {
