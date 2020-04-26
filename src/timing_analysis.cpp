@@ -14,7 +14,6 @@ const int ITERATION_COUNT = 5000;
 
 MemoryMap setup_mem_map(uint8_t opcode) {
     MemoryMap memory_map;
-    memory_map.init_memory_map(nullptr);
 
     for (int i = 0; i < 2*ITERATION_COUNT; i++) {
         memory_map.write(0xA000 + i, opcode);

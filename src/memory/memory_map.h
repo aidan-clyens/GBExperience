@@ -11,7 +11,8 @@ class MemoryMap {
         MemoryMap();
         virtual ~MemoryMap();
 
-        bool init_memory_map(void*);
+        bool init_memory_map();
+        void load_rom(void *);
         uint16_t write(uint16_t, uint8_t);
         uint8_t read(uint16_t);
 

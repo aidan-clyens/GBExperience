@@ -11,7 +11,7 @@ TEST(CPU_ALU, ADD) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -38,7 +38,7 @@ TEST(CPU_ALU, ADD_HL) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -69,7 +69,7 @@ TEST(CPU_ALU, ADD_N) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
 
     EXPECT_EQ(n, mem_map.read(PC));
@@ -99,7 +99,7 @@ TEST(CPU_ALU, ADDCarry) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -125,7 +125,7 @@ TEST(CPU_ALU, ADDZero) {
     uint8_t n = 0x0;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -151,7 +151,7 @@ TEST(CPU_ALU, ADDHalfCarry) {
     uint8_t n = 0x01;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -177,7 +177,7 @@ TEST(CPU_ALU, ADC) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     // First operation sets carry flag
@@ -217,7 +217,7 @@ TEST(CPU_ALU, ADCZero) {
     uint8_t n = 0x0;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -245,7 +245,7 @@ TEST(CPU_ALU, ADCCarry) {
     uint8_t n = 0x02;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
     
     // First operation ensures that carry flag is set
@@ -284,7 +284,7 @@ TEST(CPU_ALU, ADCHalfCarry) {
     uint8_t n = 0x01;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -311,7 +311,7 @@ TEST(CPU_ALU, SUB) {
     uint8_t result = 0xA0;  // 1010 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -339,7 +339,7 @@ TEST(CPU_ALU, SUB_HL) {
     uint8_t result = 0xA0; // 1010 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -368,7 +368,7 @@ TEST(CPU_ALU, SUBZero) {
     uint8_t result = 0x00; // 0000 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -395,7 +395,7 @@ TEST(CPU_ALU, SUBCarry) {
     uint8_t result = 0x10; // 0001 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -422,7 +422,7 @@ TEST(CPU_ALU, SUBHalfCarry) {
     uint8_t result = 0x81; // 1000 0001
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -449,7 +449,7 @@ TEST(CPU_ALU, SBCCarryNotSet) {
     uint8_t result = 0xA0; // 1010 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -480,7 +480,7 @@ TEST(CPU_ALU, SBCCarrySet) {
     uint8_t result = 0x9F; // 1001 1111
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -511,7 +511,7 @@ TEST(CPU_ALU, SBCZero) {
     uint8_t result = 0x00;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -541,7 +541,7 @@ TEST(CPU_ALU, SBCCarry) {
     uint8_t result = 0x10;  // 0001 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -571,7 +571,7 @@ TEST(CPU_ALU, SBCHalfCarry) {
     uint8_t result = 0x01;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -600,7 +600,7 @@ TEST(CPU_ALU, AND) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -626,7 +626,7 @@ TEST(CPU_ALU, ANDZero) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -652,7 +652,7 @@ TEST(CPU_ALU, OR) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -678,7 +678,7 @@ TEST(CPU_ALU, ORZero) {
     uint8_t n = 0x0;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -704,7 +704,7 @@ TEST(CPU_ALU, XOR) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -730,7 +730,7 @@ TEST(CPU_ALU, XORZero) {
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -757,7 +757,7 @@ TEST(CPU_ALU, CPNoMatch) {
     uint8_t n = 0x20;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -781,7 +781,7 @@ TEST(CPU_ALU, CPMatch) {
     uint8_t n = 0x20;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -804,7 +804,7 @@ TEST(CPU_ALU, INC) {
     uint8_t val = 0x13;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -826,7 +826,7 @@ TEST(CPU_ALU, INCHalfCarry) {
     uint8_t val = 0x1F;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -849,7 +849,7 @@ TEST(CPU_ALU, INC_HL) {
     uint8_t val = 0x15;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", address);
@@ -869,7 +869,7 @@ TEST(CPU_ALU, DEC) {
     uint8_t result = 0x12;  // 0001 0010
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -892,7 +892,7 @@ TEST(CPU_ALU, DECZero) {
     uint8_t result = 0x00;  // 0000 0000
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -915,7 +915,7 @@ TEST(CPU_ALU, DECHalfCarry) {
     uint8_t result = 0x11;  // 0001 0001
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val);
@@ -939,7 +939,7 @@ TEST(CPU_ALU, DEC_HL) {
     uint8_t result = 0x12;  // 0001 0010
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", address);
@@ -960,7 +960,7 @@ TEST(CPU_ALU_16Bit, ADD) {
     uint16_t n = 0x0314;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", val);
@@ -985,7 +985,7 @@ TEST(CPU_ALU_16Bit, ADDCarry) {
     uint16_t n = 0x1000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", val);
@@ -1010,7 +1010,7 @@ TEST(CPU_ALU_16Bit, ADDHalfCarry) {
     uint16_t n = 0x0010;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", val);
@@ -1037,7 +1037,7 @@ TEST(CPU_ALU_16Bit, ADD_SP) {
     uint16_t PC = 0xA000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
 
     EXPECT_EQ(n, mem_map.read(PC));
@@ -1069,7 +1069,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_Negative) {
     uint16_t PC = 0xA000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
 
     EXPECT_EQ((uint8_t)n, mem_map.read(PC));
@@ -1100,7 +1100,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
     uint16_t PC = 0xA000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
 
     EXPECT_EQ(n, mem_map.read(PC));
@@ -1131,7 +1131,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_HalfCarry) {
     uint16_t PC = 0xA000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
 
     EXPECT_EQ(n, mem_map.read(PC));
@@ -1159,7 +1159,7 @@ TEST(CPU_ALU_16Bit, INC) {
     uint16_t val = 0x1312;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("BC", val);
@@ -1176,7 +1176,7 @@ TEST(CPU_ALU_16Bit, DEC_16) {
     uint16_t val = 0x1312;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("BC", val);
