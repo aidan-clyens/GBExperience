@@ -12,7 +12,7 @@ MemoryMap::MemoryMap() {
     m_address_space[3] = 0xA000;
     // Internal RAM
     m_address_space[4] = 0xC000;
-    // Unusable
+    // Echo RAM
     m_address_space[5] = 0xE000;
     // Sprite Attributes
     m_address_space[6] = 0xFE00;
@@ -57,7 +57,10 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 0:
             std::cerr << "Cannot write to ROM" << std::endl;
             throw new std::exception;
-        case 5:
+        case 5: {
+            Memory *mem = (Memory *)m_memory_map.find(index-1)->second;
+            return mem->write_memory(address - m_address_space[index], data);
+        }
         case 7:
         case 9: {
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
@@ -75,17 +78,18 @@ uint8_t MemoryMap::read(uint16_t address) {
 
     switch (index) {
         case 0: {
-                uint8_t *rom = (uint8_t *)m_memory_map.find(index)->second;
-                return rom[address];
-            }
-
-        case 5:
+            uint8_t *rom = (uint8_t *)m_memory_map.find(index)->second;
+            return rom[address];
+        }
+        case 5: {
+            Memory *mem = (Memory *)m_memory_map.find(index-1)->second;
+            return mem->read_memory(address - m_address_space[index]);
+        }
         case 7:
         case 9: {
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
         }
-        
         default: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->read_memory(address - m_address_space[index]);
