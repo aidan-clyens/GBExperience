@@ -3,7 +3,7 @@
 
 MemoryMap setup_mem_map(uint16_t PC, uint16_t value) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, (value & 0xFF));
     mem_map.write(PC + 1, (value >> 8));
 
@@ -342,7 +342,7 @@ TEST(CPU_RST, RST) {
     uint16_t SP = 0xC000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("PC", PC);
@@ -369,7 +369,7 @@ TEST(CPU_CALL, CALL_NN) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
@@ -401,7 +401,7 @@ TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
@@ -429,7 +429,7 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
@@ -465,7 +465,7 @@ TEST(CPU_RETURNS, RET) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
@@ -503,7 +503,7 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
@@ -545,7 +545,7 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
@@ -587,7 +587,7 @@ TEST(CPU_RETURNS, RETI) {
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val & 0xFF);
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);

@@ -11,7 +11,7 @@ TEST(CPU_LD, LD_NN_N) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val_2);
     CPU cpu(mem_map);
 
@@ -33,7 +33,7 @@ TEST(CPU_LD, LD_R1_R2) {
     uint8_t val_2 = 0xAC;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val_1);
@@ -56,7 +56,7 @@ TEST(CPU_LD, LD_R1_HL) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("B", val_1);
@@ -80,7 +80,7 @@ TEST(CPU_LD, LD_HL_R2) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", address);
@@ -105,7 +105,7 @@ TEST(CPU_LD, LD_HL_N) {
     uint16_t PC = 0xA200;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val_2);
     CPU cpu(mem_map);
     
@@ -130,7 +130,7 @@ TEST(CPU_LD, LD_A_BC) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val_1);
@@ -155,7 +155,7 @@ TEST(CPU_LD, LD_A_NN) {
     uint16_t PC = 0xA200;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, address & 0xFF);
     mem_map.write(PC + 1, address >> 8);
     mem_map.write(address, val_2);
@@ -180,7 +180,7 @@ TEST(CPU_LD, LD_A_N) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val_2);
     CPU cpu(mem_map);
 
@@ -202,7 +202,7 @@ TEST(CPU_LD, LD_N_A) {
     uint8_t val_2 = 0xAC;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("B", val_1);
@@ -225,7 +225,7 @@ TEST(CPU_LD, LD_BC_A) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("BC", address);
@@ -250,7 +250,7 @@ TEST(CPU_LD, LD_NN_A) {
     uint16_t PC = 0xA200;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, address & 0xFF);
     mem_map.write(PC + 1, address >> 8);
     mem_map.write(address, val_1);
@@ -278,7 +278,7 @@ TEST(CPU_LD, LD_A_C) {
     uint16_t address = 0xFF00 + val_C;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(address, val_2);
     
     EXPECT_EQ(val_2, mem_map.read(address));
@@ -307,7 +307,7 @@ TEST(CPU_LD, LD_C_A) {
     uint16_t address = 0xFF00 + val_C;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(address, val_1);
     CPU cpu(mem_map);
     
@@ -331,7 +331,7 @@ TEST(CPU_LD, LDD_A_HL) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val_1);
@@ -356,7 +356,7 @@ TEST(CPU_LD, LDD_HL_A) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", address);
@@ -384,7 +384,7 @@ TEST(CPU_LD, LDI_A_HL) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", val_1);
@@ -409,7 +409,7 @@ TEST(CPU_LD, LDI_HL_A) {
     uint16_t address = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", address);
@@ -440,7 +440,7 @@ TEST(CPU_LD, LD_n_A) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val_n);
     mem_map.write(address, val_1);
     CPU cpu(mem_map);
@@ -468,7 +468,7 @@ TEST(CPU_LD, LD_A_n) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val_n);
     mem_map.write(address, val_2);
     
@@ -495,7 +495,7 @@ TEST(CPU_LD_16Bit, LD_N_NN) {
     uint16_t PC = 0xA200;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, val_2 & 0xFF);
     mem_map.write(PC + 1, val_2 >> 8);
     CPU cpu(mem_map);
@@ -519,7 +519,7 @@ TEST(CPU_LD_16Bit, LD_SP_HL) {
     uint16_t val_2 = 0xABCD;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("SP", val_1);
@@ -542,7 +542,7 @@ TEST(CPU_LD_16Bit, LDHL_SP_N) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
     CPU cpu(mem_map);
 
@@ -577,7 +577,7 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Negative) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
     CPU cpu(mem_map);
 
@@ -611,7 +611,7 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Carry) {
     uint16_t PC = 0xA0FF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, n);
     CPU cpu(mem_map);
 
@@ -650,7 +650,7 @@ TEST(CPU_LD_16Bit, LD_PUSH_NN) {
     uint16_t SP = 0xC000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("SP", SP);
@@ -679,7 +679,7 @@ TEST(CPU_LD_16Bit, LD_POP_NN) {
     uint16_t SP = 0xC000;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("SP", SP);
