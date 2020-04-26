@@ -74,7 +74,7 @@ TEST(CPU_MISC, CPL) {
     uint8_t result = 0x54;  // 0101 0100
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);
@@ -95,7 +95,7 @@ TEST(CPU_MISC, CCF) {
     bool carry = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.set_flag_register(CARRY_FLAG, carry);
@@ -115,7 +115,7 @@ TEST(CPU_MISC, SCF) {
     bool carry = false;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.set_flag_register(CARRY_FLAG, carry);
@@ -134,7 +134,7 @@ TEST(CPU_MISC, NOP) {
     uint8_t opcode = 0x00;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     int count = cpu.decode_op(opcode);
@@ -147,7 +147,7 @@ TEST(CPU_MISC, HALT) {
     uint8_t opcode = 0x76;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);
@@ -163,7 +163,7 @@ TEST(CPU_MISC, STOP) {
     uint8_t opcode = 0x10;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);
@@ -179,7 +179,7 @@ TEST(CPU_MISC, EI) {
     uint8_t opcode = 0xFB;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);
@@ -192,7 +192,7 @@ TEST(CPU_MISC, DI) {
     uint8_t opcode = 0xF3;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);

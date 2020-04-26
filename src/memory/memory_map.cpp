@@ -26,6 +26,8 @@ MemoryMap::MemoryMap() {
     m_address_space[10] = 0xFF80;
     // Interrupt Enable Register
     m_address_space[11] = 0xFFFF;
+
+    this->init_memory_map();
 }
 
 MemoryMap::~MemoryMap() {
@@ -34,9 +36,7 @@ MemoryMap::~MemoryMap() {
     }
 }
 
-bool MemoryMap::init_memory_map(void *file_parser_buffer) {
-    m_memory_map.insert(std::pair<int, void *>(0, file_parser_buffer));
-
+bool MemoryMap::init_memory_map() {
     for (int i = 1; i < 11; i++) {
         Memory *ram = new Memory(m_address_space[i+1] - m_address_space[i]);
         ram->init_memory();
@@ -48,6 +48,10 @@ bool MemoryMap::init_memory_map(void *file_parser_buffer) {
     m_memory_map.insert(std::pair<int, Memory *>(11, io));
 
     return true;
+}
+
+void MemoryMap::load_rom(void *file_parser_buffer) {
+    m_memory_map.insert(std::pair<int, void *>(0, file_parser_buffer));
 }
 
 uint16_t MemoryMap::write(uint16_t address, uint8_t data) {

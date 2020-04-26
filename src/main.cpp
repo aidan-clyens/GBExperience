@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     file_parser.load_rom(rom_file);
     
     MemoryMap memory_map;
-    memory_map.init_memory_map(file_parser.get_buffer_ptr());
+    memory_map.load_rom(file_parser.get_buffer_ptr());
 
     CPU cpu(memory_map);
 

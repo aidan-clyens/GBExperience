@@ -4,7 +4,7 @@
 
 MemoryMap setup_cb_instruction(uint16_t PC, uint8_t opcode) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     mem_map.write(PC, 0xCB);
     mem_map.write(PC + 1, opcode);
 
@@ -23,7 +23,7 @@ TEST(CPU_ROTATES, RLCA) {
     bool bit_7 = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);
@@ -49,7 +49,7 @@ TEST(CPU_ROTATES, RLA_CarryNotSet) {
     bool bit_7 = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);
@@ -79,7 +79,7 @@ TEST(CPU_ROTATES, RLA_CarrySet) {
     bool bit_7 = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);
@@ -109,7 +109,7 @@ TEST(CPU_ROTATES, RRCA) {
     bool bit_0 = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);
@@ -135,7 +135,7 @@ TEST(CPU_ROTATES, RRA_CarryNotSet) {
     bool bit_0 = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);
@@ -165,7 +165,7 @@ TEST(CPU_ROTATES, RRA_CarrySet) {
     bool bit_0 = true;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("A", A);

@@ -6,7 +6,7 @@
 
 TEST(CPU, InitCPU) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x0, cpu.read_register("A"));
@@ -33,7 +33,7 @@ TEST(CPU, FetchOpcodeFromRom) {
     EXPECT_TRUE(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(file_parser.get_buffer_ptr());
+    mem_map. load_rom(file_parser.get_buffer_ptr());
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x100, cpu.read_register("PC"));
@@ -43,7 +43,7 @@ TEST(CPU, FetchOpcodeFromRom) {
 
 TEST(CPU, InitialFlagRegister) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_EQ(0, cpu.read_flag_register(ZERO_FLAG));
@@ -54,7 +54,7 @@ TEST(CPU, InitialFlagRegister) {
 
 TEST(CPU, WriteZeroFlag) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_NO_THROW(cpu.set_flag_register(ZERO_FLAG, true));
@@ -66,7 +66,7 @@ TEST(CPU, WriteZeroFlag) {
 
 TEST(CPU, WriteSubtractFlag) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, true));
@@ -78,7 +78,7 @@ TEST(CPU, WriteSubtractFlag) {
 
 TEST(CPU, WriteHalfCarryFlag) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_NO_THROW(cpu.set_flag_register(HALF_CARRY_FLAG, true));
@@ -90,7 +90,7 @@ TEST(CPU, WriteHalfCarryFlag) {
 
 TEST(CPU, WriteCarryFlag) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_NO_THROW(cpu.set_flag_register(CARRY_FLAG, true));
@@ -102,7 +102,7 @@ TEST(CPU, WriteCarryFlag) {
 
 TEST(CPU, SetMultipleFlags) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_NO_THROW(cpu.set_flag_register(SUBTRACT_FLAG, true));
@@ -119,7 +119,7 @@ TEST(CPU, SetMultipleFlags) {
 
 TEST(CPU, ResetFlagRegister) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     EXPECT_NO_THROW(cpu.set_flag_register(ZERO_FLAG, true));
@@ -140,7 +140,7 @@ TEST(CPU, WriteMemoryHL) {
     uint8_t val = 0xAB;
     
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("HL", HL);
@@ -157,7 +157,7 @@ TEST(CPU, WriteMemory) {
     uint8_t val = 0xAB;
     
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
+    
     CPU cpu(mem_map);
 
     cpu.write_register("BC", BC);

@@ -4,13 +4,11 @@
 
 
 TEST(MemoryMap, Init) {
-    MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
+    MemoryMap mem_map;    
 }
 
 TEST(MemoryMap, GetIndexes) {
-    MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
+    MemoryMap mem_map;     
 
     uint16_t addresses[12] = {
         0x1000,
@@ -34,7 +32,6 @@ TEST(MemoryMap, GetIndexes) {
 
 TEST(MemoryMap, GetIndexesBoundaries) {
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
 
     uint16_t addresses[12] = {
         0x0000,
@@ -58,7 +55,7 @@ TEST(MemoryMap, GetIndexesBoundaries) {
 
 TEST(MemoryMap, WriteSwitchableRAM) {
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
+     
 
     uint16_t address = 0xA100;
     uint16_t mem_address = address - 0xA000;
@@ -72,7 +69,7 @@ TEST(MemoryMap, WriteSwitchableRAM) {
 
 TEST(MemoryMap, WriteInternalRAM) {
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
+     
 
     uint16_t address =0xC100;
     uint16_t mem_address = address - 0xC000;
@@ -94,7 +91,7 @@ TEST(MemoryMap, ReadRom) {
     EXPECT_TRUE(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(file_parser.get_buffer_ptr()));
+    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_ptr()));
 
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0x54;
@@ -113,7 +110,7 @@ TEST(MemoryMap, WriteToRom) {
     EXPECT_TRUE(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(file_parser.get_buffer_ptr()));
+    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_ptr()));
 
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0xFF;
@@ -124,7 +121,6 @@ TEST(MemoryMap, WriteToRom) {
 
 TEST(MemoryMap, ReadFromUnimplementedSpace) {
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
 
     uint16_t address = 0xFEAF;
 
@@ -139,7 +135,6 @@ TEST(MemoryMap, WriteEchoRAM) {
     uint8_t data = 0xAB;
 
     MemoryMap mem_map;
-    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
 
     mem_map.write(echo_ram_address, data);
 
