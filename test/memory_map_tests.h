@@ -131,3 +131,18 @@ TEST(MemoryMap, ReadFromUnimplementedSpace) {
     EXPECT_EQ(7, mem_map.get_index(address));
     EXPECT_ANY_THROW(mem_map.read(address));
 }
+
+
+TEST(MemoryMap, WriteEchoRAM) {
+    uint16_t echo_ram_address = 0xE100;
+    uint16_t ram_address = echo_ram_address - 0x2000;
+    uint8_t data = 0xAB;
+
+    MemoryMap mem_map;
+    EXPECT_TRUE(mem_map.init_memory_map(nullptr));
+
+    mem_map.write(echo_ram_address, data);
+
+    EXPECT_EQ(data, mem_map.read(echo_ram_address));
+    EXPECT_EQ(data, mem_map.read(ram_address));
+}
