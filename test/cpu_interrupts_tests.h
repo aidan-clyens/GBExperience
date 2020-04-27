@@ -4,7 +4,6 @@
 
 TEST(Interrupts, InterruptsEnabledByDefault) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     EXPECT_TRUE(cpu.interrupts_enabled());
@@ -13,7 +12,6 @@ TEST(Interrupts, InterruptsEnabledByDefault) {
 
 TEST(Interrupts, ReadInterruptEnableRegister) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x1F, cpu.read_io_register(IE));
@@ -22,7 +20,6 @@ TEST(Interrupts, ReadInterruptEnableRegister) {
 
 TEST(Interrupts, ReadInterruptFlagRegister) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x0, cpu.read_io_register(IF));
@@ -32,7 +29,6 @@ TEST(Interrupts, WriteInterruptEnableRegister) {
     uint8_t value = 0xFF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IE, value);
@@ -44,7 +40,6 @@ TEST(Interrupts, WriteInterruptFlagRegister) {
     uint8_t value = 0xFF;
 
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IF, value);
@@ -53,7 +48,6 @@ TEST(Interrupts, WriteInterruptFlagRegister) {
 
 TEST(Interrupts, SetVBlankEnableBit) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IE, 0x0);
@@ -68,7 +62,6 @@ TEST(Interrupts, SetVBlankEnableBit) {
 
 TEST(Interrupts, SetVBlankFlagBit) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IF, 0x0);
@@ -83,7 +76,6 @@ TEST(Interrupts, SetVBlankFlagBit) {
 
 TEST(Interrupts, SetMultipleEnableBits) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IE, 0x0);
@@ -101,7 +93,6 @@ TEST(Interrupts, SetMultipleEnableBits) {
 
 TEST(Interrupts, SetMultipleFlagBits) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IF, 0x0);
@@ -119,7 +110,6 @@ TEST(Interrupts, SetMultipleFlagBits) {
 
 TEST(Interrupts, ResetVBlankEnableBit) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IE, 0x1F);
@@ -134,7 +124,6 @@ TEST(Interrupts, ResetVBlankEnableBit) {
 
 TEST(Interrupts, ResetVBlankFlagBit) {
     MemoryMap mem_map;
-    mem_map.init_memory_map(nullptr);
     CPU cpu(mem_map);
 
     cpu.write_io_register(IF, 0x1F);
