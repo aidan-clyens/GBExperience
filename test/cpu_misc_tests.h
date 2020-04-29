@@ -118,6 +118,7 @@ TEST(CPU_MISC, SCF) {
     
     CPU cpu(mem_map);
 
+    cpu.reset_flag_register();
     cpu.set_flag_register(CARRY_FLAG, carry);
     EXPECT_EQ(carry, cpu.read_flag_register(CARRY_FLAG));
 

@@ -5,19 +5,19 @@
 TEST(CPURegisters, InitCPURegisters) {
     CPURegisters cpu_registers;
 
-    EXPECT_EQ(0x0, cpu_registers.read_register("A"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("F"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("AF"));
+    EXPECT_EQ(0x01, cpu_registers.read_register("A"));
+    EXPECT_EQ(0xB0, cpu_registers.read_register("F"));
+    EXPECT_EQ(0x01B0, cpu_registers.read_register("AF"));
     EXPECT_EQ(0x0, cpu_registers.read_register("B"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("C"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("BC"));
+    EXPECT_EQ(0x13, cpu_registers.read_register("C"));
+    EXPECT_EQ(0x0013, cpu_registers.read_register("BC"));
     EXPECT_EQ(0x0, cpu_registers.read_register("D"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("E"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("DE"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("H"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("L"));
-    EXPECT_EQ(0x0, cpu_registers.read_register("HL"));
-    EXPECT_EQ(0xE000, cpu_registers.read_register("SP"));
+    EXPECT_EQ(0xD8, cpu_registers.read_register("E"));
+    EXPECT_EQ(0x00D8, cpu_registers.read_register("DE"));
+    EXPECT_EQ(0x01, cpu_registers.read_register("H"));
+    EXPECT_EQ(0x4D, cpu_registers.read_register("L"));
+    EXPECT_EQ(0x014D, cpu_registers.read_register("HL"));
+    EXPECT_EQ(0xFFFE, cpu_registers.read_register("SP"));
     EXPECT_EQ(0x100, cpu_registers.read_register("PC"));
 }
 
