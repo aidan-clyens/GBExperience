@@ -1,9 +1,7 @@
 #include "memory_map.h"
 
 
-MemoryMap::MemoryMap():
-m_interrupt_enable_register(0x1F)
-{
+MemoryMap::MemoryMap() {
     // 32 kB Cartridge ROM Bank #0
     m_address_space[0] = 0x0000;
     // 32 kB Cartridge Switchable ROM Bank
@@ -69,9 +67,9 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 9:
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
+        case 8:
         case 11:
-            m_interrupt_enable_register = data;
-            return 0xFFFF;
+            return this->m_io.write((IORegisters_t)address, data);
         default: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->write_memory(address - m_address_space[index], data);
@@ -96,8 +94,9 @@ uint8_t MemoryMap::read(uint16_t address) {
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
             throw new std::exception;
         
+        case 8:
         case 11:
-            return m_interrupt_enable_register;
+            return this->m_io.read((IORegisters_t)address);
         
         default: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
