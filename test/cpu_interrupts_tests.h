@@ -15,7 +15,7 @@ TEST(Interrupts, ReadInterruptEnableRegister) {
     MemoryMap mem_map;
     CPU cpu(mem_map);
 
-    EXPECT_EQ(0x1F, cpu.read_io_register(IE));
+    EXPECT_EQ(0x0, cpu.read_io_register(IE));
 }
 
 
