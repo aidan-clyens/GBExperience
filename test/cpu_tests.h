@@ -8,21 +8,6 @@ TEST(CPU, InitCPU) {
     MemoryMap mem_map;
     
     CPU cpu(mem_map);
-
-    EXPECT_EQ(0x0, cpu.read_register("A"));
-    EXPECT_EQ(0x0, cpu.read_register("F"));
-    EXPECT_EQ(0x0, cpu.read_register("AF"));
-    EXPECT_EQ(0x0, cpu.read_register("B"));
-    EXPECT_EQ(0x0, cpu.read_register("C"));
-    EXPECT_EQ(0x0, cpu.read_register("BC"));
-    EXPECT_EQ(0x0, cpu.read_register("D"));
-    EXPECT_EQ(0x0, cpu.read_register("E"));
-    EXPECT_EQ(0x0, cpu.read_register("DE"));
-    EXPECT_EQ(0x0, cpu.read_register("H"));
-    EXPECT_EQ(0x0, cpu.read_register("L"));
-    EXPECT_EQ(0x0, cpu.read_register("HL"));
-    EXPECT_EQ(0xE000, cpu.read_register("SP"));
-    EXPECT_EQ(0x100, cpu.read_register("PC"));
 }
 
 TEST(CPU, FetchOpcodeFromRom) {
@@ -46,10 +31,10 @@ TEST(CPU, InitialFlagRegister) {
     
     CPU cpu(mem_map);
 
-    EXPECT_EQ(0, cpu.read_flag_register(ZERO_FLAG));
-    EXPECT_EQ(0, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(0, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(0, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_TRUE(cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_TRUE(cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_TRUE(cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU, WriteZeroFlag) {
