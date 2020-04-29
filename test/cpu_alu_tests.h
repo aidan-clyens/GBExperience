@@ -226,17 +226,17 @@ TEST(CPU_ALU, ADCZero) {
     EXPECT_EQ(val, cpu.read_register("A"));
     EXPECT_EQ(n, cpu.read_register("B"));
 
-    // Run twice to ensure flag register is reset
-    cpu.decode_op(opcode);
+    cpu.reset_flag_register();
+
     cpu.decode_op(opcode);
 
     EXPECT_EQ(val + n, cpu.read_register("A"));
 
     // Check Flag register
-    EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_TRUE(cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU, ADCCarry) {
@@ -293,15 +293,17 @@ TEST(CPU_ALU, ADCHalfCarry) {
     EXPECT_EQ(val, cpu.read_register("A"));
     EXPECT_EQ(n, cpu.read_register("B"));
 
+    cpu.reset_flag_register();
+
     cpu.decode_op(opcode);
 
     EXPECT_EQ(val + n, cpu.read_register("A"));
 
     // Check Flag register
-    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_TRUE(cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_FALSE(cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU, SUB) {

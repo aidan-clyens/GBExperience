@@ -3,7 +3,7 @@
 
 CPURegisters::CPURegisters():
 m_PC(0x100),
-m_SP(0xE000)
+m_SP(0xFFFE)
 {
     m_valid_8bit_registers = {"A", "F", "B", "C", "D", "E", "H", "L"};
     m_valid_16bit_registers = {"AF", "BC", "DE", "HL"};
@@ -12,6 +12,11 @@ m_SP(0xE000)
         std::string reg = m_valid_8bit_registers[i];
         m_registers.insert(std::pair<std::string, uint8_t>(reg, 0x0));
     }
+
+    this->write_register("AF", 0x01B0);
+    this->write_register("BC", 0x0013);
+    this->write_register("DE", 0x00D8);
+    this->write_register("HL", 0x014D);
 }
 
 CPURegisters::~CPURegisters() {
