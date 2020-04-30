@@ -10,6 +10,12 @@ class Video {
 
         void tick();
 
+        // LCDC Register
+        bool lcd_display_enabled();
+        bool window_display_enabled();
+        bool sprite_display_enabled();
+        bool background_display_enabled();
+
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
 
