@@ -98,3 +98,29 @@ TEST(Video, CheckTileDataTable) {
 
     EXPECT_EQ(TILE_DATA_SIGNED, video.get_tile_data_selected());
 }
+
+
+TEST(Video, CheckWindowTileMap) {
+    uint8_t LCDC_data = 0xEC;   // 1110 1100
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(LCDC, LCDC_data);
+    EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
+
+    EXPECT_EQ(TILE_MAP_2, video.get_window_tile_map_selected());
+}
+
+
+TEST(Video, CheckBackgroundTileMap) {
+    uint8_t LCDC_data = 0xEC;   // 1110 1100
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(LCDC, LCDC_data);
+    EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
+
+    EXPECT_EQ(TILE_MAP_2, video.get_background_tile_map_selected());
+}
