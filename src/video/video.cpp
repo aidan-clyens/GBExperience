@@ -15,6 +15,7 @@ void Video::tick() {
 
 }
 
+/******   LCDC Register   ******/
 bool Video::lcd_display_enabled() {
     // Check bit 7 of the LCDC register
     uint8_t lcdc = this->read_io_register(LCDC);
@@ -42,6 +43,15 @@ bool Video::background_display_enabled() {
 
     return (lcdc & 0x01) == 0x01;
 }
+
+SpriteSize_t Video::get_sprite_size() {
+    // Check bit 2 of the LCDC register
+    uint8_t lcdc = this->read_io_register(LCDC);
+    bool bit2 = ((lcdc >> 2) & 0x01) == 0x01;
+
+    return (bit2) ? SPRITEx16 : SPRITEx8;
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
