@@ -72,3 +72,16 @@ TEST(Video, CheckBackgroundDisplayEnabled) {
 
     EXPECT_FALSE(video.background_display_enabled());
 }
+
+
+TEST(Video, CheckSpriteSize) {
+    uint8_t LCDC_data = 0xEC;   // 1110 1100
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(LCDC, LCDC_data);
+    EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
+
+    EXPECT_EQ(SPRITEx16, video.get_sprite_size());
+}
