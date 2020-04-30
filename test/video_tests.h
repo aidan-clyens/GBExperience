@@ -85,3 +85,16 @@ TEST(Video, CheckSpriteSize) {
 
     EXPECT_EQ(SPRITEx16, video.get_sprite_size());
 }
+
+
+TEST(Video, CheckTileDataTable) {
+    uint8_t LCDC_data = 0xEC;   // 1110 1100
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(LCDC, LCDC_data);
+    EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
+
+    EXPECT_EQ(TILE_DATA_SIGNED, video.get_tile_data_selected());
+}
