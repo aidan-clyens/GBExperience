@@ -52,6 +52,14 @@ SpriteSize_t Video::get_sprite_size() {
     return (bit2) ? SPRITEx16 : SPRITEx8;
 }
 
+TileDataTableSelect_t Video::get_tile_data_selected() {
+    // Check bit 4 of the LCDC register
+    uint8_t lcdc = this->read_io_register(LCDC);
+    bool bit4 = ((lcdc >> 4) & 0x01) == 0x01;
+
+    return (bit4) ? TILE_DATA_UNSIGNED : TILE_DATA_SIGNED;
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
