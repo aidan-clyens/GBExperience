@@ -60,6 +60,22 @@ TileDataTableSelect_t Video::get_tile_data_selected() {
     return (bit4) ? TILE_DATA_UNSIGNED : TILE_DATA_SIGNED;
 }
 
+TileMapTableSelect_t Video::get_window_tile_map_selected() {
+    // Check bit 6 of the LCDC register
+    uint8_t lcdc = this->read_io_register(LCDC);
+    bool bit6 = ((lcdc >> 6) & 0x01) == 0x01;
+
+    return (bit6) ? TILE_MAP_2 : TILE_MAP_1;
+}
+
+TileMapTableSelect_t Video::get_background_tile_map_selected() {
+    // Check bit 3 of the LCDC register
+    uint8_t lcdc = this->read_io_register(LCDC);
+    bool bit3 = ((lcdc >> 3) & 0x01) == 0x01;
+
+    return (bit3) ? TILE_MAP_2 : TILE_MAP_1;
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
