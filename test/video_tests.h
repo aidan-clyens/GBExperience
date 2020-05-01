@@ -137,3 +137,16 @@ TEST(Video, CheckVideoMode) {
 
     EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
 }
+
+
+TEST(Video, CheckCoincidenceFlag) {
+    uint8_t stat = 0xE9; // 1110 1001
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+
+    EXPECT_FALSE(video.get_coincidence_flag());
+}
