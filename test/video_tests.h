@@ -393,3 +393,37 @@ TEST(Video, GetBackgroundPalette) {
     EXPECT_EQ(BLACK, palette.colour2);
     EXPECT_EQ(LIGHT_GRAY, palette.colour3);
 }
+
+
+TEST(Video, GetSpritePalette0) {
+    // LIGHT GRAY, BLACK, WHITE
+    uint8_t obp0 = 0x70; // 0111 0000
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(OBP0, obp0);
+    EXPECT_EQ(obp0, video.read_io_register(OBP0));
+
+    Palette palette = video.get_sprite_palette_0();
+    EXPECT_EQ(WHITE, palette.colour1);
+    EXPECT_EQ(BLACK, palette.colour2);
+    EXPECT_EQ(LIGHT_GRAY, palette.colour3);
+}
+
+
+TEST(Video, GetSpritePalette1) {
+    // LIGHT GRAY, BLACK, WHITE
+    uint8_t obp1 = 0x70; // 0111 0000
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(OBP1, obp1);
+    EXPECT_EQ(obp1, video.read_io_register(OBP1));
+
+    Palette palette = video.get_sprite_palette_1();
+    EXPECT_EQ(WHITE, palette.colour1);
+    EXPECT_EQ(BLACK, palette.colour2);
+    EXPECT_EQ(LIGHT_GRAY, palette.colour3);
+}
