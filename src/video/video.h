@@ -54,6 +54,10 @@ class Video {
         bool vblank_interrupt_enabled();
         bool hblank_interrupt_enabled();
 
+        // Position and Scrolling
+        int get_scroll_y();
+        int get_scroll_x();
+
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
 

@@ -113,6 +113,14 @@ bool Video::hblank_interrupt_enabled() {
     return ((stat >> 3) & 0x01) == 0x01;
 }
 
+int Video::get_scroll_y() {
+    return (int)this->read_io_register(SCY);
+}
+
+int Video::get_scroll_x() {
+    return (int)this->read_io_register(SCX);
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
