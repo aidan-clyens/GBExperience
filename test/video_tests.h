@@ -289,3 +289,89 @@ TEST(Video, GetWindowX) {
 
     EXPECT_EQ(wx, video.get_window_x());
 }
+
+
+TEST(Video, TriggerVBlankInterrupt) {
+    uint8_t stat = 0x11;    // 0001 0001
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    // Initialize in OAM mode
+    video.set_video_mode(OAM_Mode);
+    EXPECT_EQ(OAM_Mode, video.get_video_mode());
+
+    // Change to V-Blank mode
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
+    EXPECT_TRUE(video.vblank_interrupt_enabled());
+    
+    // No interrupts should be triggered yet
+    EXPECT_EQ(0x0, video.read_io_register(IF));
+
+    video.tick();
+
+    // A V-Blank interrupt should be triggered
+    EXPECT_EQ(0x01, video.read_io_register(IF));
+    video.write_io_register(IF, 0x0);
+
+    // Run a second cycle
+    video.tick();
+
+    // Interrupt should only be triggered at the start of the V-Blank period
+    EXPECT_EQ(0x0, video.read_io_register(IF));
+}
+
+
+TEST(Video, TriggerLCDCStatusOAMInterrupt) {
+    uint8_t stat = 0x22; // 0010 0010
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    // Initialize in V-Blank mode
+    video.set_video_mode(VBLANK_Mode);
+    EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
+
+    // Change to OAM mode
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(OAM_Mode, video.get_video_mode());
+    EXPECT_TRUE(video.oam_interrupt_enabled());
+
+    // No interrupts should be triggered yet
+    EXPECT_EQ(0x0, video.read_io_register(IF));
+
+    video.tick();
+
+    // A LCDC status interrupt should be triggered
+    EXPECT_EQ(0x02, video.read_io_register(IF));
+    video.write_io_register(IF, 0x0);
+
+    // Run a second cycle
+    video.tick();
+
+    // Interrupt should only be triggered at the start of the OAM period
+    EXPECT_EQ(0x0, video.read_io_register(IF));
+}
+
+
+TEST(Video, TriggerLCDCStatusCoincidenceInterrupt) {
+    uint8_t stat = 0x46; // 0100 0110
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    // Set coincidence flag to true
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+    EXPECT_TRUE(video.get_coincidence_flag());
+    EXPECT_TRUE(video.coincidence_interrupt_enabled());
+
+    // No interrupts should be triggered yet
+    EXPECT_EQ(0x0, video.read_io_register(IF));
+
+    video.tick();
+
+    // A LCDC status interrupt should be triggered
+    EXPECT_EQ(0x02, video.read_io_register(IF));
+}
