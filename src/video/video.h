@@ -59,6 +59,8 @@ class Video {
         int get_scroll_x();
         int get_lcd_y_coordinate();
         int get_lcd_y_compare();
+        int get_window_y();
+        int get_window_x();
 
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);

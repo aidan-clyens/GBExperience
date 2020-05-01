@@ -205,7 +205,7 @@ TEST(Video, CheckHBlankInterruptEnabled) {
 
 
 TEST(Video, GetScrollY) {
-    uint8_t scy = 25;
+    int scy = 25;
 
     MemoryMap mem_map;
     Video video(mem_map);
@@ -218,7 +218,7 @@ TEST(Video, GetScrollY) {
 
 
 TEST(Video, GetScrollX) {
-    uint8_t scx = 50;
+    int scx = 50;
 
     MemoryMap mem_map;
     Video video(mem_map);
@@ -253,4 +253,30 @@ TEST(Video, GetLYCompare) {
     EXPECT_EQ(lyc, video.read_io_register(LYC));
 
     EXPECT_EQ(lyc, video.get_lcd_y_compare());
+}
+
+
+TEST(Video, GetWindowY) {
+    int wy = 150;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(WY, wy);
+    EXPECT_EQ(wy, video.read_io_register(WY));
+
+    EXPECT_EQ(wy, video.get_window_y());
+}
+
+
+TEST(Video, GetWindowX) {
+    int wx = 150;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(WX, wx);
+    EXPECT_EQ(wx, video.read_io_register(WX));
+
+    EXPECT_EQ(wx, video.get_window_x());
 }
