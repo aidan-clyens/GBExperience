@@ -47,7 +47,8 @@ class Video {
         TileMapTableSelect_t get_background_tile_map_selected();
 
         // LCDC STAT Register
-        VideoMode_t get_video_mode(); 
+        VideoMode_t get_video_mode();
+        bool get_coincidence_flag();
 
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);

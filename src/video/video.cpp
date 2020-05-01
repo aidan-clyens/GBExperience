@@ -83,6 +83,12 @@ VideoMode_t Video::get_video_mode() {
     return (VideoMode_t)(stat & 0x03);
 }
 
+bool Video::get_coincidence_flag() {
+    // Check bit 2 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+    return ((stat >> 2) & 0x01) == 0x01;
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
