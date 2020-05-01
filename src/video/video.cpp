@@ -89,6 +89,30 @@ bool Video::get_coincidence_flag() {
     return ((stat >> 2) & 0x01) == 0x01;
 }
 
+bool Video::coincidence_interrupt_enabled() {
+    // Check bit 6 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+    return ((stat >> 6) & 0x01) == 0x01;
+}
+
+bool Video::oam_interrupt_enabled() {
+    // Check bit 5 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+    return ((stat >> 5) & 0x01) == 0x01;
+}
+
+bool Video::vblank_interrupt_enabled() {
+    // Check bit 4 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+    return ((stat >> 4) & 0x01) == 0x01;
+}
+
+bool Video::hblank_interrupt_enabled() {
+    // Check bit 3 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+    return ((stat >> 3) & 0x01) == 0x01;
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
