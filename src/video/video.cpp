@@ -129,6 +129,14 @@ int Video::get_lcd_y_compare() {
     return (int)this->read_io_register(LYC);
 }
 
+int Video::get_window_y() {
+    return (int)this->read_io_register(WY);
+}
+
+int Video::get_window_x() {
+    return (int)this->read_io_register(WX);
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
