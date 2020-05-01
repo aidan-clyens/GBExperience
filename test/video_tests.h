@@ -202,3 +202,29 @@ TEST(Video, CheckHBlankInterruptEnabled) {
 
     EXPECT_TRUE(video.hblank_interrupt_enabled());
 }
+
+
+TEST(Video, GetScrollY) {
+    uint8_t scy = 25;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(SCY, scy);
+    EXPECT_EQ(scy, video.read_io_register(SCY));
+
+    EXPECT_EQ(scy, video.get_scroll_y());
+}
+
+
+TEST(Video, GetScrollX) {
+    uint8_t scx = 50;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(SCX, scx);
+    EXPECT_EQ(scx, video.read_io_register(SCX));
+
+    EXPECT_EQ(scx, video.get_scroll_x());
+}
