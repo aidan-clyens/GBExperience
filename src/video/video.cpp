@@ -83,6 +83,16 @@ VideoMode_t Video::get_video_mode() {
     return (VideoMode_t)(stat & 0x03);
 }
 
+void Video::set_video_mode(VideoMode_t video_mode) {
+    uint8_t stat = this->read_io_register(STAT);
+
+    stat &= ~0x03;
+    stat |= video_mode;
+
+    m_current_video_mode = video_mode;
+    this->write_io_register(STAT, stat);
+}
+
 bool Video::get_coincidence_flag() {
     // Check bit 2 of the LCDC STAT register
     uint8_t stat = this->read_io_register(STAT);
