@@ -68,4 +68,8 @@ class Video {
 
     private:
         MemoryMap &m_memory_map;
+
+        VideoMode_t m_current_video_mode;
+
+        void trigger_interrupts();
 };

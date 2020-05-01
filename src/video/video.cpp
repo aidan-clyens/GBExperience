@@ -4,7 +4,7 @@
 Video::Video(MemoryMap &mem_map):
 m_memory_map(mem_map)
 {
-
+    m_current_video_mode = this->get_video_mode();
 }
 
 Video::~Video() {
@@ -12,7 +12,7 @@ Video::~Video() {
 }
 
 void Video::tick() {
-
+    this->trigger_interrupts();
 }
 
 /******   LCDC Register   ******/
@@ -154,4 +154,50 @@ uint8_t Video::read_io_register(IORegisters_t reg) {
 
 void Video::write_io_register(IORegisters_t reg, uint8_t data) {
     this->m_memory_map.write(reg, data);
+}
+
+void Video::trigger_interrupts() {
+    VideoMode_t video_mode = this->get_video_mode();
+    bool trigger_vblank_interrupt = false;
+    bool trigger_stat_interrupt = false;
+
+    if (video_mode != m_current_video_mode) {
+        switch (video_mode) {
+            case HBLANK_Mode:
+                if (this->hblank_interrupt_enabled()) {
+                    trigger_stat_interrupt = true;
+                }
+                break;
+            case VBLANK_Mode:
+                if (this->vblank_interrupt_enabled()) {
+                    trigger_vblank_interrupt = true;
+                }
+                break;
+            case OAM_Mode:
+                if (this->oam_interrupt_enabled()) {
+                    trigger_stat_interrupt = true;
+                }
+                break;
+        }
+    }
+
+    if (this->coincidence_interrupt_enabled() && this->get_coincidence_flag()) {
+        trigger_stat_interrupt = true;
+    }
+
+    if (trigger_vblank_interrupt || trigger_stat_interrupt) {
+        uint8_t interrupt_flag = this->read_io_register(IF);
+
+        if (trigger_vblank_interrupt) {
+            interrupt_flag |= 0x01;
+        }
+
+        if (trigger_stat_interrupt) {
+            interrupt_flag |= 0x02;
+        }
+
+        this->write_io_register(IF, interrupt_flag);
+    }
+
+    m_current_video_mode = video_mode;
 }
