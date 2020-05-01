@@ -148,6 +148,20 @@ int Video::get_window_x() {
 }
 
 
+/******   Palette   ******/
+Palette Video::get_background_palette() {
+    Palette palette;
+    uint8_t bgp = this->read_io_register(BGP);
+
+    palette.colour0 = (Colour_t)(bgp & 0x03);
+    palette.colour1 = (Colour_t)((bgp >> 2) & 0x03);
+    palette.colour2 = (Colour_t)((bgp >> 4) & 0x03);
+    palette.colour3 = (Colour_t)((bgp >> 6) & 0x03);
+
+    return palette;
+}
+
+
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
 }
