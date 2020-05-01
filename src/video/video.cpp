@@ -161,6 +161,28 @@ Palette Video::get_background_palette() {
     return palette;
 }
 
+Palette Video::get_sprite_palette_0() {
+    Palette palette;
+    uint8_t obp0 = this->read_io_register(OBP0);
+
+    palette.colour1 = (Colour_t)((obp0 >> 2) & 0x03);
+    palette.colour2 = (Colour_t)((obp0 >> 4) & 0x03);
+    palette.colour3 = (Colour_t)((obp0 >> 6) & 0x03);
+
+    return palette;
+}
+
+Palette Video::get_sprite_palette_1() {
+    Palette palette;
+    uint8_t obp1 = this->read_io_register(OBP1);
+
+    palette.colour1 = (Colour_t)((obp1 >> 2) & 0x03);
+    palette.colour2 = (Colour_t)((obp1 >> 4) & 0x03);
+    palette.colour3 = (Colour_t)((obp1 >> 6) & 0x03);
+
+    return palette;
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
