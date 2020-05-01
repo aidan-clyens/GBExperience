@@ -139,6 +139,15 @@ TEST(Video, CheckVideoMode) {
 }
 
 
+TEST(Video, SetVideoMode) {
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.set_video_mode(Data_Transfer_Mode);
+    EXPECT_EQ(Data_Transfer_Mode, video.get_video_mode());
+}
+
+
 TEST(Video, CheckCoincidenceFlag) {
     uint8_t stat = 0xE9; // 1110 1001
 
