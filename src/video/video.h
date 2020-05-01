@@ -14,10 +14,19 @@ typedef enum TileDataTableSelect {
     TILE_DATA_SIGNED
 } TileDataTableSelect_t;
 
+
 typedef enum TileMapTableSelect {
     TILE_MAP_1 = 0x9800,
     TILE_MAP_2 = 0x9C00
 } TileMapTableSelect_t;
+
+
+typedef enum VideoMode {
+    HBLANK_Mode = 0x00,
+    VBLANK_Mode = 0x01,
+    OAM_Mode = 0x02,
+    Data_Transfer_Mode = 0x03
+} VideoMode_t;
 
 
 class Video {
@@ -36,6 +45,9 @@ class Video {
         TileDataTableSelect_t get_tile_data_selected();
         TileMapTableSelect_t get_window_tile_map_selected();
         TileMapTableSelect_t get_background_tile_map_selected();
+
+        // LCDC STAT Register
+        VideoMode_t get_video_mode(); 
 
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);

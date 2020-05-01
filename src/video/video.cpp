@@ -76,6 +76,13 @@ TileMapTableSelect_t Video::get_background_tile_map_selected() {
     return (bit3) ? TILE_MAP_2 : TILE_MAP_1;
 }
 
+/******   LCDC Register   ******/
+VideoMode_t Video::get_video_mode() {
+    // Check bits 0 and 1 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+    return (VideoMode_t)(stat & 0x03);
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);
