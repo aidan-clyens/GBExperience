@@ -79,6 +79,11 @@ class Video {
         int get_window_y();
         int get_window_x();
 
+        // Palette
+        Palette get_background_palette();
+        Palette get_sprite_palette_0();
+        Palette get_sprite_palette_1();
+
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
 
