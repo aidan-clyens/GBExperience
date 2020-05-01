@@ -150,3 +150,55 @@ TEST(Video, CheckCoincidenceFlag) {
 
     EXPECT_FALSE(video.get_coincidence_flag());
 }
+
+
+TEST(Video, CheckCoincidenceInterruptEnabled) {
+    uint8_t stat = 0xE9; // 1110 1001
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+
+    EXPECT_TRUE(video.coincidence_interrupt_enabled());
+}
+
+
+TEST(Video, CheckOAMInterruptEnabled) {
+    uint8_t stat = 0xE9; // 1110 1001
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+
+    EXPECT_TRUE(video.oam_interrupt_enabled());
+}
+
+
+TEST(Video, CheckVBlankInterruptEnabled) {
+    uint8_t stat = 0xE9; // 1110 1001
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+
+    EXPECT_FALSE(video.vblank_interrupt_enabled());
+}
+
+
+TEST(Video, CheckHBlankInterruptEnabled) {
+    uint8_t stat = 0xE9; // 1110 1001
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(STAT, stat);
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+
+    EXPECT_TRUE(video.hblank_interrupt_enabled());
+}

@@ -49,6 +49,10 @@ class Video {
         // LCDC STAT Register
         VideoMode_t get_video_mode();
         bool get_coincidence_flag();
+        bool coincidence_interrupt_enabled();
+        bool oam_interrupt_enabled();
+        bool vblank_interrupt_enabled();
+        bool hblank_interrupt_enabled();
 
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
