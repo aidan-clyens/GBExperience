@@ -375,3 +375,21 @@ TEST(Video, TriggerLCDCStatusCoincidenceInterrupt) {
     // A LCDC status interrupt should be triggered
     EXPECT_EQ(0x02, video.read_io_register(IF));
 }
+
+
+TEST(Video, GetBackgroundPalette) {
+    // LIGHT GRAY, BLACK, WHITE, DARK GRAY
+    uint8_t bgp = 0x72; // 0111 0010
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(BGP, bgp);
+    EXPECT_EQ(bgp, video.read_io_register(BGP));
+
+    Palette palette = video.get_background_palette();
+    EXPECT_EQ(DARK_GRAY, palette.colour0);
+    EXPECT_EQ(WHITE, palette.colour1);
+    EXPECT_EQ(BLACK, palette.colour2);
+    EXPECT_EQ(LIGHT_GRAY, palette.colour3);
+}

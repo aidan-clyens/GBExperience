@@ -29,6 +29,22 @@ typedef enum VideoMode {
 } VideoMode_t;
 
 
+typedef enum Colour {
+    WHITE = 0x0,
+    LIGHT_GRAY = 0x1,
+    DARK_GRAY = 0x2,
+    BLACK = 0x3
+} Colour_t;
+
+
+struct Palette {
+    Colour_t colour0;
+    Colour_t colour1;
+    Colour_t colour2;
+    Colour_t colour3;
+};
+
+
 class Video {
     public:
         Video(MemoryMap &);
