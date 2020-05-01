@@ -121,6 +121,14 @@ int Video::get_scroll_x() {
     return (int)this->read_io_register(SCX);
 }
 
+int Video::get_lcd_y_coordinate() {
+    return (int)this->read_io_register(LY);
+}
+
+int Video::get_lcd_y_compare() {
+    return (int)this->read_io_register(LYC);
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);

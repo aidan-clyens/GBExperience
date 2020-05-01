@@ -228,3 +228,29 @@ TEST(Video, GetScrollX) {
 
     EXPECT_EQ(scx, video.get_scroll_x());
 }
+
+
+TEST(Video, GetLY) {
+    int ly = 100;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(LY, ly);
+    EXPECT_EQ(ly, video.read_io_register(LY));
+
+    EXPECT_EQ(ly, video.get_lcd_y_coordinate());
+}
+
+
+TEST(Video, GetLYCompare) {
+    int lyc = 150;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(LYC, lyc);
+    EXPECT_EQ(lyc, video.read_io_register(LYC));
+
+    EXPECT_EQ(lyc, video.get_lcd_y_compare());
+}
