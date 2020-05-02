@@ -310,14 +310,14 @@ TEST(Video, TriggerVBlankInterrupt) {
     // No interrupts should be triggered yet
     EXPECT_EQ(0x0, video.read_io_register(IF));
 
-    video.tick();
+    video.tick(1);
 
     // A V-Blank interrupt should be triggered
     EXPECT_EQ(0x01, video.read_io_register(IF));
     video.write_io_register(IF, 0x0);
 
     // Run a second cycle
-    video.tick();
+    video.tick(1);
 
     // Interrupt should only be triggered at the start of the V-Blank period
     EXPECT_EQ(0x0, video.read_io_register(IF));
@@ -342,14 +342,14 @@ TEST(Video, TriggerLCDCStatusOAMInterrupt) {
     // No interrupts should be triggered yet
     EXPECT_EQ(0x0, video.read_io_register(IF));
 
-    video.tick();
+    video.tick(1);
 
     // A LCDC status interrupt should be triggered
     EXPECT_EQ(0x02, video.read_io_register(IF));
     video.write_io_register(IF, 0x0);
 
     // Run a second cycle
-    video.tick();
+    video.tick(1);
 
     // Interrupt should only be triggered at the start of the OAM period
     EXPECT_EQ(0x0, video.read_io_register(IF));
@@ -371,7 +371,7 @@ TEST(Video, TriggerLCDCStatusCoincidenceInterrupt) {
     // No interrupts should be triggered yet
     EXPECT_EQ(0x0, video.read_io_register(IF));
 
-    video.tick();
+    video.tick(1);
 
     // A LCDC status interrupt should be triggered
     EXPECT_EQ(0x02, video.read_io_register(IF));
