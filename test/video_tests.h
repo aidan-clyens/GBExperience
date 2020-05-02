@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "video/video.h"
+#include "video/tile.h"
 #include "memory/memory_map.h"
 
 
@@ -426,4 +427,68 @@ TEST(Video, GetSpritePalette1) {
     EXPECT_EQ(WHITE, palette.colour1);
     EXPECT_EQ(BLACK, palette.colour2);
     EXPECT_EQ(LIGHT_GRAY, palette.colour3);
+}
+
+
+TEST(Video, LoadTile) {
+    // 0, 0, 0, 0, 0, 0, 0, 0
+    // 0, 1, 1, 1, 1, 1, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 1, 1, 1, 1, 1, 0
+    // 0, 0, 0, 0, 0, 0, 0, 0
+    uint16_t starting_address = 0x8000;
+
+    MemoryMap memory_map;
+
+    uint8_t lsb;
+    uint8_t msb;
+    for (int y = 0; y < TILE_HEIGHT; y++) {
+        if (y == 0 || y == 7) {
+            lsb = 0x00; // 0000 0000
+            msb = 0x00; // 0000 0000
+        }
+        else if (y == 1 || y == 6) {
+            lsb = 0x7E; // 0111 1110
+            msb = 0x00; // 0000 0000
+        }
+        else {
+            lsb = 0x42; // 0100 0010
+            msb = 0x3C; // 0011 1100
+        }
+
+        memory_map.write(starting_address + y, lsb);
+        memory_map.write(starting_address + y + 1, msb);
+    }
+
+    Tile tile(starting_address, memory_map);
+
+    for (int y = 0; y < TILE_HEIGHT; y++) {
+        for (int x = 0; x < TILE_WIDTH; x++) {
+            if (y == 0 || y == 7) {
+                EXPECT_EQ(Colour0, tile.get_pixel(x, y));
+            }
+            else if (y == 1 || y == 6) {
+                if (x == 0 || x == 7) {
+                    EXPECT_EQ(Colour0, tile.get_pixel(x, y));
+                }
+                else {
+                    EXPECT_EQ(Colour1, tile.get_pixel(x, y));
+                }
+            }
+            else {
+                if (x == 0 || x == 7) {
+                    EXPECT_EQ(Colour0, tile.get_pixel(x, y));
+                }
+                else if (x == 1 || x == 6) {
+                    EXPECT_EQ(Colour1, tile.get_pixel(x, y));
+                }
+                else {
+                    EXPECT_EQ(Colour2, tile.get_pixel(x, y));
+                }
+            }
+        }
+    }
 }
