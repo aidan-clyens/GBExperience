@@ -51,7 +51,7 @@ class Video {
         Video(MemoryMap &);
         virtual ~Video();
 
-        void tick();
+        void tick(int);
 
         // LCDC Register
         bool lcd_display_enabled();
@@ -90,6 +90,8 @@ class Video {
 
     private:
         MemoryMap &m_memory_map;
+        int m_cycle_counter;
+        int m_lines_drawn;
 
         VideoMode_t m_current_video_mode;
 

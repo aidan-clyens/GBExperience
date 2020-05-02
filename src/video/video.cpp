@@ -2,7 +2,8 @@
 
 
 Video::Video(MemoryMap &mem_map):
-m_memory_map(mem_map)
+m_memory_map(mem_map),
+m_cycle_counter(0)
 {
     m_current_video_mode = this->get_video_mode();
 }
@@ -11,7 +12,9 @@ Video::~Video() {
 
 }
 
-void Video::tick() {
+void Video::tick(int cycles) {
+    m_cycle_counter += cycles;
+
     this->trigger_interrupts();
 }
 
