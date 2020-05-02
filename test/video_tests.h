@@ -4,6 +4,37 @@
 #include "memory/memory_map.h"
 
 
+void load_tile_into_memory(MemoryMap &mem_map, uint16_t address) {
+    // 0, 0, 0, 0, 0, 0, 0, 0
+    // 0, 1, 1, 1, 1, 1, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 2, 2, 2, 2, 1, 0
+    // 0, 1, 1, 1, 1, 1, 1, 0
+    // 0, 0, 0, 0, 0, 0, 0, 0
+    uint8_t lsb;
+    uint8_t msb;
+    for (int y = 0; y < TILE_HEIGHT; y++) {
+        if (y == 0 || y == 7) {
+            lsb = 0x00; // 0000 0000
+            msb = 0x00; // 0000 0000
+        }
+        else if (y == 1 || y == 6) {
+            lsb = 0x7E; // 0111 1110
+            msb = 0x00; // 0000 0000
+        }
+        else {
+            lsb = 0x42; // 0100 0010
+            msb = 0x3C; // 0011 1100
+        }
+
+        mem_map.write(address + y, lsb);
+        mem_map.write(address + y + 1, msb);
+    }
+}
+
+
 TEST(Video, ReadIORegister) {
     MemoryMap mem_map;
     Video video(mem_map);
@@ -431,37 +462,10 @@ TEST(Video, GetSpritePalette1) {
 
 
 TEST(Video, LoadTile) {
-    // 0, 0, 0, 0, 0, 0, 0, 0
-    // 0, 1, 1, 1, 1, 1, 1, 0
-    // 0, 1, 2, 2, 2, 2, 1, 0
-    // 0, 1, 2, 2, 2, 2, 1, 0
-    // 0, 1, 2, 2, 2, 2, 1, 0
-    // 0, 1, 2, 2, 2, 2, 1, 0
-    // 0, 1, 1, 1, 1, 1, 1, 0
-    // 0, 0, 0, 0, 0, 0, 0, 0
     uint16_t starting_address = 0x8000;
 
     MemoryMap memory_map;
-
-    uint8_t lsb;
-    uint8_t msb;
-    for (int y = 0; y < TILE_HEIGHT; y++) {
-        if (y == 0 || y == 7) {
-            lsb = 0x00; // 0000 0000
-            msb = 0x00; // 0000 0000
-        }
-        else if (y == 1 || y == 6) {
-            lsb = 0x7E; // 0111 1110
-            msb = 0x00; // 0000 0000
-        }
-        else {
-            lsb = 0x42; // 0100 0010
-            msb = 0x3C; // 0011 1100
-        }
-
-        memory_map.write(starting_address + y, lsb);
-        memory_map.write(starting_address + y + 1, msb);
-    }
+    load_tile_into_memory(memory_map, starting_address);
 
     Tile tile(starting_address, memory_map);
 
