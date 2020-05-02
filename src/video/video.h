@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../memory/memory_map.h"
+#include "tile.h"
 
 
 typedef enum SpriteSize {
