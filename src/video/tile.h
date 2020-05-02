@@ -27,8 +27,12 @@ class Tile {
 
         PixelColour_t get_pixel(int x, int y);
 
+        void init_tile();
+        std::vector<PixelColour_t> get_tile_row(uint8_t, uint8_t);
+
+        PixelColour_t *get_pixel_buffer();
+        int get_index(int x, int y);
+
     private:
         PixelColour_t m_buffer[TILE_WIDTH * TILE_HEIGHT];
-
-        std::vector<PixelColour_t> get_tile_row(uint8_t, uint8_t);
 };

@@ -3,14 +3,12 @@
 
 Tile::Tile(uint16_t starting_address, MemoryMap &mem_map) {
     // Initialize all pixels as colour 0, normally white
-    for (int i = 0; i < TILE_WIDTH * TILE_HEIGHT; i++) {
-        m_buffer[i] = Colour0;
-    }
+    this->init_tile();
 
     int buffer_index = 0;
-    for (int y = 0; y < TILE_HEIGHT; y += 2) {
-        uint8_t byte1 = mem_map.read(starting_address + y);
-        uint8_t byte2 = mem_map.read(starting_address + y + 1);
+    for (int i = 0; i < 2 * TILE_HEIGHT; i += 2) {
+        uint8_t byte1 = mem_map.read(starting_address + i);
+        uint8_t byte2 = mem_map.read(starting_address + i + 1);
 
         std::vector<PixelColour_t> row = this->get_tile_row(byte1, byte2);
         for (int x = 0; x < TILE_WIDTH; x++) {
@@ -25,9 +23,19 @@ Tile::~Tile() {
 }
 
 PixelColour_t Tile::get_pixel(int x, int y) {
-    int index = (y * TILE_WIDTH * 2) + x;
+    int index = this->get_index(x, y);
 
     return m_buffer[index];
+}
+
+void Tile::init_tile() {
+    for (int i = 0; i < TILE_WIDTH * TILE_HEIGHT; i++) {
+        m_buffer[i] = Colour0;
+    }
+}
+
+PixelColour_t *Tile::get_pixel_buffer() {
+    return m_buffer;
 }
 
 std::vector<PixelColour_t> Tile::get_tile_row(uint8_t byte1, uint8_t byte2) {
@@ -42,4 +50,8 @@ std::vector<PixelColour_t> Tile::get_tile_row(uint8_t byte1, uint8_t byte2) {
     }
 
     return pixels;
+}
+
+int Tile::get_index(int x, int y) {
+    return y * TILE_WIDTH + x;
 }
