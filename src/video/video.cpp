@@ -3,7 +3,8 @@
 
 Video::Video(MemoryMap &mem_map):
 m_memory_map(mem_map),
-m_cycle_counter(0)
+m_cycle_counter(0),
+m_lines_drawn(0)
 {
     m_current_video_mode = this->get_video_mode();
 }
@@ -14,6 +15,61 @@ Video::~Video() {
 
 void Video::tick(int cycles) {
     m_cycle_counter += cycles;
+
+    switch (m_current_video_mode) {
+        case HBLANK_Mode:
+            if (m_cycle_counter > HBLANK_CLOCKS) {
+                m_cycle_counter = m_cycle_counter % HBLANK_CLOCKS;
+
+                #ifdef DEBUG
+                std::cout << "Scanlines drawn: " << m_lines_drawn << std::endl;
+                #endif
+                m_lines_drawn++;
+
+                if (m_lines_drawn > 144) {
+                    #ifdef DEBUG
+                    std::cout << "Switching to V-Blank mode" << std::endl;
+                    #endif
+                    this->set_video_mode(VBLANK_Mode);
+                } else {
+                    #ifdef DEBUG
+                    std::cout << "Switching to OAM mode" << std::endl;
+                    #endif
+                    this->set_video_mode(OAM_Mode);
+                }
+            }
+            break;
+        case VBLANK_Mode:
+            if (m_cycle_counter > VBLANK_CLOCKS) {
+                m_cycle_counter = m_cycle_counter % VBLANK_CLOCKS;
+
+                #ifdef DEBUG
+                std::cout << "Switching to OAM mode" << std::endl;
+                #endif
+                this->set_video_mode(OAM_Mode);
+            }
+            break;
+        case OAM_Mode:
+            if (m_cycle_counter > OAM_CLOCKS) {
+                m_cycle_counter = m_cycle_counter % OAM_CLOCKS;
+
+                #ifdef DEBUG
+                std::cout << "Switching to Data Transfer mode" << std::endl;
+                #endif
+                this->set_video_mode(Data_Transfer_Mode);
+            }
+            break;
+        case Data_Transfer_Mode:
+            if (m_cycle_counter > DATA_TRANSFER_CLOCKS) {
+                m_cycle_counter = m_cycle_counter % DATA_TRANSFER_CLOCKS;
+
+                #ifdef DEBUG
+                std::cout << "Switching to H-Blank mode" << std::endl;
+                #endif
+                this->set_video_mode(HBLANK_Mode);
+            }
+            break;
+    }
 
     this->trigger_interrupts();
 }
