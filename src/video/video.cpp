@@ -3,8 +3,7 @@
 
 Video::Video(MemoryMap &mem_map):
 m_memory_map(mem_map),
-m_cycle_counter(0),
-m_lines_drawn(0)
+m_cycle_counter(0)
 {
     m_current_video_mode = this->get_video_mode();
 }
@@ -22,11 +21,11 @@ void Video::tick(int cycles) {
                 m_cycle_counter = m_cycle_counter % HBLANK_CLOCKS;
 
                 #ifdef DEBUG
-                std::cout << "Scanlines drawn: " << m_lines_drawn << std::endl;
+                std::cout << "Scanlines drawn: " << this->get_line() << std::endl;
                 #endif
-                m_lines_drawn++;
+                this->increment_line();
 
-                if (m_lines_drawn > 144) {
+                if (this->get_line() == 144) {
                     #ifdef DEBUG
                     std::cout << "Switching to V-Blank mode" << std::endl;
                     #endif
@@ -222,11 +221,11 @@ int Video::get_scroll_x() {
     return (int)this->read_io_register(SCX);
 }
 
-int Video::get_ly() {
+int Video::get_line() {
     return (int)this->read_io_register(LY);
 }
 
-int Video::get_ly_compare() {
+int Video::get_line_compare() {
     return (int)this->read_io_register(LYC);
 }
 
@@ -293,4 +292,12 @@ void Video::trigger_coincidence_interrupt() {
             this->write_io_register(IF, interrupt_flag);
         }
     }
+}
+
+void Video::increment_line() {
+    this->m_memory_map.increment_io_counter(LY);
+}
+
+void Video::reset_line() {
+    this->write_io_register(LY, 0);
 }
