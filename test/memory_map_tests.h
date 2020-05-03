@@ -141,3 +141,14 @@ TEST(MemoryMap, WriteEchoRAM) {
     EXPECT_EQ(data, mem_map.read(echo_ram_address));
     EXPECT_EQ(data, mem_map.read(ram_address));
 }
+
+
+TEST(MemoryMap, IncrementIOCounter) {
+    MemoryMap mem_map;
+
+    EXPECT_EQ(0x0, mem_map.read(DIV));
+
+    mem_map.increment_io_counter(DIV);
+
+    EXPECT_EQ(0x1, mem_map.read(DIV));
+}

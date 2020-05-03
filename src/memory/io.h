@@ -35,7 +35,9 @@ class IO {
 
         uint8_t read(IORegisters_t);
         uint16_t write(IORegisters_t, uint8_t);
-    
+
+        void increment_counter(IORegisters_t);
+
     private:
         uint8_t m_P1;
         uint8_t m_DIV;

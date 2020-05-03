@@ -118,3 +118,7 @@ int MemoryMap::get_index(uint16_t address) const {
 
     return -1;
 }
+
+void MemoryMap::increment_io_counter(IORegisters_t reg) {
+    m_io.increment_counter(reg);
+}
