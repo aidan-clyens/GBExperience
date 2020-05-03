@@ -63,6 +63,8 @@ void Video::tick(int cycles) {
             if (m_cycle_counter > DATA_TRANSFER_CLOCKS) {
                 m_cycle_counter = m_cycle_counter % DATA_TRANSFER_CLOCKS;
 
+                this->trigger_coincidence_interrupt();
+
                 #ifdef DEBUG
                 std::cout << "Switching to H-Blank mode" << std::endl;
                 #endif
@@ -70,8 +72,6 @@ void Video::tick(int cycles) {
             }
             break;
     }
-
-    this->trigger_interrupts();
 }
 
 /******   LCDC Register   ******/
@@ -150,6 +150,38 @@ void Video::set_video_mode(VideoMode_t video_mode) {
 
     m_current_video_mode = video_mode;
     this->write_io_register(STAT, stat);
+
+    bool vblank_interrupt_set = false;
+    bool lcdc_stat_interrupt_set = false;
+    switch (video_mode) {
+        case HBLANK_Mode:
+            if (this->hblank_interrupt_enabled()) {
+                lcdc_stat_interrupt_set = true;
+            }
+            break;
+        case VBLANK_Mode:
+            if (this->vblank_interrupt_enabled()) {
+                vblank_interrupt_set = true;
+            }
+            break;
+        case OAM_Mode:
+            if (this->oam_interrupt_enabled()) {
+                lcdc_stat_interrupt_set = true;
+            }
+            break;
+    }
+
+    uint8_t interrupt_flag = this->read_io_register(IF);
+
+    if (vblank_interrupt_set) {
+        interrupt_flag |= 0x01;
+    }
+    
+    if (lcdc_stat_interrupt_set) {
+        interrupt_flag |= 0x02;
+    }
+
+    this->write_io_register(IF, interrupt_flag);
 }
 
 bool Video::get_coincidence_flag() {
@@ -251,48 +283,14 @@ void Video::write_io_register(IORegisters_t reg, uint8_t data) {
     this->m_memory_map.write(reg, data);
 }
 
-void Video::trigger_interrupts() {
-    VideoMode_t video_mode = this->get_video_mode();
-    bool trigger_vblank_interrupt = false;
-    bool trigger_stat_interrupt = false;
+void Video::trigger_coincidence_interrupt() {
+    if (this->coincidence_interrupt_enabled()) {
+        if (this->get_coincidence_flag()) {
+            uint8_t interrupt_flag = this->read_io_register(IF);
 
-    if (video_mode != m_current_video_mode) {
-        switch (video_mode) {
-            case HBLANK_Mode:
-                if (this->hblank_interrupt_enabled()) {
-                    trigger_stat_interrupt = true;
-                }
-                break;
-            case VBLANK_Mode:
-                if (this->vblank_interrupt_enabled()) {
-                    trigger_vblank_interrupt = true;
-                }
-                break;
-            case OAM_Mode:
-                if (this->oam_interrupt_enabled()) {
-                    trigger_stat_interrupt = true;
-                }
-                break;
-        }
-    }
-
-    if (this->coincidence_interrupt_enabled() && this->get_coincidence_flag()) {
-        trigger_stat_interrupt = true;
-    }
-
-    if (trigger_vblank_interrupt || trigger_stat_interrupt) {
-        uint8_t interrupt_flag = this->read_io_register(IF);
-
-        if (trigger_vblank_interrupt) {
-            interrupt_flag |= 0x01;
-        }
-
-        if (trigger_stat_interrupt) {
             interrupt_flag |= 0x02;
+
+            this->write_io_register(IF, interrupt_flag);
         }
-
-        this->write_io_register(IF, interrupt_flag);
     }
-
-    m_current_video_mode = video_mode;
 }

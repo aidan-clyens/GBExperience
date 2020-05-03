@@ -293,25 +293,22 @@ TEST(Video, GetWindowX) {
 
 
 TEST(Video, TriggerVBlankInterrupt) {
-    uint8_t stat = 0x11;    // 0001 0001
+    uint8_t stat = 0x10;
 
     MemoryMap mem_map;
     Video video(mem_map);
 
-    // Initialize in OAM mode
-    video.set_video_mode(OAM_Mode);
-    EXPECT_EQ(OAM_Mode, video.get_video_mode());
-
-    // Change to V-Blank mode
     video.write_io_register(STAT, stat);
-    EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
-    EXPECT_TRUE(video.vblank_interrupt_enabled());
-    
+    EXPECT_EQ(stat, video.read_io_register(STAT));
+
     // No interrupts should be triggered yet
     EXPECT_EQ(0x0, video.read_io_register(IF));
 
-    video.tick(1);
-
+    // Change to V-Blank mode
+    video.set_video_mode(VBLANK_Mode);
+    EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
+    EXPECT_TRUE(video.vblank_interrupt_enabled());
+    
     // A V-Blank interrupt should be triggered
     EXPECT_EQ(0x01, video.read_io_register(IF));
     video.write_io_register(IF, 0x0);
@@ -325,24 +322,21 @@ TEST(Video, TriggerVBlankInterrupt) {
 
 
 TEST(Video, TriggerLCDCStatusOAMInterrupt) {
-    uint8_t stat = 0x22; // 0010 0010
+    uint8_t stat = 0x20; // 0010 0010
 
     MemoryMap mem_map;
     Video video(mem_map);
 
-    // Initialize in V-Blank mode
-    video.set_video_mode(VBLANK_Mode);
-    EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
-
-    // Change to OAM mode
     video.write_io_register(STAT, stat);
-    EXPECT_EQ(OAM_Mode, video.get_video_mode());
-    EXPECT_TRUE(video.oam_interrupt_enabled());
+    EXPECT_EQ(stat, video.read_io_register(STAT));
 
     // No interrupts should be triggered yet
     EXPECT_EQ(0x0, video.read_io_register(IF));
 
-    video.tick(1);
+    // Change to OAM mode
+    video.set_video_mode(OAM_Mode);
+    EXPECT_EQ(OAM_Mode, video.get_video_mode());
+    EXPECT_TRUE(video.oam_interrupt_enabled());
 
     // A LCDC status interrupt should be triggered
     EXPECT_EQ(0x02, video.read_io_register(IF));
@@ -357,7 +351,7 @@ TEST(Video, TriggerLCDCStatusOAMInterrupt) {
 
 
 TEST(Video, TriggerLCDCStatusCoincidenceInterrupt) {
-    uint8_t stat = 0x46; // 0100 0110
+    uint8_t stat = 0x44; // 0100 0100
 
     MemoryMap mem_map;
     Video video(mem_map);
@@ -366,14 +360,23 @@ TEST(Video, TriggerLCDCStatusCoincidenceInterrupt) {
     video.write_io_register(STAT, stat);
     EXPECT_EQ(stat, video.read_io_register(STAT));
     EXPECT_TRUE(video.get_coincidence_flag());
+
     EXPECT_TRUE(video.coincidence_interrupt_enabled());
+    EXPECT_FALSE(video.hblank_interrupt_enabled());
+
+    // Coincidence flag is only checked in Data Transfer mode
+    video.set_video_mode(Data_Transfer_Mode);
+    EXPECT_EQ(Data_Transfer_Mode, video.get_video_mode());
+    // Clear interrupt flag register
+    video.write_io_register(IF, 0x0);
 
     // No interrupts should be triggered yet
     EXPECT_EQ(0x0, video.read_io_register(IF));
 
-    video.tick(1);
+    // Cycle to end of Data Transfer period
+    video.tick(DATA_TRANSFER_CLOCKS + 1);
 
-    // A LCDC status interrupt should be triggered
+    // A LCDC status interrupt should be triggered at end of Data Transfer period
     EXPECT_EQ(0x02, video.read_io_register(IF));
 }
 
