@@ -190,11 +190,11 @@ int Video::get_scroll_x() {
     return (int)this->read_io_register(SCX);
 }
 
-int Video::get_lcd_y_coordinate() {
+int Video::get_ly() {
     return (int)this->read_io_register(LY);
 }
 
-int Video::get_lcd_y_compare() {
+int Video::get_ly_compare() {
     return (int)this->read_io_register(LYC);
 }
 

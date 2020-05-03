@@ -75,8 +75,8 @@ class Video {
         // Position and Scrolling
         int get_scroll_y();
         int get_scroll_x();
-        int get_lcd_y_coordinate();
-        int get_lcd_y_compare();
+        int get_ly();
+        int get_ly_compare();
         int get_window_y();
         int get_window_x();
 

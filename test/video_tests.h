@@ -249,7 +249,7 @@ TEST(Video, GetLY) {
     video.write_io_register(LY, ly);
     EXPECT_EQ(ly, video.read_io_register(LY));
 
-    EXPECT_EQ(ly, video.get_lcd_y_coordinate());
+    EXPECT_EQ(ly, video.get_ly());
 }
 
 
@@ -262,7 +262,7 @@ TEST(Video, GetLYCompare) {
     video.write_io_register(LYC, lyc);
     EXPECT_EQ(lyc, video.read_io_register(LYC));
 
-    EXPECT_EQ(lyc, video.get_lcd_y_compare());
+    EXPECT_EQ(lyc, video.get_ly_compare());
 }
 
 
