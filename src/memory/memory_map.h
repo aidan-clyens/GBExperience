@@ -18,7 +18,9 @@ class MemoryMap {
         uint8_t read(uint16_t);
 
         int get_index(uint16_t) const;
-    
+
+        void increment_io_counter(IORegisters_t);
+
     private:
         int m_address_space[12];
         std::map<int, void*> m_memory_map;

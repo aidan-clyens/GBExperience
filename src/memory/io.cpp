@@ -10,6 +10,7 @@ m_TAC(0x0),
 m_LCDC(0x91),
 m_SCY(0x0),
 m_SCX(0x0),
+m_LY(0x0),
 m_LYC(0x0),
 m_BGP(0xFC),
 m_OBP0(0xFF),
@@ -147,4 +148,18 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     }
 
     return address;
+}
+
+void IO::increment_counter(IORegisters_t reg) {
+    switch (reg) {
+        case LY:
+            m_LY++;
+            break;
+        case DIV:
+            m_DIV++;
+            break;
+        default:
+            std::cerr << "IO register is not a counter. Cannot be incremented." << std::endl;
+            throw new std::exception;
+    }
 }
