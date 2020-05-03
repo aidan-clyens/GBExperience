@@ -258,7 +258,7 @@ TEST(Video, GetLY) {
     video.write_io_register(LY, ly);
     EXPECT_EQ(ly, video.read_io_register(LY));
 
-    EXPECT_EQ(ly, video.get_ly());
+    EXPECT_EQ(ly, video.get_line());
 }
 
 
@@ -271,7 +271,7 @@ TEST(Video, GetLYCompare) {
     video.write_io_register(LYC, lyc);
     EXPECT_EQ(lyc, video.read_io_register(LYC));
 
-    EXPECT_EQ(lyc, video.get_ly_compare());
+    EXPECT_EQ(lyc, video.get_line_compare());
 }
 
 
@@ -597,7 +597,7 @@ TEST(Video, TestScanlineTiming) {
         if (i < HBLANK_CLOCKS) {
             EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
         }
-        else if (i > HBLANK_CLOCKS && i < HBLANK_CLOCKS + OAM_CLOCKS) {
+        else if (i >= HBLANK_CLOCKS && i < HBLANK_CLOCKS + OAM_CLOCKS) {
             EXPECT_EQ(OAM_Mode, video.get_video_mode());
         }
         else if (i >= HBLANK_CLOCKS + OAM_CLOCKS && i < scanline_cycles){
@@ -609,7 +609,7 @@ TEST(Video, TestScanlineTiming) {
 
 TEST(Video, TestVideoModeTiming) {
     int scanline_cycles = HBLANK_CLOCKS + OAM_CLOCKS + DATA_TRANSFER_CLOCKS;
-    int total_scanlines = 144;
+    int total_scanlines = 143;
 
     MemoryMap mem_map;
     Video video(mem_map);
@@ -626,7 +626,7 @@ TEST(Video, TestVideoModeTiming) {
             if (i < HBLANK_CLOCKS) {
                 EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
             }
-            else if (i > HBLANK_CLOCKS && i < HBLANK_CLOCKS + OAM_CLOCKS) {
+            else if (i >= HBLANK_CLOCKS && i < HBLANK_CLOCKS + OAM_CLOCKS) {
                 EXPECT_EQ(OAM_Mode, video.get_video_mode());
             }
             else if (i >= HBLANK_CLOCKS + OAM_CLOCKS && i < scanline_cycles){

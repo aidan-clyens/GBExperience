@@ -81,8 +81,8 @@ class Video {
         // Position and Scrolling
         int get_scroll_y();
         int get_scroll_x();
-        int get_ly();
-        int get_ly_compare();
+        int get_line();
+        int get_line_compare();
         int get_window_y();
         int get_window_x();
 
@@ -102,4 +102,6 @@ class Video {
         VideoMode_t m_current_video_mode;
 
         void trigger_coincidence_interrupt();
+        void increment_line();
+        void reset_line();
 };
