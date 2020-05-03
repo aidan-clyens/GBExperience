@@ -146,6 +146,15 @@ TEST(Video, SetVideoMode) {
 
     video.set_video_mode(Data_Transfer_Mode);
     EXPECT_EQ(Data_Transfer_Mode, video.get_video_mode());
+
+    video.set_video_mode(OAM_Mode);
+    EXPECT_EQ(OAM_Mode, video.get_video_mode());
+
+    video.set_video_mode(HBLANK_Mode);
+    EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
+
+    video.set_video_mode(VBLANK_Mode);
+    EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
 }
 
 
