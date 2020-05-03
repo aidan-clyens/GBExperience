@@ -4,6 +4,12 @@
 #include "tile.h"
 
 
+const int HBLANK_CLOCKS = 204;          // Mode 0
+const int VBLANK_CLOCKS = 4560;         // Mode 1
+const int OAM_CLOCKS = 80;              // Mode 2
+const int DATA_TRANSFER_CLOCKS = 172;   // Mode 3
+
+
 typedef enum SpriteSize {
     SPRITEx8,
     SPRITEx16
