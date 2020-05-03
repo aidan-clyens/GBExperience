@@ -95,5 +95,5 @@ class Video {
 
         VideoMode_t m_current_video_mode;
 
-        void trigger_interrupts();
+        void trigger_coincidence_interrupt();
 };
