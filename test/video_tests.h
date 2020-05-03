@@ -566,3 +566,75 @@ TEST(Video, LoadTile) {
         }
     }
 }
+
+
+TEST(Video, TestScanlineTiming) {
+    int scanline_cycles = HBLANK_CLOCKS + OAM_CLOCKS + DATA_TRANSFER_CLOCKS;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    // Initialize in H-Blank mode
+    video.set_video_mode(HBLANK_Mode);
+    EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
+
+    // Check cycle timing for each scanline
+    for (int i = 0; i < scanline_cycles; i++) {
+        video.tick(1);
+
+        if (i < HBLANK_CLOCKS) {
+            EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
+        }
+        else if (i > HBLANK_CLOCKS && i < HBLANK_CLOCKS + OAM_CLOCKS) {
+            EXPECT_EQ(OAM_Mode, video.get_video_mode());
+        }
+        else if (i >= HBLANK_CLOCKS + OAM_CLOCKS && i < scanline_cycles){
+            EXPECT_EQ(Data_Transfer_Mode, video.get_video_mode());
+        }
+    }
+}
+
+
+TEST(Video, TestVideoModeTiming) {
+    int scanline_cycles = HBLANK_CLOCKS + OAM_CLOCKS + DATA_TRANSFER_CLOCKS;
+    int total_scanlines = 144;
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    // Initialize in H-Blank mode
+    video.set_video_mode(HBLANK_Mode);
+    EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
+
+    for (int j = 0; j < total_scanlines; j++) {
+        // Check cycle timing for each scanline
+        for (int i = 0; i < scanline_cycles; i++) {
+            video.tick(1);
+
+            if (i < HBLANK_CLOCKS) {
+                EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
+            }
+            else if (i > HBLANK_CLOCKS && i < HBLANK_CLOCKS + OAM_CLOCKS) {
+                EXPECT_EQ(OAM_Mode, video.get_video_mode());
+            }
+            else if (i >= HBLANK_CLOCKS + OAM_CLOCKS && i < scanline_cycles){
+                EXPECT_EQ(Data_Transfer_Mode, video.get_video_mode());
+            }
+        }
+    }
+
+    for (int i = 0; i < HBLANK_CLOCKS; i++) {
+        video.tick(1);
+
+        EXPECT_EQ(HBLANK_Mode, video.get_video_mode());
+    }
+
+    for (int i = 0; i < VBLANK_CLOCKS; i++) {
+        video.tick(1);
+
+        EXPECT_EQ(VBLANK_Mode, video.get_video_mode());
+    }
+
+    video.tick(1);
+    EXPECT_EQ(OAM_Mode, video.get_video_mode());
+}
