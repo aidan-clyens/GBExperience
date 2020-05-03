@@ -39,13 +39,19 @@ void Video::tick(int cycles) {
             }
             break;
         case VBLANK_Mode:
-            if (m_cycle_counter > VBLANK_CLOCKS) {
-                m_cycle_counter = m_cycle_counter % VBLANK_CLOCKS;
+            if (m_cycle_counter > VBLANK_SCANLINE_CLOCKS) {
+                m_cycle_counter = m_cycle_counter % VBLANK_SCANLINE_CLOCKS;
 
-                #ifdef DEBUG
-                std::cout << "Switching to OAM mode" << std::endl;
-                #endif
-                this->set_video_mode(OAM_Mode);
+                this->increment_line();
+
+                if (this->get_line() == 154) {
+                    this->reset_line();
+
+                    #ifdef DEBUG
+                    std::cout << "Switching to OAM mode" << std::endl;
+                    #endif
+                    this->set_video_mode(OAM_Mode);
+                }
             }
             break;
         case OAM_Mode:
