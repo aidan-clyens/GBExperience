@@ -465,9 +465,9 @@ TEST(Video, GetTileRow) {
     uint8_t msb = 0x33; // 0011 0011
 
     MemoryMap memory_map;
-    Tile tile(starting_address, memory_map);
+    TileRow tile_row(starting_address, memory_map);
 
-    std::vector<PixelColour_t> row = tile.get_tile_row(lsb, msb);
+    std::vector<PixelColour_t> row = tile_row.get_tile_row(lsb, msb);
     EXPECT_EQ(TILE_WIDTH, row.size());
 
     EXPECT_EQ(Colour0, row[0]);
@@ -493,11 +493,11 @@ TEST(Video, GetTileRowFromMemory) {
     EXPECT_EQ(lsb, memory_map.read(starting_address));
     EXPECT_EQ(msb, memory_map.read(starting_address + 1));
 
-    Tile tile(starting_address, memory_map);
+    TileRow tile_row(starting_address, memory_map);
 
     uint8_t lsb_new = memory_map.read(starting_address);
     uint8_t msb_new = memory_map.read(starting_address + 1);
-    std::vector<PixelColour_t> row = tile.get_tile_row(lsb_new, msb_new);
+    std::vector<PixelColour_t> row = tile_row.get_tile_row(lsb_new, msb_new);
     EXPECT_EQ(TILE_WIDTH, row.size());
 
     EXPECT_EQ(Colour0, row[0]);
