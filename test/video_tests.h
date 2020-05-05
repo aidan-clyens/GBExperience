@@ -1,6 +1,4 @@
 #include "gtest/gtest.h"
-#include "video/video.h"
-#include "memory/memory_map.h"
 
 
 TEST(Video, ReadIORegister) {
