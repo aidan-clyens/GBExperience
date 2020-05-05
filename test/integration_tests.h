@@ -6,7 +6,7 @@ TEST(Integration, WriteIOFromMemoryMap) {
     
     MemoryMap memory_map;
     CPU cpu(memory_map);
-    Display display("TEST");
+    Display display;
     Video video(memory_map, display);
 
     memory_map.write(BGP, bgp);
@@ -21,7 +21,7 @@ TEST(Integration, WriteIOFromCPU) {
     
     MemoryMap memory_map;
     CPU cpu(memory_map);
-    Display display("TEST");
+    Display display;
     Video video(memory_map, display);
 
     cpu.write_io_register(BGP, bgp);
@@ -36,7 +36,7 @@ TEST(Integration, WriteIOFromVideo) {
     
     MemoryMap memory_map;
     CPU cpu(memory_map);
-    Display display("TEST");
+    Display display;
     Video video(memory_map, display);
 
     video.write_io_register(BGP, bgp);

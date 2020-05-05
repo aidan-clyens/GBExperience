@@ -3,7 +3,7 @@
 
 TEST(Video, ReadIORegister) {
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     EXPECT_EQ(0x91, video.read_io_register(LCDC));
@@ -14,7 +14,7 @@ TEST(Video, WriteIORegister) {
     uint8_t data = 0xAB;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     EXPECT_NO_THROW(video.write_io_register(LCDC, data));
@@ -26,7 +26,7 @@ TEST(Video, CheckLCDDisplayEnabled) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -40,7 +40,7 @@ TEST(Video, CheckWindowDisplayEnabled) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -54,7 +54,7 @@ TEST(Video, CheckSpriteDisplayEnabled) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -68,7 +68,7 @@ TEST(Video, CheckBackgroundDisplayEnabled) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -82,7 +82,7 @@ TEST(Video, CheckSpriteSize) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -96,7 +96,7 @@ TEST(Video, CheckTileDataTable) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -110,7 +110,7 @@ TEST(Video, CheckWindowTileMap) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -124,7 +124,7 @@ TEST(Video, CheckBackgroundTileMap) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LCDC, LCDC_data);
@@ -138,7 +138,7 @@ TEST(Video, CheckVideoMode) {
     uint8_t stat = 0xE9; // 1110 1001
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -150,7 +150,7 @@ TEST(Video, CheckVideoMode) {
 
 TEST(Video, SetVideoMode) {
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.set_video_mode(Data_Transfer_Mode);
@@ -171,7 +171,7 @@ TEST(Video, CheckCoincidenceFlag) {
     uint8_t stat = 0xE9; // 1110 1001
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -185,7 +185,7 @@ TEST(Video, CheckCoincidenceInterruptEnabled) {
     uint8_t stat = 0xE9; // 1110 1001
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -199,7 +199,7 @@ TEST(Video, CheckOAMInterruptEnabled) {
     uint8_t stat = 0xE9; // 1110 1001
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -213,7 +213,7 @@ TEST(Video, CheckVBlankInterruptEnabled) {
     uint8_t stat = 0xE9; // 1110 1001
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -227,7 +227,7 @@ TEST(Video, CheckHBlankInterruptEnabled) {
     uint8_t stat = 0xE9; // 1110 1001
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -241,7 +241,7 @@ TEST(Video, GetScrollY) {
     int scy = 25;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(SCY, scy);
@@ -255,7 +255,7 @@ TEST(Video, GetScrollX) {
     int scx = 50;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(SCX, scx);
@@ -269,7 +269,7 @@ TEST(Video, GetLY) {
     int ly = 100;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LY, ly);
@@ -283,7 +283,7 @@ TEST(Video, GetLYCompare) {
     int lyc = 150;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(LYC, lyc);
@@ -297,7 +297,7 @@ TEST(Video, GetWindowY) {
     int wy = 150;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(WY, wy);
@@ -311,7 +311,7 @@ TEST(Video, GetWindowX) {
     int wx = 150;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(WX, wx);
@@ -325,7 +325,7 @@ TEST(Video, TriggerVBlankInterrupt) {
     uint8_t stat = 0x10;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -355,7 +355,7 @@ TEST(Video, TriggerLCDCStatusOAMInterrupt) {
     uint8_t stat = 0x20; // 0010 0010
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(STAT, stat);
@@ -385,7 +385,7 @@ TEST(Video, TriggerLCDCStatusCoincidenceInterrupt) {
     uint8_t stat = 0x44; // 0100 0100
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     // Set coincidence flag to true
@@ -418,7 +418,7 @@ TEST(Video, GetBackgroundPalette) {
     uint8_t bgp = 0x72; // 0111 0010
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(BGP, bgp);
@@ -437,7 +437,7 @@ TEST(Video, GetSpritePalette0) {
     uint8_t obp0 = 0x70; // 0111 0000
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(OBP0, obp0);
@@ -455,7 +455,7 @@ TEST(Video, GetSpritePalette1) {
     uint8_t obp1 = 0x70; // 0111 0000
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(OBP1, obp1);
@@ -472,7 +472,7 @@ TEST(Video, TestScanlineTiming) {
     int scanline_cycles = HBLANK_CLOCKS + OAM_CLOCKS + DATA_TRANSFER_CLOCKS;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     // Initialize in H-Blank mode
@@ -501,7 +501,7 @@ TEST(Video, TestVideoModeTiming) {
     int total_scanlines = 143;
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     // Initialize in H-Blank mode
@@ -547,7 +547,7 @@ TEST(Video, GetRealColourFromPalette) {
     uint8_t bgp = 0x72; // 0111 0010
 
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     video.write_io_register(BGP, bgp);
@@ -564,7 +564,7 @@ TEST(Video, GetRealColourFromPalette) {
 
 TEST(Video, GetBackgroundBuffer) {
     MemoryMap mem_map;
-    Display display("TEST");
+    Display display;
     Video video(mem_map, display);
 
     FrameBuffer buffer = video.get_background_buffer();

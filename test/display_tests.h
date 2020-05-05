@@ -5,8 +5,8 @@ const int DISPLAY_TIME = 10;
 
 
 TEST(Display, InitDisplay) {
-    Display display("TEST");
-    display.init_display();
+    Display display;
+    display.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
 
@@ -17,8 +17,8 @@ TEST(Display, InitDisplay) {
 
 
 TEST(Display, SetPixel) {
-    Display display("TEST");
-    display.init_display();
+    Display display;
+    display.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
     buffer.set_pixel(20, 20, DARK_GRAY);

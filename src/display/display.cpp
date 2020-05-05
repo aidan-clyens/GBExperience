@@ -1,8 +1,7 @@
 #include "display.h"
 
 
-Display::Display(const std::string &title):
-m_title(title),
+Display::Display():
 m_display_open(false),
 m_display_initialized(false)
 {
@@ -15,7 +14,7 @@ Display::~Display() {
     }
 }
 
-void Display::init_display() {
+void Display::init_display(const std::string &title) {
     sf::VideoMode window_bounds(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
     bool fullscreen = false;
     unsigned framerate_limit = 60;
@@ -25,10 +24,10 @@ void Display::init_display() {
     m_window_settings.antialiasingLevel = antialiasing_level;
 
     if (fullscreen) {
-        m_main_window = new sf::RenderWindow(window_bounds, m_title, sf::Style::Fullscreen, m_window_settings);
+        m_main_window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, m_window_settings);
     }
     else {
-        m_main_window = new sf::RenderWindow(window_bounds, m_title, sf::Style::Titlebar | sf::Style::Close, m_window_settings);
+        m_main_window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, m_window_settings);
     }
 
     m_main_window->setFramerateLimit(framerate_limit);
