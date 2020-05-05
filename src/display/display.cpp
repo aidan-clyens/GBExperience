@@ -16,7 +16,7 @@ Display::~Display() {
 }
 
 void Display::init_display() {
-    sf::VideoMode window_bounds(4*160, 4*144);
+    sf::VideoMode window_bounds(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
     bool fullscreen = false;
     unsigned framerate_limit = 60;
     bool vertical_sync_enabled = false;
@@ -34,12 +34,23 @@ void Display::init_display() {
     m_main_window->setFramerateLimit(framerate_limit);
     m_main_window->setVerticalSyncEnabled(vertical_sync_enabled);
 
+    m_image.create(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
+
     m_display_open = true;
     m_display_initialized = true;
 }
 
-void Display::render() {
+void Display::render(FrameBuffer &buffer) {
+    this->poll_events();
+
     m_main_window->clear();
+    
+    this->draw_pixels(buffer);
+    m_texture.loadFromImage(m_image);
+    m_sprite.setTexture(m_texture, true);
+
+    m_main_window->draw(m_sprite);
+
     m_main_window->display();
 }
 
@@ -50,6 +61,24 @@ void Display::poll_events() {
         if (event.type == sf::Event::Closed) {
             m_display_open = false;
             m_main_window->close();
+        }
+    }
+}
+
+void Display::draw_pixels(FrameBuffer &buffer) {
+    for (int y = 0; y < LCD_HEIGHT; y++) {
+        for (int x = 0; x < LCD_WIDTH; x++) {
+            Colour_t colour = buffer.get_pixel(x, y);
+            sf::Color pixel_colour = this->get_pixel_colour(colour);
+            this->set_pixel(x, y, pixel_colour);
+        }
+    }    
+}
+
+void Display::set_pixel(int x, int y, sf::Color colour) {
+    for (int h = 0; h < PIXEL_SIZE; h++) {
+        for (int w = 0; w < PIXEL_SIZE; w++) {
+            m_image.setPixel(x * PIXEL_SIZE + w, y * PIXEL_SIZE + h, colour);
         }
     }
 }

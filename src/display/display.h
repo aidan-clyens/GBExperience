@@ -1,9 +1,13 @@
 #pragma once
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 #include "../video/framebuffer.h"
 #include "../video/definitions.h"
+
+
+const int PIXEL_SIZE = 4;
 
 
 class Display {
@@ -13,8 +17,10 @@ class Display {
 
         void init_display();
 
-        void render();
+        void render(FrameBuffer &);
         void poll_events();
+        void draw_pixels(FrameBuffer &);
+        void set_pixel(int, int, sf::Color);
 
         sf::Color get_pixel_colour(Colour_t);
 
@@ -23,6 +29,10 @@ class Display {
     private:
         sf::RenderWindow *m_main_window;
         sf::ContextSettings m_window_settings;
+
+        sf::Image m_image;
+        sf::Texture m_texture;
+        sf::Sprite m_sprite;
 
         std::string m_title;
         bool m_display_open;
