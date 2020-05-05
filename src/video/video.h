@@ -44,6 +44,8 @@ class Video {
         Palette get_sprite_palette_0();
         Palette get_sprite_palette_1();
 
+        Colour_t get_real_colour(PixelColour_t, Palette);
+
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
 
