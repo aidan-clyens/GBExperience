@@ -1,3 +1,6 @@
+#pragma once
+
+
 const int HBLANK_CLOCKS = 204;          // Mode 0
 const int VBLANK_CLOCKS = 4560;         // Mode 1
 const int OAM_CLOCKS = 80;              // Mode 2
@@ -10,6 +13,11 @@ const int LCD_HEIGHT = 144;
 
 const int MAP_SIZE = 256;
 const int TILES_PER_LINE = 32;
+
+const int TILE_WIDTH = 8;
+const int TILE_HEIGHT = 8;
+
+const int TILE_BYTE_LENGTH = (TILE_WIDTH * TILE_HEIGHT) / 8;
 
 
 typedef enum SpriteSize {
