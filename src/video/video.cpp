@@ -3,7 +3,8 @@
 
 Video::Video(MemoryMap &mem_map):
 m_memory_map(mem_map),
-m_cycle_counter(0)
+m_cycle_counter(0),
+m_background_buffer(MAP_SIZE, MAP_SIZE)
 {
     m_current_video_mode = this->get_video_mode();
 }
@@ -319,4 +320,8 @@ void Video::increment_line() {
 
 void Video::reset_line() {
     this->write_io_register(LY, 0);
+}
+
+FrameBuffer &Video::get_background_buffer() {
+    return m_background_buffer;
 }

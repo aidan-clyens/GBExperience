@@ -528,3 +528,17 @@ TEST(Video, GetRealColourFromPalette) {
     EXPECT_EQ(BLACK, video.get_real_colour(Colour2, palette));
     EXPECT_EQ(LIGHT_GRAY, video.get_real_colour(Colour3, palette));
 }
+
+
+TEST(Video, GetBackgroundBuffer) {
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    FrameBuffer buffer = video.get_background_buffer();
+
+    for (int x = 0; x < MAP_SIZE; x++) {
+        for (int y = 0; y < MAP_SIZE; y++) {
+            EXPECT_EQ(WHITE, buffer.get_pixel(x, y));
+        }
+    }
+}
