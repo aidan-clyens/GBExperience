@@ -16,6 +16,7 @@ class Video {
 
         // LCDC Register
         bool lcd_display_enabled();
+        void set_lcd_display_enabled(bool);
         bool window_display_enabled();
         bool sprite_display_enabled();
         bool background_display_enabled();

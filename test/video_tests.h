@@ -36,6 +36,24 @@ TEST(Video, CheckLCDDisplayEnabled) {
 }
 
 
+TEST(Video, SetLCDDisplayEnabled) {
+    uint8_t LCDC_data = 0x6C; // 0110 1100
+
+    MemoryMap mem_map;
+    Display display;
+    Video video(mem_map, display);
+
+    video.write_io_register(LCDC, LCDC_data);
+    EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
+
+    EXPECT_FALSE(video.lcd_display_enabled());
+
+    video.set_lcd_display_enabled(true);
+
+    EXPECT_TRUE(video.lcd_display_enabled());
+}
+
+
 TEST(Video, CheckWindowDisplayEnabled) {
     uint8_t LCDC_data = 0xEC;   // 1110 1100
 
