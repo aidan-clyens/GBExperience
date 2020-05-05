@@ -4,22 +4,14 @@
 #include <cstdint>
 #include <vector>
 
-#include "video.h"
 #include "../memory/memory_map.h"
+#include "video.h"
 
 
 const int TILE_WIDTH = 8;
 const int TILE_HEIGHT = 8;
 
 const int TILE_BYTE_LENGTH = (TILE_WIDTH * TILE_HEIGHT) / 8;
-
-
-typedef enum PixelColour {
-    Colour0,
-    Colour1,
-    Colour2,
-    Colour3
-} PixelColour_t;
 
 
 class Tile {
