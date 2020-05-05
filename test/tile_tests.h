@@ -1,6 +1,4 @@
 #include "gtest/gtest.h"
-#include "video/tile.h"
-#include "memory/memory_map.h"
 
 
 TEST(Tile, InitTile) {

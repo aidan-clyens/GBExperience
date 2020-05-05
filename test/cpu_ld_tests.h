@@ -1,6 +1,4 @@
 #include "gtest/gtest.h"
-#include "cpu/cpu.h"
-#include "memory/memory_map.h"
 
 
 // LD B, #

@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "memory/io.h"
 
 
 TEST(IO, ReadIO) {
