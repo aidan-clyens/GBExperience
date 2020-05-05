@@ -54,6 +54,19 @@ void Display::poll_events() {
     }
 }
 
+sf::Color Display::get_pixel_colour(Colour_t colour) {
+    switch (colour) {
+        case WHITE:
+            return sf::Color(255, 255, 255);
+        case LIGHT_GRAY:
+            return sf::Color(170, 170, 170);
+        case DARK_GRAY:
+            return sf::Color(85, 85, 85);
+        case BLACK:
+            return sf::Color(0, 0, 0);
+        }
+}
+
 bool Display::is_display_open() const {
     return m_display_open;
 }
