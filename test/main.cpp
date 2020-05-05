@@ -16,6 +16,7 @@
 #include "video_tests.h"
 #include "tile_tests.h"
 #include "framebuffer_tests.h"
+#include "integration_tests.h"
 
 
 int main(int argc, char** argv) {
