@@ -5,13 +5,7 @@
 #include <vector>
 
 #include "../memory/memory_map.h"
-#include "video.h"
-
-
-const int TILE_WIDTH = 8;
-const int TILE_HEIGHT = 8;
-
-const int TILE_BYTE_LENGTH = (TILE_WIDTH * TILE_HEIGHT) / 8;
+#include "definitions.h"
 
 
 class Tile {
