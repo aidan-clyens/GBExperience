@@ -3,6 +3,7 @@
 #include "../memory/memory_map.h"
 #include "definitions.h"
 #include "tile.h"
+#include "framebuffer.h"
 
 
 class Video {
@@ -49,12 +50,16 @@ class Video {
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
 
+        FrameBuffer &get_background_buffer();
+
     private:
         MemoryMap &m_memory_map;
         int m_cycle_counter;
         int m_lines_drawn;
 
         VideoMode_t m_current_video_mode;
+
+        FrameBuffer m_background_buffer;
 
         void trigger_coincidence_interrupt();
         void increment_line();
