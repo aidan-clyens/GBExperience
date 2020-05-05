@@ -13,6 +13,7 @@
 #include "cpu_interrupts_tests.h"
 #include "io_tests.h"
 #include "video_tests.h"
+#include "tile_tests.h"
 
 
 int main(int argc, char** argv) {
