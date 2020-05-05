@@ -1,9 +1,6 @@
 #include "gtest/gtest.h"
 
 
-const int DISPLAY_TIME = 10;
-
-
 TEST(Display, InitDisplay) {
     Display display;
     display.init_display("TEST");
