@@ -279,6 +279,19 @@ Palette Video::get_sprite_palette_1() {
     return palette;
 }
 
+Colour_t Video::get_real_colour(PixelColour_t colour, Palette palette) {
+    switch (colour) {
+        case Colour0:
+            return palette.colour0;
+        case Colour1:
+            return palette.colour1;
+        case Colour2:
+            return palette.colour2;
+        case Colour3:
+            return palette.colour3;
+    }
+}
+
 
 uint8_t Video::read_io_register(IORegisters_t reg) {
     return this->m_memory_map.read(reg);

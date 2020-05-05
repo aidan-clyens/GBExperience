@@ -650,3 +650,22 @@ TEST(Video, TestVideoModeTiming) {
     video.tick(1);
     EXPECT_EQ(OAM_Mode, video.get_video_mode());
 }
+
+
+TEST(Video, GetRealColourFromPalette) {
+    // LIGHT GRAY, BLACK, WHITE, DARK GRAY
+    uint8_t bgp = 0x72; // 0111 0010
+
+    MemoryMap mem_map;
+    Video video(mem_map);
+
+    video.write_io_register(BGP, bgp);
+    EXPECT_EQ(bgp, video.read_io_register(BGP));
+
+    Palette palette = video.get_background_palette();
+
+    EXPECT_EQ(DARK_GRAY, video.get_real_colour(Colour0, palette));
+    EXPECT_EQ(WHITE, video.get_real_colour(Colour1, palette));
+    EXPECT_EQ(BLACK, video.get_real_colour(Colour2, palette));
+    EXPECT_EQ(LIGHT_GRAY, video.get_real_colour(Colour3, palette));
+}
