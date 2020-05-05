@@ -12,10 +12,10 @@ const int PIXEL_SIZE = 4;
 
 class Display {
     public:
-        Display(const std::string &);
+        Display();
         virtual ~Display();
 
-        void init_display();
+        void init_display(const std::string &);
 
         void render(FrameBuffer &);
         void poll_events();
@@ -34,7 +34,6 @@ class Display {
         sf::Texture m_texture;
         sf::Sprite m_sprite;
 
-        std::string m_title;
         bool m_display_open;
         bool m_display_initialized;
 };
