@@ -3,13 +3,16 @@
 
 Display::Display(const std::string &title):
 m_title(title),
-m_display_open(false)
+m_display_open(false),
+m_display_initialized(false)
 {
 
 }
 
 Display::~Display() {
-    delete m_main_window;
+    if (m_display_initialized) {
+        delete m_main_window;
+    }
 }
 
 void Display::init_display() {
@@ -32,6 +35,7 @@ void Display::init_display() {
     m_main_window->setVerticalSyncEnabled(vertical_sync_enabled);
 
     m_display_open = true;
+    m_display_initialized = true;
 }
 
 void Display::render() {

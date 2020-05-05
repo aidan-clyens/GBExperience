@@ -21,4 +21,5 @@ class Display {
 
         std::string m_title;
         bool m_display_open;
+        bool m_display_initialized;
 };
