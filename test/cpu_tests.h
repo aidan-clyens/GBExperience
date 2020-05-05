@@ -1,7 +1,4 @@
 #include "gtest/gtest.h"
-#include "cpu/cpu.h"
-#include "memory/memory_map.h"
-#include "file_parser/file_parser.h"
 
 
 TEST(CPU, InitCPU) {

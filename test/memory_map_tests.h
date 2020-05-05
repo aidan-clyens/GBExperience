@@ -1,6 +1,4 @@
 #include "gtest/gtest.h"
-#include "memory/memory_map.h"
-#include "file_parser/file_parser.h"
 
 
 TEST(MemoryMap, Init) {

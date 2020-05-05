@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "cpu/cpu_registers.h"
 
 
 TEST(CPURegisters, InitCPURegisters) {

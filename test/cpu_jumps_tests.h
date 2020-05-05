@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "cpu/cpu.h"
+
 
 MemoryMap setup_mem_map(uint16_t PC, uint16_t value) {
     MemoryMap mem_map;

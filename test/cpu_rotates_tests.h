@@ -1,5 +1,4 @@
 #include "gtest/gtest.h"
-#include "cpu/cpu.h"
 
 
 MemoryMap setup_cb_instruction(uint16_t PC, uint8_t opcode) {
