@@ -45,6 +45,10 @@ class Video {
         Palette get_sprite_palette_0();
         Palette get_sprite_palette_1();
 
+        // Draw
+        void write_scanline(uint8_t line);
+        void draw_background_line(uint8_t line);
+
         Colour_t get_real_colour(PixelColour_t, Palette);
 
         uint8_t read_io_register(IORegisters_t);
