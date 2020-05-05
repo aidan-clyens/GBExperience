@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 typedef enum cartridge_type {
     ROM_ONLY = 0x0,
@@ -35,12 +36,12 @@ typedef enum cartridge_type {
 
 class FileParser {
     public:
-        FileParser(int);
+        FileParser();
         virtual ~FileParser();
     
         bool load_rom(const std::string &);
 
-        uint8_t *get_buffer_ptr();
+        std::vector<uint8_t> get_buffer_data();
         uint8_t get_byte(int) const;
         int get_buffer_size() const;
 
@@ -49,10 +50,9 @@ class FileParser {
 
         bool is_gb_color() const;
         bool is_sgb() const;
-
-        void print_to_file();
     
     private:
-        int m_buffer_size;
-        uint8_t *m_buffer;
+        std::vector<uint8_t> m_buffer;
+
+        size_t m_buffer_size;
 };

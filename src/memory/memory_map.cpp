@@ -48,8 +48,8 @@ bool MemoryMap::init_memory_map() {
     return true;
 }
 
-void MemoryMap::load_rom(void *file_parser_buffer) {
-    m_memory_map.insert(std::pair<int, void *>(0, file_parser_buffer));
+void MemoryMap::load_rom(std::vector<uint8_t> file_parser_buffer) {
+    m_memory_map.insert(std::pair<int, void *>(0, &file_parser_buffer[0]));
 }
 
 uint16_t MemoryMap::write(uint16_t address, uint8_t data) {

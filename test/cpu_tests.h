@@ -8,14 +8,13 @@ TEST(CPU, InitCPU) {
 }
 
 TEST(CPU, FetchOpcodeFromRom) {
-    int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
 
-    FileParser file_parser(buffer_size);
+    FileParser file_parser;
     EXPECT_TRUE(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    mem_map. load_rom(file_parser.get_buffer_ptr());
+    mem_map. load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x100, cpu.read_register("PC"));

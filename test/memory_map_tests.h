@@ -53,7 +53,6 @@ TEST(MemoryMap, GetIndexesBoundaries) {
 
 TEST(MemoryMap, WriteSwitchableRAM) {
     MemoryMap mem_map;
-     
 
     uint16_t address = 0xA100;
     uint16_t mem_address = address - 0xA000;
@@ -67,7 +66,6 @@ TEST(MemoryMap, WriteSwitchableRAM) {
 
 TEST(MemoryMap, WriteInternalRAM) {
     MemoryMap mem_map;
-     
 
     uint16_t address =0xC100;
     uint16_t mem_address = address - 0xC000;
@@ -80,16 +78,14 @@ TEST(MemoryMap, WriteInternalRAM) {
 }
 
 TEST(MemoryMap, ReadRom) {
-    int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
 
-    FileParser file_parser(buffer_size);
+    FileParser file_parser;
 
-    EXPECT_EQ(buffer_size, file_parser.get_buffer_size());
     EXPECT_TRUE(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_ptr()));
+    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));
 
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0x54;
@@ -99,16 +95,14 @@ TEST(MemoryMap, ReadRom) {
 }
 
 TEST(MemoryMap, WriteToRom) {
-    int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
 
-    FileParser file_parser(buffer_size);
+    FileParser file_parser;
 
-    EXPECT_EQ(buffer_size, file_parser.get_buffer_size());
     EXPECT_TRUE(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_ptr()));
+    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));
 
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0xFF;
