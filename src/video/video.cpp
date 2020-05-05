@@ -1,8 +1,9 @@
 #include "video.h"
 
 
-Video::Video(MemoryMap &mem_map):
+Video::Video(MemoryMap &mem_map, Display &display):
 m_memory_map(mem_map),
+m_display(display),
 m_cycle_counter(0),
 m_background_buffer(MAP_SIZE, MAP_SIZE)
 {

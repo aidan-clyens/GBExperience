@@ -10,3 +10,4 @@
 #include "video/framebuffer.h"
 #include "video/video.h"
 #include "video/tile.h"
+#include "display/display.h"
