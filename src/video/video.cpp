@@ -92,6 +92,20 @@ bool Video::lcd_display_enabled() {
     return ((lcdc >> 7) & 0x01) == 0x01;
 }
 
+void Video::set_lcd_display_enabled(bool set) {
+    // Set bit 7 of the LCDC register
+    uint8_t lcdc = this->read_io_register(LCDC);
+
+    if (set) {
+        lcdc |= 0x80;   // 1000 0000
+    }
+    else {
+        lcdc &= 0x7F;   // 0111 1111
+    }
+
+    this->write_io_register(LCDC, lcdc);
+}
+
 bool Video::window_display_enabled() {
     // Check bit 5 of the LCDC register
     uint8_t lcdc = this->read_io_register(LCDC);
