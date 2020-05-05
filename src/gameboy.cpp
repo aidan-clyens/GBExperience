@@ -15,15 +15,16 @@ GameBoy::~GameBoy() {
 
 
 void GameBoy::tick() {
-    m_cpu.tick();
+    int cycle_count = m_cpu.tick();
+    m_video.tick(cycle_count);
 }
 
 
-void GameBoy::load_rom(const std::string &rom_file, int rom_size) {
-    FileParser file_parser(rom_size);
+void GameBoy::load_rom(const std::string &rom_file) {
+    FileParser file_parser;
     file_parser.load_rom(rom_file);
 
-    m_memory_map.load_rom(file_parser.get_buffer_ptr());
+    m_memory_map.load_rom(file_parser.get_buffer_data());
 
     m_rom_name = file_parser.get_rom_name();
     cartridge_type_t cartridge_type = file_parser.get_cartridge_type();
