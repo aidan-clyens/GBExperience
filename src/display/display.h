@@ -2,6 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../video/framebuffer.h"
+#include "../video/definitions.h"
+
 
 class Display {
     public:
@@ -12,6 +15,8 @@ class Display {
 
         void render();
         void poll_events();
+
+        sf::Color get_pixel_colour(Colour_t);
 
         bool is_display_open() const;
 
