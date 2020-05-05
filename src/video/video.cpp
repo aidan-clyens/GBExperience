@@ -49,6 +49,7 @@ void Video::tick(int cycles) {
 
                 if (this->get_line() == 154) {
                     this->reset_line();
+                    m_background_buffer.reset();
 
                     #ifdef DEBUG
                     std::cout << "Switching to OAM mode" << std::endl;
