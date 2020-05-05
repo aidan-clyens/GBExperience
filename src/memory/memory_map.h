@@ -2,6 +2,7 @@
 
 #include <map>
 #include <exception>
+#include <vector>
 
 #include "memory.h"
 #include "io.h"
@@ -13,7 +14,7 @@ class MemoryMap {
         virtual ~MemoryMap();
 
         bool init_memory_map();
-        void load_rom(void *);
+        void load_rom(std::vector<uint8_t>);
         uint16_t write(uint16_t, uint8_t);
         uint8_t read(uint16_t);
 

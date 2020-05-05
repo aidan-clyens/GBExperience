@@ -1,35 +1,40 @@
 #include "file_parser.h"
 
-FileParser::FileParser(int buffer_size):
-m_buffer_size(buffer_size),
-m_buffer(new uint8_t[buffer_size])
+FileParser::FileParser():
+m_buffer_size(0)
 {
 
 }
 
 FileParser::~FileParser() {
-    delete m_buffer;
+
 }
 
 bool FileParser::load_rom(const std::string &file_name) {
-    std::ifstream file_buffer;
-    file_buffer.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    
-    try {
-        file_buffer.open(file_name, std::ios::in | std::ios::binary);
-        file_buffer.read((char*)m_buffer, m_buffer_size);
+    std::ifstream file_buffer(file_name.c_str(), std::ios::binary | std::ios::ate);
 
-        file_buffer.close();
-    }
-    catch (std::ifstream::failure e) {
+    if (!file_buffer.good()) {
         std::cerr << "Exception opening/reading/closing file\n";
         return false;
     }
 
+    std::ifstream::pos_type position = file_buffer.tellg();
+    size_t file_size = static_cast<size_t>(position);
+
+    std::vector<char> file_contents(file_size);
+
+    file_buffer.seekg(0, std::ios::beg);
+    file_buffer.read(&file_contents[0], position);
+    file_buffer.close();
+
+    m_buffer_size = file_size;
+
+    m_buffer = std::vector<uint8_t>(file_contents.begin(), file_contents.end());
+
     return true;
 }
 
-uint8_t *FileParser::get_buffer_ptr() {
+std::vector<uint8_t> FileParser::get_buffer_data() {
     return m_buffer;
 }
 
@@ -68,8 +73,3 @@ bool FileParser::is_sgb() const {
     return this->get_byte(0x146) == 0x03;
 }
 
-void FileParser::print_to_file() {
-    std::ofstream output("../../bytes.txt", std::ios::out | std::ios::binary);
-    output.write((char*)m_buffer, m_buffer_size);
-    output.close();
-}

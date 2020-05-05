@@ -156,12 +156,11 @@ TEST(Interrupts, ResetMultipleEnableBits) {
 
 TEST(Interrupts, TriggerVBlankInterrupt) {
     uint16_t PC = 0xA000;
-    int buffer_size = 16384;
     std::string rom_file = "../../roms/Tetris.gb";
 
-    FileParser file_parser(buffer_size);
+    FileParser file_parser;
     MemoryMap mem_map;
-    mem_map.load_rom(&file_parser);
+    mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
 
     cpu.write_register("PC", PC);
