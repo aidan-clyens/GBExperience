@@ -50,8 +50,9 @@ class Video {
 
         // Draw
         void draw();
-        void write_scanline(uint8_t line);
-        void draw_background_line(uint8_t line);
+        void write_scanline(uint8_t);
+        void draw_background_line(uint8_t);
+        void draw_window_line(uint8_t);
 
         Colour_t get_real_colour(PixelColour_t, Palette);
 
