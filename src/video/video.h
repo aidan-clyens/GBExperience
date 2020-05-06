@@ -48,6 +48,7 @@ class Video {
         Palette get_sprite_palette_1();
 
         // Draw
+        void draw();
         void write_scanline(uint8_t line);
         void draw_background_line(uint8_t line);
 

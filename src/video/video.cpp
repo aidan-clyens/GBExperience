@@ -49,6 +49,10 @@ void Video::tick(int cycles) {
                 this->increment_line();
 
                 if (this->get_line() == 154) {
+                    if (this->lcd_display_enabled()) {
+                        this->draw();
+                    }
+
                     this->reset_line();
                     m_background_buffer.reset();
 
@@ -299,6 +303,10 @@ Palette Video::get_sprite_palette_1() {
 }
 
 /******   Draw   ******/
+void Video::draw() {
+    m_display.render(m_background_buffer);
+}
+
 void Video::write_scanline(uint8_t line) {
     if (!this->lcd_display_enabled()) return;
 
