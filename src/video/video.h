@@ -57,7 +57,7 @@ class Video {
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
 
-        FrameBuffer &get_background_buffer();
+        FrameBuffer &get_buffer();
 
     private:
         MemoryMap &m_memory_map;
@@ -67,7 +67,7 @@ class Video {
 
         VideoMode_t m_current_video_mode;
 
-        FrameBuffer m_background_buffer;
+        FrameBuffer m_buffer;
 
         void trigger_coincidence_interrupt();
         void increment_line();
