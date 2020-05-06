@@ -18,7 +18,7 @@ void CPU::swap(const std::string &reg) {
     this->reset_flag_register();
 
     #ifdef CPU_DEBUG
-    std::cout << "SWAP " << reg << std::endl;
+    log_info("SWAP %s", reg.c_str());
     #endif
 
     if (result == 0) {
@@ -38,7 +38,7 @@ void CPU::complement() {
     uint8_t result = ~val;
 
     #ifdef CPU_DEBUG
-    std::cout << "CPL" << std::endl;
+    log_info("CPL");
     #endif
 
     this->set_flag_register(SUBTRACT_FLAG, true);
@@ -51,7 +51,7 @@ void CPU::complement_carry() {
     bool carry = this->read_flag_register(CARRY_FLAG);
 
     #ifdef CPU_DEBUG
-    std::cout << "CCF" << std::endl;
+    log_info("CCF");
     #endif
 
     this->set_flag_register(SUBTRACT_FLAG, false);
@@ -63,7 +63,7 @@ void CPU::complement_carry() {
 void CPU::set_carry() {
 
     #ifdef CPU_DEBUG
-    std::cout << "SCF" << std::endl;
+    log_info("SCF");
     #endif
 
     this->set_flag_register(CARRY_FLAG, true);
@@ -71,7 +71,7 @@ void CPU::set_carry() {
 
 void CPU::halt() {
     #ifdef CPU_DEBUG
-    std::cout << "HALT" << std::endl;
+    log_info("HALT");
     #endif
 
     m_halted = true;
@@ -80,7 +80,7 @@ void CPU::halt() {
 
 void CPU::stop() {
     #ifdef CPU_DEBUG
-    std::cout << "STOP" << std::endl;
+    log_info("STOP");
     #endif
 
     m_stopped = true;
@@ -89,7 +89,7 @@ void CPU::stop() {
 
 void CPU::enable_interrupts() {
     #ifdef CPU_DEBUG
-    std::cout << "EI" << std::endl;
+    log_info("EI");
     #endif
 
     m_interrupts_enabled = true;
@@ -97,7 +97,7 @@ void CPU::enable_interrupts() {
 
 void CPU::disable_interrupts() {
     #ifdef CPU_DEBUG
-    std::cout << "DI" << std::endl;
+    log_info("DI");
     #endif
 
     m_interrupts_enabled = false;
