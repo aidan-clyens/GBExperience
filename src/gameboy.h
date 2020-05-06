@@ -1,3 +1,7 @@
+#pragma once
+
+#include <string>
+
 #include "cpu/cpu.h"
 #include "memory/memory_map.h"
 #include "file_parser/file_parser.h"
@@ -12,7 +16,7 @@ class GameBoy {
 
         void tick();
 
-        void load_rom(const std::string &, int);
+        void load_rom(const std::string &);
 
         std::string get_rom_name() const;
     

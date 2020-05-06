@@ -6,8 +6,6 @@
 
 
 int main(int argc, char** argv) {
-    int rom_size = 32*1024;
-
     std::string rom_file = "roms/Tetris.gb";
     
     if (argc > 1) {
@@ -15,13 +13,10 @@ int main(int argc, char** argv) {
     }
 
 
-    GameBoy gb;
-    gb.load_rom(rom_file, rom_size);
+    gb->load_rom(rom_file);
 
-    Display main_display(gb.get_rom_name());
+    main_display.init_display(gb->get_rom_name());
 
-    main_display.init_display();
-    
     while (main_display.is_display_open()) {
         gb.tick();
 
