@@ -5,7 +5,7 @@ Video::Video(MemoryMap &mem_map, Display &display):
 m_memory_map(mem_map),
 m_display(display),
 m_cycle_counter(0),
-m_background_buffer(MAP_SIZE, MAP_SIZE)
+m_buffer(MAP_SIZE, MAP_SIZE)
 {
     m_current_video_mode = this->get_video_mode();
 }
@@ -54,7 +54,7 @@ void Video::tick(int cycles) {
                     }
 
                     this->reset_line();
-                    m_background_buffer.reset();
+                    m_buffer.reset();
 
                     #ifdef DEBUG
                     std::cout << "Switching to OAM mode" << std::endl;
@@ -304,7 +304,7 @@ Palette Video::get_sprite_palette_1() {
 
 /******   Draw   ******/
 void Video::draw() {
-    m_display.render(m_background_buffer);
+    m_display.render(m_buffer);
 }
 
 void Video::write_scanline(uint8_t line) {
@@ -355,7 +355,7 @@ void Video::draw_background_line(uint8_t line) {
 
         PixelColour_t pixel = row.get_pixel(x);
         Colour_t real_pixel = this->get_real_colour(pixel, palette);
-        m_background_buffer.set_pixel(x, y, real_pixel);
+        m_buffer.set_pixel(x, y, real_pixel);
     }
 }
 
@@ -401,6 +401,6 @@ void Video::reset_line() {
     this->write_io_register(LY, 0);
 }
 
-FrameBuffer &Video::get_background_buffer() {
-    return m_background_buffer;
+FrameBuffer &Video::get_buffer() {
+    return m_buffer;
 }
