@@ -582,12 +582,12 @@ TEST(Video, GetRealColourFromPalette) {
 }
 
 
-TEST(Video, GetBackgroundBuffer) {
+TEST(Video, GetBuffer) {
     MemoryMap mem_map;
     Display display;
     Video video(mem_map, display);
 
-    FrameBuffer buffer = video.get_background_buffer();
+    FrameBuffer buffer = video.get_buffer();
 
     for (int x = 0; x < MAP_SIZE; x++) {
         for (int y = 0; y < MAP_SIZE; y++) {
