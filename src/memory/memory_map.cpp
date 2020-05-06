@@ -43,8 +43,6 @@ bool MemoryMap::init_memory_map() {
         m_memory_map.insert(std::pair<int, Memory*>(i, ram));
     }
 
-    this->write(0xFF0F, 0x0);
-
     return true;
 }
 
