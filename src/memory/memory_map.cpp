@@ -31,23 +31,35 @@ MemoryMap::MemoryMap() {
 }
 
 MemoryMap::~MemoryMap() {
-    for (int i = 1; i < m_memory_map.size() - 1; i++) {
-        delete (Memory *)m_memory_map.find(i)->second;
+    for (int i = 0; i < m_memory_map.size() - 1; i++) {
+        if (i != 5 || i != 7 || i != 8 || i != 9) {
+            delete (Memory *)m_memory_map.find(i)->second;
+        }
     }
 }
 
 bool MemoryMap::init_memory_map() {
-    for (int i = 1; i < 11; i++) {
-        Memory *ram = new Memory(m_address_space[i+1] - m_address_space[i]);
-        ram->init_memory();
-        m_memory_map.insert(std::pair<int, Memory*>(i, ram));
+    for (int i = 0; i < 11; i++) {
+        if (i != 5 || i != 7 || i != 8 || i != 9) {
+            Memory *ram = new Memory(m_address_space[i+1] - m_address_space[i]);
+            ram->init_memory();
+            m_memory_map.insert(std::pair<int, Memory*>(i, ram));
+        }
     }
 
     return true;
 }
 
 void MemoryMap::load_rom(std::vector<uint8_t> file_parser_buffer) {
-    m_memory_map.insert(std::pair<int, void *>(0, &file_parser_buffer[0]));
+    for (int i = 0; i < file_parser_buffer.size() / 2; i++) {
+        Memory *mem = (Memory *)m_memory_map.find(0)->second;
+        mem->write_memory(i - m_address_space[0], file_parser_buffer[i]);
+    }
+    
+    for (int i = file_parser_buffer.size() / 2; i < file_parser_buffer.size(); i++) {
+        Memory *mem = (Memory *)m_memory_map.find(1)->second;
+        mem->write_memory(i - m_address_space[1], file_parser_buffer[i]);
+    }
 }
 
 uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
@@ -55,10 +67,17 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
 
     switch (index) {
         case 0:
+        case 1:
             std::cerr << "Cannot write to ROM" << std::endl;
             throw new std::exception;
+        case 3:
+        case 4:
+        case 10: {
+            Memory *mem = (Memory *)m_memory_map.find(index)->second;
+            return mem->write_memory(address - m_address_space[index], data);
+        }
         case 5: {
-            Memory *mem = (Memory *)m_memory_map.find(index-1)->second;
+            Memory *mem = (Memory *)m_memory_map.find(index - 1)->second;
             return mem->write_memory(address - m_address_space[index], data);
         }
         case 7:
@@ -69,8 +88,8 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 11:
             return this->m_io.write((IORegisters_t)address, data);
         default: {
-            Memory *mem = (Memory *)m_memory_map.find(index)->second;
-            return mem->write_memory(address - m_address_space[index], data);
+            std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
+            throw new std::exception;
         }
     }
 }
@@ -79,12 +98,16 @@ uint8_t MemoryMap::read(uint16_t address) {
     int index = this->get_index(address);
 
     switch (index) {
-        case 0: {
-            uint8_t *rom = (uint8_t *)m_memory_map.find(index)->second;
-            return rom[address];
+        case 0:
+        case 1:
+        case 3:
+        case 4:
+        case 10: {
+            Memory *mem = (Memory *)m_memory_map.find(index)->second;
+            return mem->read_memory(address - m_address_space[index]);
         }
         case 5: {
-            Memory *mem = (Memory *)m_memory_map.find(index-1)->second;
+            Memory *mem = (Memory *)m_memory_map.find(index - 1)->second;
             return mem->read_memory(address - m_address_space[index]);
         }
         case 7:
@@ -97,8 +120,8 @@ uint8_t MemoryMap::read(uint16_t address) {
             return this->m_io.read((IORegisters_t)address);
         
         default: {
-            Memory *mem = (Memory *)m_memory_map.find(index)->second;
-            return mem->read_memory(address - m_address_space[index]);
+            std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
+            throw new std::exception;
         }
     }
 }
