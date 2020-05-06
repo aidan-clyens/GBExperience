@@ -38,7 +38,7 @@ void CPU::jump_add(int8_t value) {
     uint16_t pc = this->read_register("PC");
 
     #ifdef CPU_DEBUG
-    log_info("JR %X", value);
+    log_info("JR %d", value);
     #endif
 
     this->write_register("PC", pc + value - 1);
@@ -53,17 +53,17 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
     switch (flag) {
         case ZERO_FLAG:
             if (set) {
-                log_info("JR Z %X", value);
+                log_info("JR Z %d", value);
             } else {
-                log_info("JR NZ %X", value);
+                log_info("JR NZ %d", value);
             }
             break;
 
         case CARRY_FLAG:
             if (set) {
-                log_info("JR C %X", value);
+                log_info("JR C %d", value);
             } else {
-                log_info("JR NC %X", value);
+                log_info("JR NC %d", value);
             }
             break;
     }
