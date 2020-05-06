@@ -3,7 +3,7 @@
 // JP nn
 void CPU::jump(uint16_t value) {
     #ifdef CPU_DEBUG
-    std::cout << "JP " << static_cast<int>(value) << std::endl; 
+    log_info("JP %X", value); 
     #endif
 
     this->write_register("PC", value);
@@ -14,7 +14,7 @@ void CPU::jump_conditional(uint16_t value, CPUFlag_t flag, bool set) {
     bool flag_set = this->read_flag_register(flag);
 
     #ifdef CPU_DEBUG
-    std::cout << "JP cc, " << static_cast<int>(value) << std::endl;
+    log_info("JP cc, %X", value);
     #endif
 
     if (!(flag_set ^ set)) {
@@ -27,7 +27,7 @@ void CPU::jump_hl() {
     uint16_t value = this->read_register("HL");
 
     #ifdef CPU_DEBUG
-    std::cout << "JP (HL)" << std::endl;
+    log_info("JP (HL)");
     #endif
 
     this->write_register("PC", value);
@@ -38,7 +38,7 @@ void CPU::jump_add(int8_t value) {
     uint16_t pc = this->read_register("PC");
 
     #ifdef CPU_DEBUG
-    std::cout << "JR " << static_cast<int>(value) << std::endl;
+    log_info("JR %X", value);
     #endif
 
     this->write_register("PC", pc + value - 1);
@@ -53,17 +53,17 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
     switch (flag) {
         case ZERO_FLAG:
             if (set) {
-                std::cout << "JR Z " << static_cast<int>(value) << std::endl;
+                log_info("JR Z %X", value);
             } else {
-                std::cout << "JR NZ " << static_cast<int>(value) << std::endl;
+                log_info("JR NZ %X", value);
             }
             break;
 
         case CARRY_FLAG:
             if (set) {
-                std::cout << "JR C " << static_cast<int>(value) << std::endl;
+                log_info("JR C %X", value);
             } else {
-                std::cout << "JR NC " << static_cast<int>(value) << std::endl;
+                log_info("JR NC %X", value);
             }
             break;
     }
@@ -76,7 +76,7 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
 
 void CPU::restart(uint8_t n) {
     #ifdef CPU_DEBUG
-    std::cout << "RST " << static_cast<int>(n) << std::endl;
+    log_info("RST %X", n);
     #endif
 
     // Push current address to stack    
@@ -93,7 +93,7 @@ void CPU::call(uint16_t nn) {
     this->write_register("PC", PC);
 
     #ifdef CPU_DEBUG
-    std::cout << "CALL " << static_cast<int>(nn) << std::endl;
+    log_info("CALL %X", nn);
     #endif
 
     // Jump to address nn
@@ -102,7 +102,7 @@ void CPU::call(uint16_t nn) {
 
 void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
     #ifdef CPU_DEBUG
-    std::cout << "CALL cc, " << static_cast<int>(nn) << std::endl;
+    log_info("CALL cc, %X", nn);
     #endif
 
     if (!(this->read_flag_register(flag) ^ is_set)) {
@@ -120,7 +120,7 @@ void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
 // RET
 void CPU::ret() {
     #ifdef CPU_DEBUG
-    std::cout << "RET" << std::endl;
+    log_info("RET");
     #endif
 
     this->pop_stack("PC");
@@ -129,7 +129,7 @@ void CPU::ret() {
 // RET cc
 void CPU::ret(CPUFlag_t flag, bool is_set) {
     #ifdef CPU_DEBUG
-    std::cout << "RET cc" << std::endl;
+    log_info("RET cc");
     #endif
 
     if (!(this->read_flag_register(flag) ^ is_set)) {
@@ -140,7 +140,7 @@ void CPU::ret(CPUFlag_t flag, bool is_set) {
 // RETI
 void CPU::ret_enable_interrupts() {
     #ifdef CPU_DEBUG
-    std::cout << "RETI" << std::endl;
+    log_info("RETI");
     #endif
 
     this->pop_stack("PC");
