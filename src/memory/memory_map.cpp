@@ -85,7 +85,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 7:
         case 9:
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
-            throw new std::exception;
+            break;
         case 8:
         case 11:
             return this->m_io.write((IORegisters_t)address, data);
@@ -117,7 +117,7 @@ uint8_t MemoryMap::read(uint16_t address) {
         case 7:
         case 9:
             std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
-            throw new std::exception;
+            break;
         
         case 8:
         case 11:
