@@ -17,6 +17,12 @@ Video::~Video() {
 void Video::tick(int cycles) {
     m_cycle_counter += cycles;
 
+    if (m_current_video_mode != this->get_video_mode()) {
+        VideoMode_t video_mode = this->get_video_mode();
+        std::cout << "video mode changed" << std::endl;
+        this->set_video_mode(video_mode);
+    }
+
     switch (m_current_video_mode) {
         case HBLANK_Mode:
             if (m_cycle_counter > HBLANK_CLOCKS) {
