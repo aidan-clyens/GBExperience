@@ -315,13 +315,23 @@ void Video::draw() {
 
 void Video::write_scanline(uint8_t line) {
     if (!this->lcd_display_enabled()) return;
+    
+    #ifdef VIDEO_DEBUG
+    log_info("LCD enabled");
+    #endif
 
     if (this->background_display_enabled()) {
+        #ifdef VIDEO_DEBUG
+        log_info("Drawing background scanline: %d", line);
+        #endif
         this->draw_background_line(line);
     }
 
     if (this->window_display_enabled()) {
-        // this->draw_window_line(line);
+        #ifdef VIDEO_DEBUG
+        log_info("Drawing window scanline: %d", line);
+        #endif
+        this->draw_window_line(line);
     }
 }
 
@@ -363,6 +373,46 @@ void Video::draw_background_line(uint8_t line) {
         Colour_t real_pixel = this->get_real_colour(pixel, palette);
         m_buffer.set_pixel(x, y, real_pixel);
     }
+}
+
+void Video::draw_window_line(uint8_t line) {
+    Palette palette = this->get_background_palette();
+    TileDataTableSelect_t tile_data_set = this->get_tile_data_selected();
+    TileMapTableSelect_t tile_map = this->get_window_tile_map_selected();
+
+    unsigned int scroll_x = this->get_window_x();
+    unsigned int scroll_y = this->get_window_y() - 7;
+
+    unsigned int y = line;
+
+    for (unsigned int x = 0; x < LCD_WIDTH; x++) {
+        // Add scroll to current coordinates
+        unsigned int sc_x = x + scroll_x;
+        unsigned int sc_y = y - scroll_y;
+
+        // Background wraps around
+        unsigned int bg_x = sc_x % MAP_SIZE;
+        unsigned int bg_y = sc_y % MAP_SIZE;
+
+        // Get tile index
+        unsigned int tile_x = bg_x / TILE_WIDTH;
+        unsigned int tile_y = bg_y / TILE_HEIGHT;
+    
+        // Get tile from tile data
+        unsigned int tile_index = tile_y * TILES_PER_LINE + tile_x;
+        uint16_t tile_id_address = (uint16_t)tile_map + tile_index;
+        uint8_t tile_id = m_memory_map.read(tile_id_address);
+
+        // Depending on the selected Tile Data Set, index is either signed or unsigned
+        unsigned int tile_offset = (tile_data_set == TILE_DATA_UNSIGNED) ? tile_id * TILE_BYTE_LENGTH : (static_cast<int8_t>(tile_id) + 128) * TILE_BYTE_LENGTH;
+        uint16_t tile_address = (uint16_t)tile_data_set + tile_offset + (tile_y * 2);
+    
+        TileRow row(tile_address, m_memory_map);
+
+        PixelColour_t pixel = row.get_pixel(x);
+        Colour_t real_pixel = this->get_real_colour(pixel, palette);
+        m_buffer.set_pixel(x, y, real_pixel);
+    }    
 }
 
 Colour_t Video::get_real_colour(PixelColour_t colour, Palette palette) {
