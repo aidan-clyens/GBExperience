@@ -70,8 +70,10 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 1:
             std::cerr << "Cannot write to ROM" << std::endl;
             throw new std::exception;
+        case 2:
         case 3:
         case 4:
+        case 6:
         case 10: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->write_memory(address - m_address_space[index], data);
@@ -100,8 +102,10 @@ uint8_t MemoryMap::read(uint16_t address) {
     switch (index) {
         case 0:
         case 1:
+        case 2:
         case 3:
         case 4:
+        case 6:
         case 10: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->read_memory(address - m_address_space[index]);
