@@ -35,6 +35,18 @@ uint8_t IO::read(IORegisters_t address) {
             #endif
 
             return m_P1;
+        case SB:
+            #ifdef DEBUG
+            std::cerr << "SB not implemented" << std::endl;
+            #endif
+
+            return 0;
+        case SC:
+            #ifdef DEBUG
+            std::cerr << "SB not implemented" << std::endl;
+            #endif
+
+            return 0;
         case DIV:
             #ifdef DEBUG
             std::cout << "IO read: DIV" << std::endl;
@@ -65,6 +77,32 @@ uint8_t IO::read(IORegisters_t address) {
             #endif
 
             return m_IF;
+        case NR10:
+        case NR11:
+        case NR12:
+        case NR13:
+        case NR14:
+        case NR21:
+        case NR22:
+        case NR23:
+        case NR24:
+        case NR30:
+        case NR31:
+        case NR32:
+        case NR33:
+        case NR34:
+        case NR41:
+        case NR42:
+        case NR43:
+        case NR44:
+        case NR50:
+        case NR51:
+        case NR52:
+            #ifdef DEBUG
+            std::cerr << "NR5* not implemented" << std::endl;
+            #endif
+
+            return 0;
         case LCDC:
             #ifdef DEBUG
             std::cout << "IO read: LCDC" << std::endl;
@@ -159,6 +197,18 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
 
             m_P1 = data;
             break;
+        case SB:
+            #ifdef DEBUG
+            std::cerr << "SB not implemented" << std::endl;
+            #endif
+
+            break;
+        case SC:
+            #ifdef DEBUG
+            std::cerr << "SB not implemented" << std::endl;
+            #endif
+
+            break;
         case DIV:
             #ifdef DEBUG
             std::cout << "IO write: DIV" << std::endl;
@@ -193,6 +243,32 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
             #endif
 
             m_IF = data;
+            break;
+        case NR10:
+        case NR11:
+        case NR12:
+        case NR13:
+        case NR14:
+        case NR21:
+        case NR22:
+        case NR23:
+        case NR24:
+        case NR30:
+        case NR31:
+        case NR32:
+        case NR33:
+        case NR34:
+        case NR41:
+        case NR42:
+        case NR43:
+        case NR44:
+        case NR50:
+        case NR51:
+        case NR52:
+            #ifdef DEBUG
+            std::cerr << "NR5* not implemented" << std::endl;
+            #endif
+
             break;
         case LCDC:
             #ifdef DEBUG
