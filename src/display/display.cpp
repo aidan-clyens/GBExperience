@@ -92,6 +92,8 @@ sf::Color Display::get_pixel_colour(Colour_t colour) {
             return sf::Color(85, 85, 85);
         case BLACK:
             return sf::Color(0, 0, 0);
+        default:
+            return sf::Color(255, 255, 255);
         }
 }
 
