@@ -7,7 +7,6 @@
 #include "cpu_registers.h"
 #include "../memory/memory_map.h"
 #include "../memory/io.h"
-#include "../debugger/definitions.h"
 #include "../debugger/logger.h"
 
 

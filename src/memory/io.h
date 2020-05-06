@@ -4,7 +4,7 @@
 #include <iostream>
 #include <exception>
 
-#include "../debugger/definitions.h"
+#include "../debugger/logger.h"
 
 
 typedef enum IORegisters {
