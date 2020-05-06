@@ -7,6 +7,7 @@
 #include "cpu_registers.h"
 #include "../memory/memory_map.h"
 #include "../memory/io.h"
+#include "../debugger/definitions.h"
 
 
 const float EXPECTED_FREQ_MHZ = 4.194304;

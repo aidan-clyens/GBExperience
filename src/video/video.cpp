@@ -24,18 +24,18 @@ void Video::tick(int cycles) {
 
                 this->write_scanline(this->get_line());
 
-                #ifdef DEBUG
+                #ifdef VIDEO_DEBUG
                 std::cout << "Scanlines drawn: " << this->get_line() << std::endl;
                 #endif
                 this->increment_line();
 
                 if (this->get_line() == 144) {
-                    #ifdef DEBUG
+                    #ifdef VIDEO_DEBUG
                     std::cout << "Switching to V-Blank mode" << std::endl;
                     #endif
                     this->set_video_mode(VBLANK_Mode);
                 } else {
-                    #ifdef DEBUG
+                    #ifdef VIDEO_DEBUG
                     std::cout << "Switching to OAM mode" << std::endl;
                     #endif
                     this->set_video_mode(OAM_Mode);
@@ -56,7 +56,7 @@ void Video::tick(int cycles) {
                     this->reset_line();
                     m_buffer.reset();
 
-                    #ifdef DEBUG
+                    #ifdef VIDEO_DEBUG
                     std::cout << "Switching to OAM mode" << std::endl;
                     #endif
                     this->set_video_mode(OAM_Mode);
@@ -67,7 +67,7 @@ void Video::tick(int cycles) {
             if (m_cycle_counter > OAM_CLOCKS) {
                 m_cycle_counter = m_cycle_counter % OAM_CLOCKS;
 
-                #ifdef DEBUG
+                #ifdef VIDEO_DEBUG
                 std::cout << "Switching to Data Transfer mode" << std::endl;
                 #endif
                 this->set_video_mode(Data_Transfer_Mode);
@@ -79,7 +79,7 @@ void Video::tick(int cycles) {
 
                 this->trigger_coincidence_interrupt();
 
-                #ifdef DEBUG
+                #ifdef VIDEO_DEBUG
                 std::cout << "Switching to H-Blank mode" << std::endl;
                 #endif
                 this->set_video_mode(HBLANK_Mode);

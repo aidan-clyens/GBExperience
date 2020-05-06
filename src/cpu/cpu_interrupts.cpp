@@ -5,7 +5,7 @@ void CPU::handle_interrupts() {
     if (m_interrupts_enabled) {
         uint8_t fired_interrupts = this->read_io_register(IE) & this->read_io_register(IF);
 
-        #ifdef DEBUG
+        #ifdef INTERRUPT_DEBUG
         std::cout << "Interrupt fired: " << static_cast<int>(fired_interrupts) << std::endl;
         #endif
 
@@ -52,7 +52,7 @@ bool CPU::handle_interrupt(InterruptFlag_t flag, InterruptVector_t vector) {
         return false;
     }
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "Handling interrupt: " << flag << std::endl;
     #endif
 

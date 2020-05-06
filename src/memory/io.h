@@ -4,6 +4,8 @@
 #include <iostream>
 #include <exception>
 
+#include "../debugger/definitions.h"
+
 
 typedef enum IORegisters {
     P1 = 0xFF00,

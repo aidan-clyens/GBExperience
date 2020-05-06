@@ -2,7 +2,7 @@
 
 // JP nn
 void CPU::jump(uint16_t value) {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "JP " << static_cast<int>(value) << std::endl; 
     #endif
 
@@ -13,7 +13,7 @@ void CPU::jump(uint16_t value) {
 void CPU::jump_conditional(uint16_t value, CPUFlag_t flag, bool set) {
     bool flag_set = this->read_flag_register(flag);
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "JP cc, " << static_cast<int>(value) << std::endl;
     #endif
 
@@ -26,7 +26,7 @@ void CPU::jump_conditional(uint16_t value, CPUFlag_t flag, bool set) {
 void CPU::jump_hl() {
     uint16_t value = this->read_register("HL");
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "JP (HL)" << std::endl;
     #endif
 
@@ -37,7 +37,7 @@ void CPU::jump_hl() {
 void CPU::jump_add(int8_t value) {
     uint16_t pc = this->read_register("PC");
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "JR " << static_cast<int>(value) << std::endl;
     #endif
 
@@ -49,7 +49,7 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
     uint16_t pc = this->read_register("PC");
     bool flag_set = this->read_flag_register(flag);
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     switch (flag) {
         case ZERO_FLAG:
             if (set) {
@@ -75,7 +75,7 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
 }
 
 void CPU::restart(uint8_t n) {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "RST " << static_cast<int>(n) << std::endl;
     #endif
 
@@ -92,7 +92,7 @@ void CPU::call(uint16_t nn) {
     this->push_stack("PC");
     this->write_register("PC", PC);
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "CALL " << static_cast<int>(nn) << std::endl;
     #endif
 
@@ -101,7 +101,7 @@ void CPU::call(uint16_t nn) {
 }
 
 void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "CALL cc, " << static_cast<int>(nn) << std::endl;
     #endif
 
@@ -119,7 +119,7 @@ void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
 
 // RET
 void CPU::ret() {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "RET" << std::endl;
     #endif
 
@@ -128,7 +128,7 @@ void CPU::ret() {
 
 // RET cc
 void CPU::ret(CPUFlag_t flag, bool is_set) {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "RET cc" << std::endl;
     #endif
 
@@ -139,7 +139,7 @@ void CPU::ret(CPUFlag_t flag, bool is_set) {
 
 // RETI
 void CPU::ret_enable_interrupts() {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "RETI" << std::endl;
     #endif
 

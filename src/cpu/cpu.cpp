@@ -24,6 +24,10 @@ long int CPU::tick() {
     // Check if halted
     int cycle_count = 4;
     if (this->is_running()) {
+        #ifdef CPU_DEBUG
+        std::cout << static_cast<int>(this->read_register("PC")) << ": ";
+        #endif
+        
         // Fetch next opcode and execute
         uint8_t opcode = this->fetch_op();
         cycle_count = this->decode_op(opcode);
@@ -57,7 +61,7 @@ int CPU::decode_op(uint8_t opcode) {
         /****    Misc    ****/
         // NOP
         case 0x00:
-            #ifdef DEBUG
+            #ifdef CPU_DEBUG
             std::cout << "NOP" << std::endl;
             #endif
             cycle_count = 4;
@@ -74,7 +78,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // DAA
         case 0x27:
-            #ifdef DEBUG
+            #ifdef CPU_DEBUG
             std::cout << "DAA" << std::endl;
             #endif
             break;
@@ -529,7 +533,7 @@ int CPU::decode_op(uint8_t opcode) {
         // LD (nn), SP
         case 0x08:
             // TODO Learn how to implement this instruction
-            #ifdef DEBUG
+            #ifdef CPU_DEBUG
             std::cout << "LD " << static_cast<int>(arg_1) << ", SP" << std::endl;
             #endif
             cycle_count = 20;
