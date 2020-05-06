@@ -12,7 +12,7 @@ void CPU::test_bit(int n, const std::string &reg) {
         val = this->read_register(reg);
     }
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "BIT " << n <<  ", " << reg << std::endl;
     #endif
 
@@ -35,7 +35,7 @@ void CPU::set_bit(int n, const std::string &reg) {
         val = this->read_register(reg);
     }
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "SET " << n << ", " << reg << std::endl;
     #endif
 
@@ -61,7 +61,7 @@ void CPU::reset_bit(int n, const std::string &reg) {
         val = this->read_register(reg);
     }
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "RES " << n << ", " << reg << std::endl;
     #endif
 

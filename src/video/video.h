@@ -2,6 +2,7 @@
 
 #include "../memory/memory_map.h"
 #include "../display/display.h"
+#include "../debugger/definitions.h"
 #include "definitions.h"
 #include "tile.h"
 #include "framebuffer.h"

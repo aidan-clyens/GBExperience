@@ -25,7 +25,7 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
     // RLA
     if (use_carry)  {
         bool old_bit_7 = this->read_flag_register(CARRY_FLAG);
-        #ifdef DEBUG
+        #ifdef CPU_DEBUG
         if (reg == "A") {
             std::cout << "RLA" << std::endl;
         }
@@ -40,7 +40,7 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
     }
     // RLCA
     else {
-        #ifdef DEBUG
+        #ifdef CPU_DEBUG
         if (reg == "A") {
             std::cout << "RLCA" << std::endl;
         }
@@ -93,7 +93,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
     if (use_carry)  {
         bool old_bit_0 = this->read_flag_register(CARRY_FLAG);
 
-        #ifdef DEBUG
+        #ifdef CPU_DEBUG
         if (reg == "A") {
             std::cout << "RRA" << std::endl;
         }
@@ -111,7 +111,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
     }
     // RRCA
     else {
-        #ifdef DEBUG
+        #ifdef CPU_DEBUG
         if (reg == "A") {
             std::cout << "RRCA" << std::endl;
         }
@@ -151,7 +151,7 @@ void CPU::shift_left(const std::string &reg) {
     uint8_t result = val << 1;
     bool bit_7 = (val & 0x80) == 0x80;
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "SLA n" << std::endl;
     #endif
 
@@ -189,12 +189,12 @@ void CPU::shift_right(const std::string &reg, bool keep_msb) {
             result |= 0x80;
         }
 
-        #ifdef DEBUG
+        #ifdef CPU_DEBUG
         std::cout << "SRA n" << std::endl;
         #endif
     }
     else {
-        #ifdef DEBUG
+        #ifdef CPU_DEBUG
         std::cout << "SRL n" << std::endl;
         #endif
     }

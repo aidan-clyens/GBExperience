@@ -17,7 +17,7 @@ void CPU::swap(const std::string &reg) {
 
     this->reset_flag_register();
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "SWAP " << reg << std::endl;
     #endif
 
@@ -37,7 +37,7 @@ void CPU::complement() {
     uint8_t val = this->read_register("A");
     uint8_t result = ~val;
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "CPL" << std::endl;
     #endif
 
@@ -50,7 +50,7 @@ void CPU::complement() {
 void CPU::complement_carry() {
     bool carry = this->read_flag_register(CARRY_FLAG);
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "CCF" << std::endl;
     #endif
 
@@ -62,7 +62,7 @@ void CPU::complement_carry() {
 
 void CPU::set_carry() {
 
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "SCF" << std::endl;
     #endif
 
@@ -70,7 +70,7 @@ void CPU::set_carry() {
 }
 
 void CPU::halt() {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "HALT" << std::endl;
     #endif
 
@@ -79,7 +79,7 @@ void CPU::halt() {
 
 
 void CPU::stop() {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "STOP" << std::endl;
     #endif
 
@@ -88,7 +88,7 @@ void CPU::stop() {
 
 
 void CPU::enable_interrupts() {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "EI" << std::endl;
     #endif
 
@@ -96,7 +96,7 @@ void CPU::enable_interrupts() {
 }
 
 void CPU::disable_interrupts() {
-    #ifdef DEBUG
+    #ifdef CPU_DEBUG
     std::cout << "DI" << std::endl;
     #endif
 
