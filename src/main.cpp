@@ -12,16 +12,15 @@ int main(int argc, char** argv) {
         rom_file = argv[1];
     }
 
+    Display main_display;
+    std::unique_ptr<GameBoy> gb = std::make_unique<GameBoy>(main_display);
 
     gb->load_rom(rom_file);
 
     main_display.init_display(gb->get_rom_name());
 
     while (main_display.is_display_open()) {
-        gb.tick();
-
-        main_display.poll_events();
-        main_display.render();
+        gb->tick();
     }
 
     return 0;
