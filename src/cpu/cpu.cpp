@@ -1136,7 +1136,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg_1 = this->fetch_op();
 
             #ifdef CPU_DEBUG
-            log_info("JR %d", arg_1);
+            log_info("JR %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add(arg_1);
@@ -1146,7 +1146,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x20:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR NZ %d", arg_1);
+            log_info("JR NZ %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, ZERO_FLAG, false);
@@ -1155,7 +1155,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x28:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR Z %d", arg_1);
+            log_info("JR Z %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, ZERO_FLAG, true);
@@ -1164,7 +1164,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x30:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR NC %d", arg_1);
+            log_info("JR NC %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, CARRY_FLAG, false);
@@ -1173,7 +1173,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x38:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR C %d", arg_1);
+            log_info("JR C %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, CARRY_FLAG, true);
