@@ -381,9 +381,7 @@ void CPU::alu_dec(const std::string &reg) {
     }
 
     uint8_t result = N;
-    if (N > 0) {
-        result--;
-    }
+    result--;
 
     #ifdef CPU_DEBUG
     log_info("DEC %s", reg.c_str() );
@@ -473,9 +471,7 @@ void CPU::alu_inc_16bit(const std::string &reg) {
 void CPU::alu_dec_16bit(const std::string &reg) {
     uint16_t N = this->read_register(reg);
     uint16_t result = N;
-    if (N > 0) {
-        result--;
-    } 
+    result--;
 
     #ifdef CPU_DEBUG
     log_info("DEC %s", reg.c_str() );

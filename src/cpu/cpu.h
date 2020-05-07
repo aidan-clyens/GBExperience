@@ -42,7 +42,7 @@ class CPU {
         CPU(MemoryMap &);
         virtual ~CPU();
 
-        long int tick();
+        int tick();
 
         uint8_t fetch_op();
         int decode_op(uint8_t);

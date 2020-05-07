@@ -14,10 +14,7 @@ CPU::~CPU() {
 
 }
 
-long int CPU::tick() {
-    // Get start time of CPU tick
-    m_last_time = this->get_time();
-
+int CPU::tick() {
     // Handle interrupts
     this->handle_interrupts();
 
@@ -31,16 +28,9 @@ long int CPU::tick() {
         // Fetch next opcode and execute
         uint8_t opcode = this->fetch_op();
         cycle_count = this->decode_op(opcode);
-    } 
-
-    long int dt = this->get_time_difference_ns();
-
-    // Wait until expected cycle time is reached
-    while (dt < cycle_count * EXPECTED_CYCLE_TIME_NS) {
-        dt = this->get_time_difference_ns();
     }
 
-    return dt;
+    return cycle_count;
 }
 
 uint8_t CPU::fetch_op() {
