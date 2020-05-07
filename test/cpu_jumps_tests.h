@@ -177,6 +177,7 @@ TEST(CPU_JUMP, JR_Postive) {
     uint16_t PC = 0xA000;
     uint8_t value = 0x70;
     int value_signed = 112;
+    uint16_t result_PC = PC + value_signed + 1;
     uint8_t opcode = 0x18;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -186,7 +187,7 @@ TEST(CPU_JUMP, JR_Postive) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + value_signed, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register("PC"));
 }
 
 TEST(CPU_JUMP, JR_Negative) {
@@ -194,7 +195,7 @@ TEST(CPU_JUMP, JR_Negative) {
     uint8_t value = 0xAB;
     int value_signed = -85;
     uint8_t opcode = 0x18;
-    uint16_t result = PC + value_signed;
+    uint16_t result_PC = PC + value_signed + 1;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
 
@@ -203,12 +204,13 @@ TEST(CPU_JUMP, JR_Negative) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register("PC"));
 }
 
 TEST(CPU_JUMP, JR_NZ_False) {
     uint16_t PC = 0xA000;
     uint8_t value = 0x70;
+    uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x20;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -219,7 +221,7 @@ TEST(CPU_JUMP, JR_NZ_False) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + value, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register("PC"));
 }
 
 TEST(CPU_JUMP, JR_NZ_True) {
@@ -254,10 +256,10 @@ TEST(CPU_JUMP, JR_Z_False) {
     EXPECT_EQ(PC + 1, cpu.read_register("PC"));
 }
 
-TEST(CPU_JUMP, JR_Z_True)
-{
+TEST(CPU_JUMP, JR_Z_True) {
     uint16_t PC = 0xA000;
     uint8_t value = 0x70;
+    uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x28;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -268,12 +270,13 @@ TEST(CPU_JUMP, JR_Z_True)
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + value, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register("PC"));
 }
 
 TEST(CPU_JUMP, JR_NC_False) {
     uint16_t PC = 0xA000;
     uint8_t value = 0x70;
+    uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x30;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -284,7 +287,7 @@ TEST(CPU_JUMP, JR_NC_False) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + value, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register("PC"));
 }
 
 TEST(CPU_JUMP, JR_NC_True) {
@@ -322,6 +325,7 @@ TEST(CPU_JUMP, JR_C_False) {
 TEST(CPU_JUMP, JR_C_True) {
     uint16_t PC = 0xA000;
     uint8_t value = 0x70;
+    uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x38;
 
     MemoryMap mem_map = setup_mem_map(PC, value);
@@ -332,7 +336,7 @@ TEST(CPU_JUMP, JR_C_True) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + value, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register("PC"));
 }
 
 // RST 10
