@@ -365,6 +365,7 @@ TEST(CPU_RST, RST) {
 TEST(CPU_CALL, CALL_NN) {
     uint8_t opcode = 0xCD;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -387,8 +388,8 @@ TEST(CPU_CALL, CALL_NN) {
     cpu.write_register("DE", SP - 1);
     cpu.write_register("HL", SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
 
     EXPECT_EQ(val, cpu.read_register("PC"));
 }
@@ -397,6 +398,7 @@ TEST(CPU_CALL, CALL_NN) {
 TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
     uint8_t opcode = 0xDC;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -418,13 +420,14 @@ TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 2, cpu.read_register("PC"));
+    EXPECT_EQ(next_PC, cpu.read_register("PC"));
 }
 
 // CALL cc, nn
 TEST(CPU_CALL, CALL_CC_NN_Carry) {
     uint8_t opcode = 0xDC;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -451,8 +454,8 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
     cpu.write_register("DE", SP - 1);
     cpu.write_register("HL", SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
 
     EXPECT_EQ(val, cpu.read_register("PC"));
 }
@@ -461,6 +464,7 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
 TEST(CPU_RETURNS, RET) {
     uint8_t opcode = 0xCD;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -484,21 +488,22 @@ TEST(CPU_RETURNS, RET) {
     cpu.write_register("DE", SP - 1);
     cpu.write_register("HL", SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
 
     // RET
     opcode = 0xC9;
     cpu.decode_op(opcode);
 
     EXPECT_EQ(SP, cpu.read_register("SP"));
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(next_PC, cpu.read_register("PC"));
 }
 
 // RET cc
 TEST(CPU_RETURNS, RET_CC_NoFlags) {
     uint8_t opcode = 0xCD;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -522,8 +527,8 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
     cpu.write_register("DE", SP - 1);
     cpu.write_register("HL", SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
 
     // RET cc
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -541,6 +546,7 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
 TEST(CPU_RETURNS, RET_CC_Carry) {
     uint8_t opcode = 0xCD;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -564,8 +570,8 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
     cpu.write_register("DE", SP - 1);
     cpu.write_register("HL", SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
 
     // RET cc
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -576,13 +582,14 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
     cpu.decode_op(opcode);
 
     EXPECT_EQ(SP, cpu.read_register("SP"));
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(next_PC, cpu.read_register("PC"));
 }
 
 // RETI
 TEST(CPU_RETURNS, RETI) {
     uint8_t opcode = 0xCD;
     uint16_t PC = 0xA000;
+    uint16_t next_PC = 0xA002;
     uint16_t SP = 0xC000;
     uint16_t val = 0xA0FF;
 
@@ -606,15 +613,15 @@ TEST(CPU_RETURNS, RETI) {
     cpu.write_register("DE", SP - 1);
     cpu.write_register("HL", SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
 
     // RETI
     opcode = 0xD9;
     cpu.decode_op(opcode);
 
     EXPECT_EQ(SP, cpu.read_register("SP"));
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(next_PC, cpu.read_register("PC"));
 
     // Check if interrupts are enabled
     EXPECT_TRUE(cpu.interrupts_enabled());
