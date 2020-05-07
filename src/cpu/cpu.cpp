@@ -540,35 +540,67 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // PUSH nn
         case 0xF5:
+            #ifdef CPU_DEBUG
+            log_info("PUSH AF");
+            #endif
+
             this->push_stack("AF");
             cycle_count = 16;
             break;
         case 0xC5:
+            #ifdef CPU_DEBUG
+            log_info("PUSH BC");
+            #endif
+
             this->push_stack("BC");
             cycle_count = 16;
             break;
         case 0xD5:
+            #ifdef CPU_DEBUG
+            log_info("PUSH DE");
+            #endif
+
             this->push_stack("DE");
             cycle_count = 16;
             break;
         case 0xE5:
+            #ifdef CPU_DEBUG
+            log_info("PUSH HL");
+            #endif
+
             this->push_stack("HL");
             cycle_count = 16;
             break;
         // POP nn
         case 0xF1:
+            #ifdef CPU_DEBUG
+            log_info("POP AF");
+            #endif
+
             this->pop_stack("AF");
             cycle_count = 12;
             break;
         case 0xC1:
+            #ifdef CPU_DEBUG
+            log_info("POP BC");
+            #endif
+
             this->pop_stack("BC");
             cycle_count = 12;
             break;
         case 0xD1:
+            #ifdef CPU_DEBUG
+            log_info("POP DE");
+            #endif
+
             this->pop_stack("DE");
             cycle_count = 12;
             break;
         case 0xE1:
+            #ifdef CPU_DEBUG
+            log_info("POP HL");
+            #endif
+
             this->pop_stack("HL");
             cycle_count = 12;
             break;

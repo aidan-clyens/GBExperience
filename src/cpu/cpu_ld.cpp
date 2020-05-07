@@ -92,10 +92,6 @@ void CPU::push_stack(const std::string &reg) {
     uint16_t val = this->read_register(reg);
     uint16_t SP = this->read_register("SP");
 
-    #ifdef CPU_DEBUG
-    log_info("PUSH %s", reg.c_str());
-    #endif
-
     this->write_register("SP", SP - 1);
     this->write_memory("SP", val & 0xFF);
     
@@ -105,10 +101,6 @@ void CPU::push_stack(const std::string &reg) {
 
 void CPU::pop_stack(const std::string &reg) {
     uint16_t SP = this->read_register("SP");
-
-    #ifdef CPU_DEBUG
-    log_info("POP %s", reg.c_str());
-    #endif
 
     uint8_t val_1 = this->read_memory("SP");
     this->write_register("SP", SP + 1);
