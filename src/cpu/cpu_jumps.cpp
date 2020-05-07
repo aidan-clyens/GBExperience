@@ -29,11 +29,7 @@ void CPU::jump_hl() {
 void CPU::jump_add(int8_t value) {
     uint16_t pc = this->read_register("PC");
 
-    #ifdef CPU_DEBUG
-    log_info("JR %d", value);
-    #endif
-
-    this->write_register("PC", pc + value - 1);
+    this->write_register("PC", pc + value);
 }
 
 // JR cc, n
@@ -42,7 +38,7 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
     bool flag_set = this->read_flag_register(flag);
 
     if (!(flag_set ^ set)) {
-        this->write_register("PC", pc + value - 1);
+        this->write_register("PC", pc + value);
     }
 }
 
