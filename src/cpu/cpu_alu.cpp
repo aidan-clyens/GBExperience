@@ -34,8 +34,8 @@ void CPU::alu_add(const std::string &reg, bool carry) {
     }
 
     #ifdef CPU_DEBUG
-    if (carry) { log_info("ADC A, %s", reg); }
-    else { log_info("ADD A, %s", reg); }
+    if (carry) { log_info("ADC A, %s", reg.c_str()); }
+    else { log_info("ADD A, %s", reg.c_str()); }
     #endif
 
     this->write_register("A", result);
@@ -92,8 +92,8 @@ void CPU::alu_sub(const std::string &reg, bool carry) {
     uint8_t result = A - n;
 
     #ifdef CPU_DEBUG
-    if (carry) { log_info("SBC A, %s", reg); }
-    else { log_info("SUB A, %s", reg); }
+    if (carry) { log_info("SBC A, %s", reg.c_str()); }
+    else { log_info("SUB A, %s", reg.c_str()); }
     #endif
 
     this->write_register("A", result);
@@ -175,7 +175,7 @@ void CPU::alu_and(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("AND A, %s", reg );
+    log_info("AND A, %s", reg.c_str() );
     #endif
 
     this->write_register("A", result);
@@ -217,7 +217,7 @@ void CPU::alu_or(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("OR A, %s", reg );
+    log_info("OR A, %s", reg.c_str() );
     #endif
 
     this->write_register("A", result);
