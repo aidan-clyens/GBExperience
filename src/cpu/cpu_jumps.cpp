@@ -2,20 +2,12 @@
 
 // JP nn
 void CPU::jump(uint16_t value) {
-    #ifdef CPU_DEBUG
-    log_info("JP %X", value); 
-    #endif
-
     this->write_register("PC", value);
 }
 
 // JP cc, nn
 void CPU::jump_conditional(uint16_t value, CPUFlag_t flag, bool set) {
     bool flag_set = this->read_flag_register(flag);
-
-    #ifdef CPU_DEBUG
-    log_info("JP cc, %X", value);
-    #endif
 
     if (!(flag_set ^ set)) {
         this->write_register("PC", value);
@@ -49,36 +41,12 @@ void CPU::jump_add_conditional(int8_t value, CPUFlag_t flag, bool set) {
     uint16_t pc = this->read_register("PC");
     bool flag_set = this->read_flag_register(flag);
 
-    #ifdef CPU_DEBUG
-    switch (flag) {
-        case ZERO_FLAG:
-            if (set) {
-                log_info("JR Z %d", value);
-            } else {
-                log_info("JR NZ %d", value);
-            }
-            break;
-
-        case CARRY_FLAG:
-            if (set) {
-                log_info("JR C %d", value);
-            } else {
-                log_info("JR NC %d", value);
-            }
-            break;
-    }
-    #endif
-
     if (!(flag_set ^ set)) {
         this->write_register("PC", pc + value - 1);
     }
 }
 
 void CPU::restart(uint8_t n) {
-    #ifdef CPU_DEBUG
-    log_info("RST %X", n);
-    #endif
-
     // Push current address to stack    
     this->push_stack("PC");
     // Jump to address n
@@ -92,19 +60,11 @@ void CPU::call(uint16_t nn) {
     this->push_stack("PC");
     this->write_register("PC", PC);
 
-    #ifdef CPU_DEBUG
-    log_info("CALL %X", nn);
-    #endif
-
     // Jump to address nn
     this->jump(nn);
 }
 
 void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
-    #ifdef CPU_DEBUG
-    log_info("CALL cc, %X", nn);
-    #endif
-
     if (!(this->read_flag_register(flag) ^ is_set)) {
         uint16_t PC = this->read_register("PC");
         this->write_register("PC", PC - 2);
@@ -119,19 +79,11 @@ void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
 
 // RET
 void CPU::ret() {
-    #ifdef CPU_DEBUG
-    log_info("RET");
-    #endif
-
     this->pop_stack("PC");
 }
 
 // RET cc
 void CPU::ret(CPUFlag_t flag, bool is_set) {
-    #ifdef CPU_DEBUG
-    log_info("RET cc");
-    #endif
-
     if (!(this->read_flag_register(flag) ^ is_set)) {
         this->pop_stack("PC");
     }
@@ -139,10 +91,6 @@ void CPU::ret(CPUFlag_t flag, bool is_set) {
 
 // RETI
 void CPU::ret_enable_interrupts() {
-    #ifdef CPU_DEBUG
-    log_info("RETI");
-    #endif
-
     this->pop_stack("PC");
     this->enable_interrupts();
 }
