@@ -51,7 +51,7 @@ void CPU::restart(uint8_t n) {
 
 void CPU::call(uint16_t nn) {
     uint16_t PC = this->read_register("PC");
-    this->write_register("PC", PC - 2);
+    this->write_register("PC", PC);
     // Push current address to stack
     this->push_stack("PC");
     this->write_register("PC", PC);
@@ -63,7 +63,7 @@ void CPU::call(uint16_t nn) {
 void CPU::call(uint16_t nn, CPUFlag_t flag, bool is_set) {
     if (!(this->read_flag_register(flag) ^ is_set)) {
         uint16_t PC = this->read_register("PC");
-        this->write_register("PC", PC - 2);
+        this->write_register("PC", PC);
         // Push current address to stack
         this->push_stack("PC");
         this->write_register("PC", PC);
