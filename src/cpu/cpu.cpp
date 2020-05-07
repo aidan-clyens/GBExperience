@@ -1026,6 +1026,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("JP %X", arg16bit);
+            #endif
+
             this->jump(arg16bit);
             cycle_count = 12;
             break;
@@ -1037,6 +1041,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("JP NZ %X", arg16bit);
+            #endif
+
             this->jump_conditional(arg16bit, ZERO_FLAG, false);
             cycle_count = 12;
             break;
@@ -1046,6 +1054,10 @@ int CPU::decode_op(uint8_t opcode) {
             // MSB
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
+
+            #ifdef CPU_DEBUG
+            log_info("JP Z %X", arg16bit);
+            #endif
 
             this->jump_conditional(arg16bit, ZERO_FLAG, true);
             cycle_count = 12;
@@ -1057,6 +1069,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("JP NC %X", arg16bit);
+            #endif
+
             this->jump_conditional(arg16bit, CARRY_FLAG, false);
             cycle_count = 12;
             break;
@@ -1067,38 +1083,67 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("JP C %X", arg16bit);
+            #endif
+
             this->jump_conditional(arg16bit, CARRY_FLAG, true);
             cycle_count = 12;
             break;
         // JP HL
         case 0xE9:
+            #ifdef CPU_DEBUG
+            log_info("JP (%X)", this->read_register("HL"));
+            #endif
+
             this->jump_hl();
             cycle_count = 4;
             break;
         // JR n
         case 0x18:
             arg_1 = this->fetch_op();
+
+            #ifdef CPU_DEBUG
+            log_info("JR %d", arg_1);
+            #endif
+
             this->jump_add(arg_1);
             cycle_count = 8;
             break;
         // JR cc, n
         case 0x20:
             arg_1 = this->fetch_op();
+            #ifdef CPU_DEBUG
+            log_info("JR NZ %d", arg_1);
+            #endif
+
             this->jump_add_conditional(arg_1, ZERO_FLAG, false);
             cycle_count = 8;
             break;
         case 0x28:
             arg_1 = this->fetch_op();
+            #ifdef CPU_DEBUG
+            log_info("JR Z %d", arg_1);
+            #endif
+
             this->jump_add_conditional(arg_1, ZERO_FLAG, true);
             cycle_count = 8;
             break;
         case 0x30:
             arg_1 = this->fetch_op();
+            #ifdef CPU_DEBUG
+            log_info("JR NC %d", arg_1);
+            #endif
+
             this->jump_add_conditional(arg_1, CARRY_FLAG, false);
             cycle_count = 8;
             break;
         case 0x38:
             arg_1 = this->fetch_op();
+            #ifdef CPU_DEBUG
+            log_info("JR C %d", arg_1);
+            #endif
+
             this->jump_add_conditional(arg_1, CARRY_FLAG, true);
             cycle_count = 8;
             break;
@@ -1109,6 +1154,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("CALL %X", arg16bit);
+            #endif
+
             this->call(arg16bit);
             cycle_count = 12;
             break;
@@ -1118,6 +1167,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("CALL NZ %X", arg16bit);
+            #endif
+
             this->call(arg16bit, ZERO_FLAG, false);
             cycle_count = 12;
             break;
@@ -1125,6 +1178,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_1 = this->fetch_op();
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
+
+            #ifdef CPU_DEBUG
+            log_info("CALL Z %X", arg16bit);
+            #endif
 
             this->call(arg16bit, ZERO_FLAG, true);
             cycle_count = 12;
@@ -1134,6 +1191,10 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("CALL NC %X", arg16bit);
+            #endif
+
             this->call(arg16bit, CARRY_FLAG, false);
             cycle_count = 12;
             break;
@@ -1142,68 +1203,128 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
+            #ifdef CPU_DEBUG
+            log_info("CALL C %X", arg16bit);
+            #endif
+
             this->call(arg16bit, CARRY_FLAG, true);
             cycle_count = 12;
             break;
         /****    Restarts    ****/
         // RST n
         case 0xC7:
+            #ifdef CPU_DEBUG
+            log_info("RST 00");
+            #endif
+
             this->restart(0x00);
             cycle_count = 32;
             break;
         case 0xCF:
+            #ifdef CPU_DEBUG
+            log_info("RST 08");
+            #endif
+
             this->restart(0x08);
             cycle_count = 32;
             break;
         case 0xD7:
+            #ifdef CPU_DEBUG
+            log_info("RST 10");
+            #endif
+
             this->restart(0x10);
             cycle_count = 32;
             break;
         case 0xDF:
+            #ifdef CPU_DEBUG
+            log_info("RST 18");
+            #endif
+
             this->restart(0x18);
             cycle_count = 32;
             break;
         case 0xE7:
+            #ifdef CPU_DEBUG
+            log_info("RST 20");
+            #endif
+
             this->restart(0x20);
             cycle_count = 32;
             break;
         case 0xEF:
+            #ifdef CPU_DEBUG
+            log_info("RST 28");
+            #endif
+
             this->restart(0x28);
             cycle_count = 32;
             break;
         case 0xF7:
+            #ifdef CPU_DEBUG
+            log_info("RST 30");
+            #endif
+
             this->restart(0x30);
             cycle_count = 32;
             break;
         case 0xFF:
+            #ifdef CPU_DEBUG
+            log_info("RST 38");
+            #endif
+
             this->restart(0x38);
             cycle_count = 32;
             break;
         /****    Returns    ****/
         // RET
         case 0xC9:
+            #ifdef CPU_DEBUG
+            log_info("RET");
+            #endif
+
             this->ret();
             cycle_count = 8;
             break;
         // RET cc
         case 0xC0:
+            #ifdef CPU_DEBUG
+            log_info("RET NZ");
+            #endif
+
             this->ret(ZERO_FLAG, false);
             cycle_count = 8;
             break;
         case 0xC8:
+            #ifdef CPU_DEBUG
+            log_info("RET Z");
+            #endif
+
             this->ret(ZERO_FLAG, true);
             cycle_count = 8;
             break;
         case 0xD0:
+            #ifdef CPU_DEBUG
+            log_info("RET NC");
+            #endif
+
             this->ret(CARRY_FLAG, false);
             cycle_count = 8;
             break;
         case 0xD8:
+            #ifdef CPU_DEBUG
+            log_info("RET C");
+            #endif
+
             this->ret(CARRY_FLAG, true);
             cycle_count = 8;
             break;
         // RETI
         case 0xD9:
+            #ifdef CPU_DEBUG
+            log_info("RETI");
+            #endif
+
             this->ret_enable_interrupts();
             cycle_count = 8;
             break;
