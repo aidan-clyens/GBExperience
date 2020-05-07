@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 
 const int HBLANK_CLOCKS = 204;          // Mode 0
 const int VBLANK_CLOCKS = 4560;         // Mode 1
@@ -19,6 +20,9 @@ const int TILE_HEIGHT = 8;
 
 const int TILE_BYTE_LENGTH = (TILE_WIDTH * TILE_HEIGHT) / 8;
 
+const uint16_t OAM_ADDRESS = 0xFE00;
+
+const int SPRITE_BYTES = 4;
 
 typedef enum SpriteSize {
     SPRITEx8,
@@ -61,6 +65,11 @@ typedef enum PixelColour {
     Colour3
 } PixelColour_t;
 
+
+typedef enum ObjectPalette {
+    OBJECT_PALETTE_0,
+    OBJECT_PALETTE_1,
+} ObjectPalette_t;
 
 struct Palette {
     Colour_t colour0;

@@ -15,6 +15,7 @@
 #include "io_tests.h"
 #include "video_tests.h"
 #include "tile_tests.h"
+#include "sprite_tests.h"
 #include "framebuffer_tests.h"
 #include "integration_tests.h"
 #include "display_tests.h"
