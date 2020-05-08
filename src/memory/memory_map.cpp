@@ -69,7 +69,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         case 0:
         case 1:
             std::cerr << "Cannot write to ROM" << std::endl;
-            throw new std::exception;
+            break;
         case 2:
         case 3:
         case 4:
