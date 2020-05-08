@@ -364,9 +364,16 @@ void Video::draw_background_line(uint8_t line) {
         uint8_t tile_id = m_memory_map.read(tile_id_address);
 
         // Depending on the selected Tile Data Set, index is either signed or unsigned
-        unsigned int tile_offset = (tile_data_set == TILE_DATA_UNSIGNED) ? tile_id * TILE_BYTE_LENGTH : (static_cast<int8_t>(tile_id) + 128) * TILE_BYTE_LENGTH;
-        uint16_t tile_address = (uint16_t)tile_data_set + tile_offset + (tile_y * 2);
-    
+        unsigned int tile_offset;
+        if (tile_data_set == TILE_DATA_UNSIGNED) {
+            tile_offset = tile_id * TILE_BYTE_LENGTH;
+        }
+        else if (tile_data_set == TILE_DATA_SIGNED) {
+            tile_offset = (static_cast<int8_t>(tile_id) + 128) * TILE_BYTE_LENGTH;
+        }
+
+        uint16_t tile_address = (uint16_t)tile_data_set + tile_offset + (tile_pixel_y * 2);
+
         TileRow row(tile_address, m_memory_map);
 
         PixelColour_t pixel = row.get_pixel(x);
@@ -404,7 +411,14 @@ void Video::draw_window_line(uint8_t line) {
         uint8_t tile_id = m_memory_map.read(tile_id_address);
 
         // Depending on the selected Tile Data Set, index is either signed or unsigned
-        unsigned int tile_offset = (tile_data_set == TILE_DATA_UNSIGNED) ? tile_id * TILE_BYTE_LENGTH : (static_cast<int8_t>(tile_id) + 128) * TILE_BYTE_LENGTH;
+        unsigned int tile_offset;
+        if (tile_data_set == TILE_DATA_UNSIGNED) {
+            tile_offset = tile_id * TILE_BYTE_LENGTH;
+        }
+        else if (tile_data_set == TILE_DATA_SIGNED) {
+            tile_offset = (static_cast<int8_t>(tile_id) + 128) * TILE_BYTE_LENGTH;
+        }
+        
         uint16_t tile_address = (uint16_t)tile_data_set + tile_offset + (tile_y * 2);
     
         TileRow row(tile_address, m_memory_map);
