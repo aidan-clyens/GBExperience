@@ -390,8 +390,8 @@ void Video::draw_window_line(uint8_t line) {
     TileDataTableSelect_t tile_data_set = this->get_tile_data_selected();
     TileMapTableSelect_t tile_map_address = this->get_window_tile_map_selected();
 
-    unsigned int scroll_x = this->get_window_x();
-    unsigned int scroll_y = this->get_window_y() - 7;
+    unsigned int scroll_x = this->get_window_x() - 7;
+    unsigned int scroll_y = this->get_window_y();
 
     unsigned int y = line;
 
