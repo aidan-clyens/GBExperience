@@ -111,4 +111,8 @@ TEST(FileParser, GetEntireBuffer) {
 
     EXPECT_EQ(0x54, buffer_data[0x134]);
     EXPECT_EQ(0x0, buffer_data[0x142]);
+
+    for (int i = 0; i < buffer_data.size(); i++) {
+        std::cout << static_cast<int>(buffer_data[i]) << std::endl;
+    }
 }
