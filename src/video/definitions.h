@@ -23,6 +23,10 @@ const int TILE_BYTE_LENGTH = (TILE_WIDTH * TILE_HEIGHT) / 8;
 
 const uint16_t OAM_ADDRESS = 0xFE00;
 
+const int BACKGROUND_TILE_MAP_BYTES = 1023;
+const int TILE_DATA_SET_BYTES = 4095;
+const int TILE_DATA_ENTIRE_SET_BYTES = 6143;
+
 const int SPRITE_BYTES = 4;
 
 typedef enum SpriteSize {
