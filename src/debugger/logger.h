@@ -9,18 +9,23 @@
 #define INTERRUPT_DEBUG
 #define IO_DEBUG
 #define VIDEO_DEBUG
+#define MEMORY_DEBUG
 
 
-typedef enum LogLevel {
-    LOG_INFO
-} LogLevel_t;
+typedef enum LogType {
+    LOG_CPU,
+    LOG_INTERRUPTS,
+    LOG_IO,
+    LOG_VIDEO,
+    LOG_MEMORY
+} LogType_t;
 
 
 class Logger {
     public:
         Logger() = default;
 
-        void log(LogLevel_t, bool, const char *, ...);
+        void log(LogType_t, bool, const char *, ...);
 
         std::string str_format(const char *, va_list);
 };
@@ -29,5 +34,13 @@ class Logger {
 extern Logger logger;
 
 
-#define log_info(...) logger.log(LOG_INFO, true, ##__VA_ARGS__);
-#define log_info_no_new_line(...) logger.log(LOG_INFO, false, ##__VA_ARGS__);
+#define log_cpu(...) logger.log(LOG_CPU, true, ##__VA_ARGS__);
+#define log_cpu_no_new_line(...) logger.log(LOG_CPU, false, ##__VA_ARGS__);
+#define log_interrupts(...) logger.log(LOG_INTERRUPTS, true, ##__VA_ARGS__);
+#define log_interrupts_no_new_line(...) logger.log(LOG_INTERRUPTS, false, ##__VA_ARGS__);
+#define log_io(...) logger.log(LOG_IO, true, ##__VA_ARGS__);
+#define log_io_no_new_line(...) logger.log(LOG_IO, false, ##__VA_ARGS__);
+#define log_video(...) logger.log(LOG_VIDEO, true, ##__VA_ARGS__);
+#define log_video_no_new_line(...) logger.log(LOG_VIDEO, false, ##__VA_ARGS__);
+#define log_memory(...) logger.log(LOG_MEMORY, true, ##__VA_ARGS__);
+#define log_memory_no_new_line(...) logger.log(LOG_MEMORY, false, ##__VA_ARGS__);

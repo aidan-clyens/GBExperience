@@ -317,19 +317,19 @@ void Video::write_scanline(uint8_t line) {
     if (!this->lcd_display_enabled()) return;
     
     #ifdef VIDEO_DEBUG
-    log_info("LCD enabled");
+    log_video("LCD enabled");
     #endif
 
     if (this->background_display_enabled()) {
         #ifdef VIDEO_DEBUG
-        log_info("Drawing background scanline: %d", line);
+        log_video("Drawing background scanline: %d", line);
         #endif
         this->draw_background_line(line);
     }
 
     if (this->window_display_enabled()) {
         #ifdef VIDEO_DEBUG
-        log_info("Drawing window scanline: %d", line);
+        log_video("Drawing window scanline: %d", line);
         #endif
         this->draw_window_line(line);
     }

@@ -27,10 +27,10 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
         bool old_bit_7 = this->read_flag_register(CARRY_FLAG);
         #ifdef CPU_DEBUG
         if (reg == "A") {
-            log_info("RLA");
+            log_cpu("RLA");
         }
         else {
-            log_info("RL %s", reg);
+            log_cpu("RL %s", reg);
         }
         #endif
 
@@ -42,13 +42,13 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
     else {
         #ifdef CPU_DEBUG
         if (reg == "A") {
-            log_info("RLCA");
+            log_cpu("RLCA");
         }
         else if (reg == "HL") {
-            log_info("RLC (HL)" );
+            log_cpu("RLC (HL)" );
         }
         else {
-            log_info("RLC %s", reg);
+            log_cpu("RLC %s", reg);
         }
         #endif
 
@@ -95,13 +95,13 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
 
         #ifdef CPU_DEBUG
         if (reg == "A") {
-            log_info("RRA");
+            log_cpu("RRA");
         }
         else if (reg == "HL") {
-            log_info("RR (HL)");
+            log_cpu("RR (HL)");
         }
         else {
-            log_info("RR %s", reg);
+            log_cpu("RR %s", reg);
         }
         #endif
 
@@ -113,13 +113,13 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
     else {
         #ifdef CPU_DEBUG
         if (reg == "A") {
-            log_info("RRCA" );
+            log_cpu("RRCA" );
         }
         else if (reg == "HL") {
-            log_info("RRC (HL)");
+            log_cpu("RRC (HL)");
         }
         else {
-            log_info("RRC %s", reg);
+            log_cpu("RRC %s", reg);
         }
         #endif
 
@@ -152,7 +152,7 @@ void CPU::shift_left(const std::string &reg) {
     bool bit_7 = (val & 0x80) == 0x80;
 
     #ifdef CPU_DEBUG
-    log_info("SLA %s", reg);
+    log_cpu("SLA %s", reg);
     #endif
 
     // Set flags
@@ -190,12 +190,12 @@ void CPU::shift_right(const std::string &reg, bool keep_msb) {
         }
 
         #ifdef CPU_DEBUG
-        log_info("SRA %s", reg);
+        log_cpu("SRA %s", reg);
         #endif
     }
     else {
         #ifdef CPU_DEBUG
-        log_info("SRL %s", reg);
+        log_cpu("SRL %s", reg);
         #endif
     }
 
