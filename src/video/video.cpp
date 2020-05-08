@@ -357,7 +357,10 @@ void Video::draw_background_line(uint8_t line) {
         // Get tile index
         unsigned int tile_x = bg_x / TILE_WIDTH;
         unsigned int tile_y = bg_y / TILE_HEIGHT;
-    
+
+        unsigned int tile_pixel_x = bg_x % TILE_WIDTH;
+        unsigned int tile_pixel_y = bg_y % TILE_HEIGHT;
+
         // Get tile from tile data
         unsigned int tile_index = tile_y * TILES_PER_LINE + tile_x;
         uint16_t tile_id_address = (uint16_t)tile_map_address + tile_index;
@@ -376,7 +379,7 @@ void Video::draw_background_line(uint8_t line) {
 
         TileRow row(tile_address, m_memory_map);
 
-        PixelColour_t pixel = row.get_pixel(x);
+        PixelColour_t pixel = row.get_pixel(tile_pixel_x);
         Colour_t real_pixel = this->get_real_colour(pixel, palette);
         m_buffer.set_pixel(x, y, real_pixel);
     }
@@ -397,14 +400,13 @@ void Video::draw_window_line(uint8_t line) {
         unsigned int sc_x = x + scroll_x;
         unsigned int sc_y = y - scroll_y;
 
-        // Background wraps around
-        unsigned int bg_x = sc_x % MAP_SIZE;
-        unsigned int bg_y = sc_y % MAP_SIZE;
-
         // Get tile index
-        unsigned int tile_x = bg_x / TILE_WIDTH;
-        unsigned int tile_y = bg_y / TILE_HEIGHT;
-    
+        unsigned int tile_x = sc_x / TILE_WIDTH;
+        unsigned int tile_y = sc_y / TILE_HEIGHT;
+
+        unsigned int tile_pixel_x = sc_x % TILE_WIDTH;
+        unsigned int tile_pixel_y = sc_y % TILE_HEIGHT;
+
         // Get tile from tile data
         unsigned int tile_index = tile_y * TILES_PER_LINE + tile_x;
         uint16_t tile_id_address = (uint16_t)tile_map_address + tile_index;
@@ -418,12 +420,12 @@ void Video::draw_window_line(uint8_t line) {
         else if (tile_data_set == TILE_DATA_SIGNED) {
             tile_offset = (static_cast<int8_t>(tile_id) + 128) * TILE_BYTE_LENGTH;
         }
-        
-        uint16_t tile_address = (uint16_t)tile_data_set + tile_offset + (tile_y * 2);
-    
+
+        uint16_t tile_address = (uint16_t)tile_data_set + tile_offset + (tile_pixel_y * 2);
+
         TileRow row(tile_address, m_memory_map);
 
-        PixelColour_t pixel = row.get_pixel(x);
+        PixelColour_t pixel = row.get_pixel(tile_pixel_x);
         Colour_t real_pixel = this->get_real_colour(pixel, palette);
         m_buffer.set_pixel(x, y, real_pixel);
     }    
