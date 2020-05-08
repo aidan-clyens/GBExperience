@@ -1,6 +1,35 @@
 #include "gtest/gtest.h"
 
 
+MemoryMap setup_tile(uint16_t starting_address) {
+    MemoryMap mem_map;
+    // 0, 0, 0, 0, 0, 0, 0, 0
+    // 0, 0, 0, 0, 0, 0, 0, 0
+    // 1, 1, 1, 1, 1, 1, 1, 1
+    // 1, 1, 1, 1, 1, 1, 1, 1
+    // 2, 2, 2, 2, 2, 2, 2, 2
+    // 2, 2, 2, 2, 2, 2, 2, 2
+    // 3, 3, 3, 3, 3, 3, 3, 3
+    // 3, 3, 3, 3, 3, 3, 3, 3
+    int tile_size = 2 * TILE_HEIGHT;
+    uint8_t tile_data[] = {
+        0x00, 0x00,
+        0x00, 0x00,
+        0xFF, 0x00,
+        0xFF, 0x00,
+        0x00, 0xFF,
+        0x00, 0xFF,
+        0xFF, 0xFF,
+        0xFF, 0xFF};
+
+    for (int i = 0; i < tile_size; i++) {
+        mem_map.write(starting_address + i, tile_data[i]);
+    }
+
+    return mem_map;
+}
+
+
 TEST(Tile, InitTile) {
     uint16_t starting_address = 0x8000;
     int buffer_size = TILE_WIDTH * TILE_HEIGHT;
@@ -92,31 +121,7 @@ TEST(Tile, GetPixelIndexFromTile) {
 TEST(Tile, LoadTile) {
     uint16_t starting_address = 0x8000;
 
-    MemoryMap memory_map;
-    // 0, 0, 0, 0, 0, 0, 0, 0
-    // 0, 0, 0, 0, 0, 0, 0, 0
-    // 1, 1, 1, 1, 1, 1, 1, 1
-    // 1, 1, 1, 1, 1, 1, 1, 1
-    // 2, 2, 2, 2, 2, 2, 2, 2
-    // 2, 2, 2, 2, 2, 2, 2, 2
-    // 3, 3, 3, 3, 3, 3, 3, 3
-    // 3, 3, 3, 3, 3, 3, 3, 3
-    int tile_size = 2 * TILE_HEIGHT;
-    uint8_t tile_data[] = {
-        0x00, 0x00,
-        0x00, 0x00,
-        0xFF, 0x00,
-        0xFF, 0x00,
-        0x00, 0xFF,
-        0x00, 0xFF,
-        0xFF, 0xFF,
-        0xFF, 0xFF
-    };
-
-    for (int i = 0; i < tile_size; i++) {
-        memory_map.write(starting_address + i, tile_data[i]);
-        EXPECT_EQ(tile_data[i], memory_map.read(starting_address + i));
-    }
+    MemoryMap memory_map = setup_tile(starting_address);
 
     Tile tile(starting_address, memory_map);
 
