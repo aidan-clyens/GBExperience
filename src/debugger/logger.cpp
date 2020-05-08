@@ -4,7 +4,7 @@
 Logger logger;
 
 
-void Logger::log(LogLevel_t log_level, bool newline, const char *fmt, ...) {
+void Logger::log(LogType_t log_type, bool newline, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
     std::string msg = this->str_format(fmt, args);

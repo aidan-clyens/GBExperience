@@ -6,7 +6,7 @@ void CPU::handle_interrupts() {
         uint8_t fired_interrupts = this->read_io_register(IE) & this->read_io_register(IF);
 
         #ifdef INTERRUPT_DEBUG
-        log_info("Interrupt fired: %X", fired_interrupts);
+        log_interrupts("Interrupt fired: %X", fired_interrupts);
         #endif
 
         // An interrupt has been generated
@@ -52,8 +52,8 @@ bool CPU::handle_interrupt(InterruptFlag_t flag, InterruptVector_t vector) {
         return false;
     }
 
-    #ifdef CPU_DEBUG
-    log_info("Handling interrupt: %d", flag);
+    #ifdef INTERRUPT_DEBUG
+    log_interrupts("Handling interrupt: %d", flag);
     #endif
 
     // Clear corresponding Interrupt Flag bit
