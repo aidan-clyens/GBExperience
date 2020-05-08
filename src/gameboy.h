@@ -5,13 +5,13 @@
 #include "cpu/cpu.h"
 #include "memory/memory_map.h"
 #include "file_parser/file_parser.h"
-
-#include <string>
+#include "video/video.h"
+#include "display/display.h"
 
 
 class GameBoy {
     public:
-        GameBoy();
+        GameBoy(Display &);
         virtual ~GameBoy();
 
         void tick();
@@ -23,6 +23,7 @@ class GameBoy {
     private:
         CPU m_cpu;
         MemoryMap m_memory_map;
+        Video m_video;
 
         std::string m_rom_name;
 };
