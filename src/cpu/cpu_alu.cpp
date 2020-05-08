@@ -34,8 +34,8 @@ void CPU::alu_add(const std::string &reg, bool carry) {
     }
 
     #ifdef CPU_DEBUG
-    if (carry) { log_info("ADC A, %s", reg.c_str()); }
-    else { log_info("ADD A, %s", reg.c_str()); }
+    if (carry) { log_cpu("ADC A, %s", reg.c_str()); }
+    else { log_cpu("ADD A, %s", reg.c_str()); }
     #endif
 
     this->write_register("A", result);
@@ -64,8 +64,8 @@ void CPU::alu_add(uint8_t n, bool carry) {
     }
 
     #ifdef CPU_DEBUG
-    if (carry) { log_info("ADC A, %X", n); }
-    else { log_info("ADD A, %X", n); }
+    if (carry) { log_cpu("ADC A, %X", n); }
+    else { log_cpu("ADD A, %X", n); }
     #endif
 
 
@@ -92,8 +92,8 @@ void CPU::alu_sub(const std::string &reg, bool carry) {
     uint8_t result = A - n;
 
     #ifdef CPU_DEBUG
-    if (carry) { log_info("SBC A, %s", reg.c_str()); }
-    else { log_info("SUB A, %s", reg.c_str()); }
+    if (carry) { log_cpu("SBC A, %s", reg.c_str()); }
+    else { log_cpu("SUB A, %s", reg.c_str()); }
     #endif
 
     this->write_register("A", result);
@@ -129,8 +129,8 @@ void CPU::alu_sub(uint8_t n, bool carry) {
     uint8_t result = A - n;
 
     #ifdef CPU_DEBUG
-    if (carry) { log_info("SBC A, %X", n ); }
-    else { log_info("SUB A, %X", n ); }
+    if (carry) { log_cpu("SBC A, %X", n ); }
+    else { log_cpu("SUB A, %X", n ); }
     #endif
 
     this->write_register("A", result);
@@ -175,7 +175,7 @@ void CPU::alu_and(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("AND A, %s", reg.c_str() );
+    log_cpu("AND A, %s", reg.c_str() );
     #endif
 
     this->write_register("A", result);
@@ -193,7 +193,7 @@ void CPU::alu_and(uint8_t n) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("AND A, %X", n );
+    log_cpu("AND A, %X", n );
     #endif
 
     this->write_register("A", result);
@@ -217,7 +217,7 @@ void CPU::alu_or(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("OR A, %s", reg.c_str() );
+    log_cpu("OR A, %s", reg.c_str() );
     #endif
 
     this->write_register("A", result);
@@ -234,7 +234,7 @@ void CPU::alu_or(uint8_t n) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("OR A, %X", n );
+    log_cpu("OR A, %X", n );
     #endif
 
     this->write_register("A", result);
@@ -258,7 +258,7 @@ void CPU::alu_xor(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("XOR A, %s", reg.c_str() );
+    log_cpu("XOR A, %s", reg.c_str() );
     #endif
 
     this->write_register("A", result);
@@ -275,7 +275,7 @@ void CPU::alu_xor(uint8_t n) {
     }
     
     #ifdef CPU_DEBUG
-    log_info("XOR A, %X", n);
+    log_cpu("XOR A, %X", n);
     #endif
 
     this->write_register("A", result);
@@ -308,7 +308,7 @@ void CPU::alu_cp(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("CP A, %s", reg.c_str() );
+    log_cpu("CP A, %s", reg.c_str() );
     #endif
 }
 
@@ -332,7 +332,7 @@ void CPU::alu_cp(uint8_t n) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("CP A, %X", n);
+    log_cpu("CP A, %X", n);
     #endif
 }
 
@@ -361,7 +361,7 @@ void CPU::alu_inc(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("INC %s", reg.c_str() );
+    log_cpu("INC %s", reg.c_str() );
     #endif
 
     if (reg == "HL") {
@@ -384,7 +384,7 @@ void CPU::alu_dec(const std::string &reg) {
     result--;
 
     #ifdef CPU_DEBUG
-    log_info("DEC %s", reg.c_str() );
+    log_cpu("DEC %s", reg.c_str() );
     #endif
 
     bool half_borrow = false;
@@ -427,7 +427,7 @@ void CPU::alu_add_HL(const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("ADD HL, %s", reg.c_str() );
+    log_cpu("ADD HL, %s", reg.c_str() );
     #endif
 
     this->write_register("HL", result);
@@ -449,7 +449,7 @@ void CPU::alu_add_SP(int8_t n) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("ADD SP, %X", n);
+    log_cpu("ADD SP, %X", n);
     #endif
 
     this->write_register("SP", result);
@@ -461,7 +461,7 @@ void CPU::alu_inc_16bit(const std::string &reg) {
     uint16_t result = N + 1;
 
     #ifdef CPU_DEBUG
-    log_info("INC %s", reg.c_str() );
+    log_cpu("INC %s", reg.c_str() );
     #endif
 
     this->write_register(reg, result);
@@ -474,7 +474,7 @@ void CPU::alu_dec_16bit(const std::string &reg) {
     result--;
 
     #ifdef CPU_DEBUG
-    log_info("DEC %s", reg.c_str() );
+    log_cpu("DEC %s", reg.c_str() );
     #endif
 
     this->write_register(reg, result);

@@ -19,7 +19,7 @@ void CPU::jump_hl() {
     uint16_t value = this->read_register("HL");
 
     #ifdef CPU_DEBUG
-    log_info("JP (HL)");
+    log_cpu("JP (HL)");
     #endif
 
     this->write_register("PC", value);

@@ -22,7 +22,7 @@ int CPU::tick() {
     int cycle_count = 4;
     if (this->is_running()) {
         #ifdef CPU_DEBUG
-        log_info_no_new_line("0x%X: ", this->read_register("PC"));
+        log_cpu_no_new_line("0x%X: ", this->read_register("PC"));
         #endif
 
         // Fetch next opcode and execute
@@ -52,7 +52,7 @@ int CPU::decode_op(uint8_t opcode) {
         // NOP
         case 0x00:
             #ifdef CPU_DEBUG
-            log_info("NOP" );
+            log_cpu("NOP" );
             #endif
             cycle_count = 4;
             break;
@@ -69,7 +69,7 @@ int CPU::decode_op(uint8_t opcode) {
         // DAA
         case 0x27:
             #ifdef CPU_DEBUG
-            log_info("DAA" );
+            log_cpu("DAA" );
             #endif
             break;
         // CPL
@@ -524,14 +524,14 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x08:
             // TODO Learn how to implement this instruction
             #ifdef CPU_DEBUG
-            log_info("LD %X, SP", arg_1);
+            log_cpu("LD %X, SP", arg_1);
             #endif
             cycle_count = 20;
             break;
         // PUSH nn
         case 0xF5:
             #ifdef CPU_DEBUG
-            log_info("PUSH AF");
+            log_cpu("PUSH AF");
             #endif
 
             this->push_stack("AF");
@@ -539,7 +539,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xC5:
             #ifdef CPU_DEBUG
-            log_info("PUSH BC");
+            log_cpu("PUSH BC");
             #endif
 
             this->push_stack("BC");
@@ -547,7 +547,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xD5:
             #ifdef CPU_DEBUG
-            log_info("PUSH DE");
+            log_cpu("PUSH DE");
             #endif
 
             this->push_stack("DE");
@@ -555,7 +555,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xE5:
             #ifdef CPU_DEBUG
-            log_info("PUSH HL");
+            log_cpu("PUSH HL");
             #endif
 
             this->push_stack("HL");
@@ -564,7 +564,7 @@ int CPU::decode_op(uint8_t opcode) {
         // POP nn
         case 0xF1:
             #ifdef CPU_DEBUG
-            log_info("POP AF");
+            log_cpu("POP AF");
             #endif
 
             this->pop_stack("AF");
@@ -572,7 +572,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xC1:
             #ifdef CPU_DEBUG
-            log_info("POP BC");
+            log_cpu("POP BC");
             #endif
 
             this->pop_stack("BC");
@@ -580,7 +580,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xD1:
             #ifdef CPU_DEBUG
-            log_info("POP DE");
+            log_cpu("POP DE");
             #endif
 
             this->pop_stack("DE");
@@ -588,7 +588,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xE1:
             #ifdef CPU_DEBUG
-            log_info("POP HL");
+            log_cpu("POP HL");
             #endif
 
             this->pop_stack("HL");
@@ -1049,7 +1049,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("JP %X", arg16bit);
+            log_cpu("JP %X", arg16bit);
             #endif
 
             this->jump(arg16bit);
@@ -1064,7 +1064,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("JP NZ %X", arg16bit);
+            log_cpu("JP NZ %X", arg16bit);
             #endif
 
             this->jump_conditional(arg16bit, ZERO_FLAG, false);
@@ -1078,7 +1078,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("JP Z %X", arg16bit);
+            log_cpu("JP Z %X", arg16bit);
             #endif
 
             this->jump_conditional(arg16bit, ZERO_FLAG, true);
@@ -1092,7 +1092,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("JP NC %X", arg16bit);
+            log_cpu("JP NC %X", arg16bit);
             #endif
 
             this->jump_conditional(arg16bit, CARRY_FLAG, false);
@@ -1106,7 +1106,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("JP C %X", arg16bit);
+            log_cpu("JP C %X", arg16bit);
             #endif
 
             this->jump_conditional(arg16bit, CARRY_FLAG, true);
@@ -1115,7 +1115,7 @@ int CPU::decode_op(uint8_t opcode) {
         // JP HL
         case 0xE9:
             #ifdef CPU_DEBUG
-            log_info("JP (%X)", this->read_register("HL"));
+            log_cpu("JP (%X)", this->read_register("HL"));
             #endif
 
             this->jump_hl();
@@ -1126,7 +1126,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg_1 = this->fetch_op();
 
             #ifdef CPU_DEBUG
-            log_info("JR %d", static_cast<int8_t>(arg_1));
+            log_cpu("JR %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add(arg_1);
@@ -1136,7 +1136,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x20:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR NZ %d", static_cast<int8_t>(arg_1));
+            log_cpu("JR NZ %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, ZERO_FLAG, false);
@@ -1145,7 +1145,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x28:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR Z %d", static_cast<int8_t>(arg_1));
+            log_cpu("JR Z %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, ZERO_FLAG, true);
@@ -1154,7 +1154,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x30:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR NC %d", static_cast<int8_t>(arg_1));
+            log_cpu("JR NC %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, CARRY_FLAG, false);
@@ -1163,7 +1163,7 @@ int CPU::decode_op(uint8_t opcode) {
         case 0x38:
             arg_1 = this->fetch_op();
             #ifdef CPU_DEBUG
-            log_info("JR C %d", static_cast<int8_t>(arg_1));
+            log_cpu("JR C %d", static_cast<int8_t>(arg_1));
             #endif
 
             this->jump_add_conditional(arg_1, CARRY_FLAG, true);
@@ -1177,7 +1177,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("CALL %X", arg16bit);
+            log_cpu("CALL %X", arg16bit);
             #endif
 
             this->call(arg16bit);
@@ -1190,7 +1190,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("CALL NZ %X", arg16bit);
+            log_cpu("CALL NZ %X", arg16bit);
             #endif
 
             this->call(arg16bit, ZERO_FLAG, false);
@@ -1202,7 +1202,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("CALL Z %X", arg16bit);
+            log_cpu("CALL Z %X", arg16bit);
             #endif
 
             this->call(arg16bit, ZERO_FLAG, true);
@@ -1214,7 +1214,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("CALL NC %X", arg16bit);
+            log_cpu("CALL NC %X", arg16bit);
             #endif
 
             this->call(arg16bit, CARRY_FLAG, false);
@@ -1226,7 +1226,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg16bit = (arg_2 << 8) | arg_1;
 
             #ifdef CPU_DEBUG
-            log_info("CALL C %X", arg16bit);
+            log_cpu("CALL C %X", arg16bit);
             #endif
 
             this->call(arg16bit, CARRY_FLAG, true);
@@ -1236,7 +1236,7 @@ int CPU::decode_op(uint8_t opcode) {
         // RST n
         case 0xC7:
             #ifdef CPU_DEBUG
-            log_info("RST 00");
+            log_cpu("RST 00");
             #endif
 
             this->restart(0x00);
@@ -1244,7 +1244,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xCF:
             #ifdef CPU_DEBUG
-            log_info("RST 08");
+            log_cpu("RST 08");
             #endif
 
             this->restart(0x08);
@@ -1252,7 +1252,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xD7:
             #ifdef CPU_DEBUG
-            log_info("RST 10");
+            log_cpu("RST 10");
             #endif
 
             this->restart(0x10);
@@ -1260,7 +1260,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xDF:
             #ifdef CPU_DEBUG
-            log_info("RST 18");
+            log_cpu("RST 18");
             #endif
 
             this->restart(0x18);
@@ -1268,7 +1268,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xE7:
             #ifdef CPU_DEBUG
-            log_info("RST 20");
+            log_cpu("RST 20");
             #endif
 
             this->restart(0x20);
@@ -1276,7 +1276,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xEF:
             #ifdef CPU_DEBUG
-            log_info("RST 28");
+            log_cpu("RST 28");
             #endif
 
             this->restart(0x28);
@@ -1284,7 +1284,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xF7:
             #ifdef CPU_DEBUG
-            log_info("RST 30");
+            log_cpu("RST 30");
             #endif
 
             this->restart(0x30);
@@ -1292,7 +1292,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xFF:
             #ifdef CPU_DEBUG
-            log_info("RST 38");
+            log_cpu("RST 38");
             #endif
 
             this->restart(0x38);
@@ -1302,7 +1302,7 @@ int CPU::decode_op(uint8_t opcode) {
         // RET
         case 0xC9:
             #ifdef CPU_DEBUG
-            log_info("RET");
+            log_cpu("RET");
             #endif
 
             this->ret();
@@ -1311,7 +1311,7 @@ int CPU::decode_op(uint8_t opcode) {
         // RET cc
         case 0xC0:
             #ifdef CPU_DEBUG
-            log_info("RET NZ");
+            log_cpu("RET NZ");
             #endif
 
             this->ret(ZERO_FLAG, false);
@@ -1319,7 +1319,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xC8:
             #ifdef CPU_DEBUG
-            log_info("RET Z");
+            log_cpu("RET Z");
             #endif
 
             this->ret(ZERO_FLAG, true);
@@ -1327,7 +1327,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xD0:
             #ifdef CPU_DEBUG
-            log_info("RET NC");
+            log_cpu("RET NC");
             #endif
 
             this->ret(CARRY_FLAG, false);
@@ -1335,7 +1335,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xD8:
             #ifdef CPU_DEBUG
-            log_info("RET C");
+            log_cpu("RET C");
             #endif
 
             this->ret(CARRY_FLAG, true);
@@ -1344,7 +1344,7 @@ int CPU::decode_op(uint8_t opcode) {
         // RETI
         case 0xD9:
             #ifdef CPU_DEBUG
-            log_info("RETI");
+            log_cpu("RETI");
             #endif
 
             this->ret_enable_interrupts();

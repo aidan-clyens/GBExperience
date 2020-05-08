@@ -13,7 +13,7 @@ void CPU::test_bit(int n, const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("BIT %X, %s", n, reg);
+    log_cpu("BIT %X, %s", n, reg);
     #endif
 
     result = ((val >> n) & 0x01) == 0x00;
@@ -36,7 +36,7 @@ void CPU::set_bit(int n, const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("SET %X, %s", n, reg);
+    log_cpu("SET %X, %s", n, reg);
     #endif
 
     result = val | shift;
@@ -62,7 +62,7 @@ void CPU::reset_bit(int n, const std::string &reg) {
     }
 
     #ifdef CPU_DEBUG
-    log_info("RES %X, %s", n, reg);
+    log_cpu("RES %X, %s", n, reg);
     #endif
 
     result = val & ~shift;

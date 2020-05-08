@@ -39,7 +39,7 @@ uint8_t IO::read(IORegisters_t address) {
     switch (address) {
         case P1:
             #ifdef IO_DEBUG
-            std::cout << "IO read: P1" << std::endl;
+            log_io("IO read: P1");
             #endif
 
             return m_P1;
@@ -57,31 +57,31 @@ uint8_t IO::read(IORegisters_t address) {
             return 0;
         case DIV:
             #ifdef IO_DEBUG
-            std::cout << "IO read: DIV" << std::endl;
+            log_io("IO read: DIV");
             #endif
 
             return m_DIV;
         case TIMA:
             #ifdef IO_DEBUG
-            std::cout << "IO read: TIMA" << std::endl;
+            log_io("IO read: TIMA");
             #endif
 
             return m_TIMA;
         case TMA:
             #ifdef IO_DEBUG
-            std::cout << "IO read: TMA" << std::endl;
+            log_io("IO read: TMA");
             #endif
 
             return m_TMA;
         case TAC:
             #ifdef IO_DEBUG
-            std::cout << "IO read: TAC" << std::endl;
+            log_io("IO read: TAC");
             #endif
 
             return m_TAC;
         case IF:
             #ifdef IO_DEBUG
-            std::cout << "IO read: IF" << std::endl;
+            log_io("IO read: IF");
             #endif
 
             return m_IF;
@@ -113,79 +113,79 @@ uint8_t IO::read(IORegisters_t address) {
             return 0;
         case LCDC:
             #ifdef IO_DEBUG
-            std::cout << "IO read: LCDC" << std::endl;
+            log_io("IO read: LCDC");
             #endif
 
             return m_LCDC;
         case STAT:
             #ifdef IO_DEBUG
-            std::cout << "IO read: STAT" << std::endl;
+            log_io("IO read: STAT");
             #endif
 
             return m_STAT;
         case SCY:
             #ifdef IO_DEBUG
-            std::cout << "IO read: SCY" << std::endl;
+            log_io("IO read: SCY");
             #endif
 
             return m_SCY;
         case SCX:
             #ifdef IO_DEBUG
-            std::cout << "IO read: SCX" << std::endl;
+            log_io("IO read: SCX");
             #endif
 
             return m_SCX;
         case LY:
             #ifdef IO_DEBUG
-            std::cout << "IO read: LY" << std::endl;
+            log_io("IO read: LY");
             #endif
 
             return m_LY;
         case LYC:
             #ifdef IO_DEBUG
-            std::cout << "IO read: LYC" << std::endl;
+            log_io("IO read: LYC");
             #endif
 
             return m_LYC;
         case DMA:
             #ifdef IO_DEBUG
-            std::cout << "IO read: DMA" << std::endl;
+            log_io("IO read: DMA");
             #endif
 
             return m_DMA;
         case BGP:
             #ifdef IO_DEBUG
-            std::cout << "IO read: BGP" << std::endl;
+            log_io("IO read: BGP");
             #endif
 
             return m_BGP;
         case OBP0:
             #ifdef IO_DEBUG
-            std::cout << "IO read: OBP0" << std::endl;
+            log_io("IO read: OBP0");
             #endif
 
             return m_OBP0;
         case OBP1:
             #ifdef IO_DEBUG
-            std::cout << "IO read: OBP1" << std::endl;
+            log_io("IO read: OBP1");
             #endif
 
             return m_OBP1;
         case WY:
             #ifdef IO_DEBUG
-            std::cout << "IO read: WY" << std::endl;
+            log_io("IO read: WY");
             #endif
 
             return m_WY;
         case WX:
             #ifdef IO_DEBUG
-            std::cout << "IO read: WX" << std::endl;
+            log_io("IO read: WX");
             #endif
 
             return m_WX;
         case IE:
             #ifdef IO_DEBUG
-            std::cout << "IO read: IE" << std::endl;
+            log_io("IO read: IE");
             #endif
 
             return m_IE;
@@ -209,7 +209,7 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     switch (address) {
         case P1:
             #ifdef IO_DEBUG
-            std::cout << "IO write: P1" << std::endl;
+            log_io("IO write: P1");
             #endif
 
             m_P1 = data;
@@ -228,35 +228,35 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
             break;
         case DIV:
             #ifdef IO_DEBUG
-            std::cout << "IO write: DIV" << std::endl;
+            log_io("IO write: DIV");
             #endif
 
             m_DIV = data;
             break;
         case TIMA:
             #ifdef IO_DEBUG
-            std::cout << "IO write: TIMA" << std::endl;
+            log_io("IO write: TIMA");
             #endif
 
             m_TIMA = data;
             break;
         case TMA:
             #ifdef IO_DEBUG
-            std::cout << "IO write: TMA" << std::endl;
+            log_io("IO write: TMA");
             #endif
 
             m_TMA = data;
             break;
         case TAC:
             #ifdef IO_DEBUG
-            std::cout << "IO write: TAC" << std::endl;
+            log_io("IO write: TAC");
             #endif
 
             m_TAC = data;
             break;
         case IF:
             #ifdef IO_DEBUG
-            std::cout << "IO write: IF" << std::endl;
+            log_io("IO write: IF");
             #endif
 
             m_IF = data;
@@ -289,91 +289,91 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
             break;
         case LCDC:
             #ifdef IO_DEBUG
-            std::cout << "IO write: LCDC" << std::endl;
+            log_io("IO write: LCDC");
             #endif
 
             m_LCDC = data;
             break;
         case STAT:
             #ifdef IO_DEBUG
-            std::cout << "IO write: STAT" << std::endl;
+            log_io("IO write: STAT");
             #endif
 
             m_STAT = data;
             break;
         case SCY:
             #ifdef IO_DEBUG
-            std::cout << "IO write: SCY" << std::endl;
+            log_io("IO write: SCY");
             #endif
 
             m_SCY = data;
             break;
         case SCX:
             #ifdef IO_DEBUG
-            std::cout << "IO write: SCX" << std::endl;
+            log_io("IO write: SCX");
             #endif
 
             m_SCX = data;
             break;
         case LY:
             #ifdef IO_DEBUG
-            std::cout << "IO write: LY" << std::endl;
+            log_io("IO write: LY");
             #endif
 
             m_LY = data;
             break;
         case LYC:
             #ifdef IO_DEBUG
-            std::cout << "IO write: LYC" << std::endl;
+            log_io("IO write: LYC");
             #endif
 
             m_LYC = data;
             break;
         case DMA:
             #ifdef IO_DEBUG
-            std::cout << "IO write: DMA" << std::endl;
+            log_io("IO write: DMA");
             #endif
 
             m_DMA = data;
             break;
         case BGP:
             #ifdef IO_DEBUG
-            std::cout << "IO write: BGP" << std::endl;
+            log_io("IO write: BGP");
             #endif
 
             m_BGP = data;
             break;
         case OBP0:
             #ifdef IO_DEBUG
-            std::cout << "IO write: OBP0" << std::endl;
+            log_io("IO write: OBP0");
             #endif
 
             m_OBP0 = data;
             break;
         case OBP1:
             #ifdef IO_DEBUG
-            std::cout << "IO write: OBP1" << std::endl;
+            log_io("IO write: OBP1");
             #endif
 
             m_OBP1 = data;
             break;
         case WY:
             #ifdef IO_DEBUG
-            std::cout << "IO write: WY" << std::endl;
+            log_io("IO write: WY");
             #endif
 
             m_WY = data;
             break;
         case WX:
             #ifdef IO_DEBUG
-            std::cout << "IO write: WX" << std::endl;
+            log_io("IO write: WX");
             #endif
 
             m_WX = data;
             break;
         case IE:
             #ifdef IO_DEBUG
-            std::cout << "IO write: IE" << std::endl;
+            log_io("IO write: IE");
             #endif
 
             m_IE = data;
@@ -391,13 +391,13 @@ void IO::increment_counter(IORegisters_t reg) {
     switch (reg) {
         case LY:
             #ifdef IO_DEBUG
-            std::cout << "IO: Incremented LY" << std::endl;
+            log_io("IO: Incremented LY");
             #endif
             m_LY++;
             break;
         case DIV:
             #ifdef IO_DEBUG
-            std::cout << "IO: Incremented DIV" << std::endl;
+            log_io("IO: Incremented DIV");
             #endif
             m_DIV++;
             break;
