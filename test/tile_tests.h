@@ -142,3 +142,35 @@ TEST(Tile, LoadTile) {
         }
     }
 }
+
+
+TEST(Tile, DrawTile) {
+    uint16_t starting_address = 0x8000;
+    int tile_x = 100;
+    int tile_y = 100;
+
+    Palette palette;
+    palette.colour0 = WHITE;
+    palette.colour1 = LIGHT_GRAY;
+    palette.colour2 = DARK_GRAY;
+    palette.colour3 = BLACK;
+
+    MemoryMap memory_map = setup_tile(starting_address);
+    Tile tile(starting_address, memory_map);
+
+    FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
+    Display display;
+    Video video(memory_map, display);
+    display.init_display("TEST");
+
+    for (int y = 0; y < TILE_HEIGHT; y++) {
+        for (int x = 0; x < TILE_WIDTH; x++) {
+            Colour_t pixel = video.get_real_colour(tile.get_pixel(x, y), palette);
+            buffer.set_pixel(tile_x + x, tile_y + y, pixel);
+        }
+    }
+
+    for (int i = 0; i < DISPLAY_TIME; i++) {
+        display.render(buffer);
+    }
+}
