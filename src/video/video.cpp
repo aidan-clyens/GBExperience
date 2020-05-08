@@ -338,7 +338,7 @@ void Video::write_scanline(uint8_t line) {
 void Video::draw_background_line(uint8_t line) {
     Palette palette = this->get_background_palette();
     TileDataTableSelect_t tile_data_set = this->get_tile_data_selected();
-    TileMapTableSelect_t tile_map = this->get_background_tile_map_selected();
+    TileMapTableSelect_t tile_map_address = this->get_background_tile_map_selected();
 
     unsigned int scroll_x = this->get_scroll_x();
     unsigned int scroll_y = this->get_scroll_y();
@@ -360,7 +360,7 @@ void Video::draw_background_line(uint8_t line) {
     
         // Get tile from tile data
         unsigned int tile_index = tile_y * TILES_PER_LINE + tile_x;
-        uint16_t tile_id_address = (uint16_t)tile_map + tile_index;
+        uint16_t tile_id_address = (uint16_t)tile_map_address + tile_index;
         uint8_t tile_id = m_memory_map.read(tile_id_address);
 
         // Depending on the selected Tile Data Set, index is either signed or unsigned
@@ -385,7 +385,7 @@ void Video::draw_background_line(uint8_t line) {
 void Video::draw_window_line(uint8_t line) {
     Palette palette = this->get_background_palette();
     TileDataTableSelect_t tile_data_set = this->get_tile_data_selected();
-    TileMapTableSelect_t tile_map = this->get_window_tile_map_selected();
+    TileMapTableSelect_t tile_map_address = this->get_window_tile_map_selected();
 
     unsigned int scroll_x = this->get_window_x();
     unsigned int scroll_y = this->get_window_y() - 7;
@@ -407,7 +407,7 @@ void Video::draw_window_line(uint8_t line) {
     
         // Get tile from tile data
         unsigned int tile_index = tile_y * TILES_PER_LINE + tile_x;
-        uint16_t tile_id_address = (uint16_t)tile_map + tile_index;
+        uint16_t tile_id_address = (uint16_t)tile_map_address + tile_index;
         uint8_t tile_id = m_memory_map.read(tile_id_address);
 
         // Depending on the selected Tile Data Set, index is either signed or unsigned
