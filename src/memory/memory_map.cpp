@@ -71,6 +71,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             std::cerr << "Cannot write to ROM" << std::endl;
             break;
         case 2:
+            return this->write_vram(address, data);
         case 3:
         case 4:
         case 6:
@@ -101,8 +102,12 @@ uint8_t MemoryMap::read(uint16_t address) {
 
     switch (index) {
         case 0:
-        case 1:
+        case 1: {
+            Memory *mem = (Memory *)m_memory_map.find(index)->second;
+            return mem->read_memory(address - m_address_space[index]);
+        }
         case 2:
+            return this->read_vram(address);
         case 3:
         case 4:
         case 6:
@@ -128,6 +133,42 @@ uint8_t MemoryMap::read(uint16_t address) {
             throw new std::exception;
         }
     }
+}
+
+uint16_t MemoryMap::write_vram(uint16_t address, uint8_t data) {
+    #ifdef MEMORY_DEBUG
+    if (address >= TILE_DATA_UNSIGNED && address < TILE_MAP_0) {
+        log_info("MemoryMap: Writing %X to Tile Data Table at address %X", data, address);
+    }
+    else if (address >= TILE_MAP_0 && address < TILE_MAP_1) {
+        log_info("MemoryMap: Writing %X to Background Map 0 at address %X", data, address);
+    }
+    else if (address >= TILE_MAP_1) {
+        log_info("MemoryMap: Writing %X to Background Map 1 at address %X", data, address);
+    }
+    #endif
+
+    Memory *mem = (Memory *)m_memory_map.find(2)->second;
+    return mem->write_memory(address - m_address_space[2], data);
+}
+
+uint8_t MemoryMap::read_vram(uint16_t address) {
+    Memory *mem = (Memory *)m_memory_map.find(2)->second;
+    uint8_t data = mem->read_memory(address - m_address_space[2]);
+    
+    #ifdef MEMORY_DEBUG
+    if (address >= TILE_DATA_UNSIGNED && address < TILE_MAP_0) {
+        log_info("MemoryMap: Reading %X from Tile Data Table at address %X", data, address);
+    }
+    else if (address >= TILE_MAP_0 && address < TILE_MAP_1) {
+        log_info("MemoryMap: Reading %X from Background Map 0 at address %X", data, address);
+    }
+    else if (address >= TILE_MAP_1) {
+        log_info("MemoryMap: Reading %X from Background Map 1 at address %X", data, address);
+    }
+    #endif
+
+    return data;
 }
 
 int MemoryMap::get_index(uint16_t address) const {
