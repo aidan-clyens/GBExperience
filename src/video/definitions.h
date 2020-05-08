@@ -38,8 +38,8 @@ typedef enum TileDataTableSelect {
 
 
 typedef enum TileMapTableSelect {
-    TILE_MAP_1 = 0x9800,
-    TILE_MAP_2 = 0x9C00
+    TILE_MAP_0 = 0x9800,
+    TILE_MAP_1 = 0x9C00
 } TileMapTableSelect_t;
 
 
