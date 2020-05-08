@@ -7,6 +7,7 @@
 #include "memory/memory.h"
 #include "memory/memory_map.h"
 #include "memory/io.h"
+#include "video/definitions.h"
 #include "video/framebuffer.h"
 #include "video/video.h"
 #include "video/tile.h"
