@@ -153,6 +153,18 @@ TEST(MemoryMap, WriteHighRAM) {
 }
 
 
+TEST(MemoryMap, WriteToVRAM) {
+    MemoryMap mem_map;
+
+    uint16_t address = 0x8000;
+    uint8_t data = 0x1F;
+
+    EXPECT_EQ(2, mem_map.get_index(address));
+    EXPECT_NO_THROW(mem_map.write(address, data));
+    EXPECT_EQ(data, mem_map.read(address));
+}
+
+
 TEST(MemoryMap, WriteEchoRAM) {
     uint16_t echo_ram_address = 0xE100;
     uint16_t ram_address = echo_ram_address - 0x2000;

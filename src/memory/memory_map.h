@@ -6,6 +6,8 @@
 
 #include "memory.h"
 #include "io.h"
+#include "../video/definitions.h"
+#include "../debugger/logger.h"
 
 
 class MemoryMap {
@@ -17,6 +19,9 @@ class MemoryMap {
         void load_rom(std::vector<uint8_t>);
         uint16_t write(uint16_t, uint8_t);
         uint8_t read(uint16_t);
+
+        uint16_t write_vram(uint16_t, uint8_t);
+        uint8_t read_vram(uint16_t);
 
         int get_index(uint16_t) const;
 
