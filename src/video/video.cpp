@@ -158,7 +158,7 @@ TileMapTableSelect_t Video::get_window_tile_map_selected() {
     uint8_t lcdc = this->read_io_register(LCDC);
     bool bit6 = ((lcdc >> 6) & 0x01) == 0x01;
 
-    return (bit6) ? TILE_MAP_2 : TILE_MAP_1;
+    return (!bit6) ? TILE_MAP_0 : TILE_MAP_1;
 }
 
 TileMapTableSelect_t Video::get_background_tile_map_selected() {
@@ -166,7 +166,7 @@ TileMapTableSelect_t Video::get_background_tile_map_selected() {
     uint8_t lcdc = this->read_io_register(LCDC);
     bool bit3 = ((lcdc >> 3) & 0x01) == 0x01;
 
-    return (bit3) ? TILE_MAP_2 : TILE_MAP_1;
+    return (!bit3) ? TILE_MAP_0 : TILE_MAP_1;
 }
 
 /******   LCDC Register   ******/
