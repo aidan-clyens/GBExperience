@@ -489,7 +489,7 @@ TEST(Video, TestScanlineTiming) {
     MemoryMap mem_map;
     UI ui;
     Video video(mem_map, ui);
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     // Initialize in H-Blank mode
     video.set_video_mode(HBLANK_Mode);
@@ -519,7 +519,7 @@ TEST(Video, TestVideoModeTiming) {
     MemoryMap mem_map;
     UI ui;
     Video video(mem_map, ui);
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     // Initialize in H-Blank mode
     video.set_video_mode(HBLANK_Mode);

@@ -210,7 +210,7 @@ TEST(Tile, DrawTileHorizontal) {
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
     UI ui;
     Video video(memory_map, ui);
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     for (int y = 0; y < TILE_HEIGHT; y++) {
         for (int x = 0; x < TILE_WIDTH; x++) {
@@ -242,7 +242,7 @@ TEST(Tile, DrawTileVertical) {
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
     UI ui;
     Video video(memory_map, ui);
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     for (int y = 0; y < TILE_HEIGHT; y++) {
         for (int x = 0; x < TILE_WIDTH; x++) {
