@@ -15,7 +15,7 @@ class UI {
         UI();
         virtual ~UI();
 
-        void init_ui(const std::string &);
+        void init_display(const std::string &);
 
         void render(FrameBuffer &);
         void poll_events();
@@ -24,7 +24,7 @@ class UI {
 
         sf::Color get_pixel_colour(Colour_t);
 
-        bool is_ui_open() const;
+        bool is_display_enabled() const;
 
     private:
         sf::RenderWindow *m_main_window;
@@ -34,6 +34,6 @@ class UI {
         sf::Texture m_texture;
         sf::Sprite m_sprite;
 
-        bool m_ui_open;
-        bool m_ui_initialized;
+        bool m_display_open;
+        bool m_display_initialized;
 };

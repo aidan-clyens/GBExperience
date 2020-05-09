@@ -2,19 +2,19 @@
 
 
 UI::UI():
-m_ui_open(false),
-m_ui_initialized(false)
+m_display_open(false),
+m_display_initialized(false)
 {
 
 }
 
 UI::~UI() {
-    if (m_ui_initialized) {
+    if (m_display_initialized) {
         delete m_main_window;
     }
 }
 
-void UI::init_ui(const std::string &title) {
+void UI::init_display(const std::string &title) {
     sf::VideoMode window_bounds(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
     bool fullscreen = false;
     unsigned framerate_limit = 60;
@@ -36,8 +36,8 @@ void UI::init_ui(const std::string &title) {
 
     m_image.create(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
 
-    m_ui_open = true;
-    m_ui_initialized = true;
+    m_display_open = true;
+    m_display_initialized = true;
 }
 
 void UI::render(FrameBuffer &buffer) {
@@ -59,7 +59,7 @@ void UI::poll_events() {
 
     while (m_main_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            m_ui_open = false;
+            m_display_open = false;
             m_main_window->close();
         }
     }
@@ -98,6 +98,6 @@ sf::Color UI::get_pixel_colour(Colour_t colour) {
         }
 }
 
-bool UI::is_ui_open() const {
-    return m_ui_open;
+bool UI::is_display_enabled() const {
+    return m_display_open;
 }
