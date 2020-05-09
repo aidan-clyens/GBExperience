@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "debugger/logger.h"
-#include "display/display.h"
+#include "ui/ui.h"
 #include "gameboy.h"
 
 
@@ -13,14 +13,14 @@ int main(int argc, char** argv) {
         rom_file = argv[1];
     }
 
-    Display main_display;
-    std::unique_ptr<GameBoy> gb = std::make_unique<GameBoy>(main_display);
+    UI main_ui;
+    std::unique_ptr<GameBoy> gb = std::make_unique<GameBoy>(main_ui);
 
     gb->load_rom(rom_file);
 
-    main_display.init_display(gb->get_rom_name());
+    main_ui.init_ui(gb->get_rom_name());
 
-    while (main_display.is_display_open()) {
+    while (main_ui.is_ui_open()) {
         gb->tick();
     }
 
