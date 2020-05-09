@@ -1,7 +1,8 @@
 #include "ui.h"
 
 
-UI::UI():
+UI::UI(MemoryMap &mem_map):
+m_input(mem_map),
 m_display_open(false),
 m_display_initialized(false)
 {
