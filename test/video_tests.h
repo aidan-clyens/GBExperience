@@ -284,16 +284,13 @@ TEST(Video, GetScrollX) {
 
 
 TEST(Video, GetLY) {
-    int ly = 100;
-
     MemoryMap mem_map;
     UI ui;
     Video video(mem_map, ui);
 
-    video.write_io_register(LY, ly);
-    EXPECT_EQ(ly, video.read_io_register(LY));
-
-    EXPECT_EQ(ly, video.get_line());
+    mem_map.increment_io_counter(LY);
+    EXPECT_EQ(1, video.read_io_register(LY));
+    EXPECT_EQ(1, video.get_line());
 }
 
 
