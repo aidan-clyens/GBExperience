@@ -63,6 +63,14 @@ void UI::poll_events() {
             m_display_open = false;
             m_main_window->close();
         }
+        else if (event.type == sf::Event::KeyPressed) {
+            sf::Keyboard::Key key = event.key.code;
+            this->set_key_pressed(key, true);
+        }
+        else if (event.type == sf::Event::KeyReleased) {
+            sf::Keyboard::Key key = event.key.code;
+            this->set_key_pressed(key, false);
+        }
     }
 }
 
@@ -81,6 +89,35 @@ void UI::set_pixel(int x, int y, sf::Color colour) {
         for (int w = 0; w < PIXEL_SIZE; w++) {
             m_image.setPixel(x * PIXEL_SIZE + w, y * PIXEL_SIZE + h, colour);
         }
+    }
+}
+
+void UI::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
+    switch (key) {
+        case sf::Keyboard::Key::W:
+            m_input.set_button_pressed(UP, pressed);
+            break;
+        case sf::Keyboard::Key::A:
+            m_input.set_button_pressed(LEFT, pressed);
+            break;
+        case sf::Keyboard::Key::S:
+            m_input.set_button_pressed(DOWN, pressed);
+            break;
+        case sf::Keyboard::Key::D:
+            m_input.set_button_pressed(RIGHT, pressed);
+            break;
+        case sf::Keyboard::Key::Comma:
+            m_input.set_button_pressed(A, pressed);
+            break;
+        case sf::Keyboard::Key::Period:
+            m_input.set_button_pressed(B, pressed);
+            break;
+        case sf::Keyboard::Key::Enter:
+            m_input.set_button_pressed(SELECT, pressed);
+            break;
+        case sf::Keyboard::Key::Escape:
+            m_input.set_button_pressed(START, pressed);
+            break;
     }
 }
 
