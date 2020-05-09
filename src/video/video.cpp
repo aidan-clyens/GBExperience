@@ -23,6 +23,13 @@ void Video::tick(int cycles) {
         this->set_video_mode(video_mode);
     }
 
+    if (this->get_line() == this->get_line_compare()) {
+        this->set_coincidence_flag(true);
+    }
+    else {
+        this->set_coincidence_flag(false);
+    }
+
     switch (m_current_video_mode) {
         case HBLANK_Mode:
             if (m_cycle_counter > HBLANK_CLOCKS) {
