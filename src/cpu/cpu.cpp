@@ -2484,6 +2484,10 @@ void CPU::write_io_register(IORegisters_t reg, uint8_t data) {
     m_memory_map.write((uint16_t)reg, data);
 }
 
+bool CPU::is_stopped() const {
+    return m_stopped;
+}
+
 bool CPU::is_running() const {
     return !m_halted && !m_stopped;
 }

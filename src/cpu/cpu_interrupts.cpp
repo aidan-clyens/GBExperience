@@ -39,6 +39,8 @@ void CPU::handle_interrupts() {
 
             handled = this->handle_interrupt(JOYPAD, JOYPAD_ISR);
             if (handled) {
+                // Restart CPU if stopped
+                m_stopped = false;
                 return;
             }
         }
