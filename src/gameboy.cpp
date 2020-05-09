@@ -31,9 +31,9 @@ void GameBoy::load_rom(const std::string &rom_file) {
     cartridge_type_t cartridge_type = file_parser.get_cartridge_type();
 
     std::cout << "Title: " << m_rom_name << std::endl;
-    std::cout << "Cartridge Type: " << cartridge_type << std::endl;
-    std::cout << "GameBoy Color: " << (file_parser.is_gb_color() ? "YES" : "NO") << std::endl;
-    std::cout << "Super GameBoy: " << (file_parser.is_sgb() ? "YES" : "NO") << std::endl << std::endl;
+    std::cout << "Cartridge Type: " << file_parser.get_cartridge_type_string() << std::endl;
+    std::cout << "Super GameBoy: " << (file_parser.is_sgb() ? "YES" : "NO") << std::endl;
+    std::cout << "GameBoy Color: " << (file_parser.is_gb_color() ? "YES" : "NO") << std::endl << std::endl;
 }
 
 
