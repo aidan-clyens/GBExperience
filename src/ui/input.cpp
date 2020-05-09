@@ -134,7 +134,7 @@ void Input::set_input() {
         }
     }
 
-    m_memory_map.write(P1, p1);
+    m_memory_map.set_input(p1);
 }
 
 bool Input::dpad_toggled() const {

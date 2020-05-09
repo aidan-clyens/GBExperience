@@ -313,6 +313,11 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     return address;
 }
 
+void IO::set_input(uint8_t data) {
+    log_io("IO: Setting P1 to %X", data);
+    m_P1 = data;
+}
+
 void IO::increment_counter(IORegisters_t reg) {
     switch (reg) {
         case LY:

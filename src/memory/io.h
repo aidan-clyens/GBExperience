@@ -61,6 +61,7 @@ class IO {
         uint8_t read(IORegisters_t);
         uint16_t write(IORegisters_t, uint8_t);
 
+        void set_input(uint8_t);
         void increment_counter(IORegisters_t);
 
     private:
