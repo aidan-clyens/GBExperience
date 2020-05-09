@@ -32,6 +32,7 @@ void UI::init_ui(const std::string &title) {
 
     m_main_window->setFramerateLimit(framerate_limit);
     m_main_window->setVerticalSyncEnabled(vertical_sync_enabled);
+    m_main_window->setKeyRepeatEnabled(false);
 
     m_image.create(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
 
