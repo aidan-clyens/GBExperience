@@ -134,7 +134,7 @@ TEST(Video, CheckWindowTileMap) {
     video.write_io_register(LCDC, LCDC_data);
     EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
 
-    EXPECT_EQ(TILE_MAP_2, video.get_window_tile_map_selected());
+    EXPECT_EQ(TILE_MAP_1, video.get_window_tile_map_selected());
 }
 
 
@@ -148,7 +148,7 @@ TEST(Video, CheckBackgroundTileMap) {
     video.write_io_register(LCDC, LCDC_data);
     EXPECT_EQ(LCDC_data, video.read_io_register(LCDC));
 
-    EXPECT_EQ(TILE_MAP_2, video.get_background_tile_map_selected());
+    EXPECT_EQ(TILE_MAP_1, video.get_background_tile_map_selected());
 }
 
 
