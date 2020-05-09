@@ -36,7 +36,7 @@ uint8_t IO::read(IORegisters_t address) {
 
     switch (address) {
         case P1:
-            log_io("IO: reading %X from P1", m_P1);
+            log_io("IO: Reading %X from P1", m_P1);
 
             return m_P1;
         case SB:
@@ -48,23 +48,23 @@ uint8_t IO::read(IORegisters_t address) {
 
             return 0;
         case DIV:
-            log_io("IO: reading %X from DIV", m_DIV);
+            log_io("IO: Reading %X from DIV", m_DIV);
 
             return m_DIV;
         case TIMA:
-            log_io("IO: reading %X from TIMA", m_TIMA);
+            log_io("IO: Reading %X from TIMA", m_TIMA);
 
             return m_TIMA;
         case TMA:
-            log_io("IO: reading %X from TMA", m_TMA);
+            log_io("IO: Reading %X from TMA", m_TMA);
 
             return m_TMA;
         case TAC:
-            log_io("IO: reading %X from TAC", m_TAC);
+            log_io("IO: Reading %X from TAC", m_TAC);
 
             return m_TAC;
         case IF:
-            log_io("IO: reading %X from IF", m_IF);
+            log_io("IO: Reading %X from IF", m_IF);
 
             return m_IF;
         case NR10:
@@ -92,55 +92,55 @@ uint8_t IO::read(IORegisters_t address) {
 
             return 0;
         case LCDC:
-            log_io("IO: reading %X from LCDC", m_LCDC);
+            log_io("IO: Reading %X from LCDC", m_LCDC);
 
             return m_LCDC;
         case STAT:
-            log_io("IO: reading %X from STAT", m_STAT);
+            log_io("IO: Reading %X from STAT", m_STAT);
 
             return m_STAT;
         case SCY:
-            log_io("IO: reading %X from SCY", m_SCY);
+            log_io("IO: Reading %X from SCY", m_SCY);
 
             return m_SCY;
         case SCX:
-            log_io("IO: reading %X from SCX", m_SCX);
+            log_io("IO: Reading %X from SCX", m_SCX);
 
             return m_SCX;
         case LY:
-            log_io("IO: reading %X from LY", m_LY);
+            log_io("IO: Reading %X from LY", m_LY);
 
             return m_LY;
         case LYC:
-            log_io("IO: reading %X from LYC", m_LYC);
+            log_io("IO: Reading %X from LYC", m_LYC);
 
             return m_LYC;
         case DMA:
-            log_io("IO: reading %X from DMA", m_DMA);
+            log_io("IO: Reading %X from DMA", m_DMA);
 
             return m_DMA;
         case BGP:
-            log_io("IO: reading %X from BGP", m_BGP);
+            log_io("IO: Reading %X from BGP", m_BGP);
 
             return m_BGP;
         case OBP0:
-            log_io("IO: reading %X from OBP0", m_OBP0);
+            log_io("IO: Reading %X from OBP0", m_OBP0);
 
             return m_OBP0;
         case OBP1:
-            log_io("IO: reading %X from OBP1", m_OBP1);
+            log_io("IO: Reading %X from OBP1", m_OBP1);
 
             return m_OBP1;
         case WY:
-            log_io("IO: reading %X from WY", m_WY);
+            log_io("IO: Reading %X from WY", m_WY);
 
             return m_WY;
         case WX:
-            log_io("IO: reading %X from WX", m_WX);
+            log_io("IO: Reading %X from WX", m_WX);
 
             return m_WX;
         case IE:
-            log_io("IO: reading %X from IE", m_IE);
+            log_io("IO: Reading %X from IE", m_IE);
 
             return m_IE;
 
@@ -178,7 +178,7 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
                 m_P1 &= 0xDF;   // 1101 1111
             }
 
-            log_io("IO: writing %X to P1", m_P1);
+            log_io("IO: Writing %X to P1", m_P1);
 
             break;
         }
@@ -191,27 +191,27 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
 
             break;
         case DIV:
-            log_io("IO: writing %X to DIV", data);
+            log_io("IO: Writing %X to DIV", data);
 
             m_DIV = data;
             break;
         case TIMA:
-            log_io("IO: writing %X to TIMA", data);
+            log_io("IO: Writing %X to TIMA", data);
 
             m_TIMA = data;
             break;
         case TMA:
-            log_io("IO: writing %X to TMA", data);
+            log_io("IO: Writing %X to TMA", data);
 
             m_TMA = data;
             break;
         case TAC:
-            log_io("IO: writing %X to TAC", data);
+            log_io("IO: Writing %X to TAC", data);
 
             m_TAC = data;
             break;
         case IF:
-            log_io("IO: writing %X to IF", data);
+            log_io("IO: Writing %X to IF", data);
 
             m_IF = data;
             break;
@@ -240,67 +240,67 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
 
             break;
         case LCDC:
-            log_io("IO: writing %X to LCDC", data);
+            log_io("IO: Writing %X to LCDC", data);
 
             m_LCDC = data;
             break;
         case STAT:
-            log_io("IO: writing %X to STAT", data);
+            log_io("IO: Writing %X to STAT", data);
 
             m_STAT = data;
             break;
         case SCY:
-            log_io("IO: writing %X to SCY", data);
+            log_io("IO: Writing %X to SCY", data);
 
             m_SCY = data;
             break;
         case SCX:
-            log_io("IO: writing %X to SCX", data);
+            log_io("IO: Writing %X to SCX", data);
 
             m_SCX = data;
             break;
         case LY:
-            log_io("IO: writing %X to LY", 0x0);
+            log_io("IO: Writing %X to LY", 0x0);
             // LY resets when written to
             m_LY = 0x0;
             break;
         case LYC:
-            log_io("IO: writing %X to LYC", data);
+            log_io("IO: Writing %X to LYC", data);
 
             m_LYC = data;
             break;
         case DMA:
-            log_io("IO: writing %X to DMA", data);
+            log_io("IO: Writing %X to DMA", data);
 
             m_DMA = data;
             break;
         case BGP:
-            log_io("IO: writing %X to BGP", data);
+            log_io("IO: Writing %X to BGP", data);
 
             m_BGP = data;
             break;
         case OBP0:
-            log_io("IO: writing %X to OBP0", data);
+            log_io("IO: Writing %X to OBP0", data);
 
             m_OBP0 = data;
             break;
         case OBP1:
-            log_io("IO: writing %X to OBP1", data);
+            log_io("IO: Writing %X to OBP1", data);
 
             m_OBP1 = data;
             break;
         case WY:
-            log_io("IO: writing %X to WY", data);
+            log_io("IO: Writing %X to WY", data);
 
             m_WY = data;
             break;
         case WX:
-            log_io("IO: writing %X to WX", data);
+            log_io("IO: Writing %X to WX", data);
 
             m_WX = data;
             break;
         case IE:
-            log_io("IO: writing %X to IE", data);
+            log_io("IO: Writing %X to IE", data);
 
             m_IE = data;
             break;
