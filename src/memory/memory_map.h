@@ -10,6 +10,15 @@
 #include "../debugger/logger.h"
 
 
+typedef enum InterruptFlag {
+    VBLANK = 0x01,
+    LCD_STAT = 0x02,
+    TIMER = 0x04,
+    SERIAL = 0x08,
+    JOYPAD = 0x10
+} InterruptFlag_t;
+
+
 class MemoryMap {
     public:
         MemoryMap();
@@ -24,6 +33,11 @@ class MemoryMap {
         uint8_t read_vram(uint16_t);
 
         int get_index(uint16_t) const;
+
+        bool get_interrupt_enable_bit(InterruptFlag_t);
+        bool get_interrupt_flag_bit(InterruptFlag_t);
+        void set_interrupt_enable_bit(InterruptFlag_t, bool);
+        void set_interrupt_flag_bit(InterruptFlag_t, bool);
 
         void set_input(uint8_t);
         void increment_io_counter(IORegisters_t);
