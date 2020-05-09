@@ -136,7 +136,7 @@ uint8_t MemoryMap::read(uint16_t address) {
 }
 
 uint16_t MemoryMap::write_vram(uint16_t address, uint8_t data) {
-    #ifdef MEMORY_DEBUG
+    
     if (address >= TILE_DATA_UNSIGNED && address < TILE_MAP_0) {
         log_memory("MemoryMap: Writing %X to Tile Data Table at address %X", data, address);
     }
@@ -146,7 +146,7 @@ uint16_t MemoryMap::write_vram(uint16_t address, uint8_t data) {
     else if (address >= TILE_MAP_1) {
         log_memory("MemoryMap: Writing %X to Background Map 1 at address %X", data, address);
     }
-    #endif
+    
 
     Memory *mem = (Memory *)m_memory_map.find(2)->second;
     return mem->write_memory(address - m_address_space[2], data);
@@ -156,7 +156,7 @@ uint8_t MemoryMap::read_vram(uint16_t address) {
     Memory *mem = (Memory *)m_memory_map.find(2)->second;
     uint8_t data = mem->read_memory(address - m_address_space[2]);
     
-    #ifdef MEMORY_DEBUG
+    
     if (address >= TILE_DATA_UNSIGNED && address < TILE_MAP_0) {
         log_memory("MemoryMap: Reading %X from Tile Data Table at address %X", data, address);
     }
@@ -166,7 +166,7 @@ uint8_t MemoryMap::read_vram(uint16_t address) {
     else if (address >= TILE_MAP_1) {
         log_memory("MemoryMap: Reading %X from Background Map 1 at address %X", data, address);
     }
-    #endif
+    
 
     return data;
 }
