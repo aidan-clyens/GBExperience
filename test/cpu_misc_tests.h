@@ -146,32 +146,52 @@ TEST(CPU_MISC, NOP) {
 TEST(CPU_MISC, HALT) {
     uint8_t opcode = 0x76;
 
+    enable_interrupt_logging();
+
     MemoryMap mem_map;
-    
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);
 
     EXPECT_FALSE(cpu.is_running());
+    EXPECT_EQ(4, cpu.tick());
 
-    // TODO Wait for interrupt to continue CPU
-    EXPECT_TRUE(false);
+    // Trigger any interrupt
+    cpu.set_interrupt_enable_bit(VBLANK, true);
+    cpu.set_interrupt_flag_bit(VBLANK, true);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(VBLANK));
+    EXPECT_TRUE(cpu.get_interrupt_flag_bit(VBLANK));
+
+    cpu.tick();
+
+    // CPU should continue running
+    EXPECT_TRUE(cpu.is_running());
 }
 
 // STOP
 TEST(CPU_MISC, STOP) {
     uint8_t opcode = 0x10;
 
+    enable_interrupt_logging();
+
     MemoryMap mem_map;
-    
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);
 
     EXPECT_FALSE(cpu.is_running());
+    EXPECT_EQ(4, cpu.tick());
 
-    // TODO Wait for joypad interrupt to continue CPU
-    EXPECT_TRUE(false);
+    // Trigger a Joypad interrupt
+    cpu.set_interrupt_enable_bit(JOYPAD, true);
+    cpu.set_interrupt_flag_bit(JOYPAD, true);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
+    EXPECT_TRUE(cpu.get_interrupt_flag_bit(JOYPAD));
+
+    cpu.tick();
+
+    // CPU should continue running
+    EXPECT_TRUE(cpu.is_running());
 }
 
 // EI
