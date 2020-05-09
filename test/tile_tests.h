@@ -1,26 +1,48 @@
 #include "gtest/gtest.h"
 
 
-MemoryMap setup_tile(uint16_t starting_address) {
+// 0, 0, 0, 0, 0, 0, 0, 0
+// 0, 0, 0, 0, 0, 0, 0, 0
+// 1, 1, 1, 1, 1, 1, 1, 1
+// 1, 1, 1, 1, 1, 1, 1, 1
+// 2, 2, 2, 2, 2, 2, 2, 2
+// 2, 2, 2, 2, 2, 2, 2, 2
+// 3, 3, 3, 3, 3, 3, 3, 3
+// 3, 3, 3, 3, 3, 3, 3, 3
+uint8_t tile_data_1[] = {
+    0x00, 0x00,
+    0x00, 0x00,
+    0xFF, 0x00,
+    0xFF, 0x00,
+    0x00, 0xFF,
+    0x00, 0xFF,
+    0xFF, 0xFF,
+    0xFF, 0xFF
+};
+
+// 0, 0, 1, 1, 2, 2, 3, 3
+// 0, 0, 1, 1, 2, 2, 3, 3   
+// 0, 0, 1, 1, 2, 2, 3, 3
+// 0, 0, 1, 1, 2, 2, 3, 3
+// 0, 0, 1, 1, 2, 2, 3, 3
+// 0, 0, 1, 1, 2, 2, 3, 3
+// 0, 0, 1, 1, 2, 2, 3, 3
+// 0, 0, 1, 1, 2, 2, 3, 3
+uint8_t tile_data_2[] = {
+    0x33, 0x0F,
+    0x33, 0x0F,
+    0x33, 0x0F,
+    0x33, 0x0F,
+    0x33, 0x0F,
+    0x33, 0x0F,
+    0x33, 0x0F,
+    0x33, 0x0F
+};
+
+MemoryMap setup_tile(uint8_t *tile_data, uint16_t starting_address) {
     MemoryMap mem_map;
-    // 0, 0, 0, 0, 0, 0, 0, 0
-    // 0, 0, 0, 0, 0, 0, 0, 0
-    // 1, 1, 1, 1, 1, 1, 1, 1
-    // 1, 1, 1, 1, 1, 1, 1, 1
-    // 2, 2, 2, 2, 2, 2, 2, 2
-    // 2, 2, 2, 2, 2, 2, 2, 2
-    // 3, 3, 3, 3, 3, 3, 3, 3
-    // 3, 3, 3, 3, 3, 3, 3, 3
+
     int tile_size = 2 * TILE_HEIGHT;
-    uint8_t tile_data[] = {
-        0x00, 0x00,
-        0x00, 0x00,
-        0xFF, 0x00,
-        0xFF, 0x00,
-        0x00, 0xFF,
-        0x00, 0xFF,
-        0xFF, 0xFF,
-        0xFF, 0xFF};
 
     for (int i = 0; i < tile_size; i++) {
         mem_map.write(starting_address + i, tile_data[i]);
@@ -118,10 +140,10 @@ TEST(Tile, GetPixelIndexFromTile) {
 }
 
 
-TEST(Tile, LoadTile) {
+TEST(Tile, LoadTileHorizontal) {
     uint16_t starting_address = 0x8000;
 
-    MemoryMap memory_map = setup_tile(starting_address);
+    MemoryMap memory_map = setup_tile(tile_data_1, starting_address);
 
     Tile tile(starting_address, memory_map);
 
@@ -144,7 +166,34 @@ TEST(Tile, LoadTile) {
 }
 
 
-TEST(Tile, DrawTile) {
+TEST(Tile, LoadTileVertical) {
+    uint16_t starting_address = 0x8000;
+
+    MemoryMap memory_map = setup_tile(tile_data_2, starting_address);
+
+    Tile tile(starting_address, memory_map);
+
+    for (int y = 0; y < TILE_HEIGHT; y++) {
+        for (int x = 0; x < TILE_WIDTH; x++) {
+            if (x <= 1) {
+                EXPECT_EQ(Colour0, tile.get_pixel(x, y));
+            }
+            else if (x > 1 && x <= 3) {
+                EXPECT_EQ(Colour1, tile.get_pixel(x, y));
+            }
+            else if (x > 3 && x <= 5) {
+                EXPECT_EQ(Colour2, tile.get_pixel(x, y));
+            }
+            else {
+                EXPECT_EQ(Colour3, tile.get_pixel(x, y));
+            }
+        }
+    }
+}
+
+
+
+TEST(Tile, DrawTileHorizontal) {
     uint16_t starting_address = 0x8000;
     int tile_x = 100;
     int tile_y = 100;
@@ -155,7 +204,39 @@ TEST(Tile, DrawTile) {
     palette.colour2 = DARK_GRAY;
     palette.colour3 = BLACK;
 
-    MemoryMap memory_map = setup_tile(starting_address);
+    MemoryMap memory_map = setup_tile(tile_data_1, starting_address);
+    Tile tile(starting_address, memory_map);
+
+    FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
+    Display display;
+    Video video(memory_map, display);
+    display.init_display("TEST");
+
+    for (int y = 0; y < TILE_HEIGHT; y++) {
+        for (int x = 0; x < TILE_WIDTH; x++) {
+            Colour_t pixel = video.get_real_colour(tile.get_pixel(x, y), palette);
+            buffer.set_pixel(tile_x + x, tile_y + y, pixel);
+        }
+    }
+
+    for (int i = 0; i < DISPLAY_TIME; i++) {
+        display.render(buffer);
+    }
+}
+
+
+TEST(Tile, DrawTileVertical) {
+    uint16_t starting_address = 0x8000;
+    int tile_x = 100;
+    int tile_y = 100;
+
+    Palette palette;
+    palette.colour0 = WHITE;
+    palette.colour1 = LIGHT_GRAY;
+    palette.colour2 = DARK_GRAY;
+    palette.colour3 = BLACK;
+
+    MemoryMap memory_map = setup_tile(tile_data_2, starting_address);
     Tile tile(starting_address, memory_map);
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
