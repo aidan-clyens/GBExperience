@@ -43,6 +43,7 @@ TEST(FileParser, GetROMSize) {
 
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     EXPECT_EQ(rom_size, file_parser.get_byte(0x148));
+    EXPECT_EQ(2, file_parser.get_rom_size_banks());
 }
 
 TEST(FileParser, GetRAMSize) {
