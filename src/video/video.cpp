@@ -58,7 +58,6 @@ void Video::tick(int cycles) {
 
                 if (this->get_line() == 154) {
                     if (this->lcd_display_enabled()) {
-                        this->draw_sprites();
                         this->draw();
                     }
 
