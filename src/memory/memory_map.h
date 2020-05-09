@@ -25,6 +25,7 @@ class MemoryMap {
 
         int get_index(uint16_t) const;
 
+        void set_input(uint8_t);
         void increment_io_counter(IORegisters_t);
 
     private:
