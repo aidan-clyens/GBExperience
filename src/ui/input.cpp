@@ -43,7 +43,7 @@ void Input::set_button_pressed(Buttons_t button, bool pressed) {
             m_select = pressed;
             break;
         case START:
-            m_select = pressed;
+            m_start = pressed;
             break;
     }
 
