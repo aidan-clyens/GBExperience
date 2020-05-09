@@ -78,3 +78,37 @@ TEST(UI, SetButtonReleased) {
     input.set_button_pressed(RIGHT, false);
     EXPECT_FALSE(input.get_button_pressed(RIGHT));
 }
+
+
+TEST(UI, GetDPADToggled) {
+    MemoryMap mem_map;
+    Input input(mem_map);
+
+    // Ports of P1 register are active low
+    EXPECT_EQ(0xFF, mem_map.read(P1));
+    EXPECT_FALSE(input.dpad_toggled());
+    EXPECT_FALSE(input.buttons_toggled());
+
+    // Set port P14 to low
+    uint8_t p1 = 0xFF & ~P14;  // 1110 1111
+    mem_map.write(P1, p1);
+    EXPECT_TRUE(input.dpad_toggled());
+    EXPECT_FALSE(input.buttons_toggled());
+}
+
+
+TEST(UI, GetButtonsToggled) {
+    MemoryMap mem_map;
+    Input input(mem_map);
+
+    // Ports of P1 register are active low
+    EXPECT_EQ(0xFF, mem_map.read(P1));
+    EXPECT_FALSE(input.dpad_toggled());
+    EXPECT_FALSE(input.buttons_toggled());
+
+    // Set port P15 to low
+    uint8_t p1 = 0xFF & ~P15;  // 1101 1111
+    mem_map.write(P1, p1);
+    EXPECT_FALSE(input.dpad_toggled());
+    EXPECT_TRUE(input.buttons_toggled());
+}
