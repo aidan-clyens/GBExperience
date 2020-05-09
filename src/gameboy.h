@@ -11,7 +11,7 @@
 
 class GameBoy {
     public:
-        GameBoy(UI &);
+        GameBoy();
         virtual ~GameBoy();
 
         void tick();
@@ -19,11 +19,13 @@ class GameBoy {
         void load_rom(const std::string &);
 
         std::string get_rom_name() const;
+        bool is_display_open() const;
     
     private:
         CPU m_cpu;
         MemoryMap m_memory_map;
         Video m_video;
+        UI m_ui;
 
         std::string m_rom_name;
 };
