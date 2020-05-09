@@ -35,7 +35,10 @@ class Input {
         bool get_button_pressed(Buttons_t) const;
 
         void set_input();
-    
+
+        bool dpad_toggled() const;
+        bool buttons_toggled() const;
+
     private:
         MemoryMap &m_memory_map;
 

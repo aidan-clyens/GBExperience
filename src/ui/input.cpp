@@ -68,3 +68,21 @@ bool Input::get_button_pressed(Buttons_t button) const {
             return m_select;
     }
 }
+
+void Input::set_input() {
+
+}
+
+bool Input::dpad_toggled() const {
+    uint8_t p1 = m_memory_map.read(P1);
+
+    // DPAD is toggled if P14 is set low
+    return (p1 & P14) == 0;
+}
+
+bool Input::buttons_toggled() const {
+    uint8_t p1 = m_memory_map.read(P1);
+
+    // Buttons are toggled if P15 is set low
+    return (p1 & P15) == 0;
+}
