@@ -2,7 +2,8 @@
 
 
 TEST(UI, Initui) {
-    UI ui;
+    MemoryMap mem_map;
+    UI ui(mem_map);
     ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
@@ -14,7 +15,8 @@ TEST(UI, Initui) {
 
 
 TEST(UI, SetPixel) {
-    UI ui;
+    MemoryMap mem_map;
+    UI ui(mem_map);
     ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
@@ -27,7 +29,8 @@ TEST(UI, SetPixel) {
 
 
 TEST(UI, SetPixelAllPixels) {
-    UI ui;
+    MemoryMap mem_map;
+    UI ui(mem_map);
     ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
