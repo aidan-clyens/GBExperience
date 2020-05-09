@@ -46,6 +46,8 @@ void Input::set_button_pressed(Buttons_t button, bool pressed) {
             m_select = pressed;
             break;
     }
+
+    this->set_input();
 }
 
 bool Input::get_button_pressed(Buttons_t button) const {
@@ -70,7 +72,45 @@ bool Input::get_button_pressed(Buttons_t button) const {
 }
 
 void Input::set_input() {
+    uint8_t p1 = m_memory_map.read(P1);
 
+    if (this->dpad_toggled()) {
+        if (m_right) {
+            p1 &= ~P10;
+        }
+
+        if (m_left) {
+            p1 &= ~P11;
+        }
+
+        if (m_up) {
+            p1 &= ~P12;
+        }
+
+        if (m_down) {
+            p1 &= ~P13;
+        }
+    }
+
+    if (this->buttons_toggled()) {
+        if (m_a) {
+            p1 &= ~P10;
+        }
+
+        if (m_b) {
+            p1 &= ~P11;
+        }
+
+        if (m_select) {
+            p1 &= ~P12;
+        }
+
+        if (m_start) {
+            p1 &= ~P13;
+        }
+    }
+
+    m_memory_map.write(P1, p1);
 }
 
 bool Input::dpad_toggled() const {

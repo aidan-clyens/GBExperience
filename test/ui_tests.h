@@ -112,3 +112,53 @@ TEST(UI, GetButtonsToggled) {
     EXPECT_FALSE(input.dpad_toggled());
     EXPECT_TRUE(input.buttons_toggled());
 }
+
+
+TEST(UI, SelectDPAD) {
+    MemoryMap mem_map;
+    Input input(mem_map);
+
+    // Ports of P1 register are active low
+    EXPECT_EQ(0xFF, mem_map.read(P1));
+
+    // Enable DPAD
+    uint8_t p1 = 0xFF & ~P14; // 1110 1111
+    mem_map.write(P1, p1);
+    EXPECT_TRUE(input.dpad_toggled());
+
+    // Set Left button pressed
+    input.set_button_pressed(LEFT, true);
+    EXPECT_TRUE(input.get_button_pressed(LEFT));
+    // Also set A button pressed
+    input.set_button_pressed(A, true);
+    EXPECT_TRUE(input.get_button_pressed(A));
+
+    // Only P11 for the Left button should be set to low in the P1 register
+    uint8_t result_p1 = 0xED;   // 1110 1101
+    EXPECT_EQ(result_p1, mem_map.read(P1));
+}
+
+
+TEST(UI, SelectButtons) {
+    MemoryMap mem_map;
+    Input input(mem_map);
+
+    // Ports of P1 register are active low
+    EXPECT_EQ(0xFF, mem_map.read(P1));
+
+    // Enable Buttons
+    uint8_t p1 = 0xFF & ~P15; // 1101 1111
+    mem_map.write(P1, p1);
+    EXPECT_TRUE(input.buttons_toggled());
+
+    // Set Left button pressed
+    input.set_button_pressed(LEFT, true);
+    EXPECT_TRUE(input.get_button_pressed(LEFT));
+    // Also set B button pressed
+    input.set_button_pressed(A, true);
+    EXPECT_TRUE(input.get_button_pressed(A));
+
+    // Only P10 for the A button should be set to low in the P1 register
+    uint8_t result_p1 = 0xDE;   // 1101 1110
+    EXPECT_EQ(result_p1, mem_map.read(P1));
+}
