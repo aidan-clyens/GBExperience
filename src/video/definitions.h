@@ -19,7 +19,7 @@ const int TILES_PER_LINE = 32;
 const int TILE_WIDTH = 8;
 const int TILE_HEIGHT = 8;
 
-const int TILE_BYTE_LENGTH = (TILE_WIDTH * TILE_HEIGHT) / 8;
+const int TILE_BYTE_LENGTH = 2 *(TILE_WIDTH * TILE_HEIGHT) / 8;
 
 const uint16_t OAM_ADDRESS = 0xFE00;
 
