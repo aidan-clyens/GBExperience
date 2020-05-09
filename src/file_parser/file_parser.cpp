@@ -151,6 +151,23 @@ int FileParser::get_rom_size_banks() const {
     }
 }
 
+int FileParser::get_ram_size_banks() const {
+    uint8_t ram_size = this->get_byte(0x149);
+
+    switch (ram_size) {
+        case 0x0:
+            return 0;
+        case 0x1:
+            return 1;
+        case 0x2:
+            return 1;
+        case 0x3:
+            return 4;
+        case 0x4:
+            return 16;
+    }
+}
+
 bool FileParser::is_gb_color() const {
     return this->get_byte(0x143) == 0x80;
 }
