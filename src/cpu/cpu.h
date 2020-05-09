@@ -21,14 +21,6 @@ typedef enum CPUFlag {
     CARRY_FLAG = 0x10
 } CPUFlag_t;
 
-typedef enum InterruptFlag {
-    VBLANK = 0x01,
-    LCD_STAT = 0x02,
-    TIMER = 0x04,
-    SERIAL = 0x08,
-    JOYPAD = 0x10
-} InterruptFlag_t;
-
 typedef enum InteruptVector {
     VBLANK_ISR = 0x40,
     LCD_STAT_ISR = 0x48,

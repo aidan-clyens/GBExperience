@@ -65,39 +65,17 @@ bool CPU::handle_interrupt(InterruptFlag_t flag, InterruptVector_t vector) {
 }
 
 bool CPU::get_interrupt_enable_bit(InterruptFlag_t flag) {
-    uint8_t value = this->read_io_register(IE);
-
-    return (value & flag) == flag;
+    return m_memory_map.get_interrupt_enable_bit(flag);
 }
 
 bool CPU::get_interrupt_flag_bit(InterruptFlag_t flag) {
-    uint8_t value = this->read_io_register(IF);
-
-    return (value & flag) == flag;
+    return m_memory_map.get_interrupt_flag_bit(flag);
 }
 
 void CPU::set_interrupt_enable_bit(InterruptFlag_t flag, bool set) {
-    uint8_t value = this->read_io_register(IE);
-
-    if (set) {
-        value |= flag;
-    }
-    else {
-        value &= ~flag;
-    }
-
-    this->write_io_register(IE, value);
+    m_memory_map.set_interrupt_enable_bit(flag, set);
 }
 
 void CPU::set_interrupt_flag_bit(InterruptFlag_t flag, bool set) {
-    uint8_t value = this->read_io_register(IF);
-
-    if (set) {
-        value |= flag;
-    }
-    else {
-        value &= ~flag;
-    }
-
-    this->write_io_register(IF, value);
+    m_memory_map.set_interrupt_flag_bit(flag, set);
 }

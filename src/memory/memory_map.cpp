@@ -185,6 +185,44 @@ int MemoryMap::get_index(uint16_t address) const {
     return -1;
 }
 
+bool MemoryMap::get_interrupt_enable_bit(InterruptFlag_t flag) {
+    uint8_t value = this->read(IE);
+
+    return (value & flag) == flag;
+}
+
+bool MemoryMap::get_interrupt_flag_bit(InterruptFlag_t flag) {
+    uint8_t value = this->read(IF);
+
+    return (value & flag) == flag;
+}
+
+void MemoryMap::set_interrupt_enable_bit(InterruptFlag_t flag, bool set) {
+    uint8_t value = this->read(IE);
+
+    if (set) {
+        value |= flag;
+    }
+    else {
+        value &= ~flag;
+    }
+
+    this->write(IE, value);
+}
+
+void MemoryMap::set_interrupt_flag_bit(InterruptFlag_t flag, bool set) {
+    uint8_t value = this->read(IF);
+
+    if (set) {
+        value |= flag;
+    }
+    else {
+        value &= ~flag;
+    }
+
+    this->write(IF, value);
+}
+
 void MemoryMap::set_input(uint8_t data) {
     m_io.set_input(data);
 }
