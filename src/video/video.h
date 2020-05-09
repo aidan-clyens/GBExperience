@@ -30,6 +30,7 @@ class Video {
         VideoMode_t get_video_mode();
         void set_video_mode(VideoMode_t);
         bool get_coincidence_flag();
+        void set_coincidence_flag(bool);
         bool coincidence_interrupt_enabled();
         bool oam_interrupt_enabled();
         bool vblank_interrupt_enabled();
