@@ -65,6 +65,65 @@ cartridge_type_t FileParser::get_cartridge_type() const {
     return static_cast<cartridge_type_t>(cartridge_type_index);
 }
 
+std::string FileParser::get_cartridge_type_string() const {
+    cartridge_type_t cartridge_type = this->get_cartridge_type();
+
+    switch (cartridge_type) {
+        case ROM_ONLY:
+            return "ROM_ONLY";
+        case ROM_MBC1:
+            return "ROM_MBC1";
+        case ROM_MBC1_RAM:
+            return "ROM_MBC1_RAM";
+        case ROM_MBC1_RAM_BATT:
+            return "ROM_MBC1_RAM_BATT";
+        case ROM_MBC2:
+            return "ROM_MBC2";
+        case ROM_MBC2_BATT:
+            return "ROM_MBC2_BATT";
+        case ROM_RAM:
+            return "ROM_RAM";
+        case ROM_RAM_BATT:
+            return "ROM_RAM_BATT";
+        case ROM_MMM01:
+            return "ROM_MMM01";
+        case ROM_MMM01_SRAM:
+            return "ROM_MMM01_SRAM";
+        case ROM_MMM01_SRAM_BATT:
+            return "ROM_MMM01_SRAM_BATT";
+        case ROM_MBC3_TIMER_BATT:
+            return "ROM_MBC3_TIMER_BATT";
+        case ROM_MBC3_TIMER_RAM_BATT:
+            return "ROM_MBC3_TIMER_RAM_BATT";
+        case ROM_MBC3:
+            return "ROM_MBC3";
+        case ROM_MBC3_RAM:
+            return "ROM_MBC3_RAM";
+        case ROM_MBC3_RAM_BATT:
+            return "ROM_MBC3_RAM_BATT";
+        case ROM_MBC5:
+            return "ROM_MBC5";
+        case ROM_MBC5_RAM:
+            return "ROM_MBC5_RAM";
+        case ROM_MBC5_RAM_BATT:
+            return "ROM_MBC5_RAM_BATT";
+        case ROM_MBC5_RUMBLE:
+            return "ROM_MBC5_RUMBLE";
+        case ROM_MBC5_RUMBLE_SRAM:
+            return "ROM_MBC5_RUMBLE_SRAM";
+        case ROM_MBC5_RUMBLE_SRAM_BATT:
+            return "ROM_MBC5_RUMBLE_SRAM_BATT";
+        case POCKET_CAMERA:
+            return "POCKET_CAMERA";
+        case BANDAI_TAMA5:
+            return "BANDAI_TAMA5";
+        case HUDSON_HUC_3:
+            return "HUDSON_HUC_3";
+        case HUDSON_HUC_1:
+            return "HUDSON_HUC_1";
+    }
+}
+
 bool FileParser::is_gb_color() const {
     return this->get_byte(0x143) == 0x80;
 }
@@ -72,4 +131,3 @@ bool FileParser::is_gb_color() const {
 bool FileParser::is_sgb() const {
     return this->get_byte(0x146) == 0x03;
 }
-
