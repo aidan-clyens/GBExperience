@@ -44,7 +44,8 @@ TEST(UI, SetPixelAllPixels) {
 
 
 TEST(UI, InitInput) {
-    Input input;
+    MemoryMap mem_map;
+    Input input(mem_map);
 
     EXPECT_FALSE(input.get_button_pressed(RIGHT));
     EXPECT_FALSE(input.get_button_pressed(LEFT));
@@ -58,7 +59,8 @@ TEST(UI, InitInput) {
 
 
 TEST(UI, SetButtonPressed) {
-    Input input;
+    MemoryMap mem_map;
+    Input input(mem_map);
 
     input.set_button_pressed(RIGHT, true);
     EXPECT_TRUE(input.get_button_pressed(RIGHT));
@@ -67,7 +69,8 @@ TEST(UI, SetButtonPressed) {
 
 
 TEST(UI, SetButtonReleased) {
-    Input input;
+    MemoryMap mem_map;
+    Input input(mem_map);
 
     input.set_button_pressed(RIGHT, true);
     EXPECT_TRUE(input.get_button_pressed(RIGHT));
