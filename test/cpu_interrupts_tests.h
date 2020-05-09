@@ -163,6 +163,9 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
 
+    // Enable V-Blank interrupts
+    cpu.set_interrupt_enable_bit(VBLANK, true);
+
     cpu.write_register("PC", PC);
     EXPECT_EQ(PC, cpu.read_register("PC"));
 
@@ -181,5 +184,141 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     // Should jump to corresponding interrupt service routine
     EXPECT_EQ((uint16_t)VBLANK_ISR+1, cpu.read_register("PC"));
     // Corresponoding bit in IF register should be cleared
+    EXPECT_FALSE(cpu.get_interrupt_flag_bit(VBLANK));
+}
+
+
+TEST(Interrupts, TriggerJoypadInterrupt) {
+    uint16_t PC = 0xA000;
+    std::string rom_file = "../../roms/Tetris.gb";
+
+    FileParser file_parser;
+    MemoryMap mem_map;
+    mem_map.load_rom(file_parser.get_buffer_data());
+    CPU cpu(mem_map);
+
+    // Enable Joypad interrupts
+    cpu.set_interrupt_enable_bit(JOYPAD, true);
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    // Trigger Joypad interrupt
+    cpu.write_io_register(IF, JOYPAD);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
+    EXPECT_EQ(JOYPAD, cpu.read_io_register(IF));
+
+    cpu.tick();
+
+    // Current PC should be pushed to stack
+    uint16_t SP = cpu.read_register("SP");
+    EXPECT_EQ((PC >> 8), mem_map.read(SP));
+    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+
+    // Should jump to corresponding interrupt service routine
+    EXPECT_EQ((uint16_t)JOYPAD_ISR+1, cpu.read_register("PC"));
+    // Corresponoding bit in IF register should be cleared
+    EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
+}
+
+
+TEST(Interrupts, TriggerTimerInterrupt) {
+    uint16_t PC = 0xA000;
+    std::string rom_file = "../../roms/Tetris.gb";
+
+    FileParser file_parser;
+    MemoryMap mem_map;
+    mem_map.load_rom(file_parser.get_buffer_data());
+    CPU cpu(mem_map);
+
+    // Enable Timer Overflow interrupts
+    cpu.set_interrupt_enable_bit(TIMER, true);
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    // Trigger Timer Overflow interrupt
+    cpu.write_io_register(IF, TIMER);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
+    EXPECT_EQ(TIMER, cpu.read_io_register(IF));
+
+    cpu.tick();
+
+    // Current PC should be pushed to stack
+    uint16_t SP = cpu.read_register("SP");
+    EXPECT_EQ((PC >> 8), mem_map.read(SP));
+    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+
+    // Should jump to corresponding interrupt service routine
+    EXPECT_EQ((uint16_t)TIMER_ISR+1, cpu.read_register("PC"));
+    // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
+}
+
+
+TEST(Interrupts, TriggerLCDStatusInterrupt) {
+    uint16_t PC = 0xA000;
+    std::string rom_file = "../../roms/Tetris.gb";
+
+    FileParser file_parser;
+    MemoryMap mem_map;
+    mem_map.load_rom(file_parser.get_buffer_data());
+    CPU cpu(mem_map);
+
+    // Enable LCD Status interrupts
+    cpu.set_interrupt_enable_bit(LCD_STAT, true);
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    // Trigger LCD Status interrupt
+    cpu.write_io_register(IF, LCD_STAT);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(LCD_STAT));
+    EXPECT_EQ(LCD_STAT, cpu.read_io_register(IF));
+
+    cpu.tick();
+
+    // Current PC should be pushed to stack
+    uint16_t SP = cpu.read_register("SP");
+    EXPECT_EQ((PC >> 8), mem_map.read(SP));
+    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+
+    // Should jump to corresponding interrupt service routine
+    EXPECT_EQ((uint16_t)LCD_STAT_ISR+1, cpu.read_register("PC"));
+    // Corresponoding bit in IF register should be cleared
+    EXPECT_FALSE(cpu.get_interrupt_flag_bit(LCD_STAT));
+}
+
+
+TEST(Interrupts, TriggerSerialTransferInterrupt) {
+    uint16_t PC = 0xA000;
+    std::string rom_file = "../../roms/Tetris.gb";
+
+    FileParser file_parser;
+    MemoryMap mem_map;
+    mem_map.load_rom(file_parser.get_buffer_data());
+    CPU cpu(mem_map);
+
+    // Enable Serial Transfer interrupts
+    cpu.set_interrupt_enable_bit(SERIAL, true);
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    // Trigger Serial Transfer interrupt
+    cpu.write_io_register(IF, SERIAL);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(SERIAL));
+    EXPECT_EQ(SERIAL, cpu.read_io_register(IF));
+
+    cpu.tick();
+
+    // Current PC should be pushed to stack
+    uint16_t SP = cpu.read_register("SP");
+    EXPECT_EQ((PC >> 8), mem_map.read(SP));
+    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+
+    // Should jump to corresponding interrupt service routine
+    EXPECT_EQ((uint16_t)SERIAL_ISR+1, cpu.read_register("PC"));
+    // Corresponoding bit in IF register should be cleared
+    EXPECT_FALSE(cpu.get_interrupt_flag_bit(SERIAL));
 }
