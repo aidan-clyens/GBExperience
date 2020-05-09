@@ -13,6 +13,7 @@
 #include "video/tile.h"
 #include "video/sprite.h"
 #include "ui/ui.h"
+#include "debugger/logger.h"
 #include "gameboy.h"
 
 

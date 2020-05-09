@@ -158,7 +158,11 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     uint16_t PC = 0xA000;
     std::string rom_file = "../../roms/Tetris.gb";
 
+    enable_interrupt_logging();
+    enable_cpu_logging();
+
     FileParser file_parser;
+    file_parser.load_rom(rom_file);
     MemoryMap mem_map;
     mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
@@ -174,7 +178,7 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(VBLANK));
     EXPECT_EQ(VBLANK, cpu.read_io_register(IF));
 
-    cpu.tick();
+    cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register("SP");
@@ -182,9 +186,11 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)VBLANK_ISR+1, cpu.read_register("PC"));
-    // Corresponoding bit in IF register should be cleared
+    EXPECT_EQ((uint16_t)VBLANK_ISR, cpu.read_register("PC"));
+    // Corresponding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(VBLANK));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
 }
 
 
@@ -192,7 +198,11 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
     uint16_t PC = 0xA000;
     std::string rom_file = "../../roms/Tetris.gb";
 
+    enable_interrupt_logging();
+    enable_cpu_logging();
+
     FileParser file_parser;
+    file_parser.load_rom(rom_file);
     MemoryMap mem_map;
     mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
@@ -208,7 +218,7 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
     EXPECT_EQ(JOYPAD, cpu.read_io_register(IF));
 
-    cpu.tick();
+    cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register("SP");
@@ -216,9 +226,11 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)JOYPAD_ISR+1, cpu.read_register("PC"));
-    // Corresponoding bit in IF register should be cleared
+    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register("PC"));
+    // Corresponding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
 }
 
 
@@ -226,7 +238,11 @@ TEST(Interrupts, TriggerTimerInterrupt) {
     uint16_t PC = 0xA000;
     std::string rom_file = "../../roms/Tetris.gb";
 
+    enable_interrupt_logging();
+    enable_cpu_logging();
+
     FileParser file_parser;
+    file_parser.load_rom(rom_file);
     MemoryMap mem_map;
     mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
@@ -242,7 +258,7 @@ TEST(Interrupts, TriggerTimerInterrupt) {
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
     EXPECT_EQ(TIMER, cpu.read_io_register(IF));
 
-    cpu.tick();
+    cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register("SP");
@@ -250,9 +266,11 @@ TEST(Interrupts, TriggerTimerInterrupt) {
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)TIMER_ISR+1, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register("PC"));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
 }
 
 
@@ -260,7 +278,11 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
     uint16_t PC = 0xA000;
     std::string rom_file = "../../roms/Tetris.gb";
 
+    enable_interrupt_logging();
+    enable_cpu_logging();
+
     FileParser file_parser;
+    file_parser.load_rom(rom_file);
     MemoryMap mem_map;
     mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
@@ -276,7 +298,7 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(LCD_STAT));
     EXPECT_EQ(LCD_STAT, cpu.read_io_register(IF));
 
-    cpu.tick();
+    cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register("SP");
@@ -284,9 +306,11 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)LCD_STAT_ISR+1, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)LCD_STAT_ISR, cpu.read_register("PC"));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(LCD_STAT));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
 }
 
 
@@ -295,6 +319,7 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
     std::string rom_file = "../../roms/Tetris.gb";
 
     FileParser file_parser;
+    file_parser.load_rom(rom_file);
     MemoryMap mem_map;
     mem_map.load_rom(file_parser.get_buffer_data());
     CPU cpu(mem_map);
@@ -310,7 +335,7 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(SERIAL));
     EXPECT_EQ(SERIAL, cpu.read_io_register(IF));
 
-    cpu.tick();
+    cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register("SP");
@@ -318,7 +343,77 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)SERIAL_ISR+1, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)SERIAL_ISR, cpu.read_register("PC"));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(SERIAL));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
+}
+
+
+TEST(Interrupts, TriggerMultipleInterrupts) {
+    uint16_t PC = 0xA000;
+    std::string rom_file = "../../roms/Tetris.gb";
+    
+    enable_interrupt_logging();
+    enable_cpu_logging();
+
+    FileParser file_parser;
+    file_parser.load_rom(rom_file);
+    MemoryMap mem_map;
+    mem_map.load_rom(file_parser.get_buffer_data());
+    CPU cpu(mem_map);
+
+    // Enable Timer Overflow and Joypad interrupts
+    cpu.set_interrupt_enable_bit(TIMER, true);
+    cpu.set_interrupt_enable_bit(JOYPAD, true);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
+
+    cpu.write_register("PC", PC);
+    EXPECT_EQ(PC, cpu.read_register("PC"));
+
+    // Trigger Timer Overflow and Joypad interrupts
+    cpu.set_interrupt_flag_bit(TIMER, true);
+    cpu.set_interrupt_flag_bit(JOYPAD, true);
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
+    EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
+
+    cpu.handle_interrupts();
+
+    // Current PC should be pushed to stack
+    uint16_t SP = cpu.read_register("SP");
+    EXPECT_EQ((PC >> 8), mem_map.read(SP));
+    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+
+    // Should handle the Timer Overflow interrupt first
+    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register("PC"));
+    // Corresponding bit in IF register should be cleared
+    EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
+
+    while (!cpu.interrupts_enabled()) {
+        cpu.tick();
+    }
+
+    // Interrupts should be reenabled
+    EXPECT_TRUE(cpu.interrupts_enabled());
+
+    // Get current PC
+    PC = cpu.read_register("PC");
+
+    cpu.handle_interrupts();
+
+    // Current PC should be pushed to stack
+    SP = cpu.read_register("SP");
+    EXPECT_EQ((PC >> 8), mem_map.read(SP));
+    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+
+    // Should handle the Joypad interrupt next
+    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register("PC"));
+    // Corresponoding bit in IF register should be cleared
+    EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
+    // Interrupts should be disabled until reenabled at the end of the ISR
+    EXPECT_FALSE(cpu.interrupts_enabled());
 }
