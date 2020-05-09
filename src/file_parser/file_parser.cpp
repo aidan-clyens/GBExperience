@@ -124,6 +124,33 @@ std::string FileParser::get_cartridge_type_string() const {
     }
 }
 
+int FileParser::get_rom_size_banks() const {
+    uint8_t rom_size = this->get_byte(0x148);
+
+    switch (rom_size) {
+        case 0x0:
+            return 2;
+        case 0x1:
+            return 4;
+        case 0x2:
+            return 8;
+        case 0x3:
+            return 16;
+        case 0x4:
+            return 32;
+        case 0x5:
+            return 64;
+        case 0x6:
+            return 128;
+        case 0x52:
+            return 72;
+        case 0x53:
+            return 80;
+        case 0x54:
+            return 96;
+    }
+}
+
 bool FileParser::is_gb_color() const {
     return this->get_byte(0x143) == 0x80;
 }
