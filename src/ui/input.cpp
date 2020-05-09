@@ -1,7 +1,8 @@
 #include "input.h"
 
 
-Input::Input():
+Input::Input(MemoryMap &mem_map):
+m_memory_map(mem_map),
 m_right(false),
 m_left(false),
 m_up(false),
