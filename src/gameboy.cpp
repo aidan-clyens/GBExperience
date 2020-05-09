@@ -2,9 +2,9 @@
 
 
 GameBoy::GameBoy():
+m_ui(m_memory_map),
 m_cpu(m_memory_map),
 m_video(m_memory_map, m_ui),
-m_input(m_memory_map),
 m_rom_name("")
 {
 

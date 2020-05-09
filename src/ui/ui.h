@@ -5,6 +5,8 @@
 
 #include "../video/framebuffer.h"
 #include "../video/definitions.h"
+#include "../memory/memory_map.h"
+#include "input.h"
 
 
 const int PIXEL_SIZE = 4;
@@ -12,7 +14,7 @@ const int PIXEL_SIZE = 4;
 
 class UI {
     public:
-        UI();
+        UI(MemoryMap &);
         virtual ~UI();
 
         void init_display(const std::string &);
@@ -33,6 +35,8 @@ class UI {
         sf::Image m_image;
         sf::Texture m_texture;
         sf::Sprite m_sprite;
+
+        Input m_input;
 
         bool m_display_open;
         bool m_display_initialized;
