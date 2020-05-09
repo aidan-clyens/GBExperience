@@ -224,6 +224,20 @@ bool Video::get_coincidence_flag() {
     return ((stat >> 2) & 0x01) == 0x01;
 }
 
+void Video::set_coincidence_flag(bool set) {
+    // Set bit 2 of the LCDC STAT register
+    uint8_t stat = this->read_io_register(STAT);
+
+    if (set) {
+        stat |= 0x04;   // 0000 0100
+    }
+    else {
+        stat &= 0xFB;   // 1111 1011
+    }
+
+    this->write_io_register(STAT, stat);
+}
+
 bool Video::coincidence_interrupt_enabled() {
     // Check bit 6 of the LCDC STAT register
     uint8_t stat = this->read_io_register(STAT);
