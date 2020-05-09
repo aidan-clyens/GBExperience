@@ -6,7 +6,7 @@
 
 
 int main(int argc, char** argv) {
-    std::string rom_file = "roms/Tetris.gb";
+    std::string rom_file = "roms/DrMario.gb";
     
     if (argc > 1) {
         rom_file = argv[1];
