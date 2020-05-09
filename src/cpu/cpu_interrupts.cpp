@@ -5,9 +5,7 @@ void CPU::handle_interrupts() {
     if (m_interrupts_enabled) {
         uint8_t fired_interrupts = this->read_io_register(IE) & this->read_io_register(IF);
 
-        
         log_interrupts("Interrupt fired: %X", fired_interrupts);
-        
 
         // An interrupt has been generated
         if (fired_interrupts > 0)  {
@@ -52,14 +50,12 @@ bool CPU::handle_interrupt(InterruptFlag_t flag, InterruptVector_t vector) {
         return false;
     }
 
-    
     log_interrupts("Handling interrupt: %d", flag);
-    
 
     // Clear corresponding Interrupt Flag bit
     this->set_interrupt_flag_bit(flag, false);
     // Set PC to corresponding vector for ISR
-    this->write_register("PC", (uint16_t)vector);
+    this->jump((uint16_t)vector);
     // Disable interrupts
     m_interrupts_enabled = false;
 
