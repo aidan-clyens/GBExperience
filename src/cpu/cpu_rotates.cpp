@@ -25,14 +25,14 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
     // RLA
     if (use_carry)  {
         bool old_bit_7 = this->read_flag_register(CARRY_FLAG);
-        #ifdef CPU_DEBUG
+        
         if (reg == "A") {
             log_cpu("RLA");
         }
         else {
             log_cpu("RL %s", reg);
         }
-        #endif
+        
 
         if (old_bit_7) {
             result |= 0x01;
@@ -40,7 +40,7 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
     }
     // RLCA
     else {
-        #ifdef CPU_DEBUG
+        
         if (reg == "A") {
             log_cpu("RLCA");
         }
@@ -50,7 +50,7 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
         else {
             log_cpu("RLC %s", reg);
         }
-        #endif
+        
 
         if (bit_7) {
             result |= 0x01;
@@ -93,7 +93,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
     if (use_carry)  {
         bool old_bit_0 = this->read_flag_register(CARRY_FLAG);
 
-        #ifdef CPU_DEBUG
+        
         if (reg == "A") {
             log_cpu("RRA");
         }
@@ -103,7 +103,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
         else {
             log_cpu("RR %s", reg);
         }
-        #endif
+        
 
         if (old_bit_0) {
             result |= 0x80;
@@ -111,7 +111,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
     }
     // RRCA
     else {
-        #ifdef CPU_DEBUG
+        
         if (reg == "A") {
             log_cpu("RRCA" );
         }
@@ -121,7 +121,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
         else {
             log_cpu("RRC %s", reg);
         }
-        #endif
+        
 
         if (bit_0) {
             result |= 0x80;
@@ -151,9 +151,9 @@ void CPU::shift_left(const std::string &reg) {
     uint8_t result = val << 1;
     bool bit_7 = (val & 0x80) == 0x80;
 
-    #ifdef CPU_DEBUG
+    
     log_cpu("SLA %s", reg);
-    #endif
+    
 
     // Set flags
     this->set_flag_register(ZERO_FLAG, (result == 0));
@@ -189,14 +189,14 @@ void CPU::shift_right(const std::string &reg, bool keep_msb) {
             result |= 0x80;
         }
 
-        #ifdef CPU_DEBUG
+        
         log_cpu("SRA %s", reg);
-        #endif
+        
     }
     else {
-        #ifdef CPU_DEBUG
+        
         log_cpu("SRL %s", reg);
-        #endif
+        
     }
 
     // Set flags

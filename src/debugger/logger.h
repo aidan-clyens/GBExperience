@@ -5,13 +5,6 @@
 #include <string>
 
 
-#define CPU_DEBUG
-#define INTERRUPT_DEBUG
-#define IO_DEBUG
-#define VIDEO_DEBUG
-#define MEMORY_DEBUG
-
-
 typedef enum LogType {
     LOG_CPU,
     LOG_INTERRUPTS,

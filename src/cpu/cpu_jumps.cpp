@@ -18,9 +18,9 @@ void CPU::jump_conditional(uint16_t value, CPUFlag_t flag, bool set) {
 void CPU::jump_hl() {
     uint16_t value = this->read_register("HL");
 
-    #ifdef CPU_DEBUG
+    
     log_cpu("JP (HL)");
-    #endif
+    
 
     this->write_register("PC", value);
 }
