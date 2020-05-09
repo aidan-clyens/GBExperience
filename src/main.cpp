@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "debugger/logger.h"
 #include "display/display.h"
 #include "gameboy.h"
 
