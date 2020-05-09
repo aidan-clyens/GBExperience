@@ -1,9 +1,9 @@
 #include "gameboy.h"
 
 
-GameBoy::GameBoy(Display &display):
+GameBoy::GameBoy(UI &ui):
 m_cpu(m_memory_map),
-m_video(m_memory_map, display),
+m_video(m_memory_map, ui),
 m_rom_name("")
 {
 

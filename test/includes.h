@@ -12,7 +12,7 @@
 #include "video/video.h"
 #include "video/tile.h"
 #include "video/sprite.h"
-#include "display/display.h"
+#include "ui/ui.h"
 #include "gameboy.h"
 
 

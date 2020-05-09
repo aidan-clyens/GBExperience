@@ -18,7 +18,7 @@
 #include "sprite_tests.h"
 #include "framebuffer_tests.h"
 #include "integration_tests.h"
-#include "display_tests.h"
+#include "ui_tests.h"
 
 
 int main(int argc, char** argv) {

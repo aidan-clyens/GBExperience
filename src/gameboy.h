@@ -6,12 +6,12 @@
 #include "memory/memory_map.h"
 #include "file_parser/file_parser.h"
 #include "video/video.h"
-#include "display/display.h"
+#include "ui/ui.h"
 
 
 class GameBoy {
     public:
-        GameBoy(Display &);
+        GameBoy(UI &);
         virtual ~GameBoy();
 
         void tick();

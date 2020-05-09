@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "display/display.h"
+#include "ui/ui.h"
 #include "file_parser/file_parser.h"
 #include "memory/memory_map.h"
 #include "memory/memory.h"

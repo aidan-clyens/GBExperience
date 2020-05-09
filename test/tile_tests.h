@@ -208,9 +208,9 @@ TEST(Tile, DrawTileHorizontal) {
     Tile tile(starting_address, memory_map);
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
-    Display display;
-    Video video(memory_map, display);
-    display.init_display("TEST");
+    UI ui;
+    Video video(memory_map, ui);
+    ui.init_ui("TEST");
 
     for (int y = 0; y < TILE_HEIGHT; y++) {
         for (int x = 0; x < TILE_WIDTH; x++) {
@@ -220,7 +220,7 @@ TEST(Tile, DrawTileHorizontal) {
     }
 
     for (int i = 0; i < DISPLAY_TIME; i++) {
-        display.render(buffer);
+        ui.render(buffer);
     }
 }
 
@@ -240,9 +240,9 @@ TEST(Tile, DrawTileVertical) {
     Tile tile(starting_address, memory_map);
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
-    Display display;
-    Video video(memory_map, display);
-    display.init_display("TEST");
+    UI ui;
+    Video video(memory_map, ui);
+    ui.init_ui("TEST");
 
     for (int y = 0; y < TILE_HEIGHT; y++) {
         for (int x = 0; x < TILE_WIDTH; x++) {
@@ -252,6 +252,6 @@ TEST(Tile, DrawTileVertical) {
     }
 
     for (int i = 0; i < DISPLAY_TIME; i++) {
-        display.render(buffer);
+        ui.render(buffer);
     }
 }

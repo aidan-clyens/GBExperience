@@ -1,9 +1,9 @@
 #include "video.h"
 
 
-Video::Video(MemoryMap &mem_map, Display &display):
+Video::Video(MemoryMap &mem_map, UI &ui):
 m_memory_map(mem_map),
-m_display(display),
+m_ui(ui),
 m_cycle_counter(0),
 m_buffer(MAP_SIZE, MAP_SIZE)
 {
@@ -323,7 +323,7 @@ Palette Video::get_sprite_palette_1() {
 
 /******   Draw   ******/
 void Video::draw() {
-    m_display.render(m_buffer);
+    m_ui.render(m_buffer);
 }
 
 void Video::write_scanline(uint8_t line) {

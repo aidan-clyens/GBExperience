@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../memory/memory_map.h"
-#include "../display/display.h"
+#include "../ui/ui.h"
 #include "../debugger/logger.h"
 #include "definitions.h"
 #include "tile.h"
@@ -10,7 +10,7 @@
 
 class Video {
     public:
-        Video(MemoryMap &, Display &);
+        Video(MemoryMap &, UI &);
         virtual ~Video();
 
         void tick(int);
@@ -64,7 +64,7 @@ class Video {
 
     private:
         MemoryMap &m_memory_map;
-        Display &m_display;
+        UI &m_ui;
         int m_cycle_counter;
         int m_lines_drawn;
 
