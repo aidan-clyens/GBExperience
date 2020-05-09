@@ -1,9 +1,10 @@
 #include "gameboy.h"
 
 
-GameBoy::GameBoy(UI &ui):
+GameBoy::GameBoy():
 m_cpu(m_memory_map),
-m_video(m_memory_map, ui),
+m_video(m_memory_map, m_ui),
+m_input(m_memory_map),
 m_rom_name("")
 {
 
@@ -44,10 +45,14 @@ void GameBoy::load_rom(const std::string &rom_file) {
     }
 
     m_memory_map.load_rom(file_parser.get_buffer_data());
-    m_ui.init_ui(m_rom_name);
+    m_ui.init_display(m_rom_name);
 }
 
 
 std::string GameBoy::get_rom_name() const {
     return m_rom_name;
+}
+
+bool GameBoy::is_display_open() const {
+    return m_ui.is_display_enabled();
 }
