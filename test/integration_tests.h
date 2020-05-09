@@ -6,8 +6,8 @@ TEST(Integration, WriteIOFromMemoryMap) {
     
     MemoryMap memory_map;
     CPU cpu(memory_map);
-    Display display;
-    Video video(memory_map, display);
+    UI ui;
+    Video video(memory_map, ui);
 
     memory_map.write(BGP, bgp);
     EXPECT_EQ(bgp, memory_map.read(BGP));
@@ -21,8 +21,8 @@ TEST(Integration, WriteIOFromCPU) {
     
     MemoryMap memory_map;
     CPU cpu(memory_map);
-    Display display;
-    Video video(memory_map, display);
+    UI ui;
+    Video video(memory_map, ui);
 
     cpu.write_io_register(BGP, bgp);
     EXPECT_EQ(bgp, memory_map.read(BGP));
@@ -36,8 +36,8 @@ TEST(Integration, WriteIOFromVideo) {
     
     MemoryMap memory_map;
     CPU cpu(memory_map);
-    Display display;
-    Video video(memory_map, display);
+    UI ui;
+    Video video(memory_map, ui);
 
     video.write_io_register(BGP, bgp);
     EXPECT_EQ(bgp, memory_map.read(BGP));
