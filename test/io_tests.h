@@ -16,6 +16,16 @@ TEST(IO, WriteIO) {
     EXPECT_EQ(data, registers.read(DIV));
 }
 
+TEST(IO, WriteLY) {
+    uint8_t data = 0xAB;
+
+    IO registers;
+
+    // LY should reset when written to
+    EXPECT_NO_THROW(registers.write(LY, data));
+    EXPECT_EQ(0, registers.read(LY));
+}
+
 TEST(IO, IncrementLY) {
     IO registers;
 
