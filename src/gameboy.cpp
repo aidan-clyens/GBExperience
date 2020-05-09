@@ -17,7 +17,10 @@ GameBoy::~GameBoy() {
 
 void GameBoy::tick() {
     int cycle_count = m_cpu.tick();
-    m_video.tick(cycle_count);
+
+    if (!m_cpu.is_stopped()) {
+        m_video.tick(cycle_count);
+    }
 }
 
 

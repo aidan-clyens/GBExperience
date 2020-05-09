@@ -69,6 +69,7 @@ class CPU {
         void set_interrupt_enable_bit(InterruptFlag_t, bool);
         void set_interrupt_flag_bit(InterruptFlag_t, bool);
 
+        bool is_stopped() const;
         bool is_running() const;
         bool interrupts_enabled() const;
 
