@@ -78,17 +78,29 @@ void Input::set_input() {
         if (m_right) {
             p1 &= ~P10;
         }
+        else {
+            p1 |= P10;
+        }
 
         if (m_left) {
             p1 &= ~P11;
+        }
+        else {
+            p1 |= P11;
         }
 
         if (m_up) {
             p1 &= ~P12;
         }
+        else {
+            p1 |= P12;
+        }
 
         if (m_down) {
             p1 &= ~P13;
+        }
+        else {
+            p1 |= P13;
         }
     }
 
@@ -96,17 +108,29 @@ void Input::set_input() {
         if (m_a) {
             p1 &= ~P10;
         }
+        else {
+            p1 |= P10;
+        }
 
         if (m_b) {
             p1 &= ~P11;
+        }
+        else {
+            p1 |= P11;
         }
 
         if (m_select) {
             p1 &= ~P12;
         }
+        else {
+            p1 |= P12;
+        }
 
         if (m_start) {
             p1 &= ~P13;
+        }
+        else {
+            p1 |= P13;
         }
     }
 
