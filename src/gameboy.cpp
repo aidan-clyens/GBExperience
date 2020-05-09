@@ -44,6 +44,7 @@ void GameBoy::load_rom(const std::string &rom_file) {
     }
 
     m_memory_map.load_rom(file_parser.get_buffer_data());
+    m_ui.init_ui(m_rom_name);
 }
 
 

@@ -3,7 +3,7 @@
 
 TEST(UI, Initui) {
     UI ui;
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
 
@@ -15,7 +15,7 @@ TEST(UI, Initui) {
 
 TEST(UI, SetPixel) {
     UI ui;
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
     buffer.set_pixel(20, 20, DARK_GRAY);
@@ -28,7 +28,7 @@ TEST(UI, SetPixel) {
 
 TEST(UI, SetPixelAllPixels) {
     UI ui;
-    ui.init_ui("TEST");
+    ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
     for (int y = 0; y < LCD_HEIGHT; y++) {
