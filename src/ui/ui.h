@@ -24,6 +24,8 @@ class UI {
         void draw_pixels(FrameBuffer &);
         void set_pixel(int, int, sf::Color);
 
+        void set_key_pressed(sf::Keyboard::Key, bool);
+
         sf::Color get_pixel_colour(Colour_t);
 
         bool is_display_enabled() const;
