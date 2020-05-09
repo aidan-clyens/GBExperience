@@ -54,6 +54,7 @@ TEST(FileParser, GetRAMSize) {
 
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     EXPECT_EQ(ram_size, file_parser.get_byte(0x149));
+    EXPECT_EQ(0, file_parser.get_ram_size_banks());
 }
 
 TEST(FileParser, GetCartridgeType) {
