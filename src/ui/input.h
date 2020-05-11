@@ -1,7 +1,9 @@
 #pragma once
 
 
-#include "../memory/memory_map.h"
+#include <cstdint>
+
+#include "../debugger/logger.h"
 
 
 typedef enum Buttons {
@@ -26,28 +28,28 @@ typedef enum JoypadPorts {
 } JoypadPorts_t;
 
 
+typedef struct ButtonsPressed {
+    bool left_pressed = false;
+    bool right_pressed = false;
+    bool up_pressed = false;
+    bool down_pressed = false;
+    bool a_pressed = false;
+    bool b_pressed = false;
+    bool select_pressed = false;
+    bool start_pressed = false;
+} ButtonsPressed_t;
+
+
 class Input {
     public:
-        Input(MemoryMap &);
+        Input();
         virtual ~Input();
 
         void set_button_pressed(Buttons_t, bool);
         bool get_button_pressed(Buttons_t) const;
 
-        void set_input();
-
-        bool dpad_toggled() const;
-        bool buttons_toggled() const;
+        ButtonsPressed_t get_input();
 
     private:
-        MemoryMap &m_memory_map;
-
-        bool m_right;
-        bool m_left;
-        bool m_up;
-        bool m_down;
-        bool m_a;
-        bool m_b;
-        bool m_select;
-        bool m_start;
+        ButtonsPressed_t m_buttons_pressed;
 };
