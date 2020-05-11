@@ -126,3 +126,19 @@ TEST(IO, SetButtonPressedButtons) {
     EXPECT_TRUE(registers.buttons_toggled());
     EXPECT_EQ(result, registers.get_input());
 }
+
+
+TEST(IO, ReadP1) {
+    uint8_t result = 0xDD;  // 1101 1101
+    uint8_t p1 = 0xD0;      // 1101 0000
+
+    IO registers;
+    registers.write(P1, p1);
+
+    registers.set_button_pressed(B, true);
+    registers.set_button_pressed(RIGHT, true);
+    EXPECT_TRUE(registers.buttons_toggled());
+    EXPECT_EQ((result & 0xF), registers.get_input());
+
+    EXPECT_EQ(result, registers.read(P1));
+}
