@@ -64,6 +64,7 @@ class IO {
 
         void increment_counter(IORegisters_t);
 
+        void set_button_pressed(Buttons_t, bool);
         uint8_t get_input();
 
         bool dpad_toggled() const;

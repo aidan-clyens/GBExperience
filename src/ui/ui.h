@@ -6,7 +6,6 @@
 #include "../video/framebuffer.h"
 #include "../video/definitions.h"
 #include "../memory/memory_map.h"
-#include "input.h"
 
 
 const int PIXEL_SIZE = 4;
@@ -37,8 +36,6 @@ class UI {
         sf::Image m_image;
         sf::Texture m_texture;
         sf::Sprite m_sprite;
-
-        Input m_input;
 
         bool m_display_open;
         bool m_display_initialized;
