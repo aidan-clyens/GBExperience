@@ -55,7 +55,7 @@ bool Input::get_button_pressed(Buttons_t button) const {
         case SELECT:
             return m_buttons_pressed.select_pressed;
         case START:
-            return m_buttons_pressed.select_pressed;
+            return m_buttons_pressed.start_pressed;
     }
 }
 
