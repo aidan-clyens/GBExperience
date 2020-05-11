@@ -13,11 +13,11 @@ int main(int argc, char** argv) {
         rom_file = argv[1];
     }
 
-    std::unique_ptr<GameBoy> gb = std::make_unique<GameBoy>();
-    gb->load_rom(rom_file);
+    GameBoy gb;
+    gb.load_rom(rom_file);
 
-    while (gb->is_display_open()) {
-        gb->tick();
+    while (gb.is_display_open()) {
+        gb.tick();
     }
 
     return 0;
