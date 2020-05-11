@@ -5,7 +5,7 @@
 #include <exception>
 
 #include "../debugger/logger.h"
-#include "../ui/input.h"
+#include "input.h"
 
 
 typedef enum IORegisters {

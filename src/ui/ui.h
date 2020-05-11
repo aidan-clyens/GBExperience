@@ -37,6 +37,8 @@ class UI {
         sf::Texture m_texture;
         sf::Sprite m_sprite;
 
+        MemoryMap &m_memory_map;
+
         bool m_display_open;
         bool m_display_initialized;
 };

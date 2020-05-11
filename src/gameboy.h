@@ -7,7 +7,6 @@
 #include "file_parser/file_parser.h"
 #include "video/video.h"
 #include "ui/ui.h"
-#include "ui/input.h"
 
 
 class GameBoy {

@@ -39,6 +39,8 @@ class MemoryMap {
         void set_interrupt_enable_bit(InterruptFlag_t, bool);
         void set_interrupt_flag_bit(InterruptFlag_t, bool);
 
+        void set_button_pressed(Buttons_t, bool);
+
         void increment_io_counter(IORegisters_t);
 
     private:
