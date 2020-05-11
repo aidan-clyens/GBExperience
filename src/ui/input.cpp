@@ -72,69 +72,32 @@ bool Input::get_button_pressed(Buttons_t button) const {
 }
 
 void Input::set_input() {
-    uint8_t p1 = m_memory_map.read(P1);
+    uint8_t input = 0xF;
 
-    if (this->dpad_toggled()) {
-        if (m_right) {
-            p1 &= ~P10;
-        }
-        else {
-            p1 |= P10;
-        }
-
-        if (m_left) {
-            p1 &= ~P11;
-        }
-        else {
-            p1 |= P11;
-        }
-
-        if (m_up) {
-            p1 &= ~P12;
-        }
-        else {
-            p1 |= P12;
-        }
-
-        if (m_down) {
-            p1 &= ~P13;
-        }
-        else {
-            p1 |= P13;
-        }
+    if (m_right || m_a) {
+        log_io("Setting P10");
+        input &= ~P10;
+    }
+    
+    if (m_left || m_b) {
+        log_io("Setting P11");
+        input &= ~P11;
     }
 
-    if (this->buttons_toggled()) {
-        if (m_a) {
-            p1 &= ~P10;
-        }
-        else {
-            p1 |= P10;
-        }
-
-        if (m_b) {
-            p1 &= ~P11;
-        }
-        else {
-            p1 |= P11;
-        }
-
-        if (m_select) {
-            p1 &= ~P12;
-        }
-        else {
-            p1 |= P12;
-        }
-
-        if (m_start) {
-            p1 &= ~P13;
-        }
-        else {
-            p1 |= P13;
-        }
+    if (m_up || m_select) {
+        log_io("Setting P12");
+        input &= ~P12;
     }
 
-    m_memory_map.set_input(p1);
+    if (m_down || m_start) {
+        log_io("Setting P13");
+        input &= ~P13;
+    }
+
+    log_io("button: %X", input);
+
+    m_memory_map.set_input(input);
+    m_memory_map.set_interrupt_flag_bit(JOYPAD, true);
 }
 
 bool Input::dpad_toggled() const {
