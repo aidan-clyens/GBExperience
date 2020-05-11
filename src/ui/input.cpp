@@ -1,17 +1,7 @@
 #include "input.h"
 
 
-Input::Input(MemoryMap &mem_map):
-m_memory_map(mem_map),
-m_right(false),
-m_left(false),
-m_up(false),
-m_down(false),
-m_a(false),
-m_b(false),
-m_select(false),
-m_start(false)
-{
+Input::Input() {
 
 }
 
@@ -22,94 +12,54 @@ Input::~Input() {
 void Input::set_button_pressed(Buttons_t button, bool pressed) {
     switch (button) {
         case RIGHT:
-            m_right = pressed;
+            m_buttons_pressed.right_pressed = pressed;
             break;
         case LEFT:
-            m_left = pressed;
+            m_buttons_pressed.left_pressed = pressed;
             break;
         case UP:
-            m_up = pressed;
+            m_buttons_pressed.up_pressed = pressed;
             break;
         case DOWN:
-            m_down = pressed;
+            m_buttons_pressed.down_pressed = pressed;
             break;
         case A:
-            m_a = pressed;
+            m_buttons_pressed.a_pressed = pressed;
             break;
         case B:
-            m_b = pressed;
+            m_buttons_pressed.b_pressed = pressed;
             break;
         case SELECT:
-            m_select = pressed;
+            m_buttons_pressed.select_pressed = pressed;
             break;
         case START:
-            m_start = pressed;
+            m_buttons_pressed.start_pressed = pressed;
             break;
     }
-
-    this->set_input();
 }
 
 bool Input::get_button_pressed(Buttons_t button) const {
     switch (button) {
         case RIGHT:
-            return m_right;
+            return m_buttons_pressed.right_pressed;
         case LEFT:
-            return m_left;
+            return m_buttons_pressed.left_pressed;
         case UP:
-            return m_up;
+            return m_buttons_pressed.up_pressed;
         case DOWN:
-            return m_down;
+            return m_buttons_pressed.down_pressed;
         case A:
-            return m_a;
+            return m_buttons_pressed.a_pressed;
         case B:
-            return m_b;
+            return m_buttons_pressed.b_pressed;
         case SELECT:
-            return m_select;
+            return m_buttons_pressed.select_pressed;
         case START:
-            return m_select;
+            return m_buttons_pressed.select_pressed;
     }
 }
 
-void Input::set_input() {
-    uint8_t input = 0xF;
-
-    if (m_right || m_a) {
-        log_io("Setting P10");
-        input &= ~P10;
-    }
-    
-    if (m_left || m_b) {
-        log_io("Setting P11");
-        input &= ~P11;
-    }
-
-    if (m_up || m_select) {
-        log_io("Setting P12");
-        input &= ~P12;
-    }
-
-    if (m_down || m_start) {
-        log_io("Setting P13");
-        input &= ~P13;
-    }
-
-    log_io("button: %X", input);
-
-    m_memory_map.set_input(input);
-    m_memory_map.set_interrupt_flag_bit(JOYPAD, true);
+ButtonsPressed_t Input::get_input() {
+    return m_buttons_pressed;
 }
 
-bool Input::dpad_toggled() const {
-    uint8_t p1 = m_memory_map.read(P1);
-
-    // DPAD is toggled if P14 is set low
-    return (p1 & P14) == 0;
-}
-
-bool Input::buttons_toggled() const {
-    uint8_t p1 = m_memory_map.read(P1);
-
-    // Buttons are toggled if P15 is set low
-    return (p1 & P15) == 0;
-}
