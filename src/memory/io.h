@@ -5,6 +5,7 @@
 #include <exception>
 
 #include "../debugger/logger.h"
+#include "../ui/input.h"
 
 
 typedef enum IORegisters {
@@ -61,10 +62,14 @@ class IO {
         uint8_t read(IORegisters_t);
         uint16_t write(IORegisters_t, uint8_t);
 
-        void set_input(uint8_t);
         void increment_counter(IORegisters_t);
 
+        bool dpad_toggled() const;
+        bool buttons_toggled() const;
+
     private:
+        Input m_input;
+
         uint8_t m_P1;
         uint8_t m_DIV;
         uint8_t m_TIMA;

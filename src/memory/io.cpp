@@ -36,6 +36,7 @@ uint8_t IO::read(IORegisters_t address) {
 
     switch (address) {
         case P1:
+            
             log_io("IO: Reading %X from P1", m_P1);
 
             return m_P1;
@@ -161,9 +162,8 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     switch (address) {
         case P1: {
             // Can only write to bits 4 and 5 of P1
-            uint8_t buttons = m_P1 & 0xF;
-            m_P1 = data | buttons;
             log_io("IO: Writing %X to P1", data);
+            m_P1 = data;
             break;
         }
         case SB:
@@ -297,9 +297,14 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     return address;
 }
 
-void IO::set_input(uint8_t data) {
-    m_P1 |= data;
+bool IO::dpad_toggled() const {
+    return (m_P1 & P14) == 0x0;
 }
+
+bool IO::buttons_toggled() const {
+    return (m_P1 & P15) == 0x0;
+}
+
 
 void IO::increment_counter(IORegisters_t reg) {
     switch (reg) {
