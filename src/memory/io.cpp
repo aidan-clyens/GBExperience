@@ -35,11 +35,12 @@ uint8_t IO::read(IORegisters_t address) {
     }
 
     switch (address) {
-        case P1:
-            
-            log_io("IO: Reading %X from P1", m_P1);
+        case P1: {
+            uint8_t buttons = this->get_input();
+            log_io("IO: Reading %X from P1", m_P1 | buttons);
 
-            return m_P1;
+            return m_P1 | buttons;
+        }
         case SB:
             std::cerr << "SB not implemented" << std::endl;
 
@@ -295,6 +296,50 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     }
 
     return address;
+}
+
+uint8_t IO::get_input() {
+    uint8_t input = 0xF;
+
+    if (this->dpad_toggled()) {
+        if (m_input.get_button_pressed(RIGHT)) {
+            input &= ~P10;
+        }
+
+        if (m_input.get_button_pressed(LEFT)) {
+            input &= ~P11;
+        }
+
+        if (m_input.get_button_pressed(UP)) {
+            input &= ~P12;
+        }
+
+        if (m_input.get_button_pressed(DOWN)) {
+            input &= ~P13;
+        }
+    }
+
+    if (this->buttons_toggled()) {
+        if (m_input.get_button_pressed(A)) {
+            input &= ~P10;
+        }
+
+        if (m_input.get_button_pressed(B)) {
+            input &= ~P11;
+        }
+
+        if (m_input.get_button_pressed(SELECT)) {
+            input &= ~P12;
+        }
+
+        if (m_input.get_button_pressed(START)) {
+            input &= ~P13;
+        }
+    }
+
+    log_io("IO: input = %X", input);
+
+    return input;
 }
 
 bool IO::dpad_toggled() const {
