@@ -298,6 +298,10 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     return address;
 }
 
+void IO::set_button_pressed(Buttons_t button, bool pressed) {
+    m_input.set_button_pressed(button, pressed);
+}
+
 uint8_t IO::get_input() {
     uint8_t input = 0xF;
 

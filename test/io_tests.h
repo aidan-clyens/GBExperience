@@ -59,7 +59,7 @@ TEST(IO, IncrementInvalidRegister) {
 
 
 TEST(IO, GetDPADToggled) {
-    uint8_t p1 = 0xEF;  // 1110 1111
+    uint8_t p1 = 0xE0;  // 1110 0000
 
     IO registers;
     registers.write(P1, p1);
@@ -70,11 +70,59 @@ TEST(IO, GetDPADToggled) {
 
 
 TEST(IO, GetButtonsToggled) {
-    uint8_t p1 = 0xDF;  // 1101 1111
+    uint8_t p1 = 0xD0;  // 1101 0000
 
     IO registers;
     registers.write(P1, p1);
 
     EXPECT_FALSE(registers.dpad_toggled());
     EXPECT_TRUE(registers.buttons_toggled());
+}
+
+
+TEST(IO, SetButtonPressedDefault) {
+    uint8_t result = 0xF;   // 1111
+
+    IO registers;
+
+    EXPECT_EQ(result, registers.get_input());
+}
+
+
+TEST(IO, SetButtonPressedNoToggle) {
+    uint8_t result = 0xF;   // 1111
+
+    IO registers;
+
+    registers.set_button_pressed(RIGHT, true);
+
+    EXPECT_EQ(result, registers.get_input());
+}
+
+
+TEST(IO, SetButtonPressedDPAD) {
+    uint8_t result = 0xE;   // 1110
+    uint8_t p1 = 0xE0;      // 1110 0000
+
+    IO registers;
+    registers.write(P1, p1);
+
+    registers.set_button_pressed(B, true);
+    registers.set_button_pressed(RIGHT, true);
+    EXPECT_TRUE(registers.dpad_toggled());
+    EXPECT_EQ(result, registers.get_input());
+}
+
+
+TEST(IO, SetButtonPressedButtons) {
+    uint8_t result = 0xD;   // 1101
+    uint8_t p1 = 0xD0;      // 1101 0000
+
+    IO registers;
+    registers.write(P1, p1);
+
+    registers.set_button_pressed(B, true);
+    registers.set_button_pressed(RIGHT, true);
+    EXPECT_TRUE(registers.buttons_toggled());
+    EXPECT_EQ(result, registers.get_input());
 }
