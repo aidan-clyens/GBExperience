@@ -6,8 +6,28 @@ This emulator currently only supports original GameBoy cartridges which use ROM 
 
 - Examples of games that are supported are Tetris and Dr. Mario.
 
-## Building
+## Getting Started
 - cmake is required to build this project
+
+### First Time
+1. Initialize repo
+```
+git clone git@github.com:aidan-clyens/GameBoyEmu.git
+cd GameBoyEmu
+git submodule update --init
+```
+2. Initialize cmake project
+```
+mkdir build
+cd build
+cmake ..
+```
+
+### Building
+```
+cd build
+make
+```
 
 ## Author
 ***REMOVED***
