@@ -56,3 +56,25 @@ TEST(IO, IncrementInvalidRegister) {
 
     EXPECT_ANY_THROW(registers.increment_counter(P1));
 }
+
+
+TEST(IO, GetDPADToggled) {
+    uint8_t p1 = 0xEF;  // 1110 1111
+
+    IO registers;
+    registers.write(P1, p1);
+
+    EXPECT_TRUE(registers.dpad_toggled());
+    EXPECT_FALSE(registers.buttons_toggled());
+}
+
+
+TEST(IO, GetButtonsToggled) {
+    uint8_t p1 = 0xDF;  // 1101 1111
+
+    IO registers;
+    registers.write(P1, p1);
+
+    EXPECT_FALSE(registers.dpad_toggled());
+    EXPECT_TRUE(registers.buttons_toggled());
+}
