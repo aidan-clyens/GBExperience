@@ -223,6 +223,10 @@ void MemoryMap::set_interrupt_flag_bit(InterruptFlag_t flag, bool set) {
     this->write(IF, value);
 }
 
+void MemoryMap::set_button_pressed(Buttons_t button, bool pressed) {
+    m_io.set_button_pressed(button, pressed);
+}
+
 void MemoryMap::increment_io_counter(IORegisters_t reg) {
     m_io.increment_counter(reg);
 }
