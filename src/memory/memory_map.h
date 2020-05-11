@@ -39,7 +39,6 @@ class MemoryMap {
         void set_interrupt_enable_bit(InterruptFlag_t, bool);
         void set_interrupt_flag_bit(InterruptFlag_t, bool);
 
-        void set_input(uint8_t);
         void increment_io_counter(IORegisters_t);
 
     private:
