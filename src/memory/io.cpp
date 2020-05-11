@@ -161,25 +161,9 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
     switch (address) {
         case P1: {
             // Can only write to bits 4 and 5 of P1
-            bool bit4 = (data >> 4) & 0x1 == 1;
-            bool bit5 = (data >> 5) & 0x1 == 1;
-
-            if (bit4) {
-                m_P1 |= 0x10;   // 0001 0000
-            }
-            else {
-                m_P1 &= 0xEF;   // 1110 1111
-            }
-
-            if (bit5) {
-                m_P1 |= 0x20;   // 0010 0000
-            }
-            else {
-                m_P1 &= 0xDF;   // 1101 1111
-            }
-
-            log_io("IO: Writing %X to P1", m_P1);
-
+            uint8_t buttons = m_P1 & 0xF;
+            m_P1 = data | buttons;
+            log_io("IO: Writing %X to P1", data);
             break;
         }
         case SB:
@@ -314,8 +298,7 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
 }
 
 void IO::set_input(uint8_t data) {
-    log_io("IO: Setting P1 to %X", data);
-    m_P1 = data;
+    m_P1 |= data;
 }
 
 void IO::increment_counter(IORegisters_t reg) {
