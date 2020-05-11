@@ -5,10 +5,9 @@ void CPU::handle_interrupts() {
     if (m_interrupts_enabled) {
         uint8_t fired_interrupts = this->read_io_register(IE) & this->read_io_register(IF);
 
-        log_interrupts("Interrupt fired: %X", fired_interrupts);
-
         // An interrupt has been generated
         if (fired_interrupts > 0)  {
+            log_interrupts("Interrupt fired: %X", fired_interrupts);
             // Restart CPU if halted
             m_halted = false;
 
