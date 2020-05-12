@@ -283,9 +283,6 @@ void CPU::alu_xor(uint8_t n) {
 
 // CP n
 void CPU::alu_cp(const std::string &reg) {
-    this->reset_flag_register();
-    this->set_flag_register(SUBTRACT_FLAG, true);
-
     uint8_t A = this->read_register("A");
     uint16_t n = this->read_register(reg);
     
@@ -295,45 +292,56 @@ void CPU::alu_cp(const std::string &reg) {
 
     uint8_t result = A - n;
 
-    if (result == 0) {
-        this->set_flag_register(ZERO_FLAG, true);
+    bool half_borrow = false;
+    bool borrow = false;
+    for (int i = 0; i < 8; i++) {
+        if ((A & (1 << i)) < (n & (1 << i))) {
+            if (i < 4) {
+                half_borrow = true;
+            }
+
+            borrow = true;
+        }
     }
 
-    if (A < n) {
-        this->set_flag_register(CARRY_FLAG, true);
-    }
+    this->reset_flag_register();
 
-    if ((A & 0x0F) < (n & 0xF)) {
-        this->set_flag_register(HALF_CARRY_FLAG, true);
-    }
+    this->set_flag_register(SUBTRACT_FLAG, true);
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
+    this->set_flag_register(CARRY_FLAG, !borrow);
 
-    
     log_cpu("CP A, %s", reg.c_str() );
     
 }
 
 void CPU::alu_cp(uint8_t n) {
-    this->reset_flag_register();
-    this->set_flag_register(SUBTRACT_FLAG, true);
-
     uint8_t A = this->read_register("A");
     uint8_t result = A - n;
 
-    if (result == 0) {
-        this->set_flag_register(ZERO_FLAG, true);
+    bool half_borrow = false;
+    bool borrow = false;
+    for (int i = 0; i < 8; i++)
+    {
+        if ((A & (1 << i)) < (n & (1 << i)))
+        {
+            if (i < 4)
+            {
+                half_borrow = true;
+            }
+
+            borrow = true;
+        }
     }
 
-    if (A < n) {
-        this->set_flag_register(CARRY_FLAG, true);
-    }
+    this->reset_flag_register();
 
-    if ((A & 0x0F) < (n & 0xF)) {
-        this->set_flag_register(HALF_CARRY_FLAG, true);
-    }
+    this->set_flag_register(SUBTRACT_FLAG, true);
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
+    this->set_flag_register(CARRY_FLAG, !borrow);
 
-    
-    log_cpu("CP A, %X", n);
-    
+    log_cpu("CP A, %X (A=%X)", n, A);
 }
 
 // INC n
