@@ -72,9 +72,10 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             break;
         case 2:
             return this->write_vram(address, data);
+        case 6:
+            return this->write_oam(address, data);
         case 3:
         case 4:
-        case 6:
         case 10: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->write_memory(address - m_address_space[index], data);
@@ -108,9 +109,10 @@ uint8_t MemoryMap::read(uint16_t address) {
         }
         case 2:
             return this->read_vram(address);
+        case 6:
+            return this->read_oam(address);
         case 3:
         case 4:
-        case 6:
         case 10: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
             return mem->read_memory(address - m_address_space[index]);
@@ -167,6 +169,25 @@ uint8_t MemoryMap::read_vram(uint16_t address) {
         log_memory("MemoryMap: Reading %X from Background Map 1 at address %X", data, address);
     }
     
+
+    return data;
+}
+
+uint16_t MemoryMap::write_oam(uint16_t address, uint8_t data) {
+    int sprite_index = (address - m_address_space[6]) / 40;
+    log_memory("MemoryMap: Writing %X to OAM at address %X. Sprite index: %d", data, address, sprite_index);
+
+    Memory *mem = (Memory *)m_memory_map.find(6)->second;
+    return mem->write_memory(address - m_address_space[6], data);
+}
+
+uint8_t MemoryMap::read_oam(uint16_t address) {
+    int sprite_index = (address - m_address_space[6]) / 40;
+
+    Memory *mem = (Memory *)m_memory_map.find(6)->second;
+    uint8_t data = mem->read_memory(address - m_address_space[6]);
+
+    log_memory("MemoryMap: Reading %X from OAM at address %X. Sprite index: %d", data, address, sprite_index);
 
     return data;
 }
