@@ -6,6 +6,9 @@ Logger logger;
 
 void Logger::log(LogType_t log_type, bool newline, const char *fmt, ...) {
     switch (log_type) {
+        case LOG_WARN:
+            if (!m_warn_logging_enabled) return;
+            break;
         case LOG_CPU:
             if (!m_cpu_logging_enabled) return;
             break;
@@ -44,6 +47,9 @@ std::string Logger::str_format(const char *fmt, va_list args) {
 
 void Logger::enable_logging(LogType_t log_type, bool enable) {
     switch (log_type) {
+        case LOG_WARN:
+            m_warn_logging_enabled = enable;
+            break;
         case LOG_CPU:
             m_cpu_logging_enabled = enable;
             break;

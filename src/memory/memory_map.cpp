@@ -68,7 +68,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
     switch (index) {
         case 0:
         case 1:
-            std::cerr << "Cannot write to ROM" << std::endl;
+            log_warn("Cannot write to ROM");
             break;
         case 2:
             return this->write_vram(address, data);
@@ -86,7 +86,7 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
         }
         case 7:
         case 9:
-            std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
+            log_warn("Address space unusable: %d. Address: %X", index, address);
             break;
         case 8:
         case 11:
@@ -127,9 +127,9 @@ uint8_t MemoryMap::read(uint16_t address) {
         }
         case 7:
         case 9:
-            std::cerr << "Address space unusable: " << index << ". Address: " << static_cast<int>(address) << std::endl;
+            log_warn("Address space unusable: %d. Address: %X", index, address);
             break;
-        
+
         case 8:
         case 11:
             return this->m_io.read((IORegisters_t)address);
