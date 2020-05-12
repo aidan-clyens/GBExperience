@@ -29,7 +29,7 @@ IO::~IO() {
 
 uint8_t IO::read(IORegisters_t address) {
     if (address >= 0xFF30 && address <= 0xFF3F) {
-        std::cerr << "Wave Pattern RAM unusable" << std::endl;
+        log_warn("Wave Pattern RAM unusable");
 
         return 0;
     }
@@ -42,11 +42,11 @@ uint8_t IO::read(IORegisters_t address) {
             return m_P1 | buttons;
         }
         case SB:
-            std::cerr << "SB not implemented" << std::endl;
+            log_warn("SB not implemented");
 
             return 0;
         case SC:
-            std::cerr << "SB not implemented" << std::endl;
+            log_warn("SC not implemented");
 
             return 0;
         case DIV:
@@ -90,7 +90,7 @@ uint8_t IO::read(IORegisters_t address) {
         case NR50:
         case NR51:
         case NR52:
-            std::cerr << "NR5* not implemented" << std::endl;
+            log_warn("NR5* not implemented");
 
             return 0;
         case LCDC:
@@ -148,14 +148,13 @@ uint8_t IO::read(IORegisters_t address) {
 
         default:
             std::cerr << "IO Register: " << static_cast<int>(address) << " does not exist" << std::endl;
-            // throw new std::exception;
-            break;
+            throw new std::exception;
     }
 }
 
 uint16_t IO::write(IORegisters_t address, uint8_t data) {
     if (address >= 0xFF30 && address <= 0xFF3F) {
-        std::cerr << "Wave Pattern RAM unusable" << std::endl;
+        log_warn("Wave Pattern RAM unusable");
 
         return 0;
     }
@@ -168,11 +167,11 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
             break;
         }
         case SB:
-            std::cerr << "SB not implemented" << std::endl;
+            log_warn("SB not implemented");
 
             break;
         case SC:
-            std::cerr << "SB not implemented" << std::endl;
+            log_warn("SC not implemented");
 
             break;
         case DIV:
@@ -221,7 +220,7 @@ uint16_t IO::write(IORegisters_t address, uint8_t data) {
         case NR50:
         case NR51:
         case NR52:
-            std::cerr << "NR5* not implemented" << std::endl;
+            log_warn("NR5* not implemented");
 
             break;
         case LCDC:
@@ -358,15 +357,11 @@ bool IO::buttons_toggled() const {
 void IO::increment_counter(IORegisters_t reg) {
     switch (reg) {
         case LY:
-            
             log_io("IO: Incremented LY");
-            
             m_LY++;
             break;
         case DIV:
-            
             log_io("IO: Incremented DIV");
-            
             m_DIV++;
             break;
         default:
