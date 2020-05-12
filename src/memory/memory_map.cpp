@@ -90,6 +90,10 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             break;
         case 8:
         case 11:
+            if (address == DMA) {
+                this->dma_transfer(data);
+            }
+
             return this->m_io.write((IORegisters_t)address, data);
         default: {
             std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
@@ -190,6 +194,17 @@ uint8_t MemoryMap::read_oam(uint16_t address) {
     log_memory("MemoryMap: Reading %X from OAM at address %X. Sprite index: %d", data, address, sprite_index);
 
     return data;
+}
+
+void MemoryMap::dma_transfer(uint8_t index) {
+    uint16_t source_address = index * 0x100;
+    uint16_t dest_address = 0xFE00;
+    uint8_t oam_length = 0x9F;
+
+    for (uint8_t i = 0; i <= oam_length; i++) {
+        uint8_t data = this->read(source_address + i);
+        this->write(dest_address + i, data);
+    }
 }
 
 int MemoryMap::get_index(uint16_t address) const {
