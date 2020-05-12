@@ -193,9 +193,7 @@ void Video::set_video_mode(VideoMode_t video_mode) {
             }
             break;
         case VBLANK_Mode:
-            if (this->vblank_interrupt_enabled()) {
-                vblank_interrupt_set = true;
-            }
+            vblank_interrupt_set = true;
             break;
         case OAM_Mode:
             if (this->oam_interrupt_enabled()) {
