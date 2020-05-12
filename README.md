@@ -29,5 +29,9 @@ cd build
 make
 ```
 
+## Screenshots
+### Dr. Mario Menu Screen
+![](docs/img/DrMarioMenu.png)
+
 ## Author
 ***REMOVED***
