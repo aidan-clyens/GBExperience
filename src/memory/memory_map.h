@@ -34,6 +34,8 @@ class MemoryMap {
         uint16_t write_oam(uint16_t, uint8_t);
         uint8_t read_oam(uint16_t);
 
+        void dma_transfer(uint8_t);
+
         int get_index(uint16_t) const;
 
         bool get_interrupt_enable_bit(InterruptFlag_t);
