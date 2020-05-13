@@ -58,6 +58,7 @@ void Video::tick(int cycles) {
 
                 if (this->get_line() == 154) {
                     if (this->lcd_display_enabled()) {
+                        this->draw_sprites();
                         this->draw();
                     }
 
@@ -436,6 +437,71 @@ void Video::draw_window_line(uint8_t line) {
         m_buffer.set_pixel(x, y, real_pixel);
     }    
 }
+
+void Video::draw_sprites() {
+    if (!sprite_display_enabled()) {
+        return;
+    }
+    
+    
+    log_video("Draw sprites");
+    
+
+    for (int i = 0; i < NUM_SPRITES; i++) {
+        this->draw_sprite(i);
+    }
+}
+
+void Video::draw_sprite(int sprite_num) {
+    Sprite sprite(sprite_num, m_memory_map);
+
+    int sprite_x = (int)sprite.get_x_pos() - 8;
+    int sprite_y = (int)sprite.get_y_pos() - 16;
+
+    bool flip_x = sprite.get_x_flip();
+    bool flip_y = sprite.get_y_flip();
+
+    bool priority = sprite.get_priority();
+
+    if (sprite_x < 0|| sprite_x > LCD_WIDTH) {
+        return;
+    }
+
+    if (sprite_y < 0 || sprite_y > LCD_HEIGHT) {
+        return;
+    }
+
+    
+    log_video("Drawing Sprite: %d", sprite_num);
+    log_video("  (%d, %d)", sprite_x, sprite_y);
+    log_video("  Flip X: %d", flip_x);
+    log_video("  Flip Y: %d", flip_y);
+    log_video("  Priority: %d", priority);
+    
+
+    ObjectPalette_t palette_select = sprite.get_palette();
+    Palette palette;
+    if (palette_select == OBJECT_PALETTE_0) {
+        palette = this->get_sprite_palette_0();
+    }
+    else if (palette_select == OBJECT_PALETTE_1) {
+        palette = this->get_sprite_palette_1();
+    }
+
+    Tile tile = sprite.get_tile();
+
+    for (unsigned int y = 0; y < TILE_HEIGHT; y++) {
+        for (unsigned int x = 0; x < TILE_WIDTH; x++) {
+            int screen_x = sprite_x + x;
+            int screen_y = sprite_y + y;
+
+            PixelColour_t pixel = tile.get_pixel(x, y);
+            Colour_t real_pixel = this->get_real_colour(pixel, palette);
+            m_buffer.set_pixel(screen_x, screen_y, real_pixel);
+        }
+    }
+}
+
 
 Colour_t Video::get_real_colour(PixelColour_t colour, Palette palette) {
     switch (colour) {
