@@ -496,6 +496,12 @@ void Video::draw_sprite(int sprite_num) {
             int screen_y = sprite_y + y;
 
             PixelColour_t pixel = tile.get_pixel(x, y);
+
+            // Colour0 is transparent for sprites, do not draw
+            if (pixel == Colour0) {
+                continue;
+            }
+
             Colour_t real_pixel = this->get_real_colour(pixel, palette);
             m_buffer.set_pixel(screen_x, screen_y, real_pixel);
         }
