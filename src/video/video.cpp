@@ -502,6 +502,16 @@ void Video::draw_sprite(int sprite_num) {
                 continue;
             }
 
+            // If sprite priority is set, only draw over background colour 0
+            if (priority) {
+                Colour_t bg_pixel = m_buffer.get_pixel(screen_x, screen_y);
+                PixelColour_t colour_num = this->get_pixel_colour_from_real_colour(bg_pixel, this->get_background_palette());
+
+                if (colour_num != Colour0) {
+                    continue;
+                }
+            }
+
             Colour_t real_pixel = this->get_real_colour(pixel, palette);
             m_buffer.set_pixel(screen_x, screen_y, real_pixel);
         }
@@ -519,6 +529,24 @@ Colour_t Video::get_real_colour(PixelColour_t colour, Palette palette) {
             return palette.colour2;
         case Colour3:
             return palette.colour3;
+    }
+}
+
+PixelColour_t Video::get_pixel_colour_from_real_colour(Colour_t colour, Palette palette) {
+    if (palette.colour0 == colour) {
+        return Colour0;
+    }
+
+    if (palette.colour1 == colour) {
+        return Colour1;
+    }
+
+    if (palette.colour2 == colour) {
+        return Colour2;
+    }
+
+    if (palette.colour3 == colour) {
+        return Colour3;
     }
 }
 
