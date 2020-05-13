@@ -59,6 +59,7 @@ class Video {
         void draw_sprite(int);
 
         Colour_t get_real_colour(PixelColour_t, Palette);
+        PixelColour_t get_pixel_colour_from_real_colour(Colour_t, Palette);
 
         uint8_t read_io_register(IORegisters_t);
         void write_io_register(IORegisters_t, uint8_t);
