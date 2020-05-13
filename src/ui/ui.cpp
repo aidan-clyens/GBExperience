@@ -113,10 +113,10 @@ void UI::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
             m_memory_map.set_button_pressed(B, pressed);
             break;
         case sf::Keyboard::Key::Enter:
-            m_memory_map.set_button_pressed(SELECT, pressed);
-            break;
-        case sf::Keyboard::Key::Escape:
             m_memory_map.set_button_pressed(START, pressed);
+            break;
+        case sf::Keyboard::Key::BackSpace:
+            m_memory_map.set_button_pressed(SELECT, pressed);
             break;
     }
 }
