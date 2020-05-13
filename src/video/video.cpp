@@ -492,8 +492,11 @@ void Video::draw_sprite(int sprite_num) {
 
     for (unsigned int y = 0; y < TILE_HEIGHT; y++) {
         for (unsigned int x = 0; x < TILE_WIDTH; x++) {
-            int screen_x = sprite_x + x;
-            int screen_y = sprite_y + y;
+            int screen_x = sprite_x;
+            int screen_y = sprite_y;
+
+            screen_x += (!flip_x) ? x : TILE_WIDTH - x - 1;
+            screen_y += (!flip_y) ? y : TILE_HEIGHT - y - 1;
 
             PixelColour_t pixel = tile.get_pixel(x, y);
 
