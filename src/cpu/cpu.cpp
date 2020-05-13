@@ -68,9 +68,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // DAA
         case 0x27:
-            
-            log_cpu("DAA" );
-            
+            log_cpu("Unimplemented: DAA" );
             break;
         // CPL
         case 0x2F:
@@ -523,73 +521,56 @@ int CPU::decode_op(uint8_t opcode) {
         // LD (nn), SP
         case 0x08:
             // TODO Learn how to implement this instruction
-            
-            log_cpu("LD %X, SP", arg_1);
+            log_cpu("Unimplemented: LD %X, SP", arg_1);
             
             cycle_count = 20;
             break;
         // PUSH nn
         case 0xF5:
-            
             log_cpu("PUSH AF");
-            
 
             this->push_stack("AF");
             cycle_count = 16;
             break;
         case 0xC5:
-            
             log_cpu("PUSH BC");
-            
 
             this->push_stack("BC");
             cycle_count = 16;
             break;
         case 0xD5:
-            
             log_cpu("PUSH DE");
-            
 
             this->push_stack("DE");
             cycle_count = 16;
             break;
         case 0xE5:
-            
             log_cpu("PUSH HL");
-            
 
             this->push_stack("HL");
             cycle_count = 16;
             break;
         // POP nn
         case 0xF1:
-            
             log_cpu("POP AF");
-            
 
             this->pop_stack("AF");
             cycle_count = 12;
             break;
         case 0xC1:
-            
             log_cpu("POP BC");
-            
 
             this->pop_stack("BC");
             cycle_count = 12;
             break;
         case 0xD1:
-            
             log_cpu("POP DE");
-            
 
             this->pop_stack("DE");
             cycle_count = 12;
             break;
         case 0xE1:
-            
             log_cpu("POP HL");
-            
 
             this->pop_stack("HL");
             cycle_count = 12;
@@ -777,7 +758,7 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         case 0xE6:
             arg_1 = this->fetch_op();
-            this->alu_sub(arg_1, true);
+            this->alu_and(arg_1);
             cycle_count = 8;
             break;
         // OR n
@@ -1301,51 +1282,39 @@ int CPU::decode_op(uint8_t opcode) {
         /****    Returns    ****/
         // RET
         case 0xC9:
-            
             log_cpu("RET");
-            
 
             this->ret();
             cycle_count = 8;
             break;
         // RET cc
         case 0xC0:
-            
             log_cpu("RET NZ");
-            
 
             this->ret(ZERO_FLAG, false);
             cycle_count = 8;
             break;
         case 0xC8:
-            
             log_cpu("RET Z");
-            
 
             this->ret(ZERO_FLAG, true);
             cycle_count = 8;
             break;
         case 0xD0:
-            
             log_cpu("RET NC");
-            
 
             this->ret(CARRY_FLAG, false);
             cycle_count = 8;
             break;
         case 0xD8:
-            
             log_cpu("RET C");
-            
 
             this->ret(CARRY_FLAG, true);
             cycle_count = 8;
             break;
         // RETI
         case 0xD9:
-            
             log_cpu("RETI");
-            
 
             this->ret_enable_interrupts();
             cycle_count = 8;
