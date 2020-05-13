@@ -5,6 +5,7 @@
 #include "../debugger/logger.h"
 #include "definitions.h"
 #include "tile.h"
+#include "sprite.h"
 #include "framebuffer.h"
 
 
@@ -54,6 +55,8 @@ class Video {
         void write_scanline(uint8_t);
         void draw_background_line(uint8_t);
         void draw_window_line(uint8_t);
+        void draw_sprites();
+        void draw_sprite(int);
 
         Colour_t get_real_colour(PixelColour_t, Palette);
 
