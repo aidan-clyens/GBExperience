@@ -7,6 +7,7 @@
 
 typedef enum LogType {
     LOG_WARN,
+    LOG_DEBUG,
     LOG_CPU,
     LOG_INTERRUPTS,
     LOG_IO,
@@ -27,6 +28,7 @@ class Logger {
     
     private:
         bool m_warn_logging_enabled = false;
+        bool m_debug_logging_enabled = false;
         bool m_cpu_logging_enabled = false;
         bool m_interrupt_logging_enabled = false;
         bool m_io_logging_enabled = false;
@@ -40,6 +42,8 @@ extern Logger logger;
 
 #define log_warn(...) logger.log(LOG_WARN, true, ##__VA_ARGS__);
 #define log_warn_no_new_line(...) logger.log(LOG_WARN, false, ##__VA_ARGS__);
+#define log_debug(...) logger.log(LOG_DEBUG, false, ##__VA_ARGS__);
+#define log_debug_no_new_line(...) logger.log(LOG_DEBUG, false, ##__VA_ARGS__);
 #define log_cpu(...) logger.log(LOG_CPU, true, ##__VA_ARGS__);
 #define log_cpu_no_new_line(...) logger.log(LOG_CPU, false, ##__VA_ARGS__);
 #define log_interrupts(...) logger.log(LOG_INTERRUPTS, true, ##__VA_ARGS__);
@@ -53,6 +57,8 @@ extern Logger logger;
 
 #define enable_warn_logging() logger.enable_logging(LOG_WARN, true);
 #define disable_warn_logging() logger.enable_logging(LOG_WARN, false);
+#define enable_debug_logging() logger.enable_logging(LOG_DEBUG, true);
+#define disable_debug_logging() logger.enable_logging(LOG_DEBUG, false);
 #define enable_cpu_logging() logger.enable_logging(LOG_CPU, true);
 #define disable_cpu_logging() logger.enable_logging(LOG_CPU, false);
 #define enable_interrupt_logging() logger.enable_logging(LOG_INTERRUPTS, true);
