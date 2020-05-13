@@ -32,6 +32,7 @@ make
 ## Screenshots
 ### Dr. Mario:
 ![](docs/img/DrMarioMenu.png)
+![](docs/img/DrMarioMenu2.png)
 ### Tetris:
 ![](docs/img/TetrisMenu.png)
 
