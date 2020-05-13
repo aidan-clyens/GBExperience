@@ -30,8 +30,10 @@ make
 ```
 
 ## Screenshots
-### Dr. Mario Menu Screen
+### Dr. Mario:
 ![](docs/img/DrMarioMenu.png)
+### Tetris:
+![](docs/img/TetrisMenu.png)
 
 ## Author
 ***REMOVED***
