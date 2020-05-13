@@ -27,7 +27,9 @@ const int BACKGROUND_TILE_MAP_BYTES = 1023;
 const int TILE_DATA_SET_BYTES = 4095;
 const int TILE_DATA_ENTIRE_SET_BYTES = 6143;
 
+const int NUM_SPRITES = 40;
 const int SPRITE_BYTES = 4;
+
 
 typedef enum SpriteSize {
     SPRITEx8,
