@@ -1,5 +1,7 @@
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <algorithm>
 
 #include "debugger/logger.h"
 #include "ui/ui.h"
@@ -26,9 +28,18 @@ std::string trim(const std::string &s) {
 
 int main(int argc, char** argv) {
     std::string rom_file = "roms/DrMario.gb";
-    
+    bool debugger_enabled = false;
+
     if (argc > 1) {
         rom_file = argv[1];
+    }
+
+    if (argc > 2) {
+        std::string arg = trim(std::string(argv[2]));
+
+        if (arg == "--debug") {
+            debugger_enabled = true;
+        }
     }
 
     GameBoy gb;
