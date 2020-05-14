@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    GameBoy gb;
+    GameBoy gb(debugger_enabled);
     gb.load_rom(rom_file);
 
     while (gb.is_display_open()) {
