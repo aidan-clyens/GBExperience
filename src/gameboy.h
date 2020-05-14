@@ -11,7 +11,7 @@
 
 class GameBoy {
     public:
-        GameBoy();
+        GameBoy(bool=false);
         virtual ~GameBoy();
 
         void tick();
