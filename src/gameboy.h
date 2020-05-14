@@ -7,6 +7,7 @@
 #include "file_parser/file_parser.h"
 #include "video/video.h"
 #include "ui/ui.h"
+#include "../debugger/debugger.h"
 
 
 class GameBoy {
@@ -26,6 +27,8 @@ class GameBoy {
         MemoryMap m_memory_map;
         Video m_video;
         UI m_ui;
+
+        Debugger m_debugger;
 
         std::string m_rom_name;
 };
