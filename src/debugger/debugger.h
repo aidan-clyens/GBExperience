@@ -23,6 +23,7 @@ class Debugger {
         DebugAction_t get_input();
 
         void set_breakpoint(uint16_t);
+        bool check_breakpoints(uint16_t);
 
         bool quit() const;
 
