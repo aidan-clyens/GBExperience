@@ -21,6 +21,8 @@ class GameBoy {
 
         std::string get_rom_name() const;
         bool is_display_open() const;
+
+        void quit();
     
     private:
         CPU m_cpu;
