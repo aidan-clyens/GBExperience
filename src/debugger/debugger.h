@@ -24,10 +24,13 @@ class Debugger {
 
         void set_breakpoint(uint16_t);
 
+        bool quit() const;
+
     private:
         UI m_ui;
 
         bool m_stopped = true;
+        bool m_quit = false;
 
         std::vector<uint8_t> m_breakpoints;
 };
