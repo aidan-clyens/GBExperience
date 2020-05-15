@@ -12,6 +12,11 @@ Debugger::~Debugger() {
 }
 
 void Debugger::tick(uint16_t pc) {
+    if (m_first_started) {
+        this->help();
+        m_first_started = false;
+    }
+    
     if (!m_stopped) {
         if (!this->check_breakpoints(pc)) {
             return;
@@ -45,7 +50,6 @@ void Debugger::tick(uint16_t pc) {
 
 DebugAction_t Debugger::get_input() {
     std::string buf = "";
-    log_debug("Debug: 's': step, 'c': continue, 'b': add breakpoint, 'q': quit");
     std::cin >> buf;
 
     if (!buf.empty()) {
@@ -74,6 +78,10 @@ void Debugger::set_breakpoint(uint16_t pc) {
 bool Debugger::check_breakpoints(uint16_t pc) {
     auto it = std::find(m_breakpoints.begin(), m_breakpoints.end(), pc);
     return it !=m_breakpoints.end();
+}
+
+void Debugger::help() {
+    log_debug("Debug: 's': step, 'c': continue, 'b': add breakpoint, 'q': quit");
 }
 
 bool Debugger::quit() const {
