@@ -17,6 +17,7 @@ class Debugger {
         Debugger(UI &);
         virtual ~Debugger();
 
+        void tick();
         DebugAction_t get_input();
     
     private:
