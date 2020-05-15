@@ -11,7 +11,7 @@ Debugger::~Debugger() {
 
 }
 
-void Debugger::tick(uint8_t pc) {
+void Debugger::tick(uint16_t pc) {
     if (!m_stopped) {
         return;
     }
@@ -28,7 +28,7 @@ void Debugger::tick(uint8_t pc) {
             unsigned int line_num;
             log_debug_no_new_line("Enter line number: ");
             std::cin >> line_num;
-            this->set_breakpoint((uint8_t)line_num);
+            this->set_breakpoint((uint16_t)line_num);
             break;
         }
         case QUIT:
@@ -61,6 +61,6 @@ DebugAction_t Debugger::get_input() {
     return NONE;
 }
 
-void Debugger::set_breakpoint(uint8_t pc) {
+void Debugger::set_breakpoint(uint16_t pc) {
     m_breakpoints.push_back(pc);
 }
