@@ -15,6 +15,8 @@ void Debugger::tick(uint16_t pc) {
     if (m_first_started) {
         this->help();
         m_first_started = false;
+
+        log_debug("Starting at 0x%X", pc);
     }
     
     if (!m_stopped) {
@@ -22,16 +24,20 @@ void Debugger::tick(uint16_t pc) {
             return;
         }
         else {
+            log_debug("Stopped at 0x%X", pc);
             m_stopped = true;
         }
     }
 
     DebugAction_t input = this->get_input();
+    m_step = false;
     
     switch (input) {
         case STEP:
+            m_step = true;
             break;
         case CONTINUE:
+            m_step = true;
             m_stopped = false;
             break;
         case BREAKPOINT: {
@@ -41,6 +47,9 @@ void Debugger::tick(uint16_t pc) {
             this->set_breakpoint((uint16_t)line_num);
             break;
         }
+        case HELP:
+            this->help();
+            break;
         case QUIT:
             m_quit = true;
             break;
@@ -63,6 +72,9 @@ DebugAction_t Debugger::get_input() {
         else if (buf == "b") {
             return BREAKPOINT;
         }
+        else if (buf == "h") {
+            return HELP;
+        }
         else if (buf == "q") {
             return QUIT; 
         }
@@ -81,7 +93,12 @@ bool Debugger::check_breakpoints(uint16_t pc) {
 }
 
 void Debugger::help() {
-    log_debug("Debug: 's': step, 'c': continue, 'b': add breakpoint, 'q': quit");
+    log_debug("Debugger Commands:");
+    log_debug("'s': step\n'c': continue\n'b': add breakpoint\n'h': help\n'q': quit");
+}
+
+bool Debugger::step() const {
+    return m_step;
 }
 
 bool Debugger::quit() const {
