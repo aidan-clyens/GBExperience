@@ -19,6 +19,13 @@ void Debugger::tick(uint8_t pc) {
             break;
         case CONTINUE:
             break;
+        case BREAKPOINT: {
+            unsigned int line_num;
+            log_debug_no_new_line("Enter line number: ");
+            std::cin >> line_num;
+            this->set_breakpoint((uint8_t)line_num);
+            break;
+        }
         case QUIT:
             break;
         default:
@@ -28,7 +35,7 @@ void Debugger::tick(uint8_t pc) {
 
 DebugAction_t Debugger::get_input() {
     std::string buf = "";
-    log_debug("Debug: 's': step, 'c': continue, 'q': quit");
+    log_debug("Debug: 's': step, 'c': continue, 'b': add breakpoint, 'q': quit");
     std::cin >> buf;
 
     if (!buf.empty()) {
@@ -38,10 +45,17 @@ DebugAction_t Debugger::get_input() {
         else if (buf == "c") {
             return CONTINUE;
         }
+        else if (buf == "b") {
+            return BREAKPOINT;
+        }
         else if (buf == "q") {
             return QUIT; 
         }
     }
 
     return NONE;
+}
+
+void Debugger::set_breakpoint(uint8_t pc) {
+    m_breakpoints.push_back(pc);
 }
