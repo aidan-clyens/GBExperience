@@ -30,5 +30,7 @@ class GameBoy {
 
         Debugger m_debugger;
 
+        bool m_debugger_enabled;
+
         std::string m_rom_name;
 };
