@@ -9,7 +9,10 @@ m_debugger(m_ui),
 m_debugger_enabled(debug),
 m_rom_name("")
 {
-
+    if (debug) {
+        enable_debug_logging();
+        enable_cpu_logging();
+    }
 }
 
 
