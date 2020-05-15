@@ -25,11 +25,13 @@ class Debugger {
         void set_breakpoint(uint16_t);
         bool check_breakpoints(uint16_t);
 
+        void help();
         bool quit() const;
 
     private:
         UI m_ui;
 
+        bool m_first_started = true;
         bool m_stopped = true;
         bool m_quit = false;
 
