@@ -22,6 +22,10 @@ GameBoy::~GameBoy() {
 
 
 void GameBoy::tick() {
+    if (m_debugger_enabled) {
+        m_debugger.get_input();
+    }
+
     int cycle_count = m_cpu.tick();
 
     if (!m_cpu.is_stopped()) {
