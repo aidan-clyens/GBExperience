@@ -136,6 +136,11 @@ sf::Color UI::get_pixel_colour(Colour_t colour) {
         }
 }
 
+void UI::set_display_enabled(bool enabled) {
+    m_display_open = enabled;
+}
+
+
 bool UI::is_display_enabled() const {
     return m_display_open;
 }

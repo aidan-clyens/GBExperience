@@ -28,6 +28,7 @@ class UI {
         sf::Color get_pixel_colour(Colour_t);
 
         bool is_display_enabled() const;
+        void set_display_enabled(bool);
 
     private:
         sf::RenderWindow *m_main_window;
