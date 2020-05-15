@@ -10,6 +10,7 @@ typedef enum DebugAction {
     STEP,
     CONTINUE,
     BREAKPOINT,
+    HELP,
     QUIT
 } DebugAction_t;
 
@@ -26,6 +27,7 @@ class Debugger {
         bool check_breakpoints(uint16_t);
 
         void help();
+        bool step() const;
         bool quit() const;
 
     private:
@@ -33,6 +35,7 @@ class Debugger {
 
         bool m_first_started = true;
         bool m_stopped = true;
+        bool m_step = false;
         bool m_quit = false;
 
         std::vector<uint16_t> m_breakpoints;
