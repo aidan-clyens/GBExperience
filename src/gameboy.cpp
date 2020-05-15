@@ -67,3 +67,7 @@ std::string GameBoy::get_rom_name() const {
 bool GameBoy::is_display_open() const {
     return m_ui.is_display_enabled();
 }
+
+void GameBoy::quit() {
+    m_ui.set_display_enabled(false);
+}
