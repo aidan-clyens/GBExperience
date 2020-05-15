@@ -27,5 +27,7 @@ class Debugger {
     private:
         UI m_ui;
 
+        bool m_stopped = true;
+
         std::vector<uint8_t> m_breakpoints;
 };

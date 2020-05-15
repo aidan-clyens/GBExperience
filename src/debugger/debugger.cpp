@@ -12,12 +12,17 @@ Debugger::~Debugger() {
 }
 
 void Debugger::tick(uint8_t pc) {
+    if (!m_stopped) {
+        return;
+    }
+
     DebugAction_t input = this->get_input();
     
     switch (input) {
         case STEP:
             break;
         case CONTINUE:
+            m_stopped = false;
             break;
         case BREAKPOINT: {
             unsigned int line_num;
