@@ -13,7 +13,12 @@ Debugger::~Debugger() {
 
 void Debugger::tick(uint16_t pc) {
     if (!m_stopped) {
-        return;
+        if (!this->check_breakpoints(pc)) {
+            return;
+        }
+        else {
+            m_stopped = true;
+        }
     }
 
     DebugAction_t input = this->get_input();
@@ -64,6 +69,11 @@ DebugAction_t Debugger::get_input() {
 
 void Debugger::set_breakpoint(uint16_t pc) {
     m_breakpoints.push_back(pc);
+}
+
+bool Debugger::check_breakpoints(uint16_t pc) {
+    auto it = std::find(m_breakpoints.begin(), m_breakpoints.end(), pc);
+    return it !=m_breakpoints.end();
 }
 
 bool Debugger::quit() const {
