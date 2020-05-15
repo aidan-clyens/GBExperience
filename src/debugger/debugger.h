@@ -32,5 +32,5 @@ class Debugger {
         bool m_stopped = true;
         bool m_quit = false;
 
-        std::vector<uint8_t> m_breakpoints;
+        std::vector<uint16_t> m_breakpoints;
 };
