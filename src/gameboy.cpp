@@ -26,6 +26,10 @@ void GameBoy::tick() {
 
     if (m_debugger_enabled) {
         m_debugger.tick(pc);
+
+        if (m_debugger.quit()) {
+            this->quit();
+        }
     }
 
     int cycle_count = m_cpu.tick();

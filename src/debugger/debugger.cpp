@@ -54,6 +54,7 @@ DebugAction_t Debugger::get_input() {
             return BREAKPOINT;
         }
         else if (buf == "q") {
+            m_quit = true;
             return QUIT; 
         }
     }
@@ -63,4 +64,8 @@ DebugAction_t Debugger::get_input() {
 
 void Debugger::set_breakpoint(uint16_t pc) {
     m_breakpoints.push_back(pc);
+}
+
+bool Debugger::quit() const {
+    return m_quit;
 }
