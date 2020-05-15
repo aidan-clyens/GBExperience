@@ -42,6 +42,7 @@ void Debugger::tick(uint16_t pc) {
             break;
         }
         case QUIT:
+            m_quit = true;
             break;
         default:
             break;
@@ -63,7 +64,6 @@ DebugAction_t Debugger::get_input() {
             return BREAKPOINT;
         }
         else if (buf == "q") {
-            m_quit = true;
             return QUIT; 
         }
     }
