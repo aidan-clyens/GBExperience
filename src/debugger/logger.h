@@ -42,7 +42,7 @@ extern Logger logger;
 
 #define log_warn(...) logger.log(LOG_WARN, true, ##__VA_ARGS__);
 #define log_warn_no_new_line(...) logger.log(LOG_WARN, false, ##__VA_ARGS__);
-#define log_debug(...) logger.log(LOG_DEBUG, false, ##__VA_ARGS__);
+#define log_debug(...) logger.log(LOG_DEBUG, true, ##__VA_ARGS__);
 #define log_debug_no_new_line(...) logger.log(LOG_DEBUG, false, ##__VA_ARGS__);
 #define log_cpu(...) logger.log(LOG_CPU, true, ##__VA_ARGS__);
 #define log_cpu_no_new_line(...) logger.log(LOG_CPU, false, ##__VA_ARGS__);
