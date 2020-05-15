@@ -11,7 +11,7 @@ Debugger::~Debugger() {
 
 }
 
-void Debugger::tick() {
+void Debugger::tick(uint8_t pc) {
     DebugAction_t input = this->get_input();
     
     switch (input) {
