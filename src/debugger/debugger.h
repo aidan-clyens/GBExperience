@@ -19,10 +19,10 @@ class Debugger {
         Debugger(UI &);
         virtual ~Debugger();
 
-        void tick(uint8_t);
+        void tick(uint16_t);
         DebugAction_t get_input();
 
-        void set_breakpoint(uint8_t);
+        void set_breakpoint(uint16_t);
 
     private:
         UI m_ui;

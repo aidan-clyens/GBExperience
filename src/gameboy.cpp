@@ -22,14 +22,13 @@ GameBoy::~GameBoy() {
 
 
 void GameBoy::tick() {
-    uint8_t pc = 0x100;
+    uint16_t pc = m_cpu.read_register("PC");
 
     if (m_debugger_enabled) {
         m_debugger.tick(pc);
     }
 
     int cycle_count = m_cpu.tick();
-    pc = m_cpu.read_register("PC");
 
     if (!m_cpu.is_stopped()) {
         m_video.tick(cycle_count);
