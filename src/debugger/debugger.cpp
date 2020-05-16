@@ -41,9 +41,13 @@ void Debugger::tick(uint16_t pc) {
             m_stopped = false;
             break;
         case BREAKPOINT: {
-            unsigned int line_num;
-            log_debug_no_new_line("Enter line number: ");
-            std::cin >> line_num;
+            char buf[10];
+            uint16_t line_num;
+            std::stringstream ss;
+            log_debug_no_new_line("Enter line number (hex): ");
+            std::cin >> buf;
+            ss << std::hex << buf;
+            ss >> line_num;
             this->set_breakpoint((uint16_t)line_num);
             break;
         }
