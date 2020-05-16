@@ -11,6 +11,7 @@ m_rom_name("")
 {
     if (debug) {
         enable_debug_logging();
+        enable_warn_logging();
         enable_cpu_logging();
     }
 }
