@@ -63,24 +63,34 @@ void Debugger::tick(uint16_t pc) {
 }
 
 DebugAction_t Debugger::get_input() {
-    std::string buf = "";
-    std::cin >> buf;
+    std::string buf;
+    std::getline(std::cin, buf);
+    std::istringstream iss(buf);
+    std::vector<std::string> args = {
+        std::istream_iterator<std::string>(iss),
+        std::istream_iterator<std::string>()
+    };
 
-    if (!buf.empty()) {
+    if (args.size() == 0) {
+        return NONE;
+    }
+    else if (args.size() == 1) {
         if (buf == "s") {
             return STEP;
         }
         else if (buf == "c") {
             return CONTINUE;
         }
-        else if (buf == "b") {
-            return BREAKPOINT;
-        }
         else if (buf == "h") {
             return HELP;
         }
         else if (buf == "q") {
             return QUIT; 
+        }
+    }
+    else if (args.size() == 2) {
+        if (buf == "b") {
+            return BREAKPOINT;
         }
     }
 

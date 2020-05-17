@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+#include <iterator>
 #include <vector>
 
 #include "../ui/ui.h"
