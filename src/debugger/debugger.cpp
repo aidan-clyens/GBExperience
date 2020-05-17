@@ -50,6 +50,9 @@ void Debugger::tick(uint16_t pc) {
             log_debug("Set breakpoint at 0x%X", line_num);
             break;
         }
+        case PRINT:
+            this->print_reg(m_arg);
+            break;
         case HELP:
             this->help();
             break;
@@ -69,7 +72,6 @@ DebugAction_t Debugger::get_input() {
         std::istream_iterator<std::string>(iss),
         std::istream_iterator<std::string>()
     };
-
 
     if (args.size() == 0) {
         return NONE;
@@ -92,9 +94,12 @@ DebugAction_t Debugger::get_input() {
     }
     else if (args.size() == 2) {
         std::string cmd = args[0];
+        m_arg = args[1];
         if (cmd == "b") {
-            m_arg = args[1];
             return BREAKPOINT;
+        }
+        else if (cmd == "p") {
+            return PRINT;
         }
     }
 
@@ -110,9 +115,13 @@ bool Debugger::check_breakpoints(uint16_t pc) {
     return it !=m_breakpoints.end();
 }
 
+void Debugger::print_reg(const std::string &reg) {
+    log_debug("%s = 0x%X", reg.c_str(), m_cpu.read_register(reg));
+}
+
 void Debugger::help() {
     log_debug("Debugger Commands:");
-    log_debug("'s': step\n'c': continue\n'b': add breakpoint\n'h': help\n'q': quit");
+    log_debug("'s': step\n'c': continue\n'b': add breakpoint\n'p': print register\n'h': help\n'q': quit");
 }
 
 bool Debugger::step() const {
