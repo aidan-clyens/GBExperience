@@ -41,14 +41,12 @@ void Debugger::tick(uint16_t pc) {
             m_stopped = false;
             break;
         case BREAKPOINT: {
-            char buf[10];
             uint16_t line_num;
             std::stringstream ss;
-            log_debug_no_new_line("Enter line number (hex): ");
-            std::cin >> buf;
-            ss << std::hex << buf;
+            ss << std::hex << m_arg;
             ss >> line_num;
             this->set_breakpoint((uint16_t)line_num);
+            log_debug("Set breakpoint at 0x%X", line_num);
             break;
         }
         case HELP:
@@ -71,25 +69,30 @@ DebugAction_t Debugger::get_input() {
         std::istream_iterator<std::string>()
     };
 
+
     if (args.size() == 0) {
         return NONE;
     }
     else if (args.size() == 1) {
-        if (buf == "s") {
+        std::string cmd = args[0];
+
+        if (cmd == "s") {
             return STEP;
         }
-        else if (buf == "c") {
+        else if (cmd == "c") {
             return CONTINUE;
         }
-        else if (buf == "h") {
+        else if (cmd == "h") {
             return HELP;
         }
-        else if (buf == "q") {
+        else if (cmd == "q") {
             return QUIT; 
         }
     }
     else if (args.size() == 2) {
-        if (buf == "b") {
+        std::string cmd = args[0];
+        if (cmd == "b") {
+            m_arg = args[1];
             return BREAKPOINT;
         }
     }

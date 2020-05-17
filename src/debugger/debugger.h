@@ -35,6 +35,8 @@ class Debugger {
     private:
         UI m_ui;
 
+        std::string m_arg;
+
         bool m_first_started = true;
         bool m_stopped = true;
         bool m_step = false;
