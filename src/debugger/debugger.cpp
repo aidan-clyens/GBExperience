@@ -1,8 +1,9 @@
 #include "debugger.h"
 
 
-Debugger::Debugger(UI &ui):
-m_ui(ui)
+Debugger::Debugger(UI &ui, CPU &cpu):
+m_ui(ui),
+m_cpu(cpu)
 {
 
 }

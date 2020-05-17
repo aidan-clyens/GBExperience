@@ -4,6 +4,7 @@
 #include <iterator>
 #include <vector>
 
+#include "../cpu/cpu.h"
 #include "../ui/ui.h"
 
 
@@ -19,7 +20,7 @@ typedef enum DebugAction {
 
 class Debugger {
     public:
-        Debugger(UI &);
+        Debugger(UI &, CPU &);
         virtual ~Debugger();
 
         void tick(uint16_t);
@@ -33,7 +34,8 @@ class Debugger {
         bool quit() const;
 
     private:
-        UI m_ui;
+        UI &m_ui;
+        CPU &m_cpu;
 
         std::string m_arg;
 
