@@ -80,3 +80,12 @@ bool GameBoy::is_display_open() const {
 void GameBoy::quit() {
     m_ui.set_display_enabled(false);
 }
+
+long int GameBoy::get_time_difference_ns() {
+    std::chrono::steady_clock::time_point end = get_time();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(end - m_last_time).count();
+}
+
+std::chrono::steady_clock::time_point GameBoy::get_time() {
+    return std::chrono::steady_clock::now();
+}
