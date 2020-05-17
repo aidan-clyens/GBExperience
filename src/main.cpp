@@ -40,6 +40,9 @@ int main(int argc, char** argv) {
         if (arg == "--debug") {
             debugger_enabled = true;
         }
+        else if (arg == "--warnings") {
+            enable_warn_logging();
+        }
     }
 
     GameBoy gb(debugger_enabled);
