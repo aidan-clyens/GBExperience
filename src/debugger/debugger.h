@@ -13,6 +13,7 @@ typedef enum DebugAction {
     STEP,
     CONTINUE,
     BREAKPOINT,
+    PRINT,
     HELP,
     QUIT
 } DebugAction_t;
@@ -29,6 +30,7 @@ class Debugger {
         void set_breakpoint(uint16_t);
         bool check_breakpoints(uint16_t);
 
+        void print_reg(const std::string &);
         void help();
         bool step() const;
         bool quit() const;
