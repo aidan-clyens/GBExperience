@@ -10,6 +10,10 @@
 #include "../debugger/debugger.h"
 
 
+const float EXPECTED_FREQ_MHZ = 4.194304;
+const long int EXPECTED_CYCLE_TIME_NS = 1000.0 / EXPECTED_FREQ_MHZ;
+
+
 class GameBoy {
     public:
         GameBoy(bool=false);
@@ -35,4 +39,10 @@ class GameBoy {
         bool m_debugger_enabled;
 
         std::string m_rom_name;
+
+        std::chrono::steady_clock::time_point m_last_time;
+
+        // CPU Timing
+        long int get_time_difference_ns();
+        std::chrono::steady_clock::time_point get_time();
 };

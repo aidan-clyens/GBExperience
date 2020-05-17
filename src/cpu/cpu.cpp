@@ -2464,12 +2464,3 @@ bool CPU::is_running() const {
 bool CPU::interrupts_enabled() const {
     return m_interrupts_enabled;
 }
-
-long int CPU::get_time_difference_ns() {
-    std::chrono::steady_clock::time_point end = get_time();
-    return std::chrono::duration_cast<std::chrono::nanoseconds>(end - m_last_time).count();
-}
-
-std::chrono::steady_clock::time_point CPU::get_time() {
-    return std::chrono::steady_clock::now();
-}
