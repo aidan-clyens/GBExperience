@@ -1,6 +1,13 @@
 #include "gtest/gtest.h"
 
-const int BUFFER_SIZE = 32 * 1024;
+const int BUFFER_SIZE = 2 * 32 * 1024;
+const std::string TEST_ROM = "../../test/test_roms/cpu_instrs/cpu_instrs.gb";
+const std::string ROM_TITLE = "CPU_INSTRS";
+const int ROM_SIZE = 4;
+const cartridge_type_t CARTRIDGE_TYPE = ROM_MBC1;
+const bool GB_COLOR_SUPPORTED = true;
+const bool SGB_SUPPORTED = false;
+
 
 TEST(FileParser, DefaultConstructor) {
     FileParser file_parser;
@@ -9,11 +16,9 @@ TEST(FileParser, DefaultConstructor) {
 }
 
 TEST(FileParser, LoadRomValidFile) {
-    std::string rom_file = "../../roms/Tetris.gb";
-
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
     EXPECT_EQ(BUFFER_SIZE, file_parser.get_buffer_size());
 }
 
@@ -27,92 +32,73 @@ TEST(FileParser, LoadRomInvalidFile) {
 }
 
 TEST(FileParser, GetByteOutOfRange) {
-    std::string rom_file = "../../roms/Tetris.gb";
-
     FileParser file_parser;
+    file_parser.load_rom(TEST_ROM);
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
     EXPECT_ANY_THROW(file_parser.get_byte(BUFFER_SIZE + 10));
 }
 
 TEST(FileParser, GetROMSize) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    uint8_t rom_size = 0x0;
+    uint8_t rom_size = 0x1;
 
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
     EXPECT_EQ(rom_size, file_parser.get_byte(0x148));
-    EXPECT_EQ(2, file_parser.get_rom_size_banks());
+    EXPECT_EQ(ROM_SIZE, file_parser.get_rom_size_banks());
 }
 
 TEST(FileParser, GetRAMSize) {
-    std::string rom_file = "../../roms/Tetris.gb";
     uint8_t ram_size = 0x0;
 
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
     EXPECT_EQ(ram_size, file_parser.get_byte(0x149));
     EXPECT_EQ(0, file_parser.get_ram_size_banks());
 }
 
 TEST(FileParser, GetCartridgeType) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    cartridge_type_t type = ROM_ONLY;
-
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
-    EXPECT_EQ(type, file_parser.get_cartridge_type());
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
+    EXPECT_EQ(CARTRIDGE_TYPE, file_parser.get_cartridge_type());
 }
 
 TEST(FileParser, CheckGameBoyColor) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    bool is_gameboy_color = false;
-
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
-    EXPECT_EQ(is_gameboy_color, file_parser.is_gb_color());
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
+    EXPECT_EQ(GB_COLOR_SUPPORTED, file_parser.is_gb_color());
 }
 
 TEST(FileParser, CheckSuperGameBoy) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    bool is_super_gameboy = false;
-
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
-    EXPECT_EQ(is_super_gameboy, file_parser.is_sgb());
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
+    EXPECT_EQ(SGB_SUPPORTED, file_parser.is_sgb());
 }
 
 TEST(FileParser, GetTitle) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    std::string title = "TETRIS";
-
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
-    
-    EXPECT_EQ(0x54, file_parser.get_byte(0x134));
-    EXPECT_EQ(0x0, file_parser.get_byte(0x142));
-
-    EXPECT_EQ(title, file_parser.get_rom_name());
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
+    EXPECT_EQ(ROM_TITLE, file_parser.get_rom_name());
 }
 
 TEST(FileParser, GetEntireBuffer) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    std::string title = "TETRIS";
     std::vector<uint8_t> buffer_data;
+    uint8_t ram_size = 0x0;
+    uint8_t rom_size = 0x1;
 
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
     buffer_data = file_parser.get_buffer_data();
 
-    EXPECT_EQ(0x54, buffer_data[0x134]);
-    EXPECT_EQ(0x0, buffer_data[0x142]);
+    EXPECT_EQ(ram_size, file_parser.get_byte(0x149));
+    EXPECT_EQ(rom_size, file_parser.get_byte(0x148));
 
     for (int i = 0; i < buffer_data.size(); i++) {
         std::cout << static_cast<int>(buffer_data[i]) << std::endl;
