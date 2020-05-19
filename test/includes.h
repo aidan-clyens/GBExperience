@@ -19,3 +19,11 @@
 
 
 const int DISPLAY_TIME = 50;
+
+const int BUFFER_SIZE = 2 * 32 * 1024;
+const std::string TEST_ROM = "../../test/test_roms/cpu_instrs/cpu_instrs.gb";
+const std::string ROM_TITLE = "CPU_INSTRS";
+const int ROM_SIZE = 4;
+const cartridge_type_t CARTRIDGE_TYPE = ROM_MBC1;
+const bool GB_COLOR_SUPPORTED = true;
+const bool SGB_SUPPORTED = false;
