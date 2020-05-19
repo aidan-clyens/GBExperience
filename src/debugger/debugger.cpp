@@ -42,10 +42,7 @@ void Debugger::tick(uint16_t pc) {
             m_stopped = false;
             break;
         case BREAKPOINT: {
-            uint16_t line_num;
-            std::stringstream ss;
-            ss << std::hex << m_arg;
-            ss >> line_num;
+            uint16_t line_num = get_input_hex(m_arg);
             this->set_breakpoint((uint16_t)line_num);
             log_debug("Set breakpoint at 0x%X", line_num);
             break;
@@ -65,13 +62,7 @@ void Debugger::tick(uint16_t pc) {
 }
 
 DebugAction_t Debugger::get_input() {
-    std::string buf;
-    std::getline(std::cin, buf);
-    std::istringstream iss(buf);
-    std::vector<std::string> args = {
-        std::istream_iterator<std::string>(iss),
-        std::istream_iterator<std::string>()
-    };
+    std::vector<std::string> args = get_input_words_list();
 
     if (args.size() == 0) {
         return NONE;

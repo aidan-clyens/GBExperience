@@ -4,6 +4,7 @@
 #include <iterator>
 #include <vector>
 
+#include "../utils/string_utils.h"
 #include "../cpu/cpu.h"
 #include "../ui/ui.h"
 
