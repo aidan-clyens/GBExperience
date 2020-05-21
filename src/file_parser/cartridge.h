@@ -34,6 +34,25 @@ typedef enum cartridge_type {
 } cartridge_type_t;
 
 
+class Cartridge {
+    public:
+        Cartridge();
+        virtual ~Cartridge();
+
+        virtual uint8_t read(uint16_t);
+        virtual uint16_t write(uint16_t, uint8_t);
+
+        void set_cartridge_type(cartridge_type_t);
+        cartridge_type_t get_cartridge_type() const;
+        void set_size(int);
+        int get_size() const;
+
+    private:
+        cartridge_type_t m_cartridge_type;
+        int m_cartridge_size;
+};
+
+
 class ROMOnly : public Cartridge {
     public:
         ROMOnly(std::vector<char>);
