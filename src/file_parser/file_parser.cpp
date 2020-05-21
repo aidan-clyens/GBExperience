@@ -1,7 +1,7 @@
 #include "file_parser.h"
 
 FileParser::FileParser():
-m_buffer_size(0)
+m_header_buffer_size(0)
 {
 
 }
@@ -10,12 +10,12 @@ FileParser::~FileParser() {
 
 }
 
-bool FileParser::load_rom(const std::string &file_name) {
+Cartridge FileParser::load_rom(const std::string &file_name) {
     std::ifstream file_buffer(file_name.c_str(), std::ios::binary | std::ios::ate);
 
     if (!file_buffer.good()) {
         std::cerr << "Exception opening/reading/closing file\n";
-        return false;
+        throw new std::exception;
     }
 
     std::ifstream::pos_type position = file_buffer.tellg();
@@ -27,27 +27,32 @@ bool FileParser::load_rom(const std::string &file_name) {
     file_buffer.read(&file_contents[0], position);
     file_buffer.close();
 
-    m_buffer_size = file_size;
+    m_header_buffer_size = file_size;
+    m_header_buffer = std::vector<uint8_t>(file_contents.begin(), file_contents.end());
 
-    m_buffer = std::vector<uint8_t>(file_contents.begin(), file_contents.end());
-
-    return true;
+    switch (this->get_cartridge_type()) {
+        case ROM_ONLY:
+            return ROMOnly(file_contents);
+        default:
+            std::cerr << "Cartridge type " << this->get_cartridge_type_string() << " not supported" << std::endl;
+            throw new std::exception;
+    }
 }
 
 std::vector<uint8_t> FileParser::get_buffer_data() {
-    return m_buffer;
+    return m_header_buffer;
 }
 
 uint8_t FileParser::get_byte(int index) const {
-    if (index > m_buffer_size) {
+    if (index > m_header_buffer_size) {
         throw new std::exception;
     }
 
-    return m_buffer[index];
+    return m_header_buffer[index];
 }
 
 int FileParser::get_buffer_size() const {
-    return m_buffer_size;
+    return m_header_buffer_size;
 }
 
 std::string FileParser::get_rom_name() const {
