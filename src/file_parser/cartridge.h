@@ -40,8 +40,8 @@ class Cartridge {
         Cartridge();
         virtual ~Cartridge();
 
-        virtual uint8_t read(uint16_t);
-        virtual uint16_t write(uint16_t, uint8_t);
+        virtual uint8_t read(uint16_t) = 0;
+        virtual uint16_t write(uint16_t, uint8_t) = 0;
 
         void set_cartridge_type(cartridge_type_t);
         cartridge_type_t get_cartridge_type() const;
