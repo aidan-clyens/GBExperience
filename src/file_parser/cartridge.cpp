@@ -46,3 +46,26 @@ ROMOnly::ROMOnly(std::vector<char> file_buffer) {
 ROMOnly::~ROMOnly() {
     
 }
+
+uint8_t ROMOnly::read(uint16_t address) {
+    unsigned int index = (unsigned int)address;
+    if (index > m_rom_buffer.size()) {
+        std::cerr << "ROMOnly read: Index out of range" << std::endl;
+        throw new std::exception;
+    }
+
+    return m_rom_buffer[index];
+}
+
+uint16_t ROMOnly::write(uint16_t address, uint8_t data) {
+    unsigned int index = (unsigned int)address;
+
+    if (index > m_rom_buffer.size()) {
+        std::cerr << "ROMOnly write: Index out of range" << std::endl;
+        throw new std::exception;
+    }
+
+    m_rom_buffer[index] = data;
+
+    return address;
+}
