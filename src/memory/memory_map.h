@@ -6,6 +6,7 @@
 
 #include "memory.h"
 #include "io.h"
+#include "../file_parser/cartridge.h"
 #include "../video/definitions.h"
 #include "../debugger/logger.h"
 
@@ -25,7 +26,7 @@ class MemoryMap {
         virtual ~MemoryMap();
 
         bool init_memory_map();
-        void load_rom(std::vector<uint8_t>);
+        void load_rom(Cartridge*);
         uint16_t write(uint16_t, uint8_t);
         uint8_t read(uint16_t);
 
@@ -50,6 +51,8 @@ class MemoryMap {
     private:
         int m_address_space[12];
         std::map<int, void*> m_memory_map;
+
+        Cartridge *m_cartridge;
 
         IO m_io;
 };
