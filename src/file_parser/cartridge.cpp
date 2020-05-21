@@ -12,14 +12,6 @@ Cartridge::~Cartridge() {
 
 }
 
-uint8_t Cartridge::read(uint16_t address) {
-    return 0;
-}
-
-uint16_t Cartridge::write(uint16_t address, uint8_t data) {
-    return 0;
-}
-
 void Cartridge::set_cartridge_type(cartridge_type_t type) {
     m_cartridge_type = type;
 }
