@@ -162,9 +162,9 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     enable_cpu_logging();
 
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
     MemoryMap mem_map;
-    mem_map.load_rom(file_parser.get_buffer_data());
+    mem_map.load_rom(cartridge);
     CPU cpu(mem_map);
 
     // Enable V-Blank interrupts
@@ -202,9 +202,9 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
     enable_cpu_logging();
 
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
     MemoryMap mem_map;
-    mem_map.load_rom(file_parser.get_buffer_data());
+    mem_map.load_rom(cartridge);
     CPU cpu(mem_map);
 
     // Enable Joypad interrupts
@@ -242,9 +242,9 @@ TEST(Interrupts, TriggerTimerInterrupt) {
     enable_cpu_logging();
 
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
     MemoryMap mem_map;
-    mem_map.load_rom(file_parser.get_buffer_data());
+    mem_map.load_rom(cartridge);
     CPU cpu(mem_map);
 
     // Enable Timer Overflow interrupts
@@ -282,9 +282,9 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
     enable_cpu_logging();
 
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
     MemoryMap mem_map;
-    mem_map.load_rom(file_parser.get_buffer_data());
+    mem_map.load_rom(cartridge);
     CPU cpu(mem_map);
 
     // Enable LCD Status interrupts
@@ -319,9 +319,9 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
     std::string rom_file = "../../roms/Tetris.gb";
 
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
     MemoryMap mem_map;
-    mem_map.load_rom(file_parser.get_buffer_data());
+    mem_map.load_rom(cartridge);
     CPU cpu(mem_map);
 
     // Enable Serial Transfer interrupts
@@ -359,9 +359,9 @@ TEST(Interrupts, TriggerMultipleInterrupts) {
     enable_cpu_logging();
 
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
     MemoryMap mem_map;
-    mem_map.load_rom(file_parser.get_buffer_data());
+    mem_map.load_rom(cartridge);
     CPU cpu(mem_map);
 
     // Enable Timer Overflow and Joypad interrupts
