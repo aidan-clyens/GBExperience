@@ -9,10 +9,11 @@ TEST(CPU, InitCPU) {
 
 TEST(CPU, FetchOpcodeFromRom) {
     FileParser file_parser;
-    EXPECT_NO_THROW(file_parser.load_rom(TEST_ROM));
+    Cartridge *cartridge;
+    EXPECT_NO_THROW(cartridge = file_parser.load_rom(TEST_ROM));
 
     MemoryMap mem_map;
-    mem_map. load_rom(file_parser.get_buffer_data());
+    mem_map. load_rom(cartridge);
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x100, cpu.read_register("PC"));

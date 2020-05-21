@@ -82,10 +82,11 @@ TEST(MemoryMap, ReadRom) {
 
     FileParser file_parser;
 
-    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
+    Cartridge *cartridge;
+    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));
+    EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0x54;
@@ -99,16 +100,14 @@ TEST(MemoryMap, LoadRom) {
     std::string rom_file = "../../roms/Tetris.gb";
 
     FileParser file_parser;
-    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
-
-    std::vector<uint8_t> buffer_data = file_parser.get_buffer_data();
-    std::cout << file_parser.get_buffer_size() / 2 << std::endl;
+    Cartridge *cartridge;
+    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_NO_THROW(mem_map.load_rom(buffer_data));
+    EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
-    for (int i = 0; i < buffer_data.size(); i++) {
-        EXPECT_EQ(buffer_data[i], mem_map.read((uint16_t)i));
+    for (int i = 0; i < cartridge->get_size(); i++) {
+        EXPECT_EQ(cartridge->read((uint16_t)i), mem_map.read((uint16_t)i));
     }
 }
 
@@ -116,11 +115,11 @@ TEST(MemoryMap, WriteToRom) {
     std::string rom_file = "../../roms/Tetris.gb";
 
     FileParser file_parser;
-
-    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
+    Cartridge *cartridge;
+    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
-    EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));
+    EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0xFF;
