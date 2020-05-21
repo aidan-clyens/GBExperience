@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 #include <cstdint>
 
@@ -58,8 +59,8 @@ class ROMOnly : public Cartridge {
         ROMOnly(std::vector<char>);
         virtual ~ROMOnly();
 
-        uint8_t read(uint16_t);
-        uint16_t write(uint16_t, uint8_t);
+        uint8_t read(uint16_t) override;
+        uint16_t write(uint16_t, uint8_t) override;
 
     private:
         std::vector<uint8_t> m_rom_buffer;
