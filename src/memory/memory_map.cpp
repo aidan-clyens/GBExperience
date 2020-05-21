@@ -32,15 +32,17 @@ MemoryMap::MemoryMap() {
 
 MemoryMap::~MemoryMap() {
     for (int i = 0; i < m_memory_map.size() - 1; i++) {
-        if (i != 5 || i != 7 || i != 8 || i != 9) {
+        if (i !=0 | i != 1 | i != 5 || i != 7 || i != 8 || i != 9) {
             delete (Memory *)m_memory_map.find(i)->second;
         }
     }
+
+    delete m_cartridge;
 }
 
 bool MemoryMap::init_memory_map() {
     for (int i = 0; i < 11; i++) {
-        if (i != 5 || i != 7 || i != 8 || i != 9) {
+        if (i != 0 | i != 1 | i != 5 || i != 7 || i != 8 || i != 9) {
             Memory *ram = new Memory(m_address_space[i+1] - m_address_space[i]);
             ram->init_memory();
             m_memory_map.insert(std::pair<int, Memory*>(i, ram));
@@ -50,16 +52,8 @@ bool MemoryMap::init_memory_map() {
     return true;
 }
 
-void MemoryMap::load_rom(std::vector<uint8_t> file_parser_buffer) {
-    for (int i = 0; i < file_parser_buffer.size() / 2; i++) {
-        Memory *mem = (Memory *)m_memory_map.find(0)->second;
-        mem->write_memory(i - m_address_space[0], file_parser_buffer[i]);
-    }
-    
-    for (int i = file_parser_buffer.size() / 2; i < file_parser_buffer.size(); i++) {
-        Memory *mem = (Memory *)m_memory_map.find(1)->second;
-        mem->write_memory(i - m_address_space[1], file_parser_buffer[i]);
-    }
+void MemoryMap::load_rom(Cartridge *cartridge) {
+    m_cartridge = cartridge;
 }
 
 uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
@@ -107,10 +101,8 @@ uint8_t MemoryMap::read(uint16_t address) {
 
     switch (index) {
         case 0:
-        case 1: {
-            Memory *mem = (Memory *)m_memory_map.find(index)->second;
-            return mem->read_memory(address - m_address_space[index]);
-        }
+        case 1:
+            return m_cartridge->read(address);
         case 2:
             return this->read_vram(address);
         case 6:
