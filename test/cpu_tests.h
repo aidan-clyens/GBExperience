@@ -9,7 +9,7 @@ TEST(CPU, InitCPU) {
 
 TEST(CPU, FetchOpcodeFromRom) {
     FileParser file_parser;
-    EXPECT_TRUE(file_parser.load_rom(TEST_ROM));
+    EXPECT_NO_THROW(file_parser.load_rom(TEST_ROM));
 
     MemoryMap mem_map;
     mem_map. load_rom(file_parser.get_buffer_data());
