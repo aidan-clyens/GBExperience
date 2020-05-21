@@ -82,7 +82,7 @@ TEST(MemoryMap, ReadRom) {
 
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));
@@ -99,7 +99,7 @@ TEST(MemoryMap, LoadRom) {
     std::string rom_file = "../../roms/Tetris.gb";
 
     FileParser file_parser;
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
 
     std::vector<uint8_t> buffer_data = file_parser.get_buffer_data();
     std::cout << file_parser.get_buffer_size() / 2 << std::endl;
@@ -117,7 +117,7 @@ TEST(MemoryMap, WriteToRom) {
 
     FileParser file_parser;
 
-    EXPECT_TRUE(file_parser.load_rom(rom_file));
+    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));

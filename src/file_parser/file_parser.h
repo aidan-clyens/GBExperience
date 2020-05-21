@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 
+#include "cartridge.h"
+
+
 typedef enum cartridge_type {
     ROM_ONLY = 0x0,
     ROM_MBC1 = 0x1,
@@ -39,7 +42,7 @@ class FileParser {
         FileParser();
         virtual ~FileParser();
     
-        bool load_rom(const std::string &);
+        Cartridge load_rom(const std::string &);
 
         std::vector<uint8_t> get_buffer_data();
         uint8_t get_byte(int) const;
@@ -55,7 +58,7 @@ class FileParser {
         bool is_sgb() const;
     
     private:
-        std::vector<uint8_t> m_buffer;
+        std::vector<uint8_t> m_header_buffer;
 
-        size_t m_buffer_size;
+        size_t m_header_buffer_size;
 };
