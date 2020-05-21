@@ -10,7 +10,7 @@ FileParser::~FileParser() {
 
 }
 
-Cartridge FileParser::load_rom(const std::string &file_name) {
+Cartridge *FileParser::load_rom(const std::string &file_name) {
     std::ifstream file_buffer(file_name.c_str(), std::ios::binary | std::ios::ate);
 
     if (!file_buffer.good()) {
@@ -32,7 +32,7 @@ Cartridge FileParser::load_rom(const std::string &file_name) {
 
     switch (this->get_cartridge_type()) {
         case ROM_ONLY:
-            return ROMOnly(file_contents);
+            return new ROMOnly(file_contents);
         default:
             std::cerr << "Cartridge type " << this->get_cartridge_type_string() << " not supported" << std::endl;
             throw new std::exception;
