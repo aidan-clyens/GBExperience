@@ -36,13 +36,14 @@ TEST(FileParser, GetByteOutOfRange) {
 
 TEST(FileParser, GetROMSize) {
     std::string rom_file = "../../roms/DrMario.gb";
-    uint8_t rom_size = 0x0;
+    uint8_t rom_size_byte = 0x0;
+    int rom_size = 2;
 
     FileParser file_parser;
 
     EXPECT_NO_THROW(file_parser.load_rom(rom_file));
-    EXPECT_EQ(rom_size, file_parser.get_byte(0x148));
-    EXPECT_EQ(ROM_SIZE, file_parser.get_rom_size_banks());
+    EXPECT_EQ(rom_size_byte, file_parser.get_byte(0x148));
+    EXPECT_EQ(rom_size, file_parser.get_rom_size_banks());
 }
 
 TEST(FileParser, GetRAMSize) {
