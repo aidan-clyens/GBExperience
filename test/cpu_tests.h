@@ -8,6 +8,8 @@ TEST(CPU, InitCPU) {
 }
 
 TEST(CPU, FetchOpcodeFromRom) {
+    std::string rom_file = "../../roms/DrMario.gb";
+
     FileParser file_parser;
     Cartridge *cartridge;
     EXPECT_NO_THROW(cartridge = file_parser.load_rom(TEST_ROM));

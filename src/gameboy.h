@@ -10,10 +10,6 @@
 #include "debugger/debugger.h"
 
 
-const float EXPECTED_FREQ_MHZ = 4.194304;
-const long int EXPECTED_CYCLE_TIME_NS = 1000.0 / EXPECTED_FREQ_MHZ;
-
-
 class GameBoy {
     public:
         GameBoy(bool=false);
