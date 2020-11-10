@@ -9,7 +9,7 @@ TEST(FileParser, DefaultConstructor) {
 }
 
 TEST(FileParser, LoadRomValidFile) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
 
     FileParser file_parser;
 
@@ -27,7 +27,7 @@ TEST(FileParser, LoadRomInvalidFile) {
 }
 
 TEST(FileParser, GetByteOutOfRange) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
 
     FileParser file_parser;
 
@@ -36,7 +36,7 @@ TEST(FileParser, GetByteOutOfRange) {
 }
 
 TEST(FileParser, GetROMSize) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
     uint8_t rom_size = 0x0;
 
     FileParser file_parser;
@@ -47,7 +47,7 @@ TEST(FileParser, GetROMSize) {
 }
 
 TEST(FileParser, GetRAMSize) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
     uint8_t ram_size = 0x0;
 
     FileParser file_parser;
@@ -58,7 +58,7 @@ TEST(FileParser, GetRAMSize) {
 }
 
 TEST(FileParser, GetCartridgeType) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
     cartridge_type_t type = ROM_ONLY;
 
     FileParser file_parser;
@@ -68,7 +68,7 @@ TEST(FileParser, GetCartridgeType) {
 }
 
 TEST(FileParser, CheckGameBoyColor) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
     bool is_gameboy_color = false;
 
     FileParser file_parser;
@@ -78,7 +78,7 @@ TEST(FileParser, CheckGameBoyColor) {
 }
 
 TEST(FileParser, CheckSuperGameBoy) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
     bool is_super_gameboy = false;
 
     FileParser file_parser;
@@ -88,22 +88,22 @@ TEST(FileParser, CheckSuperGameBoy) {
 }
 
 TEST(FileParser, GetTitle) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    std::string title = "TETRIS";
+    std::string rom_file = "../../roms/DrMario.gb";
+    std::string title = "DR.MARIO";
 
     FileParser file_parser;
 
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     
-    EXPECT_EQ(0x54, file_parser.get_byte(0x134));
+    EXPECT_EQ(0x44, file_parser.get_byte(0x134));
     EXPECT_EQ(0x0, file_parser.get_byte(0x142));
 
     EXPECT_EQ(title, file_parser.get_rom_name());
 }
 
 TEST(FileParser, GetEntireBuffer) {
-    std::string rom_file = "../../roms/Tetris.gb";
-    std::string title = "TETRIS";
+    std::string rom_file = "../../roms/DrMario.gb";
+    std::string title = "DR.MARIO";
     std::vector<uint8_t> buffer_data;
 
     FileParser file_parser;
@@ -111,7 +111,7 @@ TEST(FileParser, GetEntireBuffer) {
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     buffer_data = file_parser.get_buffer_data();
 
-    EXPECT_EQ(0x54, buffer_data[0x134]);
+    EXPECT_EQ(0x44, buffer_data[0x134]);
     EXPECT_EQ(0x0, buffer_data[0x142]);
 
     for (int i = 0; i < buffer_data.size(); i++) {

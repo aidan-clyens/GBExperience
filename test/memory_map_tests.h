@@ -78,7 +78,7 @@ TEST(MemoryMap, WriteInternalRAM) {
 }
 
 TEST(MemoryMap, ReadRom) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
 
     FileParser file_parser;
 
@@ -88,7 +88,7 @@ TEST(MemoryMap, ReadRom) {
     EXPECT_NO_THROW(mem_map.load_rom(file_parser.get_buffer_data()));
 
     uint16_t address_1 = 0x134;
-    uint8_t data_1 = 0x54;
+    uint8_t data_1 = 0x44;
 
     EXPECT_EQ(0, mem_map.get_index(address_1));
     EXPECT_EQ(data_1, mem_map.read(address_1));
@@ -96,7 +96,7 @@ TEST(MemoryMap, ReadRom) {
 
 
 TEST(MemoryMap, LoadRom) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
 
     FileParser file_parser;
     EXPECT_TRUE(file_parser.load_rom(rom_file));
@@ -113,7 +113,7 @@ TEST(MemoryMap, LoadRom) {
 }
 
 TEST(MemoryMap, WriteToRom) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
 
     FileParser file_parser;
 
