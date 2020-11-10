@@ -47,7 +47,7 @@ void GameBoy::tick() {
 
 void GameBoy::load_rom(const std::string &rom_file) {
     FileParser file_parser;
-    file_parser.load_rom(rom_file);
+    Cartridge *cartridge = file_parser.load_rom(rom_file);
 
     m_rom_name = file_parser.get_rom_name();
     cartridge_type_t cartridge_type = file_parser.get_cartridge_type();
@@ -64,7 +64,7 @@ void GameBoy::load_rom(const std::string &rom_file) {
         throw new std::exception;
     }
 
-    m_memory_map.load_rom(file_parser.get_buffer_data());
+    m_memory_map.load_rom(cartridge);
     m_ui.init_display(m_rom_name);
 }
 
