@@ -8,7 +8,7 @@ TEST(CPU, InitCPU) {
 }
 
 TEST(CPU, FetchOpcodeFromRom) {
-    std::string rom_file = "../../roms/Tetris.gb";
+    std::string rom_file = "../../roms/DrMario.gb";
 
     FileParser file_parser;
     EXPECT_TRUE(file_parser.load_rom(rom_file));
