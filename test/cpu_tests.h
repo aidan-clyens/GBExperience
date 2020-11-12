@@ -12,7 +12,7 @@ TEST(CPU, FetchOpcodeFromRom) {
 
     FileParser file_parser;
     Cartridge *cartridge;
-    EXPECT_NO_THROW(cartridge = file_parser.load_rom(TEST_ROM));
+    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
 
     MemoryMap mem_map;
     mem_map. load_rom(cartridge);
