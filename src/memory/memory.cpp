@@ -8,7 +8,7 @@ m_memory_size(mem_size)
 }
 
 Memory::~Memory() {
-    delete m_memory;
+    delete[] m_memory;
 }
 
 bool Memory::init_memory() {
