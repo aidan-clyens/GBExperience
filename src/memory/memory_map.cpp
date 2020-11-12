@@ -36,8 +36,6 @@ MemoryMap::~MemoryMap() {
             delete (Memory *)m_memory_map.find(i)->second;
         }
     }
-
-    delete m_cartridge;
 }
 
 bool MemoryMap::init_memory_map() {
