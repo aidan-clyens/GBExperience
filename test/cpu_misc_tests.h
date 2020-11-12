@@ -177,10 +177,16 @@ TEST(CPU_MISC, HALT) {
 // STOP
 TEST(CPU_MISC, STOP) {
     uint8_t opcode = 0x10;
+    std::string rom_file = "../../roms/DrMario.gb";
 
     enable_interrupt_logging();
 
+    FileParser file_parser;
+    Cartridge *cartridge;
+    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+
     MemoryMap mem_map;
+    mem_map. load_rom(cartridge);
     CPU cpu(mem_map);
 
     cpu.decode_op(opcode);
