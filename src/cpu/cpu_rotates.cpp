@@ -30,7 +30,7 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
             log_cpu("RLA");
         }
         else {
-            log_cpu("RL %s", reg);
+            log_cpu("RL %s", reg.c_str());
         }
         
 
@@ -48,7 +48,7 @@ void CPU::rotate_left(const std::string &reg, bool use_carry) {
             log_cpu("RLC (HL)" );
         }
         else {
-            log_cpu("RLC %s", reg);
+            log_cpu("RLC %s", reg.c_str());
         }
         
 
@@ -101,7 +101,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
             log_cpu("RR (HL)");
         }
         else {
-            log_cpu("RR %s", reg);
+            log_cpu("RR %s", reg.c_str());
         }
         
 
@@ -119,7 +119,7 @@ void CPU::rotate_right(const std::string &reg, bool use_carry) {
             log_cpu("RRC (HL)");
         }
         else {
-            log_cpu("RRC %s", reg);
+            log_cpu("RRC %s", reg.c_str());
         }
         
 
@@ -151,9 +151,7 @@ void CPU::shift_left(const std::string &reg) {
     uint8_t result = val << 1;
     bool bit_7 = (val & 0x80) == 0x80;
 
-    
-    log_cpu("SLA %s", reg);
-    
+    log_cpu("SLA %s", reg.c_str());
 
     // Set flags
     this->set_flag_register(ZERO_FLAG, (result == 0));
@@ -189,14 +187,11 @@ void CPU::shift_right(const std::string &reg, bool keep_msb) {
             result |= 0x80;
         }
 
-        
-        log_cpu("SRA %s", reg);
-        
+        log_cpu("SRA %s", reg.c_str());
     }
     else {
-        
-        log_cpu("SRL %s", reg);
-        
+
+        log_cpu("SRL %s", reg.c_str());
     }
 
     // Set flags
