@@ -4,6 +4,21 @@ project(GameBoy)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+set(SFML_STATIC_LIBRARIES FALSE CACHE BOOL "Use static SFML libraries")
+set(SFML_ROOT "C:/SFML-2.3.1")
+
+if (SFML_STATIC_LIBRARIES)
+    add_definitions(-DSFML_STATIC)
+endif()
+
+find_package(SFML 2 COMPONENTS audio graphics window system network REQUIRED)
+if (SFML_FOUND)
+    include_directories(${SFML_INCLUDE_DIR})
+else()
+    set(SFML_ROOT "" CACHE_PATH "SFML top-level directory")
+    message("SFML directory not found")
+endif()
 
 add_subdirectory(src)
 add_subdirectory(test)

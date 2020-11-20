@@ -112,7 +112,7 @@ void UI::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
         case sf::Keyboard::Key::Period:
             m_memory_map.set_button_pressed(B, pressed);
             break;
-        case sf::Keyboard::Key::Enter:
+        case sf::Keyboard::Key::Return:
             m_memory_map.set_button_pressed(START, pressed);
             break;
         case sf::Keyboard::Key::BackSpace:
