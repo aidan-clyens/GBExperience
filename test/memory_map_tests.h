@@ -125,7 +125,7 @@ TEST(MemoryMap, WriteToRom) {
     uint8_t data_1 = 0xFF;
 
     EXPECT_EQ(0, mem_map.get_index(address_1));
-    EXPECT_ANY_THROW(mem_map.write(address_1, data_1));
+    EXPECT_EQ(0, mem_map.write(address_1, data_1));
 }
 
 TEST(MemoryMap, ReadFromUnimplementedSpace) {
@@ -134,7 +134,7 @@ TEST(MemoryMap, ReadFromUnimplementedSpace) {
     uint16_t address = 0xFEAF;
 
     EXPECT_EQ(7, mem_map.get_index(address));
-    EXPECT_ANY_THROW(mem_map.read(address));
+    EXPECT_EQ(0, mem_map.read(address));
 }
 
 
