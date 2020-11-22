@@ -60,8 +60,8 @@ TEST(MemoryMap, WriteSwitchableRAM) {
 
     EXPECT_EQ(3, mem_map.get_index(address));
     EXPECT_NO_THROW(mem_map.write(address, data));
-    EXPECT_EQ(mem_address, mem_map.write(address, data));
-    EXPECT_EQ(data, mem_map.read(address));
+    EXPECT_EQ(0, mem_map.write(address, data));
+    EXPECT_EQ(0, mem_map.read(address));
 }
 
 TEST(MemoryMap, WriteInternalRAM) {
