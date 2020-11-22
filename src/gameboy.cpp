@@ -59,11 +59,6 @@ void GameBoy::load_rom(const std::string &rom_file) {
     std::cout << "Super GameBoy: " << (file_parser.is_sgb() ? "YES" : "NO") << std::endl;
     std::cout << "GameBoy Color: " << (file_parser.is_gb_color() ? "YES" : "NO") << std::endl << std::endl;
 
-    if (cartridge_type != ROM_ONLY) {
-        std::cerr << "Cartridge type: " << file_parser.get_cartridge_type_string() << " not implemented" << std::endl;
-        throw new std::exception;
-    }
-
     m_memory_map.load_rom(cartridge);
     m_ui.init_display(m_rom_name);
 }
