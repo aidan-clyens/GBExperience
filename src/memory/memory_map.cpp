@@ -66,7 +66,12 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             return this->write_vram(address, data);
         case 6:
             return this->write_oam(address, data);
-        case 3:
+        case 3: {
+            if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
+                log_warn("Cannot write to interal RAM with a ROM_ONLY cartridge");
+            }
+            break;
+        }
         case 4:
         case 10: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
@@ -105,7 +110,12 @@ uint8_t MemoryMap::read(uint16_t address) {
             return this->read_vram(address);
         case 6:
             return this->read_oam(address);
-        case 3:
+        case 3: {
+            if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
+                log_warn("Cannot read to interal RAM with a ROM_ONLY cartridge");
+            }
+            break;
+        }
         case 4:
         case 10: {
             Memory *mem = (Memory *)m_memory_map.find(index)->second;
