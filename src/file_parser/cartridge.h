@@ -4,6 +4,12 @@
 #include <vector>
 #include <cstdint>
 
+#include "../memory/memory.h"
+#include "../debugger/logger.h"
+
+
+const int ROM_BANK_SIZE = 16 * 1024;
+
 
 typedef enum cartridge_type {
     ROM_ONLY = 0x0,
@@ -37,7 +43,7 @@ typedef enum cartridge_type {
 
 class Cartridge {
     public:
-        Cartridge();
+        Cartridge(std::vector<char>, int);
         virtual ~Cartridge();
 
         virtual uint8_t read(uint16_t) = 0;
@@ -45,23 +51,23 @@ class Cartridge {
 
         void set_cartridge_type(cartridge_type_t);
         cartridge_type_t get_cartridge_type() const;
-        void set_size(int);
-        int get_size() const;
+        void set_num_rom_banks(int);
+        int get_num_rom_banks() const;
 
-    private:
+    protected:
         cartridge_type_t m_cartridge_type;
         int m_cartridge_size;
+        int m_num_rom_banks;
+
+        std::vector<Memory *> m_rom_banks;
 };
 
 
 class ROMOnly : public Cartridge {
     public:
-        ROMOnly(std::vector<char>);
+        ROMOnly(std::vector<char>, int);
         virtual ~ROMOnly();
 
         uint8_t read(uint16_t) override;
         uint16_t write(uint16_t, uint8_t) override;
-
-    private:
-        std::vector<uint8_t> m_rom_buffer;
 };

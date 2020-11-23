@@ -32,7 +32,7 @@ Cartridge *FileParser::load_rom(const std::string &file_name) {
 
     switch (this->get_cartridge_type()) {
         case ROM_ONLY:
-            return new ROMOnly(file_contents);
+            return new ROMOnly(file_contents, this->get_rom_size_banks());
         default:
             std::cerr << "Cartridge type " << this->get_cartridge_type_string() << " not supported" << std::endl;
             throw new std::exception;
