@@ -118,7 +118,7 @@ TEST(CPU, ResetFlagRegister) {
 }
 
 TEST(CPU, WriteMemoryHL) {
-    uint16_t HL = 0xA000;
+    uint16_t HL = 0xFF80;
     uint8_t val = 0xAB;
     
     MemoryMap mem_map;
@@ -135,7 +135,7 @@ TEST(CPU, WriteMemoryHL) {
 }
 
 TEST(CPU, WriteMemory) {
-    uint16_t BC = 0xA000;
+    uint16_t BC = 0xFF80;
     uint8_t val = 0xAB;
     
     MemoryMap mem_map;
