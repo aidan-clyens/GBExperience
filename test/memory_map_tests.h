@@ -84,6 +84,7 @@ TEST(MemoryMap, ReadRom) {
 
     Cartridge *cartridge;
     EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+    EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(cartridge));
@@ -102,12 +103,13 @@ TEST(MemoryMap, LoadRom) {
     FileParser file_parser;
     Cartridge *cartridge;
     EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+    EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
-    for (int i = 0; i < cartridge->get_size(); i++) {
-        EXPECT_EQ(cartridge->read((uint16_t)i), mem_map.read((uint16_t)i));
+    for (int i = 0; i < file_parser.get_buffer_size(); i++) {
+        EXPECT_EQ(file_parser.get_byte((uint16_t)i), mem_map.read((uint16_t)i));
     }
 }
 
