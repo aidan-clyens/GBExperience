@@ -15,7 +15,7 @@ MemoryMap setup_mem_map(uint16_t PC, uint16_t value) {
 
 
 TEST(CPU_JUMP, JP_NN) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xC3;
 
@@ -30,7 +30,7 @@ TEST(CPU_JUMP, JP_NN) {
 }
 
 TEST(CPU_JUMP, JP_NZ_NN_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xC2;
 
@@ -46,7 +46,7 @@ TEST(CPU_JUMP, JP_NZ_NN_False) {
 }
 
 TEST(CPU_JUMP, JP_NZ_NN_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xC2;
 
@@ -62,7 +62,7 @@ TEST(CPU_JUMP, JP_NZ_NN_True) {
 }
 
 TEST(CPU_JUMP, JP_Z_NN_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xCA;
 
@@ -78,7 +78,7 @@ TEST(CPU_JUMP, JP_Z_NN_False) {
 }
 
 TEST(CPU_JUMP, JP_Z_NN_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xCA;
 
@@ -94,7 +94,7 @@ TEST(CPU_JUMP, JP_Z_NN_True) {
 }
 
 TEST(CPU_JUMP, JP_NC_NN_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xD2;
 
@@ -110,7 +110,7 @@ TEST(CPU_JUMP, JP_NC_NN_False) {
 }
 
 TEST(CPU_JUMP, JP_NC_NN_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xD2;
 
@@ -126,7 +126,7 @@ TEST(CPU_JUMP, JP_NC_NN_True) {
 }
 
 TEST(CPU_JUMP, JP_C_NN_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xDA;
 
@@ -142,7 +142,7 @@ TEST(CPU_JUMP, JP_C_NN_False) {
 }
 
 TEST(CPU_JUMP, JP_C_NN_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xDA;
 
@@ -158,7 +158,7 @@ TEST(CPU_JUMP, JP_C_NN_True) {
 }
 
 TEST(CPU_JUMP, JP_HL) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint16_t value = 0xABCD;
     uint8_t opcode = 0xE9;
 
@@ -174,7 +174,7 @@ TEST(CPU_JUMP, JP_HL) {
 }
 
 TEST(CPU_JUMP, JR_Postive) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     int value_signed = 112;
     uint16_t result_PC = PC + value_signed + 1;
@@ -191,7 +191,7 @@ TEST(CPU_JUMP, JR_Postive) {
 }
 
 TEST(CPU_JUMP, JR_Negative) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0xAB;
     int value_signed = -85;
     uint8_t opcode = 0x18;
@@ -208,7 +208,7 @@ TEST(CPU_JUMP, JR_Negative) {
 }
 
 TEST(CPU_JUMP, JR_NZ_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x20;
@@ -225,7 +225,7 @@ TEST(CPU_JUMP, JR_NZ_False) {
 }
 
 TEST(CPU_JUMP, JR_NZ_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint8_t opcode = 0x20;
 
@@ -241,7 +241,7 @@ TEST(CPU_JUMP, JR_NZ_True) {
 }
 
 TEST(CPU_JUMP, JR_Z_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint8_t opcode = 0x28;
 
@@ -257,7 +257,7 @@ TEST(CPU_JUMP, JR_Z_False) {
 }
 
 TEST(CPU_JUMP, JR_Z_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x28;
@@ -274,7 +274,7 @@ TEST(CPU_JUMP, JR_Z_True) {
 }
 
 TEST(CPU_JUMP, JR_NC_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x30;
@@ -291,7 +291,7 @@ TEST(CPU_JUMP, JR_NC_False) {
 }
 
 TEST(CPU_JUMP, JR_NC_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint8_t opcode = 0x30;
 
@@ -307,7 +307,7 @@ TEST(CPU_JUMP, JR_NC_True) {
 }
 
 TEST(CPU_JUMP, JR_C_False) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint8_t opcode = 0x38;
 
@@ -323,7 +323,7 @@ TEST(CPU_JUMP, JR_C_False) {
 }
 
 TEST(CPU_JUMP, JR_C_True) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t value = 0x70;
     uint16_t result_PC = PC + value + 1;
     uint8_t opcode = 0x38;
@@ -342,8 +342,8 @@ TEST(CPU_JUMP, JR_C_True) {
 // RST 10
 TEST(CPU_RST, RST) {
     uint8_t opcode = 0xD7;
-    uint16_t PC = 0xA000;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t SP = 0xFFF0;
 
     MemoryMap mem_map;
     
@@ -368,9 +368,9 @@ TEST(CPU_RST, RST) {
 // CALL nn
 TEST(CPU_CALL, CALL_NN) {
     uint8_t opcode = 0xCD;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
@@ -401,9 +401,9 @@ TEST(CPU_CALL, CALL_NN) {
 // CALL cc, nn
 TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
     uint8_t opcode = 0xDC;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
@@ -430,9 +430,9 @@ TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
 // CALL cc, nn
 TEST(CPU_CALL, CALL_CC_NN_Carry) {
     uint8_t opcode = 0xDC;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
@@ -467,9 +467,9 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
 // RET
 TEST(CPU_RETURNS, RET) {
     uint8_t opcode = 0xCD;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
@@ -506,9 +506,9 @@ TEST(CPU_RETURNS, RET) {
 // RET cc
 TEST(CPU_RETURNS, RET_CC_NoFlags) {
     uint8_t opcode = 0xCD;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
@@ -549,9 +549,9 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
 // RET cc
 TEST(CPU_RETURNS, RET_CC_Carry) {
     uint8_t opcode = 0xCD;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;
@@ -592,9 +592,9 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
 // RETI
 TEST(CPU_RETURNS, RETI) {
     uint8_t opcode = 0xCD;
-    uint16_t PC = 0xA000;
-    uint16_t next_PC = 0xA002;
-    uint16_t SP = 0xC000;
+    uint16_t PC = 0xFF80;
+    uint16_t next_PC = 0xFF82;
+    uint16_t SP = 0xFFF0;
     uint16_t val = 0xA0FF;
 
     MemoryMap mem_map;

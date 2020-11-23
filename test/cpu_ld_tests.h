@@ -6,7 +6,7 @@ TEST(CPU_LD, LD_NN_N) {
     uint8_t opcode = 0x06;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -51,7 +51,7 @@ TEST(CPU_LD, LD_R1_HL) {
     uint8_t opcode = 0x46;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -75,7 +75,7 @@ TEST(CPU_LD, LD_HL_R2) {
     uint8_t opcode = 0x70;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -99,8 +99,8 @@ TEST(CPU_LD, LD_HL_N) {
     uint8_t opcode = 0x36;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
-    uint16_t PC = 0xA200;
+    uint16_t address = 0xFF80;
+    uint16_t PC = 0xFFF0;
 
     MemoryMap mem_map;
     
@@ -125,7 +125,7 @@ TEST(CPU_LD, LD_A_BC) {
     uint8_t opcode = 0x0A;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -149,8 +149,8 @@ TEST(CPU_LD, LD_A_NN) {
     uint8_t opcode = 0xFA;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
-    uint16_t PC = 0xA200;
+    uint16_t address = 0xFF80;
+    uint16_t PC = 0xFFF0;
 
     MemoryMap mem_map;
     
@@ -175,7 +175,7 @@ TEST(CPU_LD, LD_A_N) {
     uint8_t opcode = 0x3E;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -220,7 +220,7 @@ TEST(CPU_LD, LD_BC_A) {
     uint8_t opcode = 0x02;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -244,8 +244,8 @@ TEST(CPU_LD, LD_NN_A) {
     uint8_t opcode = 0xEA;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
-    uint16_t PC = 0xA200;
+    uint16_t address = 0xFF80;
+    uint16_t PC = 0xFFF0;
 
     MemoryMap mem_map;
     
@@ -326,7 +326,7 @@ TEST(CPU_LD, LDD_A_HL) {
     uint8_t opcode = 0x3A;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -351,7 +351,7 @@ TEST(CPU_LD, LDD_HL_A) {
     uint8_t opcode = 0x32;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -379,7 +379,7 @@ TEST(CPU_LD, LDI_A_HL) {
     uint8_t opcode = 0x2A;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -404,7 +404,7 @@ TEST(CPU_LD, LDI_HL_A) {
     uint8_t opcode = 0x22;
     uint8_t val_1 = 0x20;
     uint8_t val_2 = 0xAC;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -435,7 +435,7 @@ TEST(CPU_LD, LD_n_A) {
     uint8_t val_2 = 0xAC;
     uint8_t val_n = 0x14;
     uint16_t address = 0xFF00 + val_n;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -463,7 +463,7 @@ TEST(CPU_LD, LD_A_n) {
     uint8_t val_2 = 0xAC;
     uint8_t val_n = 0x14;
     uint16_t address = 0xFF00 + val_n;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -490,7 +490,7 @@ TEST(CPU_LD_16Bit, LD_N_NN) {
     uint8_t opcode = 0x01;
     uint16_t val_1 = 0x1234;
     uint16_t val_2 = 0xABCD;
-    uint16_t PC = 0xA200;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -535,9 +535,9 @@ TEST(CPU_LD_16Bit, LD_SP_HL) {
 TEST(CPU_LD_16Bit, LDHL_SP_N) {
     uint8_t opcode = 0xF8;
     uint16_t val_1 = 0x1234;
-    uint16_t SP = 0xABFF;
+    uint16_t SP = 0xFFF0;
     int8_t n = 0x02;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -569,10 +569,10 @@ TEST(CPU_LD_16Bit, LDHL_SP_N) {
 TEST(CPU_LD_16Bit, LDHL_SP_N_Negative) {
     uint8_t opcode = 0xF8;
     uint16_t val_1 = 0x1234;
-    uint16_t SP = 0xABFF;
+    uint16_t SP = 0xFFF0;
     int8_t n = 0xF2;
     int signed_n = -14;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -606,7 +606,7 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Carry) {
     uint16_t val_1 = 0x1234;
     uint16_t SP = 0xFFFF;
     uint8_t n = 0x02;
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -645,7 +645,7 @@ TEST(CPU_LD_16Bit, LD_NN_SP) {
 TEST(CPU_LD_16Bit, LD_PUSH_NN) {
     uint8_t opcode = 0xC5;
     uint16_t val_1 = 0xABCD;
-    uint16_t SP = 0xC000;
+    uint16_t SP = 0xFFFE;
 
     MemoryMap mem_map;
     
@@ -674,7 +674,7 @@ TEST(CPU_LD_16Bit, LD_PUSH_NN) {
 TEST(CPU_LD_16Bit, LD_POP_NN) {
     uint8_t opcode = 0xC5;
     uint16_t val_1 = 0xABCD;
-    uint16_t SP = 0xC000;
+    uint16_t SP = 0xFFFE;
 
     MemoryMap mem_map;
     
