@@ -60,8 +60,12 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
     switch (index) {
         case 0:
         case 1:
-            log_warn("Cannot write to ROM");
-            break;
+            if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
+                log_warn("Cannot write to ROM");
+                break;
+            }
+
+            return m_cartridge->write(address, data);
         case 2:
             return this->write_vram(address, data);
         case 6:
