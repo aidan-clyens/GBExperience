@@ -19,6 +19,7 @@
 #include "framebuffer_tests.h"
 #include "integration_tests.h"
 #include "ui_tests.h"
+#include "cartridge_tests.h"
 
 
 int main(int argc, char** argv) {
