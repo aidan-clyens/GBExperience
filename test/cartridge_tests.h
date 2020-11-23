@@ -24,11 +24,14 @@ TEST(Cartridge, ROMOnlyRead) {
 
     FileParser file_parser;
 
-    uint16_t address = 0x134;
-    uint8_t data = 0x44;
+    uint16_t address0 = 0x134;
+    uint8_t data0 = 0x44;
+    uint16_t address1 = 0x4000;
+    uint8_t data1 = 0x88;
 
     ROMOnly* cartridge = (ROMOnly*)file_parser.load_rom(rom_file);
-    EXPECT_EQ(data, cartridge->read(address));
+    EXPECT_EQ(data0, cartridge->read(address0));
+    EXPECT_EQ(data1, cartridge->read(address1));
 }
 
 TEST(Cartridge, ROMOnlyInvalidRead) {
