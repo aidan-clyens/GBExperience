@@ -31,7 +31,7 @@ TEST(CPU_ALU, ADD) {
 TEST(CPU_ALU, ADD_HL) {
     uint8_t opcode = 0x86;
     uint8_t val = 0x20;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
     uint8_t n = 0x10;
 
     MemoryMap mem_map;
@@ -63,7 +63,7 @@ TEST(CPU_ALU, ADD_N) {
     uint8_t val = 0x20;
     uint8_t n = 0x10;
 
-    uint16_t PC = 0xA0FF;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -332,7 +332,7 @@ TEST(CPU_ALU, SUB) {
 
 TEST(CPU_ALU, SUB_HL) {
     uint8_t opcode = 0x96;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
     uint8_t val = 0xF0;    // 1111 0000
     uint8_t n = 0x50;      // 0101 0000
     uint8_t result = 0xA0; // 1010 0000
@@ -844,7 +844,7 @@ TEST(CPU_ALU, INCHalfCarry) {
 
 TEST(CPU_ALU, INC_HL) {
     uint8_t opcode = 0x34;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
     uint8_t val = 0x15;
 
     MemoryMap mem_map;
@@ -933,7 +933,7 @@ TEST(CPU_ALU, DECHalfCarry) {
 
 TEST(CPU_ALU, DEC_HL) {
     uint8_t opcode = 0x35;
-    uint16_t address = 0xA0FF;
+    uint16_t address = 0xFF80;
     uint16_t val = 0x13;    // 0001 0011
     uint8_t result = 0x12;  // 0001 0010
 
@@ -1033,7 +1033,7 @@ TEST(CPU_ALU_16Bit, ADD_SP) {
     uint16_t val = 0x1020;
     uint8_t n = 0x03;
 
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -1065,7 +1065,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_Negative) {
     int8_t n = 0xFF;
     int signed_n = -1;
 
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -1096,7 +1096,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
     uint16_t val = 0xFFFF;
     int8_t n = 0x2F;
 
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     
@@ -1127,7 +1127,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_HalfCarry) {
     uint16_t val = 0x10FF;
     uint8_t n = 0x03;
 
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
 
     MemoryMap mem_map;
     

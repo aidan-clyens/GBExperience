@@ -188,7 +188,7 @@ TEST(CPU_ROTATES, RRA_CarrySet) {
 
 // RLC B
 TEST(CPU_ROTATES, RLC_N) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x00;
     uint8_t B = 0xC6;      // 1100 0110
     uint8_t result = 0x8D; // 1000 1101
@@ -219,9 +219,9 @@ TEST(CPU_ROTATES, RLC_N) {
 
 // RLC (HL)
 TEST(CPU_ROTATES, RLC_N_HL) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x06;
-    uint16_t HL = 0xA0FF;
+    uint16_t HL = 0xFFF0;
     uint8_t value = 0xC6;      // 1100 0110
     uint8_t result = 0x8D; // 1000 1101
     bool bit_7 = true;
@@ -253,7 +253,7 @@ TEST(CPU_ROTATES, RLC_N_HL) {
 
 // RL B
 TEST(CPU_ROTATES, RL_N_CarryNotSet) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x10;
     uint8_t B = 0xC6;       // 1100 0110
     uint8_t result = 0x8C;  // 1000 1100
@@ -288,7 +288,7 @@ TEST(CPU_ROTATES, RL_N_CarryNotSet) {
 
 // RL B
 TEST(CPU_ROTATES, RL_N_CarrySet) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x10;
     uint8_t B = 0xC6;       // 1100 0110
     uint8_t result = 0x8D;  // 1000 1101
@@ -323,7 +323,7 @@ TEST(CPU_ROTATES, RL_N_CarrySet) {
 
 // RRC B
 TEST(CPU_ROTATES, RRC_N) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x08;
     uint8_t B = 0xC5;       // 1100 0101
     uint8_t result = 0xE2;  // 1110 0010
@@ -354,9 +354,9 @@ TEST(CPU_ROTATES, RRC_N) {
 
 // RRC (HL)
 TEST(CPU_ROTATES, RRC_N_HL) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x0E;
-    uint16_t HL = 0xA0FF;
+    uint16_t HL = 0xFFF0;
     uint8_t val = 0xC5;       // 1100 0101
     uint8_t result = 0xE2;  // 1110 0010
     bool bit_0 = true;
@@ -388,7 +388,7 @@ TEST(CPU_ROTATES, RRC_N_HL) {
 
 // RR B
 TEST(CPU_ROTATES, RR_N_CarryNotSet) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x18;
     uint8_t B = 0xC5;      // 1100 0101
     uint8_t result = 0x62; // 0110 0010
@@ -423,7 +423,7 @@ TEST(CPU_ROTATES, RR_N_CarryNotSet) {
 
 // RR B
 TEST(CPU_ROTATES, RR_N_CarrySet) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x18;
     uint8_t B = 0xC5;      // 1100 0101
     uint8_t result = 0xE2; // 1110 0010
@@ -458,7 +458,7 @@ TEST(CPU_ROTATES, RR_N_CarrySet) {
 
 // SLA B
 TEST(CPU_ROTATES, SLA_N) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x20;
     uint8_t B = 0xC5;      // 1100 0101
     uint8_t result = 0x8A; // 1000 1010
@@ -489,7 +489,7 @@ TEST(CPU_ROTATES, SLA_N) {
 
 // SRA B
 TEST(CPU_ROTATES, SRA_N) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x28;
     uint8_t B = 0xC5;      // 1100 0101
     uint8_t result = 0xE2; // 1110 0010
@@ -520,7 +520,7 @@ TEST(CPU_ROTATES, SRA_N) {
 
 // SRL B
 TEST(CPU_ROTATES, SRL_N) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x38;
     uint8_t B = 0xC5;      // 1100 0101
     uint8_t result = 0x62; // 0110 0010

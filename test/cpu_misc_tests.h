@@ -3,7 +3,7 @@
 
 // SWAP A
 TEST(CPU_MISC, SWAP) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x37;
     uint8_t A = 0xAB;
     uint8_t result = 0xBA;
@@ -34,8 +34,8 @@ TEST(CPU_MISC, SWAP) {
 
 // SWAP (HL)
 TEST(CPU_MISC, SWAP_HL) {
-    uint16_t PC = 0xA000;
-    uint16_t HL = 0xA0FF;
+    uint16_t PC = 0xFF80;
+    uint16_t HL = 0xFFF0;
     uint8_t opcode = 0x36;
     uint8_t val = 0xAB;
     uint8_t result = 0xBA;

@@ -3,7 +3,7 @@
 
 // BIT 2, B
 TEST(CPU_BIT_OPS, BIT_B_R) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x50;
     uint8_t B = 0xAB;     // 1010 1011
     bool is_zero = true;
@@ -28,9 +28,9 @@ TEST(CPU_BIT_OPS, BIT_B_R) {
 
 // BIT 1, (HL)
 TEST(CPU_BIT_OPS, BIT_B_HL) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x4E;
-    uint16_t HL = 0xA0FF;
+    uint16_t HL = 0xFFF0;
     uint8_t val = 0xAB;     // 1010 1011
     bool is_zero = false;
 
@@ -56,7 +56,7 @@ TEST(CPU_BIT_OPS, BIT_B_HL) {
 
 // SET 2, B
 TEST(CPU_BIT_OPS, SET_B_R) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x50;
     uint8_t B = 0xAB; // 1010 1011
     uint8_t result = 0xAF;  // 1010 1111
@@ -78,9 +78,9 @@ TEST(CPU_BIT_OPS, SET_B_R) {
 
 // SET 1, (HL)
 TEST(CPU_BIT_OPS, SET_B_HL) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0xCE;
-    uint16_t HL = 0xA0FF;
+    uint16_t HL = 0xFFF0;
     uint8_t val = 0xA9;     // 1010 1001
     uint8_t result = 0xAB;      // 1010 1010
 
@@ -104,7 +104,7 @@ TEST(CPU_BIT_OPS, SET_B_HL) {
 
 // RES 1, B
 TEST(CPU_BIT_OPS, RES_B_R) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x88;
     uint8_t B = 0xAB; // 1010 1011
     uint8_t result = 0xA9;  // 1010 1001
@@ -126,9 +126,9 @@ TEST(CPU_BIT_OPS, RES_B_R) {
 
 // RES 2, (HL)
 TEST(CPU_BIT_OPS, RES_B_HL) {
-    uint16_t PC = 0xA000;
+    uint16_t PC = 0xFF80;
     uint8_t opcode = 0x96;
-    uint16_t HL = 0xA0FF;
+    uint16_t HL = 0xFFF0;
     uint8_t val = 0xAF;     // 1010 1111
     uint8_t result = 0xAB;   // 1010 1011
 
