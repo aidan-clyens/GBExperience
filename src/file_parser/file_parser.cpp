@@ -56,7 +56,7 @@ int FileParser::get_buffer_size() const {
 }
 
 std::string FileParser::get_rom_name() const {
-    char buffer[0x142 - 0x134];
+    char buffer[20];
 
     for (int i=0x134; i<= 0x142; i++) {
         buffer[i - 0x134] = static_cast<char>(static_cast<int>(this->get_byte(i)));
