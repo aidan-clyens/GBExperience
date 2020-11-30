@@ -22,11 +22,11 @@ TEST(CPU_JUMP, JP_NN) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(value, cpu.read_register("PC"));
+    EXPECT_EQ(value, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_NZ_NN_False) {
@@ -37,12 +37,12 @@ TEST(CPU_JUMP, JP_NZ_NN_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(value, cpu.read_register("PC"));
+    EXPECT_EQ(value, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_NZ_NN_True) {
@@ -53,12 +53,12 @@ TEST(CPU_JUMP, JP_NZ_NN_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 2, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 2, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_Z_NN_False) {
@@ -69,12 +69,12 @@ TEST(CPU_JUMP, JP_Z_NN_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 2, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 2, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_Z_NN_True) {
@@ -85,12 +85,12 @@ TEST(CPU_JUMP, JP_Z_NN_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(value, cpu.read_register("PC"));
+    EXPECT_EQ(value, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_NC_NN_False) {
@@ -101,12 +101,12 @@ TEST(CPU_JUMP, JP_NC_NN_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(value, cpu.read_register("PC"));
+    EXPECT_EQ(value, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_NC_NN_True) {
@@ -117,12 +117,12 @@ TEST(CPU_JUMP, JP_NC_NN_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 2, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 2, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_C_NN_False) {
@@ -133,12 +133,12 @@ TEST(CPU_JUMP, JP_C_NN_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 2, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 2, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_C_NN_True) {
@@ -149,12 +149,12 @@ TEST(CPU_JUMP, JP_C_NN_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(value, cpu.read_register("PC"));
+    EXPECT_EQ(value, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JP_HL) {
@@ -165,12 +165,12 @@ TEST(CPU_JUMP, JP_HL) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("HL", value);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_HL, value);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(value, cpu.read_register("PC"));
+    EXPECT_EQ(value, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_Postive) {
@@ -183,11 +183,11 @@ TEST(CPU_JUMP, JR_Postive) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result_PC, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_Negative) {
@@ -200,11 +200,11 @@ TEST(CPU_JUMP, JR_Negative) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result_PC, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_NZ_False) {
@@ -216,12 +216,12 @@ TEST(CPU_JUMP, JR_NZ_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result_PC, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_NZ_True) {
@@ -232,12 +232,12 @@ TEST(CPU_JUMP, JR_NZ_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 1, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 1, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_Z_False) {
@@ -248,12 +248,12 @@ TEST(CPU_JUMP, JR_Z_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 1, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 1, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_Z_True) {
@@ -265,12 +265,12 @@ TEST(CPU_JUMP, JR_Z_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(ZERO_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result_PC, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_NC_False) {
@@ -282,12 +282,12 @@ TEST(CPU_JUMP, JR_NC_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result_PC, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_NC_True) {
@@ -298,12 +298,12 @@ TEST(CPU_JUMP, JR_NC_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 1, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 1, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_C_False) {
@@ -314,12 +314,12 @@ TEST(CPU_JUMP, JR_C_False) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, false);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(PC + 1, cpu.read_register("PC"));
+    EXPECT_EQ(PC + 1, cpu.read_register(REG_PC));
 }
 
 TEST(CPU_JUMP, JR_C_True) {
@@ -331,12 +331,12 @@ TEST(CPU_JUMP, JR_C_True) {
     MemoryMap mem_map = setup_mem_map(PC, value);
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, true);
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result_PC, cpu.read_register("PC"));
+    EXPECT_EQ(result_PC, cpu.read_register(REG_PC));
 }
 
 // RST 10
@@ -349,20 +349,20 @@ TEST(CPU_RST, RST) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(PC >> 8, cpu.read_memory(REG_HL));
 }
 
 // CALL nn
@@ -379,23 +379,23 @@ TEST(CPU_CALL, CALL_NN) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
 
-    EXPECT_EQ(val, cpu.read_register("PC"));
+    EXPECT_EQ(val, cpu.read_register(REG_PC));
 }
 
 // CALL cc, nn
@@ -412,11 +412,11 @@ TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.set_flag_register(CARRY_FLAG, false);
 
@@ -424,7 +424,7 @@ TEST(CPU_CALL, CALL_CC_NN_NoFlags) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(next_PC, cpu.read_register("PC"));
+    EXPECT_EQ(next_PC, cpu.read_register(REG_PC));
 }
 
 // CALL cc, nn
@@ -441,11 +441,11 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.set_flag_register(CARRY_FLAG, true);
 
@@ -453,15 +453,15 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
 
-    EXPECT_EQ(val, cpu.read_register("PC"));
+    EXPECT_EQ(val, cpu.read_register(REG_PC));
 }
 
 // RET
@@ -478,29 +478,29 @@ TEST(CPU_RETURNS, RET) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     // CALL nn
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
 
     // RET
     opcode = 0xC9;
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP, cpu.read_register("SP"));
-    EXPECT_EQ(next_PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
+    EXPECT_EQ(next_PC, cpu.read_register(REG_PC));
 }
 
 // RET cc
@@ -517,22 +517,22 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     // CALL nn
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
 
     // RET cc
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -542,8 +542,8 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
     opcode = 0xD8;
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
-    EXPECT_EQ(val, cpu.read_register("PC"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
+    EXPECT_EQ(val, cpu.read_register(REG_PC));
 }
 
 // RET cc
@@ -560,22 +560,22 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     // CALL nn
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
 
     // RET cc
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -585,8 +585,8 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
     opcode = 0xD8;
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP, cpu.read_register("SP"));
-    EXPECT_EQ(next_PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
+    EXPECT_EQ(next_PC, cpu.read_register(REG_PC));
 }
 
 // RETI
@@ -603,29 +603,29 @@ TEST(CPU_RETURNS, RETI) {
     mem_map.write(PC + 1, val >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     // CALL nn
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
 
     // RETI
     opcode = 0xD9;
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP, cpu.read_register("SP"));
-    EXPECT_EQ(next_PC, cpu.read_register("PC"));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
+    EXPECT_EQ(next_PC, cpu.read_register(REG_PC));
 
     // Check if interrupts are enabled
     EXPECT_TRUE(cpu.interrupts_enabled());

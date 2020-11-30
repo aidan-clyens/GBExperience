@@ -18,7 +18,7 @@ TEST(CPU, FetchOpcodeFromRom) {
     mem_map. load_rom(cartridge);
     CPU cpu(mem_map);
 
-    EXPECT_EQ(0x100, cpu.read_register("PC"));
+    EXPECT_EQ(0x100, cpu.read_register(REG_PC));
     EXPECT_EQ(file_parser.get_byte(0x100), cpu.fetch_op());
     EXPECT_EQ(file_parser.get_byte(0x101), cpu.fetch_op());
 }
@@ -125,13 +125,13 @@ TEST(CPU, WriteMemoryHL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", HL);
-    EXPECT_EQ(HL, cpu.read_register("HL"));
+    cpu.write_register(REG_HL, HL);
+    EXPECT_EQ(HL, cpu.read_register(REG_HL));
 
     cpu.write_memory(val);
 
     EXPECT_EQ(val, cpu.read_memory());
-    EXPECT_EQ(val, cpu.read_memory("HL"));
+    EXPECT_EQ(val, cpu.read_memory(REG_HL));
 }
 
 TEST(CPU, WriteMemory) {
@@ -142,10 +142,10 @@ TEST(CPU, WriteMemory) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("BC", BC);
-    EXPECT_EQ(BC, cpu.read_register("BC"));
+    cpu.write_register(REG_BC, BC);
+    EXPECT_EQ(BC, cpu.read_register(REG_BC));
 
-    cpu.write_memory("BC", val);
+    cpu.write_memory(REG_BC, val);
 
-    EXPECT_EQ(val, cpu.read_memory("BC"));
+    EXPECT_EQ(val, cpu.read_memory(REG_BC));
 }

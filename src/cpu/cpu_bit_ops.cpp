@@ -1,11 +1,11 @@
 #include "cpu.h"
 
 
-void CPU::test_bit(int n, const std::string &reg) {
+void CPU::test_bit(int n, Registers_t reg) {
     uint8_t val;
     bool result;
 
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         val = this->read_memory();
     }
     else {
@@ -13,7 +13,7 @@ void CPU::test_bit(int n, const std::string &reg) {
     }
 
     
-    log_cpu("BIT %X, %s", n, reg.c_str());
+    log_cpu("BIT %X, %s", n, reg);
     
 
     result = ((val >> n) & 0x01) == 0x00;
@@ -23,12 +23,12 @@ void CPU::test_bit(int n, const std::string &reg) {
     this->set_flag_register(HALF_CARRY_FLAG, true);
 }
 
-void CPU::set_bit(int n, const std::string &reg) {
+void CPU::set_bit(int n, Registers_t reg) {
     uint8_t val;
     uint8_t result;
     uint8_t shift = 0x01 << n;
 
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         val = this->read_memory();
     }
     else {
@@ -36,12 +36,12 @@ void CPU::set_bit(int n, const std::string &reg) {
     }
 
     
-    log_cpu("SET %X, %s", n, reg.c_str());
+    log_cpu("SET %X, %s", n, reg);
     
 
     result = val | shift;
 
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         this->write_memory(result);
     }
     else {
@@ -49,12 +49,12 @@ void CPU::set_bit(int n, const std::string &reg) {
     }
 }
 
-void CPU::reset_bit(int n, const std::string &reg) {
+void CPU::reset_bit(int n, Registers_t reg) {
     uint8_t val;
     uint8_t result;
     uint8_t shift = 0x01 << n;
 
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         val = this->read_memory();
     }
     else {
@@ -62,12 +62,12 @@ void CPU::reset_bit(int n, const std::string &reg) {
     }
 
     
-    log_cpu("RES %X, %s", n, reg.c_str());
+    log_cpu("RES %X, %s", n, reg);
     
 
     result = val & ~shift;
 
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         this->write_memory(result);
     }
     else {

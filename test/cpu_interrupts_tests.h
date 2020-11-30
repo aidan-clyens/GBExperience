@@ -170,8 +170,8 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     // Enable V-Blank interrupts
     cpu.set_interrupt_enable_bit(VBLANK, true);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
     // Trigger VBLANK interrupt
     cpu.write_io_register(IF, VBLANK);
@@ -181,12 +181,12 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register("SP");
+    uint16_t SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)VBLANK_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)VBLANK_ISR, cpu.read_register(REG_PC));
     // Corresponding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(VBLANK));
     // Interrupts should be disabled until reenabled at the end of the ISR
@@ -210,8 +210,8 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
     // Enable Joypad interrupts
     cpu.set_interrupt_enable_bit(JOYPAD, true);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
     // Trigger Joypad interrupt
     cpu.write_io_register(IF, JOYPAD);
@@ -221,12 +221,12 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register("SP");
+    uint16_t SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register(REG_PC));
     // Corresponding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
     // Interrupts should be disabled until reenabled at the end of the ISR
@@ -250,8 +250,8 @@ TEST(Interrupts, TriggerTimerInterrupt) {
     // Enable Timer Overflow interrupts
     cpu.set_interrupt_enable_bit(TIMER, true);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
     // Trigger Timer Overflow interrupt
     cpu.write_io_register(IF, TIMER);
@@ -261,12 +261,12 @@ TEST(Interrupts, TriggerTimerInterrupt) {
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register("SP");
+    uint16_t SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register(REG_PC));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
     // Interrupts should be disabled until reenabled at the end of the ISR
@@ -290,8 +290,8 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
     // Enable LCD Status interrupts
     cpu.set_interrupt_enable_bit(LCD_STAT, true);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
     // Trigger LCD Status interrupt
     cpu.write_io_register(IF, LCD_STAT);
@@ -301,12 +301,12 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register("SP");
+    uint16_t SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)LCD_STAT_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)LCD_STAT_ISR, cpu.read_register(REG_PC));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(LCD_STAT));
     // Interrupts should be disabled until reenabled at the end of the ISR
@@ -327,8 +327,8 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
     // Enable Serial Transfer interrupts
     cpu.set_interrupt_enable_bit(SERIAL, true);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
     // Trigger Serial Transfer interrupt
     cpu.write_io_register(IF, SERIAL);
@@ -338,12 +338,12 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register("SP");
+    uint16_t SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
-    EXPECT_EQ((uint16_t)SERIAL_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)SERIAL_ISR, cpu.read_register(REG_PC));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(SERIAL));
     // Interrupts should be disabled until reenabled at the end of the ISR
@@ -370,8 +370,8 @@ TEST(Interrupts, TriggerMultipleInterrupts) {
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
     EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
     // Trigger Timer Overflow and Joypad interrupts
     cpu.set_interrupt_flag_bit(TIMER, true);
@@ -382,12 +382,12 @@ TEST(Interrupts, TriggerMultipleInterrupts) {
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register("SP");
+    uint16_t SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should handle the Timer Overflow interrupt first
-    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register(REG_PC));
     // Corresponding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
     // Interrupts should be disabled until reenabled at the end of the ISR
@@ -401,17 +401,17 @@ TEST(Interrupts, TriggerMultipleInterrupts) {
     EXPECT_TRUE(cpu.interrupts_enabled());
 
     // Get current PC
-    PC = cpu.read_register("PC");
+    PC = cpu.read_register(REG_PC);
 
     cpu.handle_interrupts();
 
     // Current PC should be pushed to stack
-    SP = cpu.read_register("SP");
+    SP = cpu.read_register(REG_SP);
     EXPECT_EQ((PC >> 8), mem_map.read(SP));
     EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
 
     // Should handle the Joypad interrupt next
-    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register("PC"));
+    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register(REG_PC));
     // Corresponoding bit in IF register should be cleared
     EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
     // Interrupts should be disabled until reenabled at the end of the ISR

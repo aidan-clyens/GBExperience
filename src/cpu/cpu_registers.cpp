@@ -2,127 +2,100 @@
 
 
 CPURegisters::CPURegisters():
-m_PC(0x100),
+m_PC(0x0100),
 m_SP(0xFFFE)
 {
-    m_valid_8bit_registers = {"A", "F", "B", "C", "D", "E", "H", "L"};
-    m_valid_16bit_registers = {"AF", "BC", "DE", "HL"};
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_A, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_F, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_B, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_C, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_D, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_E, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_H, 0x0));
+    m_registers.insert(std::pair<Registers_t, uint8_t>(REG_L, 0x0));
 
-    for (int i=0; i<m_valid_8bit_registers.size(); i++) {
-        std::string reg = m_valid_8bit_registers[i];
-        m_registers.insert(std::pair<std::string, uint8_t>(reg, 0x0));
-    }
-
-    this->write_register("AF", 0x01B0);
-    this->write_register("BC", 0x0013);
-    this->write_register("DE", 0x00D8);
-    this->write_register("HL", 0x014D);
+    this->write_register(REG_AF, 0x01B0);
+    this->write_register(REG_BC, 0x0013);
+    this->write_register(REG_DE, 0x00D8);
+    this->write_register(REG_HL, 0x014D);
 }
 
 CPURegisters::~CPURegisters() {
 
 }
 
-void CPURegisters::write_register(const std::string &reg, uint16_t data) {
-    if (reg == "PC") {
+void CPURegisters::write_register(Registers_t reg, uint16_t data) {
+    if (reg == REG_AF) {
+        uint8_t upper_byte = data >> 8;
+        uint8_t lower_byte = data & 0xFF;
+
+        this->write_register(REG_A, upper_byte);
+        this->write_register(REG_F, lower_byte);
+    }
+    else if (reg == REG_BC) {
+        uint8_t upper_byte = data >> 8;
+        uint8_t lower_byte = data & 0xFF;
+
+        this->write_register(REG_B, upper_byte);
+        this->write_register(REG_C, lower_byte);
+    }
+    else if (reg == REG_DE) {
+        uint8_t upper_byte = data >> 8;
+        uint8_t lower_byte = data & 0xFF;
+
+        this->write_register(REG_D, upper_byte);
+        this->write_register(REG_E, lower_byte);
+    }
+    else if (reg == REG_HL) {
+        uint8_t upper_byte = data >> 8;
+        uint8_t lower_byte = data & 0xFF;
+
+        this->write_register(REG_H, upper_byte);
+        this->write_register(REG_L, lower_byte);
+    }
+    else if (reg == REG_PC) {
         m_PC = data;
-        return;
     }
-    else if (reg == "SP") {
+    else if (reg == REG_SP) {
         m_SP = data;
-        return;
-    }
-
-    // 8-bit write
-    if (reg.size() == 1) {
-        this->_write_8bit_register(reg, data);
-    }
-    // 16-bit write
-    else if (reg.size() == 2) {
-        if (!this->_check_register_valid(reg)) {
-            throw new std::exception;
-        }
-
-        std::string reg_high = std::string(1, reg[0]);
-        std::string reg_low = std::string(1, reg[1]);
-
-        this->_write_8bit_register(reg_high, ((data >> 8) & 0xFF));
-        this->_write_8bit_register(reg_low, (data & 0xFF));
     }
     else {
-        throw new std::exception;
+        if (m_registers.count(reg) > 0) {
+            m_registers.find(reg)->second = data;
+        }
+        else {
+            std::cerr << "Error: Register does not exist!" << std::endl;
+            throw new std::exception;
+        }
     }
 }
 
-uint16_t CPURegisters::read_register(const std::string &reg) {
-    if (reg == "PC") {
+uint16_t CPURegisters::read_register(Registers_t reg) {
+    if (reg == REG_AF) {
+        return (this->read_register(REG_A) << 8) | (this->read_register(REG_F));
+    }
+    else if (reg == REG_BC) {
+        return (this->read_register(REG_B) << 8) | (this->read_register(REG_C));
+    }
+    else if (reg == REG_DE) {
+        return (this->read_register(REG_D) << 8) | (this->read_register(REG_E));
+    }
+    else if (reg == REG_HL) {
+        return (this->read_register(REG_H) << 8) | (this->read_register(REG_L));
+    }
+    else if (reg == REG_PC) {
         return m_PC;
     }
-    else if (reg == "SP") {
+    else if (reg == REG_SP) {
         return m_SP;
     }
-
-    // 8-bit read
-    if (reg.size() == 1) {
-        this->_read_8bit_register(reg);
-    }
-    // 16-bit read
-    else if (reg.size() == 2) {
-        if (!this->_check_register_valid(reg)) {
+    else {
+        if (m_registers.count(reg) > 0) {
+            return m_registers.find(reg)->second;
+        }
+        else {
+            std::cerr << "Error: Register does not exist!" << std::endl;
             throw new std::exception;
         }
-
-        std::string reg_high = std::string(1, reg[0]);
-        std::string reg_low = std::string(1, reg[1]);
-
-        uint16_t value;
-        value = (this->_read_8bit_register(reg_high)) << 8 & 0xFF00;
-        value |= this->_read_8bit_register(reg_low) & 0xFF;
-    
-        return value;
-    }
-    else {
-        throw new std::exception;
-    }
-}
-
-bool CPURegisters::_check_register_valid(const std::string &reg) {
-    if (reg.size() == 1) {
-        auto it = std::find(m_valid_8bit_registers.begin(), m_valid_8bit_registers.end(), reg);
-        return (it != m_valid_8bit_registers.end());
-    }
-    else if (reg.size() == 2) {
-        auto it = std::find(m_valid_16bit_registers.begin(), m_valid_16bit_registers.end(), reg);
-        return (it != m_valid_16bit_registers.end());
-    }
-}
-
-void CPURegisters::_write_8bit_register(const std::string &reg, uint8_t data) {
-    if (!this->_check_register_valid(reg)) {
-        std::cerr << "Register: " << reg << " does not exist" << std::endl;
-        throw new std::exception;
-    }
-
-    if (m_registers.count(reg) > 0) {
-        m_registers.find(reg)->second = data;
-    }
-    else {
-        std::cerr << "Register: " << reg << " does not exist" << std::endl;
-        throw new std::exception;
-    }
-}
-
-uint8_t CPURegisters::_read_8bit_register(const std::string &reg) {
-    if (!this->_check_register_valid(reg)) {
-        std::cerr << "Register: " << reg << " does not exist" << std::endl;
-        throw new std::exception;
-    }
-
-    if (m_registers.count(reg) > 0) {
-        return m_registers.find(reg)->second;
-    }
-    else {
-        std::cerr << "Register: " << reg << " does not exist" << std::endl;
-        throw new std::exception;
     }
 }
