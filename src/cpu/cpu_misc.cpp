@@ -1,10 +1,10 @@
 #include "cpu.h"
 
 
-void CPU::swap(const std::string &reg) {
+void CPU::swap(Registers_t reg) {
     uint8_t val;
     
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         val = this->read_memory();
     }
     else {
@@ -18,14 +18,14 @@ void CPU::swap(const std::string &reg) {
     this->reset_flag_register();
 
     
-    log_cpu("SWAP %s", reg.c_str());
+    log_cpu("SWAP %s", reg);
     
 
     if (result == 0) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
-    if (reg == "HL") {
+    if (reg == REG_HL) {
         this->write_memory(result);
     }
     else {
@@ -34,7 +34,7 @@ void CPU::swap(const std::string &reg) {
 }
 
 void CPU::complement() {
-    uint8_t val = this->read_register("A");
+    uint8_t val = this->read_register(REG_A);
     uint8_t result = ~val;
 
     
@@ -44,7 +44,7 @@ void CPU::complement() {
     this->set_flag_register(SUBTRACT_FLAG, true);
     this->set_flag_register(HALF_CARRY_FLAG, true);
 
-    this->write_register("A", result);
+    this->write_register(REG_A, result);
 }
 
 void CPU::complement_carry() {

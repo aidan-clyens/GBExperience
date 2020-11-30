@@ -37,6 +37,8 @@ class Debugger {
         bool quit() const;
 
     private:
+        Registers_t register_from_string(const std::string &) const;
+
         UI &m_ui;
         CPU &m_cpu;
 

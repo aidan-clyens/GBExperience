@@ -11,15 +11,15 @@ TEST(CPU_ALU, ADD) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
     
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(val + n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -38,18 +38,18 @@ TEST(CPU_ALU, ADD_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_HL, address);
     
     cpu.write_memory(n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(address, cpu.read_register("HL"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(address, cpu.read_register(REG_HL));
     EXPECT_EQ(n, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(val + n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -73,15 +73,15 @@ TEST(CPU_ALU, ADD_N) {
 
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("A", val);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_A, val);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(val + n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -99,15 +99,15 @@ TEST(CPU_ALU, ADDCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFF, cpu.read_register("A"));
+    EXPECT_EQ((val + n) & 0xFF, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -125,15 +125,15 @@ TEST(CPU_ALU, ADDZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFF, cpu.read_register("A"));
+    EXPECT_EQ((val + n) & 0xFF, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -151,15 +151,15 @@ TEST(CPU_ALU, ADDHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFF, cpu.read_register("A"));
+    EXPECT_EQ((val + n) & 0xFF, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -178,11 +178,11 @@ TEST(CPU_ALU, ADC) {
     CPU cpu(mem_map);
 
     // First operation sets carry flag
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
@@ -191,15 +191,15 @@ TEST(CPU_ALU, ADC) {
     val = 0x20;
     n = 0x10;
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n + 1, cpu.read_register("A"));
+    EXPECT_EQ(val + n + 1, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -217,17 +217,17 @@ TEST(CPU_ALU, ADCZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.reset_flag_register();
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(val + n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_TRUE(cpu.read_flag_register(ZERO_FLAG));
@@ -246,11 +246,11 @@ TEST(CPU_ALU, ADCCarry) {
     CPU cpu(mem_map);
     
     // First operation ensures that carry flag is set
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
     cpu.decode_op(opcode);
 
     // Second operation uses carry flag
@@ -258,15 +258,15 @@ TEST(CPU_ALU, ADCCarry) {
     val = 0xFF;
     n = 0x10;
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(((val + n) & 0xFF) + 1, cpu.read_register("A"));
+    EXPECT_EQ(((val + n) & 0xFF) + 1, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -284,17 +284,17 @@ TEST(CPU_ALU, ADCHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.reset_flag_register();
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("A"));
+    EXPECT_EQ(val + n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_FALSE(cpu.read_flag_register(ZERO_FLAG));
@@ -313,15 +313,15 @@ TEST(CPU_ALU, SUB) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -341,17 +341,17 @@ TEST(CPU_ALU, SUB_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_HL, address);
     cpu.write_memory(n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(address, cpu.read_register("HL"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(address, cpu.read_register(REG_HL));
     EXPECT_EQ(n, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -370,15 +370,15 @@ TEST(CPU_ALU, SUBZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -397,15 +397,15 @@ TEST(CPU_ALU, SUBCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -424,15 +424,15 @@ TEST(CPU_ALU, SUBHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -451,11 +451,11 @@ TEST(CPU_ALU, SBCCarryNotSet) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     // Set carry flag to false
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -463,7 +463,7 @@ TEST(CPU_ALU, SBCCarryNotSet) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -482,11 +482,11 @@ TEST(CPU_ALU, SBCCarrySet) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     // Set carry flag to false
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -494,7 +494,7 @@ TEST(CPU_ALU, SBCCarrySet) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -513,18 +513,18 @@ TEST(CPU_ALU, SBCZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.set_flag_register(CARRY_FLAG, true);
     EXPECT_TRUE(cpu.read_flag_register(CARRY_FLAG));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -543,18 +543,18 @@ TEST(CPU_ALU, SBCCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.set_flag_register(CARRY_FLAG, true);
     EXPECT_TRUE(cpu.read_flag_register(CARRY_FLAG));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -573,18 +573,18 @@ TEST(CPU_ALU, SBCHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.set_flag_register(CARRY_FLAG, true);
     EXPECT_TRUE(cpu.read_flag_register(CARRY_FLAG));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -602,15 +602,15 @@ TEST(CPU_ALU, AND) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val & n, cpu.read_register("A"));
+    EXPECT_EQ(val & n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -628,15 +628,15 @@ TEST(CPU_ALU, ANDZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val & n, cpu.read_register("A"));
+    EXPECT_EQ(val & n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -654,15 +654,15 @@ TEST(CPU_ALU, OR) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val | n, cpu.read_register("A"));
+    EXPECT_EQ(val | n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -680,15 +680,15 @@ TEST(CPU_ALU, ORZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val | n, cpu.read_register("A"));
+    EXPECT_EQ(val | n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -706,15 +706,15 @@ TEST(CPU_ALU, XOR) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val ^ n, cpu.read_register("A"));
+    EXPECT_EQ(val ^ n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -732,15 +732,15 @@ TEST(CPU_ALU, XORZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val ^ n, cpu.read_register("A"));
+    EXPECT_EQ(val ^ n, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -759,11 +759,11 @@ TEST(CPU_ALU, CPNoMatch) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
@@ -783,11 +783,11 @@ TEST(CPU_ALU, CPMatch) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
-    cpu.write_register("B", n);
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
-    EXPECT_EQ(n, cpu.read_register("B"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
@@ -806,13 +806,13 @@ TEST(CPU_ALU, INC) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
+    cpu.write_register(REG_A, val);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + 1, cpu.read_register("A"));
+    EXPECT_EQ(val + 1, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -828,13 +828,13 @@ TEST(CPU_ALU, INCHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
+    cpu.write_register(REG_A, val);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + 1, cpu.read_register("A"));
+    EXPECT_EQ(val + 1, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -851,10 +851,10 @@ TEST(CPU_ALU, INC_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_HL, address);
     cpu.write_memory(val);
 
-    EXPECT_EQ(address, cpu.read_register("HL"));
+    EXPECT_EQ(address, cpu.read_register(REG_HL));
     EXPECT_EQ(val, cpu.read_memory());
 
     cpu.decode_op(opcode);
@@ -871,13 +871,13 @@ TEST(CPU_ALU, DEC) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
+    cpu.write_register(REG_A, val);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -894,13 +894,13 @@ TEST(CPU_ALU, DECZero) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
+    cpu.write_register(REG_A, val);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
@@ -917,13 +917,13 @@ TEST(CPU_ALU, DECHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val);
+    cpu.write_register(REG_A, val);
 
-    EXPECT_EQ(val, cpu.read_register("A"));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -941,10 +941,10 @@ TEST(CPU_ALU, DEC_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_HL, address);
     cpu.write_memory(val);
 
-    EXPECT_EQ(address, cpu.read_register("HL"));
+    EXPECT_EQ(address, cpu.read_register(REG_HL));
     EXPECT_EQ(val, cpu.read_memory());
 
     cpu.decode_op(opcode);
@@ -962,15 +962,15 @@ TEST(CPU_ALU_16Bit, ADD) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", val);
-    cpu.write_register("BC", n);
+    cpu.write_register(REG_HL, val);
+    cpu.write_register(REG_BC, n);
     
-    EXPECT_EQ(val, cpu.read_register("HL"));
-    EXPECT_EQ(n, cpu.read_register("BC"));
+    EXPECT_EQ(val, cpu.read_register(REG_HL));
+    EXPECT_EQ(n, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register("HL"));
+    EXPECT_EQ(val + n, cpu.read_register(REG_HL));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
@@ -987,15 +987,15 @@ TEST(CPU_ALU_16Bit, ADDCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", val);
-    cpu.write_register("BC", n);
+    cpu.write_register(REG_HL, val);
+    cpu.write_register(REG_BC, n);
 
-    EXPECT_EQ(val, cpu.read_register("HL"));
-    EXPECT_EQ(n, cpu.read_register("BC"));
+    EXPECT_EQ(val, cpu.read_register(REG_HL));
+    EXPECT_EQ(n, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("HL"));
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_HL));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
@@ -1012,15 +1012,15 @@ TEST(CPU_ALU_16Bit, ADDHalfCarry) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", val);
-    cpu.write_register("BC", n);
+    cpu.write_register(REG_HL, val);
+    cpu.write_register(REG_BC, n);
 
-    EXPECT_EQ(val, cpu.read_register("HL"));
-    EXPECT_EQ(n, cpu.read_register("BC"));
+    EXPECT_EQ(val, cpu.read_register(REG_HL));
+    EXPECT_EQ(n, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("HL"));
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_HL));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
@@ -1042,15 +1042,15 @@ TEST(CPU_ALU_16Bit, ADD_SP) {
     EXPECT_EQ(n, mem_map.read(PC));
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", val);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, val);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("SP"));
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_SP));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -1074,15 +1074,15 @@ TEST(CPU_ALU_16Bit, ADD_SP_Negative) {
     EXPECT_EQ((uint8_t)n, mem_map.read(PC));
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", val);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, val);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + signed_n) & 0xFFFF, cpu.read_register("SP"));
+    EXPECT_EQ((val + signed_n) & 0xFFFF, cpu.read_register(REG_SP));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -1105,15 +1105,15 @@ TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
     EXPECT_EQ(n, mem_map.read(PC));
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", val);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, val);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("SP"));
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_SP));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -1136,15 +1136,15 @@ TEST(CPU_ALU_16Bit, ADD_SP_HalfCarry) {
     EXPECT_EQ(n, mem_map.read(PC));
 
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("SP", val);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, val);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val, cpu.read_register("SP"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register("SP"));
+    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_SP));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -1161,13 +1161,13 @@ TEST(CPU_ALU_16Bit, INC) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("BC", val);
+    cpu.write_register(REG_BC, val);
 
-    EXPECT_EQ(val, cpu.read_register("BC"));
+    EXPECT_EQ(val, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + 1, cpu.read_register("BC"));
+    EXPECT_EQ(val + 1, cpu.read_register(REG_BC));
 }
 
 TEST(CPU_ALU_16Bit, DEC_16) {
@@ -1178,11 +1178,11 @@ TEST(CPU_ALU_16Bit, DEC_16) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("BC", val);
+    cpu.write_register(REG_BC, val);
 
-    EXPECT_EQ(val, cpu.read_register("BC"));
+    EXPECT_EQ(val, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val - 1, cpu.read_register("BC"));
+    EXPECT_EQ(val - 1, cpu.read_register(REG_BC));
 }

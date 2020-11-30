@@ -53,8 +53,8 @@ TEST(Integration, WriteMemoryFromMemoryMap) {
     MemoryMap memory_map;
     CPU cpu(memory_map);
 
-    cpu.write_register("HL", address);
-    EXPECT_EQ(address, cpu.read_register("HL"));
+    cpu.write_register(REG_HL, address);
+    EXPECT_EQ(address, cpu.read_register(REG_HL));
 
     memory_map.write(address, data);
     EXPECT_EQ(data, memory_map.read(address));
@@ -69,8 +69,8 @@ TEST(Integration, WriteMemoryFromCPU) {
     MemoryMap memory_map;
     CPU cpu(memory_map);
 
-    cpu.write_register("HL", address);
-    EXPECT_EQ(address, cpu.read_register("HL"));
+    cpu.write_register(REG_HL, address);
+    EXPECT_EQ(address, cpu.read_register(REG_HL));
 
     cpu.write_memory(data);
     EXPECT_EQ(data, memory_map.read(address));

@@ -106,8 +106,9 @@ bool Debugger::check_breakpoints(uint16_t pc) {
     return it !=m_breakpoints.end();
 }
 
-void Debugger::print_reg(const std::string &reg) {
-    log_debug("%s = 0x%X", reg.c_str(), m_cpu.read_register(reg));
+void Debugger::print_reg(const std::string &reg_str) {
+    Registers_t reg = register_from_string(reg_str);
+    log_debug("%s = 0x%X", reg_str.c_str(), m_cpu.read_register(reg));
 }
 
 void Debugger::help() {
@@ -121,4 +122,37 @@ bool Debugger::step() const {
 
 bool Debugger::quit() const {
     return m_quit;
+}
+
+Registers_t Debugger::register_from_string(const std::string &reg_str) const {
+    if (reg_str == "A")
+        return REG_A;
+    else if (reg_str == "F")
+        return REG_F;
+    else if (reg_str == "B")
+        return REG_B;
+    else if (reg_str == "C")
+        return REG_C;
+    else if (reg_str == "D")
+        return REG_D;
+    else if (reg_str == "E")
+        return REG_E;
+    else if (reg_str == "H")
+        return REG_H;
+    else if (reg_str == "L")
+        return REG_L;
+    else if (reg_str == "AF")
+        return REG_AF;
+    else if (reg_str == "BC")
+        return REG_BC;
+    else if (reg_str == "DE")
+        return REG_DE;
+    else if (reg_str == "HL")
+        return REG_HL;
+    else if (reg_str == "PC")
+        return REG_PC;
+    else if (reg_str == "SP")
+        return REG_SP;
+    else
+        std::cerr << "Error: Register does not exist!" << std::endl;
 }

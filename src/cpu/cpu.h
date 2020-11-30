@@ -35,13 +35,13 @@ class CPU {
         uint8_t fetch_op();
         int decode_op(uint8_t);
 
-        void write_register(const std::string &, uint16_t);
-        uint16_t read_register(const std::string &);
+        void write_register(Registers_t, uint16_t);
+        uint16_t read_register(Registers_t);
 
         void write_memory(uint8_t);
-        void write_memory(const std::string &, uint8_t);
+        void write_memory(Registers_t, uint8_t);
         uint8_t read_memory();
-        uint8_t read_memory(const std::string &);
+        uint8_t read_memory(Registers_t);
 
         void set_flag_register(CPUFlag_t, bool);
         bool read_flag_register(CPUFlag_t);
@@ -70,55 +70,55 @@ class CPU {
         bool m_interrupts_enabled;
 
         /****    8-Bit and 16-Bit Loads    ****/
-        void load(const std::string &, const std::string &);
-        void load(const std::string &, uint16_t);
-        void load_from_mem(const std::string &, const std::string &);
-        void load_from_mem(const std::string &, uint16_t);
-        void load_to_mem(const std::string &, const std::string &);
-        void load_to_mem(const std::string &, uint16_t);
-        void load_to_mem(uint16_t, const std::string &);
+        void load(Registers_t, Registers_t);
+        void load(Registers_t, uint16_t);
+        void load_from_mem(Registers_t, Registers_t);
+        void load_from_mem(Registers_t, uint16_t);
+        void load_to_mem(Registers_t, Registers_t);
+        void load_to_mem(Registers_t, uint16_t);
+        void load_to_mem(uint16_t, Registers_t);
         void load_HL(int8_t);
 
         // PUSH nn
-        void push_stack(const std::string &);
+        void push_stack(Registers_t);
         // POP nn
-        void pop_stack(const std::string &);
+        void pop_stack(Registers_t);
 
         /****    8-Bit ALU    ****/
         // ADD A, n
         // ADC A, n
-        void alu_add(const std::string &, bool);
+        void alu_add(Registers_t, bool);
         void alu_add(uint8_t, bool);
         // SUB n
         // SBC n
-        void alu_sub(const std::string &, bool);
+        void alu_sub(Registers_t, bool);
         void alu_sub(uint8_t, bool);
         // AND n
-        void alu_and(const std::string &);
+        void alu_and(Registers_t);
         void alu_and(uint8_t);
         // OR n
-        void alu_or(const std::string &);
+        void alu_or(Registers_t);
         void alu_or(uint8_t);
         // XOR n
-        void alu_xor(const std::string &);
+        void alu_xor(Registers_t);
         void alu_xor(uint8_t);
         // CP n
-        void alu_cp(const std::string &);
+        void alu_cp(Registers_t);
         void alu_cp(uint8_t);
         // INC n
-        void alu_inc(const std::string &);
+        void alu_inc(Registers_t);
         // DEC n
-        void alu_dec(const std::string &);
+        void alu_dec(Registers_t);
 
         /****    16-Bit ALU    ****/
         // ADD HL, nn
-        void alu_add_HL(const std::string &);
+        void alu_add_HL(Registers_t);
         // ADD SP, e
         void alu_add_SP(int8_t);
         // INC nn
-        void alu_inc_16bit(const std::string &);
+        void alu_inc_16bit(Registers_t);
         // DEC nn
-        void alu_dec_16bit(const std::string &);
+        void alu_dec_16bit(Registers_t);
 
         /****    Jumps    ****/
         // JP nn
@@ -152,23 +152,23 @@ class CPU {
 
         /****    Rotates and Shifts    ****/
         void rotate_left(bool);
-        void rotate_left(const std::string &, bool);
+        void rotate_left(Registers_t, bool);
         void rotate_right(bool);
-        void rotate_right(const std::string &, bool);
-        void shift_left(const std::string &);
-        void shift_right(const std::string &, bool);
+        void rotate_right(Registers_t, bool);
+        void shift_left(Registers_t);
+        void shift_right(Registers_t, bool);
 
         /****    Bit Opcodes    ****/
         // BIT b, r
-        void test_bit(int, const std::string &);
+        void test_bit(int, Registers_t);
         // SET b, r
-        void set_bit(int, const std::string &);
+        void set_bit(int, Registers_t);
         // RES b, r
-        void reset_bit(int, const std::string &);
+        void reset_bit(int, Registers_t);
 
         /****    Misc.    ****/
         // SWAP n
-        void swap(const std::string &);
+        void swap(Registers_t);
         // CPL
         void complement();
         // CCF
