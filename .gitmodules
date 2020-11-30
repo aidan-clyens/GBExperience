@@ -1,3 +1,6 @@
 [submodule "lib/googletest"]
 	path = lib/googletest
 	url = https://github.com/google/googletest/
+[submodule "test/test-roms"]
+	path = test/test-roms
+	url = https://github.com/retrio/gb-test-roms.git
