@@ -12,7 +12,7 @@ void CPU::handle_interrupts() {
             m_halted = false;
 
             // Push current program program counter onto the stack
-            this->push_stack("PC");
+            this->push_stack(REG_PC);
 
             // Handle interrupts by order of priority
             bool handled = false;

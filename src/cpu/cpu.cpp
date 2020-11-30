@@ -22,7 +22,7 @@ int CPU::tick() {
     int cycle_count = 4;
     if (this->is_running()) {
         
-        log_cpu_no_new_line("0x%X: ", this->read_register("PC"));
+        log_cpu_no_new_line("0x%X: ", this->read_register(REG_PC));
         
 
         // Fetch next opcode and execute
@@ -34,8 +34,8 @@ int CPU::tick() {
 }
 
 uint8_t CPU::fetch_op() {
-    uint16_t address = this->read_register("PC");
-    this->write_register("PC", address + 1);
+    uint16_t address = this->read_register(REG_PC);
+    this->write_register(REG_PC, address + 1);
 
     return m_memory_map.read(address);
 }
@@ -99,271 +99,271 @@ int CPU::decode_op(uint8_t opcode) {
         // LD nn, n
         case 0x06:
             arg_1 = this->fetch_op();
-            this->load("B", arg_1);
+            this->load(REG_B, arg_1);
             cycle_count = 4;
             break;
         case 0x0E:
             arg_1 = this->fetch_op();
-            this->load("C", arg_1);
+            this->load(REG_C, arg_1);
             cycle_count = 4;
             break;
         case 0x16:
             arg_1 = this->fetch_op();
-            this->load("D", arg_1);
+            this->load(REG_D, arg_1);
             cycle_count = 4;
             break;
         case 0x1E:
             arg_1 = this->fetch_op();
-            this->load("E", arg_1);
+            this->load(REG_E, arg_1);
             cycle_count = 4;
             break;
         case 0x26:
             arg_1 = this->fetch_op();
-            this->load("H", arg_1);
+            this->load(REG_H, arg_1);
             cycle_count = 4;
             break;
         case 0x2E:
             arg_1 = this->fetch_op();
-            this->load("L", arg_1);
+            this->load(REG_L, arg_1);
             cycle_count = 4;
             break;
         // LD r1, r2
         case 0x7F:
-            this->load("A", "A");
+            this->load(REG_A, REG_A);
             cycle_count = 4;
             break;
         case 0x78:
-            this->load("A", "B");
+            this->load(REG_A, REG_B);
             cycle_count = 4;
             break;
         case 0x79:
-            this->load("A", "C");
+            this->load(REG_A, REG_C);
             cycle_count = 4;
             break;
         case 0x7A:
-            this->load("A", "D");
+            this->load(REG_A, REG_D);
             cycle_count = 4;
             break;
         case 0x7B:
-            this->load("A", "E");
+            this->load(REG_A, REG_E);
             cycle_count = 4;
             break;
         case 0x7C:
-            this->load("A", "H");
+            this->load(REG_A, REG_H);
             cycle_count = 4;
             break;
         case 0x7D:
-            this->load("A", "L");
+            this->load(REG_A, REG_L);
             cycle_count = 4;
             break;
         case 0x7E:
-            this->load_from_mem("A", "HL");
+            this->load_from_mem(REG_A, REG_HL);
             cycle_count = 8;
             break;
         case 0x40:
-            this->load("B", "B");
+            this->load(REG_B, REG_B);
             cycle_count = 4;
             break;
         case 0x41:
-            this->load("B", "C");
+            this->load(REG_B, REG_C);
             cycle_count = 4;
             break;
         case 0x42:
-            this->load("B", "D");
+            this->load(REG_B, REG_D);
             cycle_count = 4;
             break;
         case 0x43:
-            this->load("B", "E");
+            this->load(REG_B, REG_E);
             cycle_count = 4;
             break;
         case 0x44:
-            this->load("B", "H");
+            this->load(REG_B, REG_H);
             cycle_count = 4;
             break;
         case 0x45:
-            this->load("B", "L");
+            this->load(REG_B, REG_L);
             cycle_count = 4;
             break;
         case 0x46:
-            this->load_from_mem("B", "HL");
+            this->load_from_mem(REG_B, REG_HL);
             cycle_count = 8;
             break;
         case 0x48:
-            this->load("C", "B");
+            this->load(REG_C, REG_B);
             cycle_count = 4;
             break;
         case 0x49:
-            this->load("C", "C");
+            this->load(REG_C, REG_C);
             cycle_count = 4;
             break;
         case 0x4A:
-            this->load("C", "D");
+            this->load(REG_C, REG_D);
             cycle_count = 4;
             break;
         case 0x4B:
-            this->load("C", "E");
+            this->load(REG_C, REG_E);
             cycle_count = 4;
             break;
         case 0x4C:
-            this->load("C", "H");
+            this->load(REG_C, REG_H);
             cycle_count = 4;
             break;
         case 0x4D:
-            this->load("C", "L");
+            this->load(REG_C, REG_L);
             cycle_count = 4;
             break;
         case 0x4E:
-            this->load_from_mem("C", "HL");
+            this->load_from_mem(REG_C, REG_HL);
             cycle_count = 8;
             break;
         case 0x50:
-            this->load("D", "B");
+            this->load(REG_D, REG_B);
             cycle_count = 4;
             break;
         case 0x51:
-            this->load("D", "C");
+            this->load(REG_D, REG_C);
             cycle_count = 4;
             break;
         case 0x52:
-            this->load("D", "D");
+            this->load(REG_D, REG_D);
             cycle_count = 4;
             break;
         case 0x53:
-            this->load("D", "E");
+            this->load(REG_D, REG_E);
             cycle_count = 4;
             break;
         case 0x54:
-            this->load("D", "H");
+            this->load(REG_D, REG_H);
             cycle_count = 4;
             break;
         case 0x55:
-            this->load("D", "L");
+            this->load(REG_D, REG_L);
             cycle_count = 4;
             break;
         case 0x56:
-            this->load_from_mem("D", "HL");
+            this->load_from_mem(REG_D, REG_HL);
             cycle_count = 8;
             break;
         case 0x58:
-            this->load("E", "B");
+            this->load(REG_E, REG_B);
             cycle_count = 4;
             break;
         case 0x59:
-            this->load("E", "C");
+            this->load(REG_E, REG_C);
             cycle_count = 4;
             break;
         case 0x5A:
-            this->load("E", "D");
+            this->load(REG_E, REG_D);
             cycle_count = 4;
             break;
         case 0x5B:
-            this->load("E", "E");
+            this->load(REG_E, REG_E);
             cycle_count = 4;
             break;
         case 0x5C:
-            this->load("E", "H");
+            this->load(REG_E, REG_H);
             cycle_count = 4;
             break;
         case 0x5D:
-            this->load("E", "L");
+            this->load(REG_E, REG_L);
             cycle_count = 4;
             break;
         case 0x5E:
-            this->load_from_mem("E", "HL");
+            this->load_from_mem(REG_E, REG_HL);
             cycle_count = 8;
             break;
         case 0x60:
-            this->load("H", "B");
+            this->load(REG_H, REG_B);
             cycle_count = 4;
             break;
         case 0x61:
-            this->load("H", "C");
+            this->load(REG_H, REG_C);
             cycle_count = 4;
             break;
         case 0x62:
-            this->load("H", "D");
+            this->load(REG_H, REG_D);
             cycle_count = 4;
             break;
         case 0x63:
-            this->load("H", "E");
+            this->load(REG_H, REG_E);
             cycle_count = 4;
             break;
         case 0x64:
-            this->load("H", "H");
+            this->load(REG_H, REG_H);
             cycle_count = 4;
             break;
         case 0x65:
-            this->load("H", "L");
+            this->load(REG_H, REG_L);
             cycle_count = 4;
             break;
         case 0x66:
-            this->load_from_mem("H", "HL");
+            this->load_from_mem(REG_H, REG_HL);
             cycle_count = 8;
             break;
         case 0x68:
-            this->load("L", "B");
+            this->load(REG_L, REG_B);
             cycle_count = 4;
             break;
         case 0x69:
-            this->load("L", "C");
+            this->load(REG_L, REG_C);
             cycle_count = 4;
             break;
         case 0x6A:
-            this->load("L", "D");
+            this->load(REG_L, REG_D);
             cycle_count = 4;
             break;
         case 0x6B:
-            this->load("L", "E");
+            this->load(REG_L, REG_E);
             cycle_count = 4;
             break;
         case 0x6C:
-            this->load("L", "H");
+            this->load(REG_L, REG_H);
             cycle_count = 4;
             break;
         case 0x6D:
-            this->load("L", "L");
+            this->load(REG_L, REG_L);
             cycle_count = 4;
             break;
         case 0x6E:
-            this->load_from_mem("L", "HL");
+            this->load_from_mem(REG_L, REG_HL);
             cycle_count = 8;
             break;
         case 0x70:
-            this->load_to_mem("HL", "B");
+            this->load_to_mem(REG_HL, REG_B);
             cycle_count = 8;
             break;
         case 0x71:
-            this->load_to_mem("HL", "C");
+            this->load_to_mem(REG_HL, REG_C);
             cycle_count = 8;
             break;
         case 0x72:
-            this->load_to_mem("HL", "D");
+            this->load_to_mem(REG_HL, REG_D);
             cycle_count = 8;
             break;
         case 0x73:
-            this->load_to_mem("HL", "E");
+            this->load_to_mem(REG_HL, REG_E);
             cycle_count = 8;
             break;
         case 0x74:
-            this->load_to_mem("HL", "H");
+            this->load_to_mem(REG_HL, REG_H);
             cycle_count = 8;
             break;
         case 0x75:
-            this->load_to_mem("HL", "L");
+            this->load_to_mem(REG_HL, REG_L);
             cycle_count = 8;
             break;
         case 0x36:
             arg_1 = this->fetch_op();
-            this->load_to_mem("HL", arg_1);
+            this->load_to_mem(REG_HL, arg_1);
             cycle_count = 12;
             break;
         // LD A, n
         case 0x0A:
-            this->load_from_mem("A", "BC");
+            this->load_from_mem(REG_A, REG_BC);
             cycle_count = 8;
             break;
         case 0x1A:
-            this->load_from_mem("A", "DE");
+            this->load_from_mem(REG_A, REG_DE);
             cycle_count = 8;
             break;
         case 0xFA:
@@ -371,49 +371,49 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
-            this->load_from_mem("A", arg16bit);
+            this->load_from_mem(REG_A, arg16bit);
             cycle_count = 16;
             break;
         case 0x3E:
             arg_1 = this->fetch_op();
-            this->load("A", arg_1);
+            this->load(REG_A, arg_1);
             cycle_count = 8;
             break;
         // LD n, A
         case 0x47:
-            this->load("B", "A");
+            this->load(REG_B, REG_A);
             cycle_count = 4;
             break;
         case 0x4F:
-            this->load("C", "A");
+            this->load(REG_C, REG_A);
             cycle_count = 4;
             break;
         case 0x57:
-            this->load("D", "A");
+            this->load(REG_D, REG_A);
             cycle_count = 4;
             break;
         case 0x5F:
-            this->load("E", "A");
+            this->load(REG_E, REG_A);
             cycle_count = 4;
             break;
         case 0x67:
-            this->load("H", "A");
+            this->load(REG_H, REG_A);
             cycle_count = 4;
             break;
         case 0x6F:
-            this->load("L", "A");
+            this->load(REG_L, REG_A);
             cycle_count = 4;
             break;
         case 0x02:
-            this->load_to_mem("BC", "A");
+            this->load_to_mem(REG_BC, REG_A);
             cycle_count = 8;
             break;
         case 0x12:
-            this->load_to_mem("DE", "A");
+            this->load_to_mem(REG_DE, REG_A);
             cycle_count = 8;
             break;
         case 0x77:
-            this->load_to_mem("HL", "A");
+            this->load_to_mem(REG_HL, REG_A);
             cycle_count = 8;
             break;
         case 0xEA:
@@ -421,55 +421,55 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
-            this->load_to_mem(arg16bit, "A");
+            this->load_to_mem(arg16bit, REG_A);
             cycle_count = 16;
             break;
         // LD A, (C)
         case 0xF2:
-            arg16bit = 0xFF00 + this->read_register("C");
-            this->load_from_mem("A", arg16bit);
+            arg16bit = 0xFF00 + this->read_register(REG_C);
+            this->load_from_mem(REG_A, arg16bit);
             cycle_count = 8;
             break;
         // LD (C), A
         case 0xE2:
-            arg16bit = 0xFF00 + this->read_register("C");
-            this->load_to_mem(arg16bit, "A");
+            arg16bit = 0xFF00 + this->read_register(REG_C);
+            this->load_to_mem(arg16bit, REG_A);
             cycle_count = 8;
             break;
         // LDD A, (HL)
         case 0x3A:
-            this->load_from_mem("A", "HL");
-            this->alu_dec_16bit("HL");
+            this->load_from_mem(REG_A, REG_HL);
+            this->alu_dec_16bit(REG_HL);
             cycle_count = 8;
             break;
         // LDD (HL), A
         case 0x32:
-            this->load_to_mem("HL", "A");
-            this->alu_dec_16bit("HL");
+            this->load_to_mem(REG_HL, REG_A);
+            this->alu_dec_16bit(REG_HL);
             cycle_count = 8;
             break;
         // LDI A, (HL)
         case 0x2A:
-            this->load_from_mem("A", "HL");
-            this->alu_inc_16bit("HL");
+            this->load_from_mem(REG_A, REG_HL);
+            this->alu_inc_16bit(REG_HL);
             cycle_count = 8;
             break;
         // LDI (HL), A
         case 0x22:
-            this->load_to_mem("HL", "A");
-            this->alu_inc_16bit("HL");
+            this->load_to_mem(REG_HL, REG_A);
+            this->alu_inc_16bit(REG_HL);
             cycle_count = 8;
             break;
         // LDH (n), A
         case 0xE0:
             arg16bit = 0xFF00 + this->fetch_op();
-            this->load_to_mem(arg16bit, "A");
+            this->load_to_mem(arg16bit, REG_A);
             cycle_count = 12;
             break;
         // LDH A, (n)
         case 0xF0:
             arg16bit = 0xFF00 + this->fetch_op();
-            this->load_from_mem("A", arg16bit);
+            this->load_from_mem(REG_A, arg16bit);
             cycle_count = 12;
             break;
         /****    16-Bit Loads    ****/
@@ -479,7 +479,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
-            this->load("BC", arg16bit);
+            this->load(REG_BC, arg16bit);
             cycle_count = 12;
             break;
         case 0x11:
@@ -487,7 +487,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
-            this->load("DE", arg16bit);
+            this->load(REG_DE, arg16bit);
             cycle_count = 12;
             break;
         case 0x21:
@@ -495,7 +495,7 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
-            this->load("HL", arg16bit);
+            this->load(REG_HL, arg16bit);
             cycle_count = 12;
             break;
         case 0x31:
@@ -503,12 +503,12 @@ int CPU::decode_op(uint8_t opcode) {
             arg_2 = this->fetch_op();
             arg16bit = (arg_2 << 8) | arg_1;
 
-            this->load("SP", arg16bit);
+            this->load(REG_SP, arg16bit);
             cycle_count = 12;
             break;
         // LD SP, HL
         case 0xF9:
-            this->load("SP", "HL");
+            this->load(REG_SP, REG_HL);
             cycle_count = 8;
             break;
         // LDHL SP, n
@@ -529,84 +529,84 @@ int CPU::decode_op(uint8_t opcode) {
         case 0xF5:
             log_cpu("PUSH AF");
 
-            this->push_stack("AF");
+            this->push_stack(REG_AF);
             cycle_count = 16;
             break;
         case 0xC5:
             log_cpu("PUSH BC");
 
-            this->push_stack("BC");
+            this->push_stack(REG_BC);
             cycle_count = 16;
             break;
         case 0xD5:
             log_cpu("PUSH DE");
 
-            this->push_stack("DE");
+            this->push_stack(REG_DE);
             cycle_count = 16;
             break;
         case 0xE5:
             log_cpu("PUSH HL");
 
-            this->push_stack("HL");
+            this->push_stack(REG_HL);
             cycle_count = 16;
             break;
         // POP nn
         case 0xF1:
             log_cpu("POP AF");
 
-            this->pop_stack("AF");
+            this->pop_stack(REG_AF);
             cycle_count = 12;
             break;
         case 0xC1:
             log_cpu("POP BC");
 
-            this->pop_stack("BC");
+            this->pop_stack(REG_BC);
             cycle_count = 12;
             break;
         case 0xD1:
             log_cpu("POP DE");
 
-            this->pop_stack("DE");
+            this->pop_stack(REG_DE);
             cycle_count = 12;
             break;
         case 0xE1:
             log_cpu("POP HL");
 
-            this->pop_stack("HL");
+            this->pop_stack(REG_HL);
             cycle_count = 12;
             break;
         /****    8-Bit ALU    ****/
         // ADD A, n
         case 0x87:
-            this->alu_add("A", false);
+            this->alu_add(REG_A, false);
             cycle_count = 4;
             break;
         case 0x80:
-            this->alu_add("B", false);
+            this->alu_add(REG_B, false);
             cycle_count = 4;
             break;
         case 0x81:
-            this->alu_add("C", false);
+            this->alu_add(REG_C, false);
             cycle_count = 4;
             break;
         case 0x82:
-            this->alu_add("D", false);
+            this->alu_add(REG_D, false);
             cycle_count = 4;
             break;
         case 0x83:
-            this->alu_add("E", false);
+            this->alu_add(REG_E, false);
             cycle_count = 4;
             break;
         case 0x84:
-            this->alu_add("H", false);
+            this->alu_add(REG_H, false);
             cycle_count = 4;
             break;
         case 0x85:
-            this->alu_add("L", false);
+            this->alu_add(REG_L, false);
             cycle_count = 4;
             break;
         case 0x86:
-            this->alu_add("HL", false);
+            this->alu_add(REG_HL, false);
             cycle_count = 8;
             break;
         case 0xC6:
@@ -616,35 +616,35 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // ADC A, n
         case 0x8F:
-            this->alu_add("A", true);
+            this->alu_add(REG_A, true);
             cycle_count = 4;
             break;
         case 0x88:
-            this->alu_add("B", true);
+            this->alu_add(REG_B, true);
             cycle_count = 4;
             break;
         case 0x89:
-            this->alu_add("C", true);
+            this->alu_add(REG_C, true);
             cycle_count = 4;
             break;
         case 0x8A:
-            this->alu_add("D", true);
+            this->alu_add(REG_D, true);
             cycle_count = 4;
             break;
         case 0x8B:
-            this->alu_add("E", true);
+            this->alu_add(REG_E, true);
             cycle_count = 4;
             break;
         case 0x8C:
-            this->alu_add("H", true);
+            this->alu_add(REG_H, true);
             cycle_count = 4;
             break;
         case 0x8D:
-            this->alu_add("L", true);
+            this->alu_add(REG_L, true);
             cycle_count = 4;
             break;
         case 0x8E:
-            this->alu_add("HL", true);
+            this->alu_add(REG_HL, true);
             cycle_count = 8;
             break;
         case 0xCE:
@@ -654,35 +654,35 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // SUB n
         case 0x97:
-            this->alu_sub("A", false);
+            this->alu_sub(REG_A, false);
             cycle_count = 4;
             break;
         case 0x90:
-            this->alu_sub("B", false);
+            this->alu_sub(REG_B, false);
             cycle_count = 4;
             break;
         case 0x91:
-            this->alu_sub("C", false);
+            this->alu_sub(REG_C, false);
             cycle_count = 4;
             break;
         case 0x92:
-            this->alu_sub("D", false);
+            this->alu_sub(REG_D, false);
             cycle_count = 4;
             break;
         case 0x93:
-            this->alu_sub("E", false);
+            this->alu_sub(REG_E, false);
             cycle_count = 4;
             break;
         case 0x94:
-            this->alu_sub("H", false);
+            this->alu_sub(REG_H, false);
             cycle_count = 4;
             break;
         case 0x95:
-            this->alu_sub("L", false);
+            this->alu_sub(REG_L, false);
             cycle_count = 4;
             break;
         case 0x96:
-            this->alu_sub("HL", false);
+            this->alu_sub(REG_HL, false);
             cycle_count = 8;
             break;
         case 0xD6:
@@ -692,68 +692,68 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // SBC n
         case 0x9F:
-            this->alu_sub("A", true);
+            this->alu_sub(REG_A, true);
             cycle_count = 4;
             break;
         case 0x98:
-            this->alu_sub("B", true);
+            this->alu_sub(REG_B, true);
             cycle_count = 4;
             break;
         case 0x99:
-            this->alu_sub("C", true);
+            this->alu_sub(REG_C, true);
             cycle_count = 4;
             break;
         case 0x9A:
-            this->alu_sub("D", true);
+            this->alu_sub(REG_D, true);
             cycle_count = 4;
             break;
         case 0x9B:
-            this->alu_sub("E", true);
+            this->alu_sub(REG_E, true);
             cycle_count = 4;
             break;
         case 0x9C:
-            this->alu_sub("H", true);
+            this->alu_sub(REG_H, true);
             cycle_count = 4;
             break;
         case 0x9D:
-            this->alu_sub("L", true);
+            this->alu_sub(REG_L, true);
             cycle_count = 4;
             break;
         case 0x9E:
-            this->alu_sub("HL", true);
+            this->alu_sub(REG_HL, true);
             cycle_count = 8;
             break;
         // AND n
         case 0xA7:
-            this->alu_and("A");
+            this->alu_and(REG_A);
             cycle_count = 4;
             break;
         case 0xA0:
-            this->alu_and("B");
+            this->alu_and(REG_B);
             cycle_count = 4;
             break;
         case 0xA1:
-            this->alu_and("C");
+            this->alu_and(REG_C);
             cycle_count = 4;
             break;
         case 0xA2:
-            this->alu_and("D");
+            this->alu_and(REG_D);
             cycle_count = 4;
             break;
         case 0xA3:
-            this->alu_and("E");
+            this->alu_and(REG_E);
             cycle_count = 4;
             break;
         case 0xA4:
-            this->alu_and("H");
+            this->alu_and(REG_H);
             cycle_count = 4;
             break;
         case 0xA5:
-            this->alu_and("L");
+            this->alu_and(REG_L);
             cycle_count = 4;
             break;
         case 0xA6:
-            this->alu_and("HL");
+            this->alu_and(REG_HL);
             cycle_count = 8;
             break;
         case 0xE6:
@@ -763,35 +763,35 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // OR n
         case 0xB7:
-            this->alu_or("A");
+            this->alu_or(REG_A);
             cycle_count = 4;
             break;
         case 0xB0:
-            this->alu_or("B");
+            this->alu_or(REG_B);
             cycle_count = 4;
             break;
         case 0xB1:
-            this->alu_or("C");
+            this->alu_or(REG_C);
             cycle_count = 4;
             break;
         case 0xB2:
-            this->alu_or("D");
+            this->alu_or(REG_D);
             cycle_count = 4;
             break;
         case 0xB3:
-            this->alu_or("E");
+            this->alu_or(REG_E);
             cycle_count = 4;
             break;
         case 0xB4:
-            this->alu_or("H");
+            this->alu_or(REG_H);
             cycle_count = 4;
             break;
         case 0xB5:
-            this->alu_or("L");
+            this->alu_or(REG_L);
             cycle_count = 4;
             break;
         case 0xB6:
-            this->alu_or("HL");
+            this->alu_or(REG_HL);
             cycle_count = 8;
             break;
         case 0xF6:
@@ -801,35 +801,35 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // XOR n
         case 0xAF:
-            this->alu_xor("A");
+            this->alu_xor(REG_A);
             cycle_count = 4;
             break;
         case 0xA8:
-            this->alu_xor("B");
+            this->alu_xor(REG_B);
             cycle_count = 4;
             break;
         case 0xA9:
-            this->alu_xor("C");
+            this->alu_xor(REG_C);
             cycle_count = 4;
             break;
         case 0xAA:
-            this->alu_xor("D");
+            this->alu_xor(REG_D);
             cycle_count = 4;
             break;
         case 0xAB:
-            this->alu_xor("E");
+            this->alu_xor(REG_E);
             cycle_count = 4;
             break;
         case 0xAC:
-            this->alu_xor("H");
+            this->alu_xor(REG_H);
             cycle_count = 4;
             break;
         case 0xAD:
-            this->alu_xor("L");
+            this->alu_xor(REG_L);
             cycle_count = 4;
             break;
         case 0xAE:
-            this->alu_xor("HL");
+            this->alu_xor(REG_HL);
             cycle_count = 8;
             break;
         case 0xEE:
@@ -839,35 +839,35 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // CP n
         case 0xBF:
-            this->alu_cp("A");
+            this->alu_cp(REG_A);
             cycle_count = 4;
             break;
         case 0xB8:
-            this->alu_cp("B");
+            this->alu_cp(REG_B);
             cycle_count = 4;
             break;
         case 0xB9:
-            this->alu_cp("C");
+            this->alu_cp(REG_C);
             cycle_count = 4;
             break;
         case 0xBA:
-            this->alu_cp("D");
+            this->alu_cp(REG_D);
             cycle_count = 4;
             break;
         case 0xBB:
-            this->alu_cp("E");
+            this->alu_cp(REG_E);
             cycle_count = 4;
             break;
         case 0xBC:
-            this->alu_cp("H");
+            this->alu_cp(REG_H);
             cycle_count = 4;
             break;
         case 0xBD:
-            this->alu_cp("L");
+            this->alu_cp(REG_L);
             cycle_count = 4;
             break;
         case 0xBE:
-            this->alu_cp("HL");
+            this->alu_cp(REG_HL);
             cycle_count = 8;
             break;
         case 0xFE:
@@ -877,86 +877,86 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // INC n
         case 0x3C:
-            this->alu_inc("A");
+            this->alu_inc(REG_A);
             cycle_count = 4;
             break;
         case 0x04:
-            this->alu_inc("B");
+            this->alu_inc(REG_B);
             cycle_count = 4;
             break;
         case 0x0C:
-            this->alu_inc("C");
+            this->alu_inc(REG_C);
             cycle_count = 4;
             break;
         case 0x14:
-            this->alu_inc("D");
+            this->alu_inc(REG_D);
             cycle_count = 4;
             break;
         case 0x1C:
-            this->alu_inc("E");
+            this->alu_inc(REG_E);
             cycle_count = 4;
             break;
         case 0x24:
-            this->alu_inc("H");
+            this->alu_inc(REG_H);
             cycle_count = 4;
             break;
         case 0x2C:
-            this->alu_inc("L");
+            this->alu_inc(REG_L);
             cycle_count = 4;
             break;
         case 0x34:
-            this->alu_inc("HL");
+            this->alu_inc(REG_HL);
             cycle_count = 12;
             break;
         // DEC n
         case 0x3D:
-            this->alu_dec("A");
+            this->alu_dec(REG_A);
             cycle_count = 4;
             break;
         case 0x05:
-            this->alu_dec("B");
+            this->alu_dec(REG_B);
             cycle_count = 4;
             break;
         case 0x0D:
-            this->alu_dec("C");
+            this->alu_dec(REG_C);
             cycle_count = 4;
             break;
         case 0x15:
-            this->alu_dec("D");
+            this->alu_dec(REG_D);
             cycle_count = 4;
             break;
         case 0x1D:
-            this->alu_dec("E");
+            this->alu_dec(REG_E);
             cycle_count = 4;
             break;
         case 0x25:
-            this->alu_dec("H");
+            this->alu_dec(REG_H);
             cycle_count = 4;
             break;
         case 0x2D:
-            this->alu_dec("L");
+            this->alu_dec(REG_L);
             cycle_count = 4;
             break;
         case 0x35:
-            this->alu_dec("HL");
+            this->alu_dec(REG_HL);
             cycle_count = 12;
             break;
         /****    16-Bit Arithmetic    ****/
         // ADD HL, n
         case 0x09:
-            this->alu_add_HL("BC");
+            this->alu_add_HL(REG_BC);
             cycle_count = 8;
             break;
         case 0x19:
-            this->alu_add_HL("DE");
+            this->alu_add_HL(REG_DE);
             cycle_count = 8;
             break;
         case 0x29:
-            this->alu_add_HL("HL");
+            this->alu_add_HL(REG_HL);
             cycle_count = 8;
             break;
         case 0x39:
-            this->alu_add_HL("SP");
+            this->alu_add_HL(REG_SP);
             cycle_count = 8;
             break;
         // ADD SP, n
@@ -967,36 +967,36 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // INC nn
         case 0x03:
-            this->alu_inc_16bit("BC");
+            this->alu_inc_16bit(REG_BC);
             cycle_count = 8;
             break;
         case 0x13:
-            this->alu_inc_16bit("DE");
+            this->alu_inc_16bit(REG_DE);
             cycle_count = 8;
             break;
         case 0x23:
-            this->alu_inc_16bit("HL");
+            this->alu_inc_16bit(REG_HL);
             cycle_count = 8;
             break;
         case 0x33:
-            this->alu_inc_16bit("SP");
+            this->alu_inc_16bit(REG_SP);
             cycle_count = 8;
             break;
         // DEC nn
         case 0x0B:
-            this->alu_dec_16bit("BC");
+            this->alu_dec_16bit(REG_BC);
             cycle_count = 8;
             break;
         case 0x1B:
-            this->alu_dec_16bit("DE");
+            this->alu_dec_16bit(REG_DE);
             cycle_count = 8;
             break;
         case 0x2B:
-            this->alu_dec_16bit("HL");
+            this->alu_dec_16bit(REG_HL);
             cycle_count = 8;
             break;
         case 0x3B:
-            this->alu_dec_16bit("SP");
+            this->alu_dec_16bit(REG_SP);
             cycle_count = 8;
             break;
         /****    Rotates and Shifts    ****/
@@ -1096,7 +1096,7 @@ int CPU::decode_op(uint8_t opcode) {
         // JP HL
         case 0xE9:
             
-            log_cpu("JP (%X)", this->read_register("HL"));
+            log_cpu("JP (%X)", this->read_register(REG_HL));
             
 
             this->jump_hl();
@@ -1328,1060 +1328,1060 @@ int CPU::decode_op(uint8_t opcode) {
                 /****    Misc    ****/
                 // SWAP n
                 case 0x37:
-                    this->swap("A");
+                    this->swap(REG_A);
                     cycle_count = 8;
                     break;
                 case 0x30:
-                    this->swap("B");
+                    this->swap(REG_B);
                     cycle_count = 8;
                     break;
                 case 0x31:
-                    this->swap("C");
+                    this->swap(REG_C);
                     cycle_count = 8;
                     break;
                 case 0x32:
-                    this->swap("D");
+                    this->swap(REG_D);
                     cycle_count = 8;
                     break;
                 case 0x33:
-                    this->swap("E");
+                    this->swap(REG_E);
                     cycle_count = 8;
                     break;
                 case 0x34:
-                    this->swap("H");
+                    this->swap(REG_H);
                     cycle_count = 8;
                     break;
                 case 0x35:
-                    this->swap("L");
+                    this->swap(REG_L);
                     cycle_count = 8;
                     break;
                 case 0x36:
-                    this->swap("HL");
+                    this->swap(REG_HL);
                     cycle_count = 16;
                     break;
                 /****    Rotates and Shifts    ****/
                 // RLC n
                 case 0x07:
-                    this->rotate_left("A", false);
+                    this->rotate_left(REG_A, false);
                     cycle_count = 8;
                     break;
                 case 0x00:
-                    this->rotate_left("B", false);
+                    this->rotate_left(REG_B, false);
                     cycle_count = 8;
                     break;
                 case 0x01:
-                    this->rotate_left("C", false);
+                    this->rotate_left(REG_C, false);
                     cycle_count = 8;
                     break;
                 case 0x02:
-                    this->rotate_left("D", false);
+                    this->rotate_left(REG_D, false);
                     cycle_count = 8;
                     break;
                 case 0x03:
-                    this->rotate_left("E", false);
+                    this->rotate_left(REG_E, false);
                     cycle_count = 8;
                     break;
                 case 0x04:
-                    this->rotate_left("H", false);
+                    this->rotate_left(REG_H, false);
                     cycle_count = 8;
                     break;
                 case 0x05:
-                    this->rotate_left("L", false);
+                    this->rotate_left(REG_L, false);
                     cycle_count = 8;
                     break;
                 case 0x06:
-                    this->rotate_left("HL", false);
+                    this->rotate_left(REG_HL, false);
                     cycle_count = 16;
                     break;
                 // RL n
                 case 0x17:
-                    this->rotate_left("A", true);
+                    this->rotate_left(REG_A, true);
                     cycle_count = 8;
                     break;
                 case 0x10:
-                    this->rotate_left("B", true);
+                    this->rotate_left(REG_B, true);
                     cycle_count = 8;
                     break;
                 case 0x11:
-                    this->rotate_left("C", true);
+                    this->rotate_left(REG_C, true);
                     cycle_count = 8;
                     break;
                 case 0x12:
-                    this->rotate_left("D", true);
+                    this->rotate_left(REG_D, true);
                     cycle_count = 8;
                     break;
                 case 0x13:
-                    this->rotate_left("E", true);
+                    this->rotate_left(REG_E, true);
                     cycle_count = 8;
                     break;
                 case 0x14:
-                    this->rotate_left("H", true);
+                    this->rotate_left(REG_H, true);
                     cycle_count = 8;
                     break;
                 case 0x15:
-                    this->rotate_left("L", true);
+                    this->rotate_left(REG_L, true);
                     cycle_count = 8;
                     break;
                 case 0x16:
-                    this->rotate_left("HL", true);
+                    this->rotate_left(REG_HL, true);
                     cycle_count = 16;
                     break;
                 // RRC n
                 case 0x0F:
-                    this->rotate_right("A", false);
+                    this->rotate_right(REG_A, false);
                     cycle_count = 8;
                     break;
                 case 0x08:
-                    this->rotate_right("B", false);
+                    this->rotate_right(REG_B, false);
                     cycle_count = 8;
                     break;
                 case 0x09:
-                    this->rotate_right("C", false);
+                    this->rotate_right(REG_C, false);
                     cycle_count = 8;
                     break;
                 case 0x0A:
-                    this->rotate_right("D", false);
+                    this->rotate_right(REG_D, false);
                     cycle_count = 8;
                     break;
                 case 0x0B:
-                    this->rotate_right("E", false);
+                    this->rotate_right(REG_E, false);
                     cycle_count = 8;
                     break;
                 case 0x0C:
-                    this->rotate_right("H", false);
+                    this->rotate_right(REG_H, false);
                     cycle_count = 8;
                     break;
                 case 0x0D:
-                    this->rotate_right("L", false);
+                    this->rotate_right(REG_L, false);
                     cycle_count = 8;
                     break;
                 case 0x0E:
-                    this->rotate_right("HL", false);
+                    this->rotate_right(REG_HL, false);
                     cycle_count = 16;
                     break;
                 // RR n
                 case 0x1F:
-                    this->rotate_right("A", true);
+                    this->rotate_right(REG_A, true);
                     cycle_count = 8;
                     break;
                 case 0x18:
-                    this->rotate_right("B", true);
+                    this->rotate_right(REG_B, true);
                     cycle_count = 8;
                     break;
                 case 0x19:
-                    this->rotate_right("C", true);
+                    this->rotate_right(REG_C, true);
                     cycle_count = 8;
                     break;
                 case 0x1A:
-                    this->rotate_right("D", true);
+                    this->rotate_right(REG_D, true);
                     cycle_count = 8;
                     break;
                 case 0x1B:
-                    this->rotate_right("E", true);
+                    this->rotate_right(REG_E, true);
                     cycle_count = 8;
                     break;
                 case 0x1C:
-                    this->rotate_right("H", true);
+                    this->rotate_right(REG_H, true);
                     cycle_count = 8;
                     break;
                 case 0x1D:
-                    this->rotate_right("L", true);
+                    this->rotate_right(REG_L, true);
                     cycle_count = 8;
                     break;
                 case 0x1E:
-                    this->rotate_right("HL", true);
+                    this->rotate_right(REG_HL, true);
                     cycle_count = 16;
                     break;
                 // SLA n
                 case 0x27:
-                    this->shift_left("A");
+                    this->shift_left(REG_A);
                     cycle_count = 8;
                     break;
                 case 0x20:
-                    this->shift_left("B");
+                    this->shift_left(REG_B);
                     cycle_count = 8;
                     break;
                 case 0x21:
-                    this->shift_left("C");
+                    this->shift_left(REG_C);
                     cycle_count = 8;
                     break;
                 case 0x22:
-                    this->shift_left("D");
+                    this->shift_left(REG_D);
                     cycle_count = 8;
                     break;
                 case 0x23:
-                    this->shift_left("E");
+                    this->shift_left(REG_E);
                     cycle_count = 8;
                     break;
                 case 0x24:
-                    this->shift_left("H");
+                    this->shift_left(REG_H);
                     cycle_count = 8;
                     break;
                 case 0x25:
-                    this->shift_left("L");
+                    this->shift_left(REG_L);
                     cycle_count = 8;
                     break;
                 case 0x26:
-                    this->shift_left("HL");
+                    this->shift_left(REG_HL);
                     cycle_count = 16;
                     break;
                 // SRA n
                 case 0x2F:
-                    this->shift_right("A", true);
+                    this->shift_right(REG_A, true);
                     cycle_count = 8;
                     break;
                 case 0x28:
-                    this->shift_right("B", true);
+                    this->shift_right(REG_B, true);
                     cycle_count = 8;
                     break;
                 case 0x29:
-                    this->shift_right("C", true);
+                    this->shift_right(REG_C, true);
                     cycle_count = 8;
                     break;
                 case 0x2A:
-                    this->shift_right("D", true);
+                    this->shift_right(REG_D, true);
                     cycle_count = 8;
                     break;
                 case 0x2B:
-                    this->shift_right("E", true);
+                    this->shift_right(REG_E, true);
                     cycle_count = 8;
                     break;
                 case 0x2C:
-                    this->shift_right("H", true);
+                    this->shift_right(REG_H, true);
                     cycle_count = 8;
                     break;
                 case 0x2D:
-                    this->shift_right("L", true);
+                    this->shift_right(REG_L, true);
                     cycle_count = 8;
                     break;
                 case 0x2E:
-                    this->shift_right("HL", true);
+                    this->shift_right(REG_HL, true);
                     cycle_count = 16;
                     break;
                 // SRL n
                 case 0x3F:
-                    this->shift_right("A", false);
+                    this->shift_right(REG_A, false);
                     cycle_count = 8;
                     break;
                 case 0x38:
-                    this->shift_right("B", false);
+                    this->shift_right(REG_B, false);
                     cycle_count = 8;
                     break;
                 case 0x39:
-                    this->shift_right("C", false);
+                    this->shift_right(REG_C, false);
                     cycle_count = 8;
                     break;
                 case 0x3A:
-                    this->shift_right("D", false);
+                    this->shift_right(REG_D, false);
                     cycle_count = 8;
                     break;
                 case 0x3B:
-                    this->shift_right("E", false);
+                    this->shift_right(REG_E, false);
                     cycle_count = 8;
                     break;
                 case 0x3C:
-                    this->shift_right("H", false);
+                    this->shift_right(REG_H, false);
                     cycle_count = 8;
                     break;
                 case 0x3D:
-                    this->shift_right("L", false);
+                    this->shift_right(REG_L, false);
                     cycle_count = 8;
                     break;
                 case 0x3E:
-                    this->shift_right("HL", false);
+                    this->shift_right(REG_HL, false);
                     cycle_count = 16;
                     break;
                 /****    Bit Opcodes    ****/
                 // BIT 0, r
                 case 0x40:
-                    this->test_bit(0, "B");
+                    this->test_bit(0, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x41:
-                    this->test_bit(0, "C");
+                    this->test_bit(0, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x42:
-                    this->test_bit(0, "D");
+                    this->test_bit(0, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x43:
-                    this->test_bit(0, "E");
+                    this->test_bit(0, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x44:
-                    this->test_bit(0, "H");
+                    this->test_bit(0, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x45:
-                    this->test_bit(0, "L");
+                    this->test_bit(0, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x46:
-                    this->test_bit(0, "HL");
+                    this->test_bit(0, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x47:
-                    this->test_bit(0, "A");
+                    this->test_bit(0, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 1, r
                 case 0x48:
-                    this->test_bit(1, "B");
+                    this->test_bit(1, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x49:
-                    this->test_bit(1, "C");
+                    this->test_bit(1, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x4A:
-                    this->test_bit(1, "D");
+                    this->test_bit(1, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x4B:
-                    this->test_bit(1, "E");
+                    this->test_bit(1, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x4C:
-                    this->test_bit(1, "H");
+                    this->test_bit(1, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x4D:
-                    this->test_bit(1, "L");
+                    this->test_bit(1, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x4E:
-                    this->test_bit(1, "HL");
+                    this->test_bit(1, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x4F:
-                    this->test_bit(1, "A");
+                    this->test_bit(1, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 2, r
                 case 0x50:
-                    this->test_bit(2, "B");
+                    this->test_bit(2, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x51:
-                    this->test_bit(2, "C");
+                    this->test_bit(2, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x52:
-                    this->test_bit(2, "D");
+                    this->test_bit(2, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x53:
-                    this->test_bit(2, "E");
+                    this->test_bit(2, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x54:
-                    this->test_bit(2, "H");
+                    this->test_bit(2, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x55:
-                    this->test_bit(2, "L");
+                    this->test_bit(2, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x56:
-                    this->test_bit(2, "HL");
+                    this->test_bit(2, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x57:
-                    this->test_bit(2, "A");
+                    this->test_bit(2, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 3, r
                 case 0x58:
-                    this->test_bit(3, "B");
+                    this->test_bit(3, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x59:
-                    this->test_bit(3, "C");
+                    this->test_bit(3, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x5A:
-                    this->test_bit(3, "D");
+                    this->test_bit(3, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x5B:
-                    this->test_bit(3, "E");
+                    this->test_bit(3, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x5C:
-                    this->test_bit(3, "H");
+                    this->test_bit(3, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x5D:
-                    this->test_bit(3, "L");
+                    this->test_bit(3, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x5E:
-                    this->test_bit(3, "HL");
+                    this->test_bit(3, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x5F:
-                    this->test_bit(3, "A");
+                    this->test_bit(3, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 4, r
                 case 0x60:
-                    this->test_bit(4, "B");
+                    this->test_bit(4, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x61:
-                    this->test_bit(4, "C");
+                    this->test_bit(4, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x62:
-                    this->test_bit(4, "D");
+                    this->test_bit(4, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x63:
-                    this->test_bit(4, "E");
+                    this->test_bit(4, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x64:
-                    this->test_bit(4, "H");
+                    this->test_bit(4, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x65:
-                    this->test_bit(4, "L");
+                    this->test_bit(4, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x66:
-                    this->test_bit(4, "HL");
+                    this->test_bit(4, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x67:
-                    this->test_bit(4, "A");
+                    this->test_bit(4, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 5, r
                 case 0x68:
-                    this->test_bit(5, "B");
+                    this->test_bit(5, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x69:
-                    this->test_bit(5, "C");
+                    this->test_bit(5, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x6A:
-                    this->test_bit(5, "D");
+                    this->test_bit(5, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x6B:
-                    this->test_bit(5, "E");
+                    this->test_bit(5, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x6C:
-                    this->test_bit(5, "H");
+                    this->test_bit(5, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x6D:
-                    this->test_bit(5, "L");
+                    this->test_bit(5, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x6E:
-                    this->test_bit(5, "HL");
+                    this->test_bit(5, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x6F:
-                    this->test_bit(5, "A");
+                    this->test_bit(5, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 6, r
                 case 0x70:
-                    this->test_bit(6, "B");
+                    this->test_bit(6, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x71:
-                    this->test_bit(6, "C");
+                    this->test_bit(6, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x72:
-                    this->test_bit(6, "D");
+                    this->test_bit(6, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x73:
-                    this->test_bit(6, "E");
+                    this->test_bit(6, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x74:
-                    this->test_bit(6, "H");
+                    this->test_bit(6, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x75:
-                    this->test_bit(6, "L");
+                    this->test_bit(6, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x76:
-                    this->test_bit(6, "HL");
+                    this->test_bit(6, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x77:
-                    this->test_bit(6, "A");
+                    this->test_bit(6, REG_A);
                     cycle_count = 8;
                     break;
                 // BIT 7, r
                 case 0x78:
-                    this->test_bit(7, "B");
+                    this->test_bit(7, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x79:
-                    this->test_bit(7, "C");
+                    this->test_bit(7, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x7A:
-                    this->test_bit(7, "D");
+                    this->test_bit(7, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x7B:
-                    this->test_bit(7, "E");
+                    this->test_bit(7, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x7C:
-                    this->test_bit(7, "H");
+                    this->test_bit(7, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x7D:
-                    this->test_bit(7, "L");
+                    this->test_bit(7, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x7E:
-                    this->test_bit(7, "HL");
+                    this->test_bit(7, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x7F:
-                    this->test_bit(7, "A");
+                    this->test_bit(7, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 0, r
                 case 0xC0:
-                    this->set_bit(0, "B");
+                    this->set_bit(0, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xC1:
-                    this->set_bit(0, "C");
+                    this->set_bit(0, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xC2:
-                    this->set_bit(0, "D");
+                    this->set_bit(0, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xC3:
-                    this->set_bit(0, "E");
+                    this->set_bit(0, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xC4:
-                    this->set_bit(0, "H");
+                    this->set_bit(0, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xC5:
-                    this->set_bit(0, "L");
+                    this->set_bit(0, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xC6:
-                    this->set_bit(0, "HL");
+                    this->set_bit(0, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xC7:
-                    this->set_bit(0, "A");
+                    this->set_bit(0, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 1, r
                 case 0xC8:
-                    this->set_bit(1, "B");
+                    this->set_bit(1, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xC9:
-                    this->set_bit(1, "C");
+                    this->set_bit(1, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xCA:
-                    this->set_bit(1, "D");
+                    this->set_bit(1, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xCB:
-                    this->set_bit(1, "E");
+                    this->set_bit(1, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xCC:
-                    this->set_bit(1, "H");
+                    this->set_bit(1, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xCD:
-                    this->set_bit(1, "L");
+                    this->set_bit(1, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xCE:
-                    this->set_bit(1, "HL");
+                    this->set_bit(1, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xCF:
-                    this->set_bit(1, "A");
+                    this->set_bit(1, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 2, r
                 case 0xD0:
-                    this->set_bit(2, "B");
+                    this->set_bit(2, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xD1:
-                    this->set_bit(2, "C");
+                    this->set_bit(2, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xD2:
-                    this->set_bit(2, "D");
+                    this->set_bit(2, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xD3:
-                    this->set_bit(2, "E");
+                    this->set_bit(2, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xD4:
-                    this->set_bit(2, "H");
+                    this->set_bit(2, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xD5:
-                    this->set_bit(2, "L");
+                    this->set_bit(2, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xD6:
-                    this->set_bit(2, "HL");
+                    this->set_bit(2, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xD7:
-                    this->set_bit(2, "A");
+                    this->set_bit(2, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 3, r
                 case 0xD8:
-                    this->set_bit(3, "B");
+                    this->set_bit(3, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xD9:
-                    this->set_bit(3, "C");
+                    this->set_bit(3, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xDA:
-                    this->set_bit(3, "D");
+                    this->set_bit(3, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xDB:
-                    this->set_bit(3, "E");
+                    this->set_bit(3, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xDC:
-                    this->set_bit(3, "H");
+                    this->set_bit(3, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xDD:
-                    this->set_bit(3, "L");
+                    this->set_bit(3, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xDE:
-                    this->set_bit(3, "HL");
+                    this->set_bit(3, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xDF:
-                    this->set_bit(3, "A");
+                    this->set_bit(3, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 4, r
                 case 0xE0:
-                    this->set_bit(4, "B");
+                    this->set_bit(4, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xE1:
-                    this->set_bit(4, "C");
+                    this->set_bit(4, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xE2:
-                    this->set_bit(4, "D");
+                    this->set_bit(4, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xE3:
-                    this->set_bit(4, "E");
+                    this->set_bit(4, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xE4:
-                    this->set_bit(4, "H");
+                    this->set_bit(4, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xE5:
-                    this->set_bit(4, "L");
+                    this->set_bit(4, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xE6:
-                    this->set_bit(4, "HL");
+                    this->set_bit(4, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xE7:
-                    this->set_bit(4, "A");
+                    this->set_bit(4, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 5, r
                 case 0xE8:
-                    this->set_bit(5, "B");
+                    this->set_bit(5, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xE9:
-                    this->set_bit(5, "C");
+                    this->set_bit(5, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xEA:
-                    this->set_bit(5, "D");
+                    this->set_bit(5, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xEB:
-                    this->set_bit(5, "E");
+                    this->set_bit(5, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xEC:
-                    this->set_bit(5, "H");
+                    this->set_bit(5, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xED:
-                    this->set_bit(5, "L");
+                    this->set_bit(5, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xEE:
-                    this->set_bit(5, "HL");
+                    this->set_bit(5, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xEF:
-                    this->set_bit(5, "A");
+                    this->set_bit(5, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 6, r
                 case 0xF0:
-                    this->set_bit(6, "B");
+                    this->set_bit(6, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xF1:
-                    this->set_bit(6, "C");
+                    this->set_bit(6, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xF2:
-                    this->set_bit(6, "D");
+                    this->set_bit(6, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xF3:
-                    this->set_bit(6, "E");
+                    this->set_bit(6, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xF4:
-                    this->set_bit(6, "H");
+                    this->set_bit(6, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xF5:
-                    this->set_bit(6, "L");
+                    this->set_bit(6, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xF6:
-                    this->set_bit(6, "HL");
+                    this->set_bit(6, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xF7:
-                    this->set_bit(6, "A");
+                    this->set_bit(6, REG_A);
                     cycle_count = 8;
                     break;
                 // SET 7, r
                 case 0xF8:
-                    this->set_bit(7, "B");
+                    this->set_bit(7, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xF9:
-                    this->set_bit(7, "C");
+                    this->set_bit(7, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xFA:
-                    this->set_bit(7, "D");
+                    this->set_bit(7, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xFB:
-                    this->set_bit(7, "E");
+                    this->set_bit(7, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xFC:
-                    this->set_bit(7, "H");
+                    this->set_bit(7, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xFD:
-                    this->set_bit(7, "L");
+                    this->set_bit(7, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xFE:
-                    this->set_bit(7, "HL");
+                    this->set_bit(7, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xFF:
-                    this->set_bit(7, "A");
+                    this->set_bit(7, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 0, r
                 case 0x80:
-                    this->reset_bit(0, "B");
+                    this->reset_bit(0, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x81:
-                    this->reset_bit(0, "C");
+                    this->reset_bit(0, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x82:
-                    this->reset_bit(0, "D");
+                    this->reset_bit(0, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x83:
-                    this->reset_bit(0, "E");
+                    this->reset_bit(0, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x84:
-                    this->reset_bit(0, "H");
+                    this->reset_bit(0, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x85:
-                    this->reset_bit(0, "L");
+                    this->reset_bit(0, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x86:
-                    this->reset_bit(0, "HL");
+                    this->reset_bit(0, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x87:
-                    this->reset_bit(0, "A");
+                    this->reset_bit(0, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 1, r
                 case 0x88:
-                    this->reset_bit(1, "B");
+                    this->reset_bit(1, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x89:
-                    this->reset_bit(1, "C");
+                    this->reset_bit(1, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x8A:
-                    this->reset_bit(1, "D");
+                    this->reset_bit(1, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x8B:
-                    this->reset_bit(1, "E");
+                    this->reset_bit(1, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x8C:
-                    this->reset_bit(1, "H");
+                    this->reset_bit(1, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x8D:
-                    this->reset_bit(1, "L");
+                    this->reset_bit(1, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x8E:
-                    this->reset_bit(1, "HL");
+                    this->reset_bit(1, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x8F:
-                    this->reset_bit(1, "A");
+                    this->reset_bit(1, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 2, r
                 case 0x90:
-                    this->reset_bit(2, "B");
+                    this->reset_bit(2, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x91:
-                    this->reset_bit(2, "C");
+                    this->reset_bit(2, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x92:
-                    this->reset_bit(2, "D");
+                    this->reset_bit(2, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x93:
-                    this->reset_bit(2, "E");
+                    this->reset_bit(2, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x94:
-                    this->reset_bit(2, "H");
+                    this->reset_bit(2, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x95:
-                    this->reset_bit(2, "L");
+                    this->reset_bit(2, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x96:
-                    this->reset_bit(2, "HL");
+                    this->reset_bit(2, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x97:
-                    this->reset_bit(2, "A");
+                    this->reset_bit(2, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 3, r
                 case 0x98:
-                    this->reset_bit(3, "B");
+                    this->reset_bit(3, REG_B);
                     cycle_count = 8;
                     break;
                 case 0x99:
-                    this->reset_bit(3, "C");
+                    this->reset_bit(3, REG_C);
                     cycle_count = 8;
                     break;
                 case 0x9A:
-                    this->reset_bit(3, "D");
+                    this->reset_bit(3, REG_D);
                     cycle_count = 8;
                     break;
                 case 0x9B:
-                    this->reset_bit(3, "E");
+                    this->reset_bit(3, REG_E);
                     cycle_count = 8;
                     break;
                 case 0x9C:
-                    this->reset_bit(3, "H");
+                    this->reset_bit(3, REG_H);
                     cycle_count = 8;
                     break;
                 case 0x9D:
-                    this->reset_bit(3, "L");
+                    this->reset_bit(3, REG_L);
                     cycle_count = 8;
                     break;
                 case 0x9E:
-                    this->reset_bit(3, "HL");
+                    this->reset_bit(3, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0x9F:
-                    this->reset_bit(3, "A");
+                    this->reset_bit(3, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 4, r
                 case 0xA0:
-                    this->reset_bit(4, "B");
+                    this->reset_bit(4, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xA1:
-                    this->reset_bit(4, "C");
+                    this->reset_bit(4, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xA2:
-                    this->reset_bit(4, "D");
+                    this->reset_bit(4, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xA3:
-                    this->reset_bit(4, "E");
+                    this->reset_bit(4, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xA4:
-                    this->reset_bit(4, "H");
+                    this->reset_bit(4, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xA5:
-                    this->reset_bit(4, "L");
+                    this->reset_bit(4, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xA6:
-                    this->reset_bit(4, "HL");
+                    this->reset_bit(4, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xA7:
-                    this->reset_bit(4, "A");
+                    this->reset_bit(4, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 5, r
                 case 0xA8:
-                    this->reset_bit(5, "B");
+                    this->reset_bit(5, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xA9:
-                    this->reset_bit(5, "C");
+                    this->reset_bit(5, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xAA:
-                    this->reset_bit(5, "D");
+                    this->reset_bit(5, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xAB:
-                    this->reset_bit(5, "E");
+                    this->reset_bit(5, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xAC:
-                    this->reset_bit(5, "H");
+                    this->reset_bit(5, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xAD:
-                    this->reset_bit(5, "L");
+                    this->reset_bit(5, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xAE:
-                    this->reset_bit(5, "HL");
+                    this->reset_bit(5, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xAF:
-                    this->reset_bit(5, "A");
+                    this->reset_bit(5, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 6, r
                 case 0xB0:
-                    this->reset_bit(6, "B");
+                    this->reset_bit(6, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xB1:
-                    this->reset_bit(6, "C");
+                    this->reset_bit(6, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xB2:
-                    this->reset_bit(6, "D");
+                    this->reset_bit(6, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xB3:
-                    this->reset_bit(6, "E");
+                    this->reset_bit(6, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xB4:
-                    this->reset_bit(6, "H");
+                    this->reset_bit(6, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xB5:
-                    this->reset_bit(6, "L");
+                    this->reset_bit(6, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xB6:
-                    this->reset_bit(6, "HL");
+                    this->reset_bit(6, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xB7:
-                    this->reset_bit(6, "A");
+                    this->reset_bit(6, REG_A);
                     cycle_count = 8;
                     break;
                 // RES 7, r
                 case 0xB8:
-                    this->reset_bit(7, "B");
+                    this->reset_bit(7, REG_B);
                     cycle_count = 8;
                     break;
                 case 0xB9:
-                    this->reset_bit(7, "C");
+                    this->reset_bit(7, REG_C);
                     cycle_count = 8;
                     break;
                 case 0xBA:
-                    this->reset_bit(7, "D");
+                    this->reset_bit(7, REG_D);
                     cycle_count = 8;
                     break;
                 case 0xBB:
-                    this->reset_bit(7, "E");
+                    this->reset_bit(7, REG_E);
                     cycle_count = 8;
                     break;
                 case 0xBC:
-                    this->reset_bit(7, "H");
+                    this->reset_bit(7, REG_H);
                     cycle_count = 8;
                     break;
                 case 0xBD:
-                    this->reset_bit(7, "L");
+                    this->reset_bit(7, REG_L);
                     cycle_count = 8;
                     break;
                 case 0xBE:
-                    this->reset_bit(7, "HL");
+                    this->reset_bit(7, REG_HL);
                     cycle_count = 16;
                     break;
                 case 0xBF:
-                    this->reset_bit(7, "A");
+                    this->reset_bit(7, REG_A);
                     cycle_count = 8;
                     break;
                 // Default, opcode not implemented
@@ -2399,50 +2399,50 @@ int CPU::decode_op(uint8_t opcode) {
     return cycle_count;
 }
 
-void CPU::write_register(const std::string &reg, uint16_t data) {
+void CPU::write_register(Registers_t reg, uint16_t data) {
     m_registers.write_register(reg, data);
 }
 
-uint16_t CPU::read_register(const std::string &reg) {
+uint16_t CPU::read_register(Registers_t reg) {
     return m_registers.read_register(reg);
 }
 
 void CPU::write_memory(uint8_t data) {
-    this->write_memory("HL", data);
+    this->write_memory(REG_HL, data);
 }
 
-void CPU::write_memory(const std::string &reg, uint8_t data) {
+void CPU::write_memory(Registers_t reg, uint8_t data) {
     uint16_t address = this->read_register(reg);
     this->m_memory_map.write(address, data);
 }
 
 uint8_t CPU::read_memory() {
-    return this->read_memory("HL");
+    return this->read_memory(REG_HL);
 }
 
-uint8_t CPU::read_memory(const std::string &reg) {
+uint8_t CPU::read_memory(Registers_t reg) {
     uint16_t address = this->read_register(reg);
     return this->m_memory_map.read(address);
 }
 
 void CPU::set_flag_register(CPUFlag_t flag, bool value) {
-    uint8_t flag_register_val = this->read_register("F");
+    uint8_t flag_register_val = this->read_register(REG_F);
     uint8_t val = (value) ? flag : 0;
 
     // Reset flag value to 0
     flag_register_val &= ~flag;
-    this->write_register("F", flag_register_val);
+    this->write_register(REG_F, flag_register_val);
     // Set new flag value
     flag_register_val |= val;
-    this->write_register("F", flag_register_val);
+    this->write_register(REG_F, flag_register_val);
 }
 
 bool CPU::read_flag_register(CPUFlag_t flag) {
-    return (this->read_register("F") & flag) == flag;
+    return (this->read_register(REG_F) & flag) == flag;
 }
 
 void CPU::reset_flag_register() {
-    this->write_register("F", 0);
+    this->write_register(REG_F, 0);
 }
 
 uint8_t CPU::read_io_register(IORegisters_t reg) {

@@ -11,10 +11,10 @@ TEST(CPU_BIT_OPS, BIT_B_R) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -37,11 +37,11 @@ TEST(CPU_BIT_OPS, BIT_B_HL) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("HL", HL);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_HL, HL);
     cpu.write_memory(val);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(HL, cpu.read_register("HL"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(HL, cpu.read_register(REG_HL));
     EXPECT_EQ(val, cpu.read_memory());
 
     opcode = cpu.fetch_op();
@@ -65,10 +65,10 @@ TEST(CPU_BIT_OPS, SET_B_R) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -87,11 +87,11 @@ TEST(CPU_BIT_OPS, SET_B_HL) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("HL", HL);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_HL, HL);
     cpu.write_memory(val);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(HL, cpu.read_register("HL"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(HL, cpu.read_register(REG_HL));
     EXPECT_EQ(val, cpu.read_memory());
 
     opcode = cpu.fetch_op();
@@ -113,10 +113,10 @@ TEST(CPU_BIT_OPS, RES_B_R) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -135,11 +135,11 @@ TEST(CPU_BIT_OPS, RES_B_HL) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("HL", HL);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_HL, HL);
     cpu.write_memory(val);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(HL, cpu.read_register("HL"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(HL, cpu.read_register(REG_HL));
     EXPECT_EQ(val, cpu.read_memory());
 
     opcode = cpu.fetch_op();

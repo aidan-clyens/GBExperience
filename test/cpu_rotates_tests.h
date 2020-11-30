@@ -25,13 +25,13 @@ TEST(CPU_ROTATES, RLCA) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", A);
-    EXPECT_EQ(A, cpu.read_register("A"));
+    cpu.write_register(REG_A, A);
+    EXPECT_EQ(A, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
     // Check value of A register
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -51,8 +51,8 @@ TEST(CPU_ROTATES, RLA_CarryNotSet) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", A);
-    EXPECT_EQ(A, cpu.read_register("A"));
+    cpu.write_register(REG_A, A);
+    EXPECT_EQ(A, cpu.read_register(REG_A));
 
     // Set carry flag to false
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -61,7 +61,7 @@ TEST(CPU_ROTATES, RLA_CarryNotSet) {
     cpu.decode_op(opcode);
 
     // Check value of A register
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -81,8 +81,8 @@ TEST(CPU_ROTATES, RLA_CarrySet) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", A);
-    EXPECT_EQ(A, cpu.read_register("A"));
+    cpu.write_register(REG_A, A);
+    EXPECT_EQ(A, cpu.read_register(REG_A));
 
     // Set carry flag to true
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -91,7 +91,7 @@ TEST(CPU_ROTATES, RLA_CarrySet) {
     cpu.decode_op(opcode);
 
     // Check value of A register
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -111,13 +111,13 @@ TEST(CPU_ROTATES, RRCA) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", A);
-    EXPECT_EQ(A, cpu.read_register("A"));
+    cpu.write_register(REG_A, A);
+    EXPECT_EQ(A, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
     // Check value of A register
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
     // Check carry flag for old bit 0
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -137,8 +137,8 @@ TEST(CPU_ROTATES, RRA_CarryNotSet) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", A);
-    EXPECT_EQ(A, cpu.read_register("A"));
+    cpu.write_register(REG_A, A);
+    EXPECT_EQ(A, cpu.read_register(REG_A));
 
     // Set carry flag to false
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -147,7 +147,7 @@ TEST(CPU_ROTATES, RRA_CarryNotSet) {
     cpu.decode_op(opcode);
 
     // Check value of A register
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
     // Check carry flag for old bit 0
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -167,8 +167,8 @@ TEST(CPU_ROTATES, RRA_CarrySet) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", A);
-    EXPECT_EQ(A, cpu.read_register("A"));
+    cpu.write_register(REG_A, A);
+    EXPECT_EQ(A, cpu.read_register(REG_A));
 
     // Set carry flag to true
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -177,7 +177,7 @@ TEST(CPU_ROTATES, RRA_CarrySet) {
     cpu.decode_op(opcode);
 
     // Check value of A register
-    EXPECT_EQ(result, cpu.read_register("A"));
+    EXPECT_EQ(result, cpu.read_register(REG_A));
     // Check carry flag for old bit 0
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -196,11 +196,11 @@ TEST(CPU_ROTATES, RLC_N) {
 
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -208,7 +208,7 @@ TEST(CPU_ROTATES, RLC_N) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -228,12 +228,12 @@ TEST(CPU_ROTATES, RLC_N_HL) {
 
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
-    cpu.write_register("PC", PC);
-    cpu.write_register("HL", HL);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_HL, HL);
     cpu.write_memory(value);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(HL, cpu.read_register("HL"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(HL, cpu.read_register(REG_HL));
     EXPECT_EQ(value, cpu.read_memory());
 
     opcode = cpu.fetch_op();
@@ -262,10 +262,10 @@ TEST(CPU_ROTATES, RL_N_CarryNotSet) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     // Set carry flag to false
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -277,7 +277,7 @@ TEST(CPU_ROTATES, RL_N_CarryNotSet) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -297,10 +297,10 @@ TEST(CPU_ROTATES, RL_N_CarrySet) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     // Set carry flag to true
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -312,7 +312,7 @@ TEST(CPU_ROTATES, RL_N_CarrySet) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -332,10 +332,10 @@ TEST(CPU_ROTATES, RRC_N) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -343,7 +343,7 @@ TEST(CPU_ROTATES, RRC_N) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 0
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -364,11 +364,11 @@ TEST(CPU_ROTATES, RRC_N_HL) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("HL", HL);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_HL, HL);
     cpu.write_memory(val);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(HL, cpu.read_register("HL"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(HL, cpu.read_register(REG_HL));
     EXPECT_EQ(val, cpu.read_memory());
 
     opcode = cpu.fetch_op();
@@ -397,10 +397,10 @@ TEST(CPU_ROTATES, RR_N_CarryNotSet) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     // Set carry flag to false
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -412,7 +412,7 @@ TEST(CPU_ROTATES, RR_N_CarryNotSet) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -432,10 +432,10 @@ TEST(CPU_ROTATES, RR_N_CarrySet) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     // Set carry flag to true
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -447,7 +447,7 @@ TEST(CPU_ROTATES, RR_N_CarrySet) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -467,10 +467,10 @@ TEST(CPU_ROTATES, SLA_N) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -478,7 +478,7 @@ TEST(CPU_ROTATES, SLA_N) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_7, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -498,10 +498,10 @@ TEST(CPU_ROTATES, SRA_N) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -509,7 +509,7 @@ TEST(CPU_ROTATES, SRA_N) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags
@@ -529,10 +529,10 @@ TEST(CPU_ROTATES, SRL_N) {
     MemoryMap mem_map = setup_cb_instruction(PC, opcode);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("B", B);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(B, cpu.read_register("B"));
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_B, B);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(B, cpu.read_register(REG_B));
 
     opcode = cpu.fetch_op();
     EXPECT_EQ(0xCB, opcode);
@@ -540,7 +540,7 @@ TEST(CPU_ROTATES, SRL_N) {
     cpu.decode_op(opcode);
 
     // Check value of B register
-    EXPECT_EQ(result, cpu.read_register("B"));
+    EXPECT_EQ(result, cpu.read_register(REG_B));
     // Check carry flag for old bit 7
     EXPECT_EQ(bit_0, cpu.read_flag_register(CARRY_FLAG));
     // Check zero, subtract, and half-carry flags

@@ -13,15 +13,15 @@ TEST(CPU_LD, LD_NN_N) {
     mem_map.write(PC, val_2);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
     
-    cpu.write_register("B", val_1);
-    EXPECT_EQ(val_1, cpu.read_register("B"));
+    cpu.write_register(REG_B, val_1);
+    EXPECT_EQ(val_1, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("B"));  
+    EXPECT_EQ(val_2, cpu.read_register(REG_B));  
 }
 
 // LD A, E
@@ -34,16 +34,16 @@ TEST(CPU_LD, LD_R1_R2) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val_1);
-    cpu.write_register("E", val_2);
+    cpu.write_register(REG_A, val_1);
+    cpu.write_register(REG_E, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("A"));
-    EXPECT_EQ(val_2, cpu.read_register("E"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
+    EXPECT_EQ(val_2, cpu.read_register(REG_E));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
-    EXPECT_EQ(val_2, cpu.read_register("E"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
+    EXPECT_EQ(val_2, cpu.read_register(REG_E));
 }
 
 // LD B, (HL)
@@ -57,16 +57,16 @@ TEST(CPU_LD, LD_R1_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("B", val_1);
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_B, val_1);
+    cpu.write_register(REG_HL, address);
     cpu.write_memory(val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("B"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_B));
     EXPECT_EQ(val_2, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("B"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_B));
     EXPECT_EQ(val_2, cpu.read_memory());
 }
 
@@ -81,17 +81,17 @@ TEST(CPU_LD, LD_HL_R2) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_HL, address);
     cpu.write_memory(val_1);
-    cpu.write_register("B", val_2);
+    cpu.write_register(REG_B, val_2);
 
     EXPECT_EQ(val_1, cpu.read_memory());
-    EXPECT_EQ(val_2, cpu.read_register("B"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_B));
 
     cpu.decode_op(opcode);
 
     EXPECT_EQ(val_2, cpu.read_memory());
-    EXPECT_EQ(val_2, cpu.read_register("B"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_B));
 }
 
 // LD (HL), #
@@ -107,10 +107,10 @@ TEST(CPU_LD, LD_HL_N) {
     mem_map.write(PC, val_2);
     CPU cpu(mem_map);
     
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
-    cpu.write_register("HL", address);
+    cpu.write_register(REG_HL, address);
     cpu.write_memory(val_1);
 
     EXPECT_EQ(val_1, cpu.read_memory());
@@ -131,17 +131,17 @@ TEST(CPU_LD, LD_A_BC) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val_1);
-    cpu.write_register("BC", address);
-    cpu.write_memory("BC", val_2);
+    cpu.write_register(REG_A, val_1);
+    cpu.write_register(REG_BC, address);
+    cpu.write_memory(REG_BC, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("A"));
-    EXPECT_EQ(val_2, cpu.read_memory("BC"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
-    EXPECT_EQ(val_2, cpu.read_memory("BC"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_BC));
 }
 
 // LD A, (nn)
@@ -160,14 +160,14 @@ TEST(CPU_LD, LD_A_NN) {
 
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("A", val_1);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_A, val_1);
 
-    EXPECT_EQ(val_1, cpu.read_register("A"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 }
 
 // LD A, #
@@ -182,15 +182,15 @@ TEST(CPU_LD, LD_A_N) {
     mem_map.write(PC, val_2);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
     
-    cpu.write_register("A", val_1);
-    EXPECT_EQ(val_1, cpu.read_register("A"));
+    cpu.write_register(REG_A, val_1);
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 }
 
 // LD B, A
@@ -203,16 +203,16 @@ TEST(CPU_LD, LD_N_A) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("B", val_1);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_B, val_1);
+    cpu.write_register(REG_A, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("B"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_B));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("B"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_B));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 }
 
 // LD (BC), A
@@ -226,17 +226,17 @@ TEST(CPU_LD, LD_BC_A) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("BC", address);
-    cpu.write_memory("BC", val_1);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_BC, address);
+    cpu.write_memory(REG_BC, val_1);
+    cpu.write_register(REG_A, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_memory("BC"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_1, cpu.read_memory(REG_BC));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_memory("BC"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_BC));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 }
 
 // LD (nn), A
@@ -255,15 +255,15 @@ TEST(CPU_LD, LD_NN_A) {
 
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_A, val_2);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    cpu.write_register("BC", address);
-    EXPECT_EQ(val_2, cpu.read_memory("BC"));
+    cpu.write_register(REG_BC, address);
+    EXPECT_EQ(val_2, cpu.read_memory(REG_BC));
 }
 
 // LD A, (C)
@@ -283,15 +283,15 @@ TEST(CPU_LD, LD_A_C) {
     
     CPU cpu(mem_map);
     
-    cpu.write_register("A", val_1);
-    cpu.write_register("C", val_C);
+    cpu.write_register(REG_A, val_1);
+    cpu.write_register(REG_C, val_C);
 
-    EXPECT_EQ(val_1, cpu.read_register("A"));
-    EXPECT_EQ(val_C, cpu.read_register("C"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
+    EXPECT_EQ(val_C, cpu.read_register(REG_C));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 }
 
 
@@ -309,16 +309,16 @@ TEST(CPU_LD, LD_C_A) {
     mem_map.write(address, val_1);
     CPU cpu(mem_map);
     
-    cpu.write_register("C", val_C);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_C, val_C);
+    cpu.write_register(REG_A, val_2);
 
-    EXPECT_EQ(val_C, cpu.read_register("C"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_C, cpu.read_register(REG_C));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    cpu.write_register("DE", address);
-    EXPECT_EQ(val_2, cpu.read_memory("DE"));
+    cpu.write_register(REG_DE, address);
+    EXPECT_EQ(val_2, cpu.read_memory(REG_DE));
 }
 
 // LDD A, (HL)
@@ -332,18 +332,18 @@ TEST(CPU_LD, LDD_A_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val_1);
-    cpu.write_register("HL", address);
-    cpu.write_memory("HL", val_2);
+    cpu.write_register(REG_A, val_1);
+    cpu.write_register(REG_HL, address);
+    cpu.write_memory(REG_HL, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("A"));
-    EXPECT_EQ(val_2, cpu.read_memory("HL"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_HL));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
-    EXPECT_EQ(address - 1, cpu.read_register("HL"));
+    EXPECT_EQ(address - 1, cpu.read_register(REG_HL));
 }
 
 // LDD (HL), A
@@ -357,21 +357,21 @@ TEST(CPU_LD, LDD_HL_A) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", address);
-    cpu.write_memory("HL", val_1);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_HL, address);
+    cpu.write_memory(REG_HL, val_1);
+    cpu.write_register(REG_A, val_2);
 
-    cpu.write_register("BC", address);
+    cpu.write_register(REG_BC, address);
 
-    EXPECT_EQ(val_1, cpu.read_memory("HL"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_1, cpu.read_memory(REG_HL));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_memory("BC"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_BC));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
-    EXPECT_EQ(address - 1, cpu.read_register("HL"));
+    EXPECT_EQ(address - 1, cpu.read_register(REG_HL));
 }
 
 // LDI A, (HL)
@@ -385,18 +385,18 @@ TEST(CPU_LD, LDI_A_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("A", val_1);
-    cpu.write_register("HL", address);
-    cpu.write_memory("HL", val_2);
+    cpu.write_register(REG_A, val_1);
+    cpu.write_register(REG_HL, address);
+    cpu.write_memory(REG_HL, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("A"));
-    EXPECT_EQ(val_2, cpu.read_memory("HL"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_HL));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
-    EXPECT_EQ(address + 1, cpu.read_register("HL"));
+    EXPECT_EQ(address + 1, cpu.read_register(REG_HL));
 }
 
 // LDI (HL), A
@@ -410,21 +410,21 @@ TEST(CPU_LD, LDI_HL_A) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("HL", address);
-    cpu.write_memory("HL", val_1);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_HL, address);
+    cpu.write_memory(REG_HL, val_1);
+    cpu.write_register(REG_A, val_2);
 
-    cpu.write_register("BC", address);
+    cpu.write_register(REG_BC, address);
 
-    EXPECT_EQ(val_1, cpu.read_memory("HL"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_1, cpu.read_memory(REG_HL));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_memory("BC"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_memory(REG_BC));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
-    EXPECT_EQ(address + 1, cpu.read_register("HL"));
+    EXPECT_EQ(address + 1, cpu.read_register(REG_HL));
 }
 
 // LDH (n), A
@@ -443,16 +443,16 @@ TEST(CPU_LD, LD_n_A) {
     mem_map.write(address, val_1);
     CPU cpu(mem_map);
     
-    cpu.write_register("PC", PC);
-    cpu.write_register("A", val_2);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_A, val_2);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    cpu.write_register("DE", address);
-    EXPECT_EQ(val_2, cpu.read_memory("DE"));
+    cpu.write_register(REG_DE, address);
+    EXPECT_EQ(val_2, cpu.read_memory(REG_DE));
 }
 
 // LD A, (n)
@@ -474,15 +474,15 @@ TEST(CPU_LD, LD_A_n) {
     
     CPU cpu(mem_map);
     
-    cpu.write_register("PC", PC);
-    cpu.write_register("A", val_1);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_A, val_1);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
-    EXPECT_EQ(val_1, cpu.read_register("A"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val_1, cpu.read_register(REG_A));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("A"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_A));
 }
 
 // LD BC, nn
@@ -498,16 +498,16 @@ TEST(CPU_LD_16Bit, LD_N_NN) {
     mem_map.write(PC + 1, val_2 >> 8);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    cpu.write_register(REG_PC, PC);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
-    cpu.write_register("BC", val_1);
+    cpu.write_register(REG_BC, val_1);
 
-    EXPECT_EQ(val_1, cpu.read_register("BC"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("BC"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_BC));
 }
 
 // LD SP, HL
@@ -520,15 +520,15 @@ TEST(CPU_LD_16Bit, LD_SP_HL) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("SP", val_1);
-    cpu.write_register("HL", val_2);
+    cpu.write_register(REG_SP, val_1);
+    cpu.write_register(REG_HL, val_2);
 
-    EXPECT_EQ(val_1, cpu.read_register("SP"));
-    EXPECT_EQ(val_2, cpu.read_register("HL"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_SP));
+    EXPECT_EQ(val_2, cpu.read_register(REG_HL));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register("SP"));
+    EXPECT_EQ(val_2, cpu.read_register(REG_SP));
 }
 
 // LDHL SP, n
@@ -544,19 +544,19 @@ TEST(CPU_LD_16Bit, LDHL_SP_N) {
     mem_map.write(PC, n);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
-    cpu.write_register("HL", val_1);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_HL, val_1);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(val_1, cpu.read_register("HL"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_HL));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((SP + n) & 0xFFFF, cpu.read_register("HL"));
+    EXPECT_EQ((SP + n) & 0xFFFF, cpu.read_register(REG_HL));
 
     // Check flags
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -579,19 +579,19 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Negative) {
     mem_map.write(PC, n);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
-    cpu.write_register("HL", val_1);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_HL, val_1);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(val_1, cpu.read_register("HL"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_HL));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((SP + signed_n) & 0xFFFF, cpu.read_register("HL"));
+    EXPECT_EQ((SP + signed_n) & 0xFFFF, cpu.read_register(REG_HL));
 
     // Check flags
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -613,19 +613,19 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Carry) {
     mem_map.write(PC, n);
     CPU cpu(mem_map);
 
-    cpu.write_register("PC", PC);
+    cpu.write_register(REG_PC, PC);
 
-    EXPECT_EQ(PC, cpu.read_register("PC"));
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
-    cpu.write_register("HL", val_1);
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_HL, val_1);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(val_1, cpu.read_register("HL"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_HL));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((SP + n) & 0xFFFF, cpu.read_register("HL"));
+    EXPECT_EQ((SP + n) & 0xFFFF, cpu.read_register(REG_HL));
 
     // Check flags
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
@@ -651,23 +651,23 @@ TEST(CPU_LD_16Bit, LD_PUSH_NN) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
-    cpu.write_register("BC", val_1);
+    cpu.write_register(REG_BC, val_1);
 
-    EXPECT_EQ(val_1, cpu.read_register("BC"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(val_1 >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(val_1 >> 8, cpu.read_memory(REG_HL));
 }
 
 // POP BC
@@ -680,28 +680,28 @@ TEST(CPU_LD_16Bit, LD_POP_NN) {
     
     CPU cpu(mem_map);
 
-    cpu.write_register("SP", SP);
+    cpu.write_register(REG_SP, SP);
 
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 
-    cpu.write_register("BC", val_1);
+    cpu.write_register(REG_BC, val_1);
 
-    EXPECT_EQ(val_1, cpu.read_register("BC"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_BC));
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(SP - 2, cpu.read_register("SP"));
+    EXPECT_EQ(SP - 2, cpu.read_register(REG_SP));
 
-    cpu.write_register("DE", SP - 1);
-    cpu.write_register("HL", SP - 2);
+    cpu.write_register(REG_DE, SP - 1);
+    cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory("DE"));
-    EXPECT_EQ(val_1 >> 8, cpu.read_memory("HL"));
+    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory(REG_DE));
+    EXPECT_EQ(val_1 >> 8, cpu.read_memory(REG_HL));
 
     opcode = 0xD1;
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_1, cpu.read_register("DE"));
-    EXPECT_EQ(SP, cpu.read_register("SP"));
+    EXPECT_EQ(val_1, cpu.read_register(REG_DE));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
 }
