@@ -12,9 +12,7 @@ void CPU::test_bit(int n, Registers_t reg) {
         val = this->read_register(reg);
     }
 
-    
-    log_cpu("BIT %X, %s", n, reg);
-    
+    log_cpu("BIT %X, %s", n, CPURegisters::to_string(reg));
 
     result = ((val >> n) & 0x01) == 0x00;
 
@@ -35,9 +33,7 @@ void CPU::set_bit(int n, Registers_t reg) {
         val = this->read_register(reg);
     }
 
-    
-    log_cpu("SET %X, %s", n, reg);
-    
+    log_cpu("SET %X, %s", n, CPURegisters::to_string(reg));
 
     result = val | shift;
 
@@ -61,9 +57,7 @@ void CPU::reset_bit(int n, Registers_t reg) {
         val = this->read_register(reg);
     }
 
-    
-    log_cpu("RES %X, %s", n, reg);
-    
+    log_cpu("RES %X, %s", n, CPURegisters::to_string(reg));
 
     result = val & ~shift;
 

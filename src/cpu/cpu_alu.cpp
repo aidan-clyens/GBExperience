@@ -35,7 +35,7 @@ void CPU::alu_add(Registers_t reg, bool carry) {
 
     
     if (carry) { log_cpu("ADC A, %s", reg); }
-    else { log_cpu("ADD A, %s", reg); }
+    else { log_cpu("ADD A, %s", CPURegisters::to_string(reg)); }
     
 
     this->write_register(REG_A, result);
@@ -92,8 +92,8 @@ void CPU::alu_sub(Registers_t reg, bool carry) {
     uint8_t result = A - n;
 
     
-    if (carry) { log_cpu("SBC A, %s", reg); }
-    else { log_cpu("SUB A, %s", reg); }
+    if (carry) { log_cpu("SBC A, %s", CPURegisters::to_string(reg)); }
+    else { log_cpu("SUB A, %s", CPURegisters::to_string(reg)); }
     
 
     this->write_register(REG_A, result);
@@ -174,9 +174,7 @@ void CPU::alu_and(Registers_t reg) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
-    
-    log_cpu("AND A, %s", reg );
-    
+    log_cpu("AND A, %s", CPURegisters::to_string(reg));
 
     this->write_register(REG_A, result);
 }
@@ -216,9 +214,7 @@ void CPU::alu_or(Registers_t reg) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
-    
-    log_cpu("OR A, %s", reg );
-    
+    log_cpu("OR A, %s", CPURegisters::to_string(reg));
 
     this->write_register(REG_A, result);
 }
@@ -257,9 +253,7 @@ void CPU::alu_xor(Registers_t reg) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
-    
-    log_cpu("XOR A, %s", reg );
-    
+    log_cpu("XOR A, %s", CPURegisters::to_string(reg));
 
     this->write_register(REG_A, result);
 }
@@ -311,8 +305,7 @@ void CPU::alu_cp(Registers_t reg) {
     this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
     this->set_flag_register(CARRY_FLAG, !borrow);
 
-    log_cpu("CP A, %s", reg );
-    
+    log_cpu("CP A, %s", CPURegisters::to_string(reg));
 }
 
 void CPU::alu_cp(uint8_t n) {
@@ -368,9 +361,7 @@ void CPU::alu_inc(Registers_t reg) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
-    
-    log_cpu("INC %s", reg );
-    
+    log_cpu("INC %s", CPURegisters::to_string(reg));
 
     if (reg == REG_HL) {
         this->write_memory(result);
@@ -391,9 +382,7 @@ void CPU::alu_dec(Registers_t reg) {
     uint8_t result = N;
     result--;
 
-    
-    log_cpu("DEC %s", reg );
-    
+    log_cpu("DEC %s", CPURegisters::to_string(reg));
 
     bool half_borrow = false;
 
@@ -434,9 +423,7 @@ void CPU::alu_add_HL(Registers_t reg) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
-    
-    log_cpu("ADD HL, %s", reg );
-    
+    log_cpu("ADD HL, %s", CPURegisters::to_string(reg));
 
     this->write_register(REG_HL, result);
 }
@@ -468,9 +455,7 @@ void CPU::alu_inc_16bit(Registers_t reg) {
     uint16_t N = this->read_register(reg);
     uint16_t result = N + 1;
 
-    
-    log_cpu("INC %s", reg );
-    
+    log_cpu("INC %s", CPURegisters::to_string(reg));
 
     this->write_register(reg, result);
 }
@@ -481,9 +466,7 @@ void CPU::alu_dec_16bit(Registers_t reg) {
     uint16_t result = N;
     result--;
 
-    
-    log_cpu("DEC %s", reg );
-    
+    log_cpu("DEC %s", CPURegisters::to_string(reg));
 
     this->write_register(reg, result);
 }
