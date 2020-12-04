@@ -17,9 +17,7 @@ void CPU::swap(Registers_t reg) {
 
     this->reset_flag_register();
 
-    
-    log_cpu("SWAP %s", reg);
-    
+    log_cpu("SWAP %s", CPURegisters::to_string(reg));
 
     if (result == 0) {
         this->set_flag_register(ZERO_FLAG, true);

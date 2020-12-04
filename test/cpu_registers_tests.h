@@ -47,3 +47,20 @@ TEST(CPURegisters, Write8BitRegisterInvalidData) {
     EXPECT_NE(data, cpu_registers.read_register(REG_A));
     EXPECT_EQ(data & 0xFF, cpu_registers.read_register(REG_A));
 }
+
+TEST(CPURegisters, RegisterToString) {
+    EXPECT_EQ("A", std::string(CPURegisters::to_string(REG_A)));
+    EXPECT_EQ("F", std::string(CPURegisters::to_string(REG_F)));
+    EXPECT_EQ("B", std::string(CPURegisters::to_string(REG_B)));
+    EXPECT_EQ("C", std::string(CPURegisters::to_string(REG_C)));
+    EXPECT_EQ("D", std::string(CPURegisters::to_string(REG_D)));
+    EXPECT_EQ("E", std::string(CPURegisters::to_string(REG_E)));
+    EXPECT_EQ("H", std::string(CPURegisters::to_string(REG_H)));
+    EXPECT_EQ("L", std::string(CPURegisters::to_string(REG_L)));
+    EXPECT_EQ("AF", std::string(CPURegisters::to_string(REG_AF)));
+    EXPECT_EQ("BC", std::string(CPURegisters::to_string(REG_BC)));
+    EXPECT_EQ("DE", std::string(CPURegisters::to_string(REG_DE)));
+    EXPECT_EQ("HL", std::string(CPURegisters::to_string(REG_HL)));
+    EXPECT_EQ("PC", std::string(CPURegisters::to_string(REG_PC)));
+    EXPECT_EQ("SP", std::string(CPURegisters::to_string(REG_SP)));
+}

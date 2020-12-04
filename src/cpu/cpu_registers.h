@@ -32,6 +32,8 @@ class CPURegisters {
         void write_register(Registers_t, uint16_t);
         uint16_t read_register(Registers_t);
 
+        static const char *to_string(Registers_t);
+
     private:
         std::map<Registers_t, uint8_t> m_registers;
 
