@@ -24,6 +24,9 @@ int main(int argc, char** argv) {
         else if (arg == "--warnings") {
             enable_warn_logging();
         }
+        else if (arg == "--trace") {
+            enable_cpu_logging();
+        }
     }
 
     GameBoy gb(debugger_enabled);
