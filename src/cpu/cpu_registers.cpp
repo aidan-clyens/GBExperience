@@ -99,3 +99,24 @@ uint16_t CPURegisters::read_register(Registers_t reg) {
         }
     }
 }
+
+const char *CPURegisters::to_string(Registers_t reg) {
+    switch (reg) {
+        case REG_A: return "A";
+        case REG_F: return "F";
+        case REG_B: return "B";
+        case REG_C: return "C";
+        case REG_D: return "D";
+        case REG_E: return "E";
+        case REG_H: return "H";
+        case REG_L: return "L";
+        case REG_AF: return "AF";
+        case REG_BC: return "BC";
+        case REG_DE: return "DE";
+        case REG_HL: return "HL";
+        case REG_PC: return "PC";
+        case REG_SP: return "SP";
+    }
+
+    return "";
+}

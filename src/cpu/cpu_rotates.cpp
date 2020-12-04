@@ -30,7 +30,7 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
             log_cpu("RLA");
         }
         else {
-            log_cpu("RL %s", reg);
+            log_cpu("RL %s", CPURegisters::to_string(reg));
         }
         
 
@@ -48,7 +48,7 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
             log_cpu("RLC (HL)" );
         }
         else {
-            log_cpu("RLC %s", reg);
+            log_cpu("RLC %s", CPURegisters::to_string(reg));
         }
         
 
@@ -101,7 +101,7 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
             log_cpu("RR (HL)");
         }
         else {
-            log_cpu("RR %s", reg);
+            log_cpu("RR %s", CPURegisters::to_string(reg));
         }
         
 
@@ -119,7 +119,7 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
             log_cpu("RRC (HL)");
         }
         else {
-            log_cpu("RRC %s", reg);
+            log_cpu("RRC %s", CPURegisters::to_string(reg));
         }
         
 
@@ -151,7 +151,7 @@ void CPU::shift_left(Registers_t reg) {
     uint8_t result = val << 1;
     bool bit_7 = (val & 0x80) == 0x80;
 
-    log_cpu("SLA %s", reg);
+    log_cpu("SLA %s", CPURegisters::to_string(reg));
 
     // Set flags
     this->set_flag_register(ZERO_FLAG, (result == 0));
@@ -187,11 +187,11 @@ void CPU::shift_right(Registers_t reg, bool keep_msb) {
             result |= 0x80;
         }
 
-        log_cpu("SRA %s", reg);
+        log_cpu("SRA %s", CPURegisters::to_string(reg));
     }
     else {
 
-        log_cpu("SRL %s", reg);
+        log_cpu("SRL %s", CPURegisters::to_string(reg));
     }
 
     // Set flags
