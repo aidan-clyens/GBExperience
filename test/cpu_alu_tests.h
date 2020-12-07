@@ -752,8 +752,8 @@ TEST(CPU_ALU, XORZero) {
 
 TEST(CPU_ALU, CPNoMatch) {
     uint8_t opcode = 0xB8;
-    uint8_t val = 0x10;
-    uint8_t n = 0x20;
+    uint8_t val = 0x10;     // 0001 0000
+    uint8_t n = 0x20;       // 0010 0000
 
     MemoryMap mem_map;
     
@@ -770,14 +770,14 @@ TEST(CPU_ALU, CPNoMatch) {
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU, CPMatch) {
     uint8_t opcode = 0xB8;
-    uint8_t val = 0x20;
-    uint8_t n = 0x20;
+    uint8_t val = 0x20;     // 0010 0000
+    uint8_t n = 0x20;       // 0010 0000
 
     MemoryMap mem_map;
     
@@ -794,8 +794,8 @@ TEST(CPU_ALU, CPMatch) {
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU, INC) {
