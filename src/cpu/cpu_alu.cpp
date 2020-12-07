@@ -89,34 +89,24 @@ void CPU::alu_sub(Registers_t reg, bool carry) {
         n++;
     }
 
-    uint8_t result = A - n;
+    uint8_t result = static_cast<uint8_t>(A - n);
 
     
     if (carry) { log_cpu("SBC A, %s", CPURegisters::to_string(reg)); }
-    else { log_cpu("SUB A, %s", CPURegisters::to_string(reg)); }
+    else { log_cpu("SUB A(%X), %s", A, CPURegisters::to_string(reg)); }
     
 
     this->write_register(REG_A, result);
     
-    bool borrow = false;
-    bool half_borrow = false;
-
-    for (int i = 0; i < 8; i++) {
-        if ((A & (1 << i)) < (n & (1 << i))) {
-            if (i < 4) {
-                half_borrow = true;
-            }
-            
-            borrow = true;
-        }
-    }
+    bool borrow = A < n;
+    bool half_borrow = ((A & 0xF) - (n & 0xF)) < 0;
 
     this->reset_flag_register();
 
     this->set_flag_register(SUBTRACT_FLAG, true);
     this->set_flag_register(ZERO_FLAG, (result == 0));
-    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
-    this->set_flag_register(CARRY_FLAG, !borrow);
+    this->set_flag_register(HALF_CARRY_FLAG, half_borrow);
+    this->set_flag_register(CARRY_FLAG, borrow);
 }
 
 void CPU::alu_sub(uint8_t n, bool carry) {
@@ -126,34 +116,24 @@ void CPU::alu_sub(uint8_t n, bool carry) {
         n++;
     }
 
-    uint8_t result = A - n;
+    uint8_t result = static_cast<uint8_t>(A - n);
 
     
     if (carry) { log_cpu("SBC A, %X", n ); }
-    else { log_cpu("SUB A, %X", n ); }
+    else { log_cpu("SUB A(%X), %X", A, n); }
     
 
     this->write_register(REG_A, result);
     
-    bool borrow = false;
-    bool half_borrow = false;
-
-    for (int i = 0; i < 8; i++) {
-        if ((A & (1 << i)) < (n & (1 << i))) {
-            if (i < 4) {
-                half_borrow = true;
-            }
-
-            borrow = true;
-        }
-    }
+    bool borrow = A < n;
+    bool half_borrow = ((A & 0xF) - (n & 0xF)) < 0;
 
     this->reset_flag_register();
 
     this->set_flag_register(SUBTRACT_FLAG, true);
     this->set_flag_register(ZERO_FLAG, (result == 0));
-    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
-    this->set_flag_register(CARRY_FLAG, !borrow);
+    this->set_flag_register(HALF_CARRY_FLAG, half_borrow);
+    this->set_flag_register(CARRY_FLAG, borrow);
 }
 
 // AND n
