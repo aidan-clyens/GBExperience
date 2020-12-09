@@ -61,6 +61,10 @@ void CPURegisters::write_register(Registers_t reg, uint16_t data) {
     }
     else {
         if (m_registers.count(reg) > 0) {
+            if (reg == REG_F) {
+                data = (data & 0xF0) | (m_registers.find(reg)->second & 0x0F);
+            }
+
             m_registers.find(reg)->second = data;
         }
         else {
