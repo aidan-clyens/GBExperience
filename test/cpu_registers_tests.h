@@ -34,8 +34,8 @@ TEST(CPURegisters, WriteValid16BitRegister) {
 
     uint16_t data = 0xABCD;
 
-    EXPECT_NO_THROW(cpu_registers.write_register(REG_AF, data));
-    EXPECT_EQ(data, cpu_registers.read_register(REG_AF));
+    EXPECT_NO_THROW(cpu_registers.write_register(REG_BC, data));
+    EXPECT_EQ(data, cpu_registers.read_register(REG_BC));
 }
 
 TEST(CPURegisters, Write8BitRegisterInvalidData) {
@@ -46,6 +46,18 @@ TEST(CPURegisters, Write8BitRegisterInvalidData) {
     EXPECT_NO_THROW(cpu_registers.write_register(REG_A, data));
     EXPECT_NE(data, cpu_registers.read_register(REG_A));
     EXPECT_EQ(data & 0xFF, cpu_registers.read_register(REG_A));
+}
+
+TEST(CPURegisters, WriteToFlagRegister) {
+    CPURegisters cpu_registers;
+
+    EXPECT_EQ(0xB0, cpu_registers.read_register(REG_F));
+
+    EXPECT_NO_THROW(cpu_registers.write_register(REG_F, 0xA0));
+    EXPECT_EQ(0xA0, cpu_registers.read_register(REG_F));
+
+    EXPECT_NO_THROW(cpu_registers.write_register(REG_F, 0xAF));
+    EXPECT_EQ(0xA0, cpu_registers.read_register(REG_F));
 }
 
 TEST(CPURegisters, RegisterToString) {
