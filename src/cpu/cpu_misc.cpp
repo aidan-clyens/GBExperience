@@ -100,3 +100,36 @@ void CPU::disable_interrupts() {
 
     m_interrupts_enabled = false;
 }
+
+void CPU::daa() {
+    log_cpu("DAA");
+
+    bool subtract = this->read_flag_register(SUBTRACT_FLAG);
+    bool carry = this->read_flag_register(CARRY_FLAG);
+    bool half_carry = this->read_flag_register(HALF_CARRY_FLAG);
+
+    uint8_t A = this->read_register(REG_A);
+
+    if (subtract) {
+        if (carry) {
+            A -= 0x60;
+        }
+        if (half_carry) {
+            A -= 0x06;
+        }
+    }
+    else {
+        if (carry || A > 0x99) {
+            carry = true;
+            A += 0x60;
+        }
+        if (half_carry || (A & 0x0F) > 0x09) {
+            A += 0x06;
+        }
+    }
+
+    this->write_register(REG_A, A);
+    this->set_flag_register(HALF_CARRY_FLAG, false);
+    this->set_flag_register(CARRY_FLAG, carry);
+    this->set_flag_register(ZERO_FLAG, (A == 0));
+}
