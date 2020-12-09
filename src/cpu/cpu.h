@@ -183,4 +183,6 @@ class CPU {
         void enable_interrupts();
         // DI
         void disable_interrupts();
+        // DAA
+        void daa();
 };
