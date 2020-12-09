@@ -231,3 +231,92 @@ TEST(CPU_MISC, DI) {
 
     EXPECT_FALSE(cpu.interrupts_enabled());
 }
+
+// DAA ADD
+TEST(CPU_MISC, DAA_ADD) {
+    uint8_t add_opcode = 0x80;
+    uint8_t daa_opcode = 0x27;
+
+    MemoryMap mem_map;
+    CPU cpu(mem_map);
+
+    // ADD
+    uint8_t val = 0x05;
+    uint8_t n = 0x75;
+    uint8_t add_result = 0x7A;
+    uint8_t daa_result = 0x80;
+
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
+
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
+    
+    cpu.decode_op(add_opcode);
+
+    EXPECT_EQ(add_result, cpu.read_register(REG_A));
+
+    // DAA
+    cpu.decode_op(daa_opcode);
+    EXPECT_EQ(daa_result, cpu.read_register(REG_A));
+}
+
+// DAA ADD Boundary
+TEST(CPU_MISC, DAA_ADD_BOUNDARY) {
+    uint8_t add_opcode = 0x80;
+    uint8_t daa_opcode = 0x27;
+
+    MemoryMap mem_map;
+    CPU cpu(mem_map);
+
+    // ADD
+    uint8_t val = 0x90;
+    uint8_t n = 0x10;
+    uint8_t add_result = 0xA0;
+    uint8_t daa_result = 0x00;
+
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
+
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
+    
+    cpu.decode_op(add_opcode);
+
+    EXPECT_EQ(add_result, cpu.read_register(REG_A));
+
+    // DAA
+    cpu.decode_op(daa_opcode);
+    EXPECT_EQ(daa_result, cpu.read_register(REG_A));
+    EXPECT_TRUE(cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_TRUE(cpu.read_flag_register(ZERO_FLAG));
+}
+
+// DAA SUB
+TEST(CPU_MISC, DAA_SUB) {
+    uint8_t sub_opcode = 0x90;
+    uint8_t daa_opcode = 0x27;
+
+    MemoryMap mem_map;
+    CPU cpu(mem_map);
+
+    // SUB
+    uint8_t val = 0x80;
+    uint8_t n = 0x75;
+    uint8_t sub_result = 0x0B;
+    uint8_t daa_result = 0x05;
+
+    cpu.write_register(REG_A, val);
+    cpu.write_register(REG_B, n);
+
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+    EXPECT_EQ(n, cpu.read_register(REG_B));
+    
+    cpu.decode_op(sub_opcode);
+
+    EXPECT_EQ(sub_result, cpu.read_register(REG_A));
+
+    // DAA
+    cpu.decode_op(daa_opcode);
+    EXPECT_EQ(daa_result, cpu.read_register(REG_A));
+}

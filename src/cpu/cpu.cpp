@@ -68,7 +68,8 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // DAA
         case 0x27:
-            log_cpu("Unimplemented: DAA" );
+            this->daa();
+            cycle_count = 4;
             break;
         // CPL
         case 0x2F:
