@@ -636,9 +636,31 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Carry) {
 
 // LD (nn), SP
 TEST(CPU_LD_16Bit, LD_NN_SP) {
-    // TODO Learn how to implement this instruction
+    uint8_t opcode = 0x08;
+    uint16_t address = 0xFF90;
+    uint16_t SP = 0xFFFE;
+    uint8_t n = 0x02;
+    uint16_t PC = 0xFF80;
 
-    EXPECT_TRUE(false);
+    MemoryMap mem_map;
+
+    mem_map.write(PC, (address & 0xFF));
+    mem_map.write(PC + 1, (address >> 8));
+    EXPECT_EQ(address & 0xFF, mem_map.read(PC));
+    EXPECT_EQ(address >> 8, mem_map.read(PC + 1));
+
+    CPU cpu(mem_map);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_SP, SP);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(SP, cpu.read_register(REG_SP));
+
+    cpu.decode_op(opcode);
+
+    cpu.write_register(REG_HL, address);
+    EXPECT_EQ((SP & 0xFF), cpu.read_memory());
+    cpu.write_register(REG_HL, address+1);
+    EXPECT_EQ((SP >> 8), cpu.read_memory());
 }
 
 // PUSH BC

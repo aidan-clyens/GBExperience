@@ -77,6 +77,7 @@ class CPU {
         void load_to_mem(Registers_t, Registers_t);
         void load_to_mem(Registers_t, uint16_t);
         void load_to_mem(uint16_t, Registers_t);
+        void load_to_mem16bit(uint16_t, Registers_t);
         void load_HL(int8_t);
 
         // PUSH nn
