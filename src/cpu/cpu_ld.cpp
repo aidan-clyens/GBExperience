@@ -53,6 +53,17 @@ void CPU::load_to_mem(uint16_t nn, Registers_t r2) {
     this->m_memory_map.write(nn, val);
 }
 
+void CPU::load_to_mem16bit(uint16_t nn, Registers_t r2) {
+    uint16_t val = this->read_register(r2);
+    uint8_t lower_bits = val & 0xFF;
+    uint8_t upper_bits = val >> 8;
+
+    log_cpu("LD (%X), %s", nn, CPURegisters::to_string(r2));
+
+    this->m_memory_map.write(nn, lower_bits);
+    this->m_memory_map.write(nn+1, upper_bits);
+}
+
 void CPU::load_HL(int8_t n) {
     uint16_t SP = this->read_register(REG_SP);
     uint16_t result = SP + n;

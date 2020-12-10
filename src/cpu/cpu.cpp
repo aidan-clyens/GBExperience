@@ -521,9 +521,11 @@ int CPU::decode_op(uint8_t opcode) {
             break;
         // LD (nn), SP
         case 0x08:
-            // TODO Learn how to implement this instruction
-            log_cpu("Unimplemented: LD %X, SP", arg_1);
-            
+            arg_1 = this->fetch_op();
+            arg_2 = this->fetch_op();
+            arg16bit = (arg_2 << 8) | arg_1;
+
+            this->load_to_mem16bit(arg16bit, REG_SP);            
             cycle_count = 20;
             break;
         // PUSH nn
