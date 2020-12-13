@@ -726,6 +726,11 @@ int CPU::decode_op(uint8_t opcode) {
             this->alu_sub(REG_HL, true);
             cycle_count = 8;
             break;
+        case 0xDE:
+            arg_1 = this->fetch_op();
+            this->alu_sub(arg_1, true);
+            cycle_count = 8;
+            break;
         // AND n
         case 0xA7:
             this->alu_and(REG_A);
