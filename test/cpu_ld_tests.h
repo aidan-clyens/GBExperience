@@ -559,7 +559,7 @@ TEST(CPU_LD_16Bit, LDHL_SP_N) {
     // Check flags
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
