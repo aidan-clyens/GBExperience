@@ -268,57 +268,54 @@ TEST(CPU_LD, LD_NN_A) {
 
 // LD A, (C)
 TEST(CPU_LD, LD_A_C) {
-    // TODO Fix when memory-mapped I/O is implemented
     uint8_t opcode = 0xF2;
-    uint8_t val_1 = 0x20;
-    uint8_t val_2 = 0xAC;
-    uint8_t val_C = 0x14;
-    uint16_t address = 0xFF00 + val_C;
+    IORegisters_t io_reg = STAT;
+    uint8_t val_C = (uint16_t)io_reg - 0xFF00;
+    uint8_t data = 0xAB;
 
     MemoryMap mem_map;
-    
-    mem_map.write(address, val_2);
-    
-    EXPECT_EQ(val_2, mem_map.read(address));
-    
     CPU cpu(mem_map);
-    
-    cpu.write_register(REG_A, val_1);
     cpu.write_register(REG_C, val_C);
-
-    EXPECT_EQ(val_1, cpu.read_register(REG_A));
+    cpu.write_register(REG_A, 0x0);
+    cpu.write_register(REG_HL, io_reg);
     EXPECT_EQ(val_C, cpu.read_register(REG_C));
+    EXPECT_EQ(0x0, cpu.read_register(REG_A));
+    EXPECT_EQ(io_reg, cpu.read_register(REG_HL));
+
+    cpu.write_io_register(io_reg, data);
+    EXPECT_EQ(data, cpu.read_io_register(io_reg));
+    EXPECT_EQ(data, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val_2, cpu.read_register(REG_A));
+    EXPECT_EQ(data, cpu.read_register(REG_A));
 }
 
 
 // LD (C), A
 TEST(CPU_LD, LD_C_A) {
-    // TODO Fix when memory-mapped I/O is implemented
     uint8_t opcode = 0xE2;
-    uint8_t val_1 = 0x20;
-    uint8_t val_2 = 0xAC;
-    uint8_t val_C = 0x14;
-    uint16_t address = 0xFF00 + val_C;
+    IORegisters_t io_reg = STAT;
+    uint8_t val_C = (uint16_t)io_reg - 0xFF00;
+    uint8_t data = 0xAB;
 
     MemoryMap mem_map;
-    
-    mem_map.write(address, val_1);
     CPU cpu(mem_map);
-    
     cpu.write_register(REG_C, val_C);
-    cpu.write_register(REG_A, val_2);
-
+    cpu.write_register(REG_A, data);
+    cpu.write_register(REG_HL, io_reg);
     EXPECT_EQ(val_C, cpu.read_register(REG_C));
-    EXPECT_EQ(val_2, cpu.read_register(REG_A));
+    EXPECT_EQ(data, cpu.read_register(REG_A));
+    EXPECT_EQ(io_reg, cpu.read_register(REG_HL));
+
+    cpu.write_io_register(io_reg, 0x0);
+    EXPECT_EQ(0x0, cpu.read_io_register(io_reg));
+    EXPECT_EQ(0x0, cpu.read_memory());
 
     cpu.decode_op(opcode);
 
-    cpu.write_register(REG_DE, address);
-    EXPECT_EQ(val_2, cpu.read_memory(REG_DE));
+    EXPECT_EQ(data, cpu.read_io_register(io_reg));
+    EXPECT_EQ(data, cpu.read_memory());
 }
 
 // LDD A, (HL)
