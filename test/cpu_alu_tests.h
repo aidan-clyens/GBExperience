@@ -441,6 +441,34 @@ TEST(CPU_ALU, SUBHalfCarry) {
     EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
 }
 
+TEST(CPU_ALU, SUB_N) {
+    uint8_t opcode = 0xD6;
+    uint8_t val = 0xF0;     // 1111 0000
+    uint8_t n = 0x50;       // 0101 0000
+    uint8_t result = 0xA0;  // 1010 0000
+    uint16_t PC = 0xFF80;
+
+    MemoryMap mem_map;
+    mem_map.write(PC, n);
+    EXPECT_EQ(n, mem_map.read(PC));
+
+    CPU cpu(mem_map);
+    cpu.write_register(REG_PC, PC);
+    cpu.write_register(REG_A, val);
+    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+    EXPECT_EQ(val, cpu.read_register(REG_A));
+
+    cpu.decode_op(opcode);
+
+    EXPECT_EQ(result, cpu.read_register(REG_A));
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+}
+
 TEST(CPU_ALU, SBCCarryNotSet) {
     uint8_t opcode = 0x98;
     uint8_t val = 0xF0;    // 1111 0000
