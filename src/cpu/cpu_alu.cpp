@@ -392,21 +392,14 @@ void CPU::alu_add_HL(Registers_t reg) {
 // ADD SP, e
 void CPU::alu_add_SP(int8_t n) {
     uint16_t SP = this->read_register(REG_SP);
-    uint16_t result = SP + n;
+    int result_full = static_cast<int>(SP + n);
+    uint16_t result = static_cast<uint16_t>(result_full);
 
     this->reset_flag_register();
+    this->set_flag_register(CARRY_FLAG, ((SP ^ n ^ (result & 0xFFFF)) & 0x100) == 0x100);
+    this->set_flag_register(HALF_CARRY_FLAG, ((SP ^ n ^ (result & 0xFFFF)) & 0x10) == 0x10);
 
-    if (SP + n > 0xFFFF) {
-        this->set_flag_register(CARRY_FLAG, true);
-    }
-
-    if ((SP & 0xFF) + (n & 0xFF) > 0x00FF) {
-        this->set_flag_register(HALF_CARRY_FLAG, true);
-    }
-
-    
     log_cpu("ADD SP, %X", n);
-    
 
     this->write_register(REG_SP, result);
 }
