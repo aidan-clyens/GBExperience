@@ -377,20 +377,15 @@ void CPU::alu_dec(Registers_t reg) {
 void CPU::alu_add_HL(Registers_t reg) {
     uint16_t HL = this->read_register(REG_HL);
     uint16_t nn = this->read_register(reg);
-    uint16_t result = HL + nn;
+    uint32_t result_full = HL + nn;
 
-    this->reset_flag_register();
-
-    if (HL + nn > 0xFFFF) {
-        this->set_flag_register(CARRY_FLAG, true);
-    }
-
-    if ((HL & 0xFF) + (nn & 0xFF) > 0x00FF) {
-        this->set_flag_register(HALF_CARRY_FLAG, true);
-    }
+    this->set_flag_register(SUBTRACT_FLAG, false);
+    this->set_flag_register(CARRY_FLAG, ((result_full & 0x10000) != 0));
+    this->set_flag_register(HALF_CARRY_FLAG, ((HL & 0xFFF) + (nn & 0xFFF) > 0xFFF));
 
     log_cpu("ADD HL, %s", CPURegisters::to_string(reg));
 
+    uint16_t result = static_cast<uint16_t>(result_full);
     this->write_register(REG_HL, result);
 }
 
