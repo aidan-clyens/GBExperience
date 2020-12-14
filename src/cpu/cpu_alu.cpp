@@ -13,11 +13,15 @@ void CPU::alu_add(Registers_t reg, bool carry) {
         n = this->read_register(reg);
     }
 
-    uint8_t result = A + n;
+    uint16_t result_full = A + n;
+    uint8_t carry_bit = 0;
 
     if (carry) {
-        result += (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
+        carry_bit = (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
+        result_full += carry_bit;
     }
+
+    uint8_t result = static_cast<uint8_t>(result_full);
 
     this->reset_flag_register();
 
@@ -25,11 +29,11 @@ void CPU::alu_add(Registers_t reg, bool carry) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
-    if (A + n > 0xFF) {
+    if (result_full > 0xFF) {
         this->set_flag_register(CARRY_FLAG, true);
     }
 
-    if ((A & 0xF) + (n & 0xF) > 0x0F) {
+    if (((A & 0xF) + (n & 0xF) + carry_bit) > 0x0F) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
@@ -43,11 +47,14 @@ void CPU::alu_add(Registers_t reg, bool carry) {
 
 void CPU::alu_add(uint8_t n, bool carry) {
     uint8_t A = this->read_register(REG_A);
-    uint8_t result = A + n;
+    uint16_t result_full = A + n;
+    uint8_t carry_bit = 0;
 
     if (carry) {
-        result += (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
+        carry_bit = (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
+        result_full += carry_bit;
     }
+    uint8_t result = static_cast<uint8_t>(result_full);
 
     this->reset_flag_register();
 
@@ -55,11 +62,11 @@ void CPU::alu_add(uint8_t n, bool carry) {
         this->set_flag_register(ZERO_FLAG, true);
     }
 
-    if (A + n > 0xFF) {
+    if (result_full > 0xFF) {
         this->set_flag_register(CARRY_FLAG, true);
     }
 
-    if ((A & 0xF) + (n & 0xF) > 0x0F) {
+    if (((A & 0xF) + (n & 0xF) + carry_bit) > 0x0F) {
         this->set_flag_register(HALF_CARRY_FLAG, true);
     }
 
