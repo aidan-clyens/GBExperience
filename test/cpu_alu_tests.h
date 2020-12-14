@@ -1015,8 +1015,9 @@ TEST(CPU_ALU, DEC_HL) {
 /****    16-Bit ALU    ****/
 TEST(CPU_ALU_16Bit, ADD) {
     uint8_t opcode = 0x09;
-    uint16_t val = 0x1020;
-    uint16_t n = 0x0314;
+    uint16_t val = 0x1020;      // 0001 0000 0010 0000
+    uint16_t n = 0x0314;        // 0000 0011 0001 0100
+    uint16_t result = 0x1334;    // 0001 0011 0011 0100
 
     MemoryMap mem_map;
     
@@ -1030,7 +1031,7 @@ TEST(CPU_ALU_16Bit, ADD) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ(val + n, cpu.read_register(REG_HL));
+    EXPECT_EQ(result, cpu.read_register(REG_HL));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
@@ -1042,6 +1043,7 @@ TEST(CPU_ALU_16Bit, ADDCarry) {
     uint8_t opcode = 0x09;
     uint16_t val = 0xFFFF;
     uint16_t n = 0x1000;
+    uint16_t result = 0x0FFF;
 
     MemoryMap mem_map;
     
@@ -1055,7 +1057,7 @@ TEST(CPU_ALU_16Bit, ADDCarry) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_HL));
+    EXPECT_EQ(result, cpu.read_register(REG_HL));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
@@ -1065,8 +1067,9 @@ TEST(CPU_ALU_16Bit, ADDCarry) {
 
 TEST(CPU_ALU_16Bit, ADDHalfCarry) {
     uint8_t opcode = 0x09;
-    uint16_t val = 0x00F0;
-    uint16_t n = 0x0010;
+    uint16_t val = 0x0F00;      // 0000 1111 0000 0000
+    uint16_t n = 0x0100;        // 0000 0001 0000 0000
+    uint16_t result = 0x1000;   // 0001 0000 0000 0000
 
     MemoryMap mem_map;
     
@@ -1080,7 +1083,7 @@ TEST(CPU_ALU_16Bit, ADDHalfCarry) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((val + n) & 0xFFFF, cpu.read_register(REG_HL));
+    EXPECT_EQ(result, cpu.read_register(REG_HL));
 
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
