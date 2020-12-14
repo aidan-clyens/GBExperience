@@ -84,6 +84,7 @@ void CPU::alu_add(uint8_t n, bool carry) {
 void CPU::alu_sub(Registers_t reg, bool carry) {
     uint8_t A = this->read_register(REG_A);
     uint8_t n;
+    uint8_t carry_bit = 0;
 
     if (reg == REG_HL) {
         n = this->read_memory();
@@ -92,21 +93,20 @@ void CPU::alu_sub(Registers_t reg, bool carry) {
         n = this->read_register(reg);
     }
 
-    if (carry & this->read_flag_register(CARRY_FLAG)) {
-        n++;
+    if (carry) {
+        carry_bit = (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
     }
 
-    uint8_t result = static_cast<uint8_t>(A - n);
-
+    int result_full = A - n - carry_bit;
+    uint8_t result = static_cast<uint8_t>(result_full);
     
     if (carry) { log_cpu("SBC A, %s", CPURegisters::to_string(reg)); }
     else { log_cpu("SUB A(%X), %s", A, CPURegisters::to_string(reg)); }
-    
 
     this->write_register(REG_A, result);
     
-    bool borrow = A < n;
-    bool half_borrow = ((A & 0xF) - (n & 0xF)) < 0;
+    bool borrow = result_full < 0;
+    bool half_borrow = ((A & 0xF) - (n & 0xF) - carry_bit) < 0;
 
     this->reset_flag_register();
 
@@ -118,22 +118,22 @@ void CPU::alu_sub(Registers_t reg, bool carry) {
 
 void CPU::alu_sub(uint8_t n, bool carry) {
     uint8_t A = this->read_register(REG_A);
+    uint8_t carry_bit = 0;
 
-    if (carry & this->read_flag_register(CARRY_FLAG)) {
-        n++;
+    if (carry) {
+        carry_bit = (this->read_flag_register(CARRY_FLAG)) ? 1 : 0;
     }
 
-    uint8_t result = static_cast<uint8_t>(A - n);
-
+    int result_full = A - n - carry_bit;
+    uint8_t result = static_cast<uint8_t>(result_full);
     
     if (carry) { log_cpu("SBC A, %X", n ); }
     else { log_cpu("SUB A(%X), %X", A, n); }
-    
 
     this->write_register(REG_A, result);
     
-    bool borrow = A < n;
-    bool half_borrow = ((A & 0xF) - (n & 0xF)) < 0;
+    bool borrow = result_full < 0;
+    bool half_borrow = ((A & 0xF) - (n & 0xF) - carry_bit) < 0;
 
     this->reset_flag_register();
 
