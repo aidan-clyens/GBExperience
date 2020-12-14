@@ -238,8 +238,8 @@ TEST(CPU_ALU, ADCZero) {
 
 TEST(CPU_ALU, ADCCarry) {
     uint8_t opcode = 0x88;
-    uint8_t val = 0xFF;
-    uint8_t n = 0x02;
+    uint8_t val = 0xFF;     // 1111 1111
+    uint8_t n = 0x02;       // 0000 0010
 
     MemoryMap mem_map;
     
@@ -271,7 +271,7 @@ TEST(CPU_ALU, ADCCarry) {
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
