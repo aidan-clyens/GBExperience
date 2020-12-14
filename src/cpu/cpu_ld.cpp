@@ -66,21 +66,14 @@ void CPU::load_to_mem16bit(uint16_t nn, Registers_t r2) {
 
 void CPU::load_HL(int8_t n) {
     uint16_t SP = this->read_register(REG_SP);
-    uint16_t result = SP + n;
-
+    int result_full = static_cast<int>(SP + n);
+    uint16_t result = static_cast<uint16_t>(result_full);
     
     log_cpu("LDHL %X", n);
-    
 
     this->reset_flag_register();
-    
-    if (SP + n > 0xFFFF) {
-        this->set_flag_register(CARRY_FLAG, true);
-    }
-
-    if ((SP & 0xFF) + (n & 0xFF) > 0xFF) {
-        this->set_flag_register(HALF_CARRY_FLAG, true);
-    }
+    this->set_flag_register(CARRY_FLAG, ((SP ^ n ^ (result & 0xFFFF)) & 0x100) == 0x100);
+    this->set_flag_register(HALF_CARRY_FLAG, ((SP ^ n ^ (result & 0xFFFF)) & 0x10) == 0x10);
 
     this->load(REG_HL, result);
 }
