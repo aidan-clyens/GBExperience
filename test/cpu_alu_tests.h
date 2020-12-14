@@ -1151,7 +1151,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_Negative) {
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU_16Bit, ADD_SP_Carry) {
@@ -1213,7 +1213,7 @@ TEST(CPU_ALU_16Bit, ADD_SP_HalfCarry) {
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
 TEST(CPU_ALU_16Bit, INC) {
