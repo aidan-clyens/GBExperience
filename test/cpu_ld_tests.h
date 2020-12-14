@@ -567,10 +567,12 @@ TEST(CPU_LD_16Bit, LDHL_SP_N) {
 TEST(CPU_LD_16Bit, LDHL_SP_N_Negative) {
     uint8_t opcode = 0xF8;
     uint16_t val_1 = 0x1234;
-    uint16_t SP = 0xFFF0;
-    int8_t n = 0xF2;
-    int signed_n = -14;
+    uint16_t SP = 0xFFF0;       // 1111 1111 1111 0000
+    int8_t n = 0xF2;            //           1111 0010
     uint16_t PC = 0xFF80;
+
+    int result_full = static_cast<int>(SP + n);
+    uint16_t result = static_cast<uint16_t>(result_full);
 
     MemoryMap mem_map;
     
@@ -589,13 +591,13 @@ TEST(CPU_LD_16Bit, LDHL_SP_N_Negative) {
 
     cpu.decode_op(opcode);
 
-    EXPECT_EQ((SP + signed_n) & 0xFFFF, cpu.read_register(REG_HL));
+    EXPECT_EQ(result, cpu.read_register(REG_HL));
 
     // Check flags
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(CARRY_FLAG));
 }
 
 // LDHL SP, n
