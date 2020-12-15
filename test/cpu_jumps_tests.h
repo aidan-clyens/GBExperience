@@ -361,8 +361,8 @@ TEST(CPU_RST, RST) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(PC & 0xFF, cpu.read_memory(REG_HL));
 }
 
 // CALL nn
@@ -392,8 +392,8 @@ TEST(CPU_CALL, CALL_NN) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_HL));
 
     EXPECT_EQ(val, cpu.read_register(REG_PC));
 }
@@ -458,8 +458,8 @@ TEST(CPU_CALL, CALL_CC_NN_Carry) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_HL));
 
     EXPECT_EQ(val, cpu.read_register(REG_PC));
 }
@@ -492,8 +492,8 @@ TEST(CPU_RETURNS, RET) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_HL));
 
     // RET
     opcode = 0xC9;
@@ -531,8 +531,8 @@ TEST(CPU_RETURNS, RET_CC_NoFlags) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_HL));
 
     // RET cc
     cpu.set_flag_register(CARRY_FLAG, false);
@@ -574,8 +574,8 @@ TEST(CPU_RETURNS, RET_CC_Carry) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_HL));
 
     // RET cc
     cpu.set_flag_register(CARRY_FLAG, true);
@@ -617,8 +617,8 @@ TEST(CPU_RETURNS, RETI) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(next_PC >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(next_PC & 0xFF, cpu.read_memory(REG_HL));
 
     // RETI
     opcode = 0xD9;
