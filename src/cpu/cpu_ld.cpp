@@ -81,23 +81,25 @@ void CPU::load_HL(int8_t n) {
 void CPU::push_stack(Registers_t reg) {
     uint16_t val = this->read_register(reg);
     uint16_t SP = this->read_register(REG_SP);
+    uint8_t lower_byte = val & 0xFF;
+    uint8_t upper_byte = val >> 8;
 
     this->write_register(REG_SP, SP - 1);
-    this->write_memory(REG_SP, val & 0xFF);
+    this->write_memory(REG_SP, upper_byte);
     
     this->write_register(REG_SP, SP - 2);
-    this->write_memory(REG_SP, val >> 8);
+    this->write_memory(REG_SP, lower_byte);
 }
 
 void CPU::pop_stack(Registers_t reg) {
     uint16_t SP = this->read_register(REG_SP);
 
-    uint8_t val_1 = this->read_memory(REG_SP);
+    uint8_t lower_byte = this->read_memory(REG_SP);
     this->write_register(REG_SP, SP + 1);
 
-    uint8_t val_2 = this->read_memory(REG_SP);
+    uint8_t upper_byte = this->read_memory(REG_SP);
     this->write_register(REG_SP, SP + 2);
 
-    uint16_t val = (val_1 << 8) | val_2;
+    uint16_t val = (upper_byte << 8) | lower_byte;
     this->write_register(reg, val);
 }

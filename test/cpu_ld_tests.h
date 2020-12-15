@@ -688,8 +688,8 @@ TEST(CPU_LD_16Bit, LD_PUSH_NN) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(val_1 >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(val_1 >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory(REG_HL));
 }
 
 // POP BC
@@ -717,8 +717,8 @@ TEST(CPU_LD_16Bit, LD_POP_NN) {
     cpu.write_register(REG_DE, SP - 1);
     cpu.write_register(REG_HL, SP - 2);
 
-    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory(REG_DE));
-    EXPECT_EQ(val_1 >> 8, cpu.read_memory(REG_HL));
+    EXPECT_EQ(val_1 >> 8, cpu.read_memory(REG_DE));
+    EXPECT_EQ(val_1 & 0xFF, cpu.read_memory(REG_HL));
 
     opcode = 0xD1;
 
