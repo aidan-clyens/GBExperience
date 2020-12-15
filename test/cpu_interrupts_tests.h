@@ -182,8 +182,8 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
     EXPECT_EQ((uint16_t)VBLANK_ISR, cpu.read_register(REG_PC));
@@ -222,8 +222,8 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
     EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register(REG_PC));
@@ -262,8 +262,8 @@ TEST(Interrupts, TriggerTimerInterrupt) {
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
     EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register(REG_PC));
@@ -302,8 +302,8 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
     EXPECT_EQ((uint16_t)LCD_STAT_ISR, cpu.read_register(REG_PC));
@@ -339,8 +339,8 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should jump to corresponding interrupt service routine
     EXPECT_EQ((uint16_t)SERIAL_ISR, cpu.read_register(REG_PC));
@@ -383,8 +383,8 @@ TEST(Interrupts, TriggerMultipleInterrupts) {
 
     // Current PC should be pushed to stack
     uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should handle the Timer Overflow interrupt first
     EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register(REG_PC));
@@ -407,8 +407,8 @@ TEST(Interrupts, TriggerMultipleInterrupts) {
 
     // Current PC should be pushed to stack
     SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC >> 8), mem_map.read(SP));
-    EXPECT_EQ((PC & 0xF), mem_map.read(SP + 1));
+    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
     // Should handle the Joypad interrupt next
     EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register(REG_PC));
