@@ -62,9 +62,10 @@ void CPU::set_carry() {
 
     
     log_cpu("SCF");
-    
 
     this->set_flag_register(CARRY_FLAG, true);
+    this->set_flag_register(SUBTRACT_FLAG, false);
+    this->set_flag_register(HALF_CARRY_FLAG, false);
 }
 
 void CPU::halt() {
