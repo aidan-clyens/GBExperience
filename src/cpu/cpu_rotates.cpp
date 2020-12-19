@@ -1,12 +1,11 @@
 #include "cpu.h"
 
-void CPU::rotate_left(bool use_carry) {
-    this->rotate_left(REG_A, use_carry);
+void CPU::rotate_left_A(bool use_carry) {
+    this->rotate_left(REG_A, use_carry, false);
 }
 
-void CPU::rotate_left(Registers_t reg, bool use_carry) {
+void CPU::rotate_left(Registers_t reg, bool use_carry, bool set_zero) {
     uint8_t val;
-
     if (reg == REG_HL) {
         val = this->read_memory();
     }
@@ -25,13 +24,12 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
     if (use_carry)  {
         bool old_bit_7 = this->read_flag_register(CARRY_FLAG);
         
-        if (reg == REG_A) {
+        if (reg == REG_A && !set_zero) {
             log_cpu("RLA");
         }
         else {
             log_cpu("RL %s", CPURegisters::to_string(reg));
         }
-        
 
         if (old_bit_7) {
             result |= 0x01;
@@ -39,8 +37,7 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
     }
     // RLCA
     else {
-        
-        if (reg == REG_A) {
+        if (reg == REG_A && !set_zero) {
             log_cpu("RLCA");
         }
         else if (reg == REG_HL) {
@@ -49,7 +46,6 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
         else {
             log_cpu("RLC %s", CPURegisters::to_string(reg));
         }
-        
 
         if (bit_7) {
             result |= 0x01;
@@ -63,7 +59,12 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
         this->write_register(reg, result);
     }
 
-    this->set_flag_register(ZERO_FLAG, (result == 0));
+    if (set_zero) {
+        this->set_flag_register(ZERO_FLAG, (result == 0));
+    } else {
+        this->set_flag_register(ZERO_FLAG, false);
+    }
+
     this->set_flag_register(CARRY_FLAG, bit_7);
 }
 

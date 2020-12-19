@@ -1010,12 +1010,12 @@ int CPU::decode_op(uint8_t opcode) {
         /****    Rotates and Shifts    ****/
         // RLCA
         case 0x07:
-            this->rotate_left(false);
+            this->rotate_left_A(false);
             cycle_count = 4;
             break;
         // RLA
         case 0x17:
-            this->rotate_left(true);
+            this->rotate_left_A(true);
             cycle_count = 4;
             break;
         // RRCA
@@ -1370,68 +1370,68 @@ int CPU::decode_op(uint8_t opcode) {
                 /****    Rotates and Shifts    ****/
                 // RLC n
                 case 0x07:
-                    this->rotate_left(REG_A, false);
+                    this->rotate_left(REG_A, false, true);
                     cycle_count = 8;
                     break;
                 case 0x00:
-                    this->rotate_left(REG_B, false);
+                    this->rotate_left(REG_B, false, true);
                     cycle_count = 8;
                     break;
                 case 0x01:
-                    this->rotate_left(REG_C, false);
+                    this->rotate_left(REG_C, false, true);
                     cycle_count = 8;
                     break;
                 case 0x02:
-                    this->rotate_left(REG_D, false);
+                    this->rotate_left(REG_D, false, true);
                     cycle_count = 8;
                     break;
                 case 0x03:
-                    this->rotate_left(REG_E, false);
+                    this->rotate_left(REG_E, false, true);
                     cycle_count = 8;
                     break;
                 case 0x04:
-                    this->rotate_left(REG_H, false);
+                    this->rotate_left(REG_H, false, true);
                     cycle_count = 8;
                     break;
                 case 0x05:
-                    this->rotate_left(REG_L, false);
+                    this->rotate_left(REG_L, false, true);
                     cycle_count = 8;
                     break;
                 case 0x06:
-                    this->rotate_left(REG_HL, false);
+                    this->rotate_left(REG_HL, false, true);
                     cycle_count = 16;
                     break;
                 // RL n
                 case 0x17:
-                    this->rotate_left(REG_A, true);
+                    this->rotate_left(REG_A, true, true);
                     cycle_count = 8;
                     break;
                 case 0x10:
-                    this->rotate_left(REG_B, true);
+                    this->rotate_left(REG_B, true, true);
                     cycle_count = 8;
                     break;
                 case 0x11:
-                    this->rotate_left(REG_C, true);
+                    this->rotate_left(REG_C, true, true);
                     cycle_count = 8;
                     break;
                 case 0x12:
-                    this->rotate_left(REG_D, true);
+                    this->rotate_left(REG_D, true, true);
                     cycle_count = 8;
                     break;
                 case 0x13:
-                    this->rotate_left(REG_E, true);
+                    this->rotate_left(REG_E, true, true);
                     cycle_count = 8;
                     break;
                 case 0x14:
-                    this->rotate_left(REG_H, true);
+                    this->rotate_left(REG_H, true, true);
                     cycle_count = 8;
                     break;
                 case 0x15:
-                    this->rotate_left(REG_L, true);
+                    this->rotate_left(REG_L, true, true);
                     cycle_count = 8;
                     break;
                 case 0x16:
-                    this->rotate_left(REG_HL, true);
+                    this->rotate_left(REG_HL, true, true);
                     cycle_count = 16;
                     break;
                 // RRC n
