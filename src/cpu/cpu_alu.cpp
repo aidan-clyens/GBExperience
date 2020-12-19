@@ -305,27 +305,19 @@ void CPU::alu_cp(uint8_t n) {
 
 // INC n
 void CPU::alu_inc(Registers_t reg) {
-    uint16_t N = this->read_register(reg);
+    uint8_t N;
     
     if (reg == REG_HL) {
         N = this->read_memory();
+    } else {
+        N= this->read_register(reg);
     }
 
-    uint8_t result = N + 1;
+    uint8_t result = static_cast<uint8_t>(N + 1);
 
-    if (N < 0xFF) {
-        this->set_flag_register(ZERO_FLAG, false);
-        this->set_flag_register(SUBTRACT_FLAG, false);
-        this->set_flag_register(HALF_CARRY_FLAG, false);
-    }    
-
-    if (result == 0) {
-        this->set_flag_register(ZERO_FLAG, true);
-    }
-
-    if ((N & 0xF) + 1 > 0x0F) {
-        this->set_flag_register(HALF_CARRY_FLAG, true);
-    }
+    this->set_flag_register(SUBTRACT_FLAG, false);
+    this->set_flag_register(ZERO_FLAG, (result == 0));
+    this->set_flag_register(HALF_CARRY_FLAG, ((N & 0xF) + 1 > 0x0F));
 
     log_cpu("INC %s", CPURegisters::to_string(reg));
 
@@ -339,30 +331,20 @@ void CPU::alu_inc(Registers_t reg) {
 
 // DEC n
 void CPU::alu_dec(Registers_t reg) {
-    uint8_t N = this->read_register(reg);
-
+    uint8_t N;
     if (reg == REG_HL) {
         N = this->read_memory();
+    } else {
+        N = this->read_register(reg);
     }
 
-    uint8_t result = N;
-    result--;
+    uint8_t result = static_cast<uint8_t>(N - 1);
 
     log_cpu("DEC %s", CPURegisters::to_string(reg));
 
-    bool half_borrow = false;
-
-    for (int i = 0; i < 4; i++) {
-        if ((N & (1 << i)) < (1 & (1 << i))) {
-            half_borrow = true;
-        }
-    }
-
-    this->reset_flag_register();
-
     this->set_flag_register(SUBTRACT_FLAG, true);
     this->set_flag_register(ZERO_FLAG, (result == 0));
-    this->set_flag_register(HALF_CARRY_FLAG, !half_borrow);
+    this->set_flag_register(HALF_CARRY_FLAG, (result & 0x0F) == 0x0F);
 
     if (reg == REG_HL) {
         this->write_memory(result);

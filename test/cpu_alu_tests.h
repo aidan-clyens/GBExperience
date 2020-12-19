@@ -905,7 +905,7 @@ TEST(CPU_ALU, INCHalfCarry) {
 TEST(CPU_ALU, INC_HL) {
     uint8_t opcode = 0x34;
     uint16_t address = 0xFF80;
-    uint8_t val = 0x15;
+    uint8_t val = 0x15;         // 0001 0101
 
     MemoryMap mem_map;
     
@@ -920,6 +920,11 @@ TEST(CPU_ALU, INC_HL) {
     cpu.decode_op(opcode);
 
     EXPECT_EQ(val + 1, cpu.read_memory());
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
 TEST(CPU_ALU, DEC) {
@@ -942,7 +947,7 @@ TEST(CPU_ALU, DEC) {
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
 TEST(CPU_ALU, DECZero) {
@@ -965,13 +970,13 @@ TEST(CPU_ALU, DECZero) {
     // Check Flag register
     EXPECT_EQ(true, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
 TEST(CPU_ALU, DECHalfCarry) {
     uint8_t opcode = 0x3D;
-    uint8_t val = 0x12;     // 0001 0010
-    uint8_t result = 0x11;  // 0001 0001
+    uint8_t val = 0x10;     // 0001 0000
+    uint8_t result = 0x0F;  // 0000 1111
 
     MemoryMap mem_map;
     
@@ -988,7 +993,7 @@ TEST(CPU_ALU, DECHalfCarry) {
     // Check Flag register
     EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
     EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
-    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
 TEST(CPU_ALU, DEC_HL) {
@@ -1010,6 +1015,11 @@ TEST(CPU_ALU, DEC_HL) {
     cpu.decode_op(opcode);
 
     EXPECT_EQ(result, cpu.read_memory());
+
+    // Check Flag register
+    EXPECT_EQ(false, cpu.read_flag_register(ZERO_FLAG));
+    EXPECT_EQ(true, cpu.read_flag_register(SUBTRACT_FLAG));
+    EXPECT_EQ(false, cpu.read_flag_register(HALF_CARRY_FLAG));
 }
 
 /****    16-Bit ALU    ****/
