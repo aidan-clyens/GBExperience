@@ -18,7 +18,6 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
     bool bit_7 = (val & 0x80) == 0x80;
 
     // Set flags
-    this->set_flag_register(ZERO_FLAG, (result == 0));
     this->set_flag_register(SUBTRACT_FLAG, false);
     this->set_flag_register(HALF_CARRY_FLAG, false);
 
@@ -64,6 +63,7 @@ void CPU::rotate_left(Registers_t reg, bool use_carry) {
         this->write_register(reg, result);
     }
 
+    this->set_flag_register(ZERO_FLAG, (result == 0));
     this->set_flag_register(CARRY_FLAG, bit_7);
 }
 
@@ -85,7 +85,6 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
     bool bit_0 = (val & 0x01) == 0x01;
 
     // Set flags
-    this->set_flag_register(ZERO_FLAG, (result == 0));
     this->set_flag_register(SUBTRACT_FLAG, false);
     this->set_flag_register(HALF_CARRY_FLAG, false);
 
@@ -135,6 +134,7 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
         this->write_register(reg, result);
     }
 
+    this->set_flag_register(ZERO_FLAG, (result == 0));
     this->set_flag_register(CARRY_FLAG, bit_0);
 }
 
