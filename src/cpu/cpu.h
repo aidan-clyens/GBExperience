@@ -152,8 +152,8 @@ class CPU {
         void ret_enable_interrupts();
 
         /****    Rotates and Shifts    ****/
-        void rotate_left(bool);
-        void rotate_left(Registers_t, bool);
+        void rotate_left_A(bool);
+        void rotate_left(Registers_t, bool, bool);
         void rotate_right(bool);
         void rotate_right(Registers_t, bool);
         void shift_left(Registers_t);
