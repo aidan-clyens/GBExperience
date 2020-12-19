@@ -68,13 +68,12 @@ void CPU::rotate_left(Registers_t reg, bool use_carry, bool set_zero) {
     this->set_flag_register(CARRY_FLAG, bit_7);
 }
 
-void CPU::rotate_right(bool use_carry) {
-    rotate_right(REG_A, use_carry);
+void CPU::rotate_right_A(bool use_carry) {
+    rotate_right(REG_A, use_carry, false);
 }
 
-void CPU::rotate_right(Registers_t reg, bool use_carry) {
+void CPU::rotate_right(Registers_t reg, bool use_carry, bool set_zero) {
     uint8_t val;
-
     if (reg == REG_HL) {
         val = this->read_memory();
     }
@@ -92,9 +91,11 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
     // RRA
     if (use_carry)  {
         bool old_bit_0 = this->read_flag_register(CARRY_FLAG);
+        if (old_bit_0) {
+            result |= 0x80;
+        }
 
-        
-        if (reg == REG_A) {
+        if (reg == REG_A && !set_zero) {
             log_cpu("RRA");
         }
         else if (reg == REG_HL) {
@@ -103,16 +104,14 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
         else {
             log_cpu("RR %s", CPURegisters::to_string(reg));
         }
-        
-
-        if (old_bit_0) {
-            result |= 0x80;
-        }
     }
     // RRCA
-    else {
-        
-        if (reg == REG_A) {
+    else {        
+        if (bit_0) {
+            result |= 0x80;
+        }
+
+        if (reg == REG_A && !set_zero) {
             log_cpu("RRCA" );
         }
         else if (reg == REG_HL) {
@@ -120,11 +119,6 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
         }
         else {
             log_cpu("RRC %s", CPURegisters::to_string(reg));
-        }
-        
-
-        if (bit_0) {
-            result |= 0x80;
         }
     }
 
@@ -135,7 +129,12 @@ void CPU::rotate_right(Registers_t reg, bool use_carry) {
         this->write_register(reg, result);
     }
 
-    this->set_flag_register(ZERO_FLAG, (result == 0));
+    if (set_zero) {
+        this->set_flag_register(ZERO_FLAG, (result == 0));
+    } else {
+        this->set_flag_register(ZERO_FLAG, false);
+    }
+
     this->set_flag_register(CARRY_FLAG, bit_0);
 }
 
