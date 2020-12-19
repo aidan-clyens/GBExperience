@@ -154,8 +154,8 @@ class CPU {
         /****    Rotates and Shifts    ****/
         void rotate_left_A(bool);
         void rotate_left(Registers_t, bool, bool);
-        void rotate_right(bool);
-        void rotate_right(Registers_t, bool);
+        void rotate_right_A(bool);
+        void rotate_right(Registers_t, bool, bool);
         void shift_left(Registers_t);
         void shift_right(Registers_t, bool);
 
