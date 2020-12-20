@@ -2,10 +2,7 @@
 
 #include <iostream>
 #include <exception>
-#include <map>
 #include <string>
-#include <vector>
-#include <algorithm>
 
 enum Registers_t {
     REG_A,
@@ -35,8 +32,14 @@ class CPURegisters {
         static const char *to_string(Registers_t);
 
     private:
-        std::map<Registers_t, uint8_t> m_registers;
-
+        uint8_t m_A;
+        uint8_t m_F;
+        uint8_t m_B;
+        uint8_t m_C;
+        uint8_t m_D;
+        uint8_t m_E;
+        uint8_t m_H;
+        uint8_t m_L;
         uint16_t m_PC;
         uint16_t m_SP;
 };
