@@ -41,6 +41,12 @@ typedef enum cartridge_type {
 } cartridge_type_t;
 
 
+typedef enum mode_select {
+    ROM_MODE,
+    RAM_MODE
+} mode_select_t;
+
+
 class Cartridge {
     public:
         Cartridge(std::vector<char>, int);
@@ -70,4 +76,24 @@ class ROMOnly : public Cartridge {
 
         uint8_t read(uint16_t) override;
         uint16_t write(uint16_t, uint8_t) override;
+};
+
+
+class MBC1: public Cartridge {
+    public:
+        MBC1(std::vector<char>, int);
+        virtual ~MBC1();
+
+        uint8_t read(uint16_t) override;
+        uint16_t write(uint16_t, uint8_t) override;
+
+        bool is_ram_enabled() const;
+        int get_rom_bank_number() const;
+        mode_select_t get_mode() const;
+    private:
+        bool m_ram_enabled;
+        uint8_t m_rom_bank_bits;
+        int m_rom_bank_number;
+
+        mode_select_t m_mode;
 };
