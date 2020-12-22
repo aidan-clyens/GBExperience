@@ -31,23 +31,22 @@ MemoryMap::MemoryMap() {
 }
 
 MemoryMap::~MemoryMap() {
-    for (int i = 0; i < m_memory_map.size() - 1; i++) {
-        if (i !=0 | i != 1 | i != 5 || i != 7 || i != 8 || i != 9) {
-            delete (Memory *)m_memory_map.find(i)->second;
-        }
-    }
+    delete m_vram;
+    delete m_oam;
+    delete m_internal_ram;
+    delete m_high_ram;
 }
 
-bool MemoryMap::init_memory_map() {
-    for (int i = 0; i < 11; i++) {
-        if (i != 0 | i != 1 | i != 5 || i != 7 || i != 8 || i != 9) {
-            Memory *ram = new Memory(m_address_space[i+1] - m_address_space[i]);
-            ram->init_memory();
-            m_memory_map.insert(std::pair<int, Memory*>(i, ram));
-        }
-    }
+void MemoryMap::init_memory_map() {
+    m_vram = new Memory(m_address_space[3] - m_address_space[2]);
+    m_oam = new Memory(m_address_space[7] - m_address_space[6]);
+    m_internal_ram = new Memory(m_address_space[5] - m_address_space[4]);
+    m_high_ram = new Memory(m_address_space[11] - m_address_space[10]);
 
-    return true;
+    m_vram->init_memory();
+    m_oam->init_memory();
+    m_internal_ram->init_memory();
+    m_high_ram->init_memory();
 }
 
 void MemoryMap::load_rom(Cartridge *cartridge) {
@@ -77,14 +76,10 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             break;
         }
         case 4:
-        case 10: {
-            Memory *mem = (Memory *)m_memory_map.find(index)->second;
-            return mem->write_memory(address - m_address_space[index], data);
-        }
-        case 5: {
-            Memory *mem = (Memory *)m_memory_map.find(index - 1)->second;
-            return mem->write_memory(address - m_address_space[index], data);
-        }
+        case 5:
+            return m_internal_ram->write_memory(address - m_address_space[index], data);
+        case 10:
+            return m_high_ram->write_memory(address - m_address_space[index], data);
         case 7:
         case 9:
             log_warn("Address space unusable: %d. Address: %X", index, address);
@@ -101,6 +96,8 @@ uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
             throw new std::exception;
         }
     }
+
+    return 0x0;
 }
 
 uint8_t MemoryMap::read(uint16_t address) {
@@ -121,14 +118,10 @@ uint8_t MemoryMap::read(uint16_t address) {
             break;
         }
         case 4:
-        case 10: {
-            Memory *mem = (Memory *)m_memory_map.find(index)->second;
-            return mem->read_memory(address - m_address_space[index]);
-        }
-        case 5: {
-            Memory *mem = (Memory *)m_memory_map.find(index - 1)->second;
-            return mem->read_memory(address - m_address_space[index]);
-        }
+        case 5:
+            return m_internal_ram->read_memory(address - m_address_space[index]);
+        case 10:
+            return m_high_ram->read_memory(address - m_address_space[index]);
         case 7:
         case 9:
             log_warn("Address space unusable: %d. Address: %X", index, address);
@@ -143,6 +136,8 @@ uint8_t MemoryMap::read(uint16_t address) {
             throw new std::exception;
         }
     }
+
+    return 0x0;
 }
 
 uint16_t MemoryMap::write_vram(uint16_t address, uint8_t data) {
@@ -156,16 +151,12 @@ uint16_t MemoryMap::write_vram(uint16_t address, uint8_t data) {
     else if (address >= TILE_MAP_1) {
         log_memory("MemoryMap: Writing %X to Background Map 1 at address %X", data, address);
     }
-    
 
-    Memory *mem = (Memory *)m_memory_map.find(2)->second;
-    return mem->write_memory(address - m_address_space[2], data);
+    return m_vram->write_memory(address - m_address_space[2], data);
 }
 
 uint8_t MemoryMap::read_vram(uint16_t address) {
-    Memory *mem = (Memory *)m_memory_map.find(2)->second;
-    uint8_t data = mem->read_memory(address - m_address_space[2]);
-    
+    uint8_t data = m_vram->read_memory(address - m_address_space[2]);
     
     if (address >= TILE_DATA_UNSIGNED && address < TILE_MAP_0) {
         log_memory("MemoryMap: Reading %X from Tile Data Table at address %X", data, address);
@@ -176,7 +167,6 @@ uint8_t MemoryMap::read_vram(uint16_t address) {
     else if (address >= TILE_MAP_1) {
         log_memory("MemoryMap: Reading %X from Background Map 1 at address %X", data, address);
     }
-    
 
     return data;
 }
@@ -185,15 +175,13 @@ uint16_t MemoryMap::write_oam(uint16_t address, uint8_t data) {
     int sprite_index = (address - m_address_space[6]) / 40;
     log_memory("MemoryMap: Writing %X to OAM at address %X. Sprite index: %d", data, address, sprite_index);
 
-    Memory *mem = (Memory *)m_memory_map.find(6)->second;
-    return mem->write_memory(address - m_address_space[6], data);
+    return m_oam->write_memory(address - m_address_space[6], data);
 }
 
 uint8_t MemoryMap::read_oam(uint16_t address) {
     int sprite_index = (address - m_address_space[6]) / 40;
 
-    Memory *mem = (Memory *)m_memory_map.find(6)->second;
-    uint8_t data = mem->read_memory(address - m_address_space[6]);
+    uint8_t data = m_oam->read_memory(address - m_address_space[6]);
 
     log_memory("MemoryMap: Reading %X from OAM at address %X. Sprite index: %d", data, address, sprite_index);
 
