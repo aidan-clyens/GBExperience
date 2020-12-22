@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include <exception>
 #include <vector>
 
@@ -25,7 +24,7 @@ class MemoryMap {
         MemoryMap();
         virtual ~MemoryMap();
 
-        bool init_memory_map();
+        void init_memory_map();
         void load_rom(Cartridge*);
         uint16_t write(uint16_t, uint8_t);
         uint8_t read(uint16_t);
@@ -50,7 +49,11 @@ class MemoryMap {
 
     private:
         int m_address_space[12];
-        std::map<int, void*> m_memory_map;
+
+        Memory *m_vram;
+        Memory *m_oam;
+        Memory *m_internal_ram;
+        Memory *m_high_ram;
 
         Cartridge *m_cartridge;
 
