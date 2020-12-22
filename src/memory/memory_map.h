@@ -1,7 +1,6 @@
 #pragma once
 
 #include <exception>
-#include <vector>
 
 #include "memory.h"
 #include "io.h"
@@ -35,8 +34,6 @@ class MemoryMap {
         uint8_t read_oam(uint16_t);
 
         void dma_transfer(uint8_t);
-
-        int get_index(uint16_t) const;
 
         bool get_interrupt_enable_bit(InterruptFlag_t);
         bool get_interrupt_flag_bit(InterruptFlag_t);

@@ -5,52 +5,6 @@ TEST(MemoryMap, Init) {
     MemoryMap mem_map;    
 }
 
-TEST(MemoryMap, GetIndexes) {
-    MemoryMap mem_map;     
-
-    uint16_t addresses[12] = {
-        0x1000,
-        0x5000,
-        0x9000,
-        0xB000,
-        0xD000,
-        0xF000,
-        0xFE0A,
-        0xFEFF,
-        0xFF0F,
-        0xFF50,
-        0xFF90,
-        0xFFFF
-    };
-
-    for (int i=0; i<12; i++) {
-        EXPECT_EQ(i, mem_map.get_index(addresses[i]));
-    }
-}
-
-TEST(MemoryMap, GetIndexesBoundaries) {
-    MemoryMap mem_map;
-
-    uint16_t addresses[12] = {
-        0x0000,
-        0x4000,
-        0x8000,
-        0xA000,
-        0xC000,
-        0xE000,
-        0xFE00,
-        0xFEA0,
-        0xFF00,
-        0xFF4C,
-        0xFF80,
-        0xFFFF
-    };
-
-    for (int i=0; i<12; i++) {
-        EXPECT_EQ(i, mem_map.get_index(addresses[i]));
-    }
-}
-
 TEST(MemoryMap, WriteSwitchableRAM) {
     MemoryMap mem_map;
 
@@ -58,7 +12,6 @@ TEST(MemoryMap, WriteSwitchableRAM) {
     uint16_t mem_address = address - 0xA000;
     uint8_t data = 0x1F;
 
-    EXPECT_EQ(3, mem_map.get_index(address));
     EXPECT_NO_THROW(mem_map.write(address, data));
     EXPECT_EQ(0, mem_map.write(address, data));
     EXPECT_EQ(0, mem_map.read(address));
@@ -71,7 +24,6 @@ TEST(MemoryMap, WriteInternalRAM) {
     uint16_t mem_address = address - 0xC000;
     uint8_t data = 0x1F;
 
-    EXPECT_EQ(4, mem_map.get_index(address));
     EXPECT_NO_THROW(mem_map.write(address, data));
     EXPECT_EQ(mem_address, mem_map.write(address, data));
     EXPECT_EQ(data, mem_map.read(address));
@@ -92,7 +44,6 @@ TEST(MemoryMap, ReadRom) {
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0x44;
 
-    EXPECT_EQ(0, mem_map.get_index(address_1));
     EXPECT_EQ(data_1, mem_map.read(address_1));
 }
 
@@ -126,7 +77,6 @@ TEST(MemoryMap, WriteToRom) {
     uint16_t address_1 = 0x134;
     uint8_t data_1 = 0xFF;
 
-    EXPECT_EQ(0, mem_map.get_index(address_1));
     EXPECT_EQ(0, mem_map.write(address_1, data_1));
 }
 
@@ -135,7 +85,6 @@ TEST(MemoryMap, ReadFromUnimplementedSpace) {
 
     uint16_t address = 0xFEAF;
 
-    EXPECT_EQ(7, mem_map.get_index(address));
     EXPECT_EQ(0, mem_map.read(address));
 }
 
@@ -147,7 +96,6 @@ TEST(MemoryMap, WriteHighRAM) {
     uint16_t mem_address = address - 0xFF80;
     uint8_t data = 0x1F;
 
-    EXPECT_EQ(10, mem_map.get_index(address));
     EXPECT_NO_THROW(mem_map.write(address, data));
     EXPECT_EQ(mem_address, mem_map.write(address, data));
     EXPECT_EQ(data, mem_map.read(address));
@@ -160,7 +108,6 @@ TEST(MemoryMap, WriteToVRAM) {
     uint16_t address = 0x8000;
     uint8_t data = 0x1F;
 
-    EXPECT_EQ(2, mem_map.get_index(address));
     EXPECT_NO_THROW(mem_map.write(address, data));
     EXPECT_EQ(data, mem_map.read(address));
 }
