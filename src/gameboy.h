@@ -7,6 +7,7 @@
 #include "file_parser/file_parser.h"
 #include "video/video.h"
 #include "ui/ui.h"
+#include "timer/timer.h"
 #include "debugger/debugger.h"
 
 
@@ -15,7 +16,7 @@ class GameBoy {
         GameBoy(bool=false);
         virtual ~GameBoy();
 
-        void tick();
+        int tick();
 
         void load_rom(const std::string &);
 
@@ -29,6 +30,7 @@ class GameBoy {
         MemoryMap m_memory_map;
         Video m_video;
         UI m_ui;
+        Timer m_timer;
 
         Debugger m_debugger;
 
