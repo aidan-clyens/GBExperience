@@ -54,87 +54,119 @@ void MemoryMap::load_rom(Cartridge *cartridge) {
 }
 
 uint16_t MemoryMap::write(uint16_t address, uint8_t data) {
-    int index = this->get_index(address);
-
-    switch (index) {
-        case 0:
-        case 1:
-            if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
-                log_warn("Cannot write to ROM");
-                break;
-            }
-
+    // Cartridge ROM
+    if (address >= m_address_space[0] && address < m_address_space[2]) {
+        if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
+            log_warn("Cannot write to ROM");
+        }
+        else {
             return m_cartridge->write(address, data);
-        case 2:
-            return this->write_vram(address, data);
-        case 6:
-            return this->write_oam(address, data);
-        case 3: {
-            if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
-                log_warn("Cannot write to interal RAM with a ROM_ONLY cartridge");
-            }
-            break;
         }
-        case 4:
-        case 5:
-            return m_internal_ram->write_memory(address - m_address_space[index], data);
-        case 10:
-            return m_high_ram->write_memory(address - m_address_space[index], data);
-        case 7:
-        case 9:
-            log_warn("Address space unusable: %d. Address: %X", index, address);
-            break;
-        case 8:
-        case 11:
-            if (address == DMA) {
-                this->dma_transfer(data);
-            }
+    }
+    // VRAM
+    else if (address >= m_address_space[2] && address < m_address_space[3]) {
+        return this->write_vram(address, data);
+    }
+    // Switchable RAM
+    else if (address >= m_address_space[3] && address < m_address_space[4]) {
+        if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
+            log_warn("Cannot write to interal RAM with a ROM_ONLY cartridge");
+        }
+    }
+    // Internal RAM
+    else if (address >= m_address_space[4] && address < m_address_space[5]) {
+        return m_internal_ram->write_memory(address - m_address_space[4], data);
+    }
+    // Echo RAM
+    else if (address >= m_address_space[5] && address < m_address_space[6]) {
+        return m_internal_ram->write_memory(address - m_address_space[5], data);
+    }
+    // OAM
+    else if (address >= m_address_space[6] && address < m_address_space[7]) {
+        return this->write_oam(address, data);
+    }
+    // Unused space
+    else if (address >= m_address_space[7] && address < m_address_space[8]) {
+        log_warn("Address space unusable: %X", address);
+    }
+    // IO
+    else if (address >= m_address_space[8] && address < m_address_space[9]) {
+        if (address == DMA) {
+            this->dma_transfer(data);
+        }
 
-            return this->m_io.write((IORegisters_t)address, data);
-        default: {
-            std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
-            throw new std::exception;
-        }
+        return this->m_io.write((IORegisters_t)address, data);
+    }
+    // Unused space
+    else if (address >= m_address_space[9] && address < m_address_space[10]) {
+        log_warn("Address space unusable: %X", address);
+    }
+    // High RAM
+    else if (address >= m_address_space[10] && address < m_address_space[11]) {
+        return m_high_ram->write_memory(address - m_address_space[10], data);
+    }
+    // Interrupt Enable Register
+    else if (address == m_address_space[11]) {
+        return this->m_io.write((IORegisters_t)address, data);
+    }
+    else {
+        std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
+        throw new std::exception;
     }
 
     return 0x0;
 }
 
 uint8_t MemoryMap::read(uint16_t address) {
-    int index = this->get_index(address);
-
-    switch (index) {
-        case 0:
-        case 1:
-            return m_cartridge->read(address);
-        case 2:
-            return this->read_vram(address);
-        case 6:
-            return this->read_oam(address);
-        case 3: {
-            if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
-                log_warn("Cannot read to interal RAM with a ROM_ONLY cartridge");
-            }
-            break;
+    // Cartridge ROM
+    if (address >= m_address_space[0] && address < m_address_space[2]) {
+        return m_cartridge->read(address);
+    }
+    // VRAM
+    else if (address >= m_address_space[2] && address < m_address_space[3]) {
+        return this->read_vram(address);
+    }
+    // Switchable RAM
+    else if (address >= m_address_space[3] && address < m_address_space[4]) {
+        if (m_cartridge->get_cartridge_type() == ROM_ONLY) {
+            log_warn("Cannot read from internal RAM with a ROM_ONLY cartridge");
         }
-        case 4:
-        case 5:
-            return m_internal_ram->read_memory(address - m_address_space[index]);
-        case 10:
-            return m_high_ram->read_memory(address - m_address_space[index]);
-        case 7:
-        case 9:
-            log_warn("Address space unusable: %d. Address: %X", index, address);
-            break;
-
-        case 8:
-        case 11:
-            return this->m_io.read((IORegisters_t)address);
-        
-        default: {
-            std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
-            throw new std::exception;
-        }
+    }
+    // Internal RAM
+    else if (address >= m_address_space[4] && address < m_address_space[5]) {
+        return m_internal_ram->read_memory(address - m_address_space[4]);
+    }
+    // Echo RAM
+    else if (address >= m_address_space[5] && address < m_address_space[6]) {
+        return m_internal_ram->read_memory(address - m_address_space[5]);
+    }
+    // OAM
+    else if (address >= m_address_space[6] && address < m_address_space[7]) {
+        return this->read_oam(address);
+    }
+    // Unused space
+    else if (address >= m_address_space[7] && address < m_address_space[8]) {
+        log_warn("Address space unusable: %X", address);
+    }
+    // IO
+    else if (address >= m_address_space[8] && address < m_address_space[9]) {
+        return this->m_io.read((IORegisters_t)address);
+    }
+    // Unused space
+    else if (address >= m_address_space[9] && address < m_address_space[10]) {
+        log_warn("Address space unusable: %X", address);
+    }
+    // High RAM
+    else if (address >= m_address_space[10] && address < m_address_space[11]) {
+        return m_high_ram->read_memory(address - m_address_space[10]);
+    }
+    // Interrupt Enable Register
+    else if (address == m_address_space[11]) {
+        return this->m_io.read((IORegisters_t)address);
+    }
+    else {
+        std::cerr << "Invalid address: " << static_cast<int>(address) << std::endl;
+        throw new std::exception;
     }
 
     return 0x0;
@@ -197,20 +229,6 @@ void MemoryMap::dma_transfer(uint8_t index) {
         uint8_t data = this->read(source_address + i);
         this->write(dest_address + i, data);
     }
-}
-
-int MemoryMap::get_index(uint16_t address) const {
-    for (int i=0; i<12; i++) {
-        if (address < m_address_space[i]) {
-            return i-1;
-        }
-    }
-
-    if (address == 0xFFFF) {
-        return 11;
-    }
-
-    return -1;
 }
 
 bool MemoryMap::get_interrupt_enable_bit(InterruptFlag_t flag) {
