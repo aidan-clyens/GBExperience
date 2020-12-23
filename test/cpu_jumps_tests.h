@@ -284,6 +284,7 @@ TEST(CPU_JUMP, JR_NC_False) {
     CPU cpu(mem_map);
     cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, false);
+    EXPECT_FALSE(cpu.read_flag_register(CARRY_FLAG));
 
     cpu.decode_op(opcode);
 
@@ -300,6 +301,7 @@ TEST(CPU_JUMP, JR_NC_True) {
     CPU cpu(mem_map);
     cpu.write_register(REG_PC, PC);
     cpu.set_flag_register(CARRY_FLAG, true);
+    EXPECT_TRUE(cpu.read_flag_register(CARRY_FLAG));
 
     cpu.decode_op(opcode);
 
