@@ -24,7 +24,7 @@ GameBoy::~GameBoy() {
 
 
 void GameBoy::tick() {
-    uint16_t pc = m_cpu.read_register("PC");
+    uint16_t pc = m_cpu.read_register(REG_PC);
 
     if (m_debugger_enabled) {
         m_debugger.tick(pc);
