@@ -16,7 +16,7 @@ class GameBoy {
         GameBoy(bool=false);
         virtual ~GameBoy();
 
-        int tick();
+        void tick();
 
         void load_rom(const std::string &);
 
