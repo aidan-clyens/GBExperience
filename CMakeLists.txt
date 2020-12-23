@@ -12,6 +12,13 @@ if (SFML_STATIC_LIBRARIES)
     add_definitions(-DSFML_STATIC)
 endif()
 
+if (CMAKE_BUILD_TYPE EQUAL "Debug")
+    add_definitions("-Wall -Wextra -g")
+endif()
+if (CMAKE_BUILD_TYPE EQUAL "Release")
+    add_definitions("-O2")
+endif()
+
 find_package(SFML 2 COMPONENTS audio graphics window system network REQUIRED)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
