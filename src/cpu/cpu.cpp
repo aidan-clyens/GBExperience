@@ -21,12 +21,11 @@ int CPU::tick() {
     // Check if halted
     int cycle_count = 4;
     if (this->is_running()) {
-        
-        log_cpu_no_new_line("0x%X: ", this->read_register(REG_PC));
-        
-
         // Fetch next opcode and execute
         uint8_t opcode = this->fetch_op();
+        
+        log_cpu_no_new_line("0x%X: (0x%X)", this->read_register(REG_PC), opcode);
+
         cycle_count = this->decode_op(opcode);
     }
 
