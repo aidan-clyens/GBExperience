@@ -29,6 +29,13 @@ cd build
 make
 ```
 
+### Usage
+Example: `./build/src/GameBoy_run roms/DrMario.gb`
+
+Options:\
+--trace: Print out instructions executing by CPU line by line\
+--debug: Enable step-by-step debugger
+
 ## Screenshots
 ### Dr. Mario:
 ![](docs/img/DrMarioMenu.png)
