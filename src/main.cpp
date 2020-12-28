@@ -17,19 +17,24 @@ int main(int argc, char** argv) {
     }
 
     if (argc > 2) {
-        std::string arg = trim(std::string(argv[2]));
+        for (int i = 2; i < argc; i++) {
+            std::string arg = trim(std::string(argv[i]));
 
-        if (arg == "--debug") {
-            debugger_enabled = true;
-        }
-        else if (arg == "--warnings") {
-            enable_warn_logging();
-        }
-        else if (arg == "--trace") {
-            enable_cpu_logging();
-        }
-        else if (arg == "--headless") {
-            headless = true;
+            if (arg == "--debug") {
+                debugger_enabled = true;
+            }
+
+            if (arg == "--headless") {
+                headless = true;
+            }
+
+            if (arg == "--warnings") {
+                enable_warn_logging();
+            }
+
+            if (arg == "--trace") {
+                enable_cpu_logging();
+            }
         }
     }
 
