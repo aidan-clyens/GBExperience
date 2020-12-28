@@ -8,19 +8,23 @@ TEST(CPU, InitCPU) {
 }
 
 TEST(CPU, FetchOpcodeFromRom) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::vector<char> contents;
+    contents.resize(BUFFER_SIZE);
+    std::fill(contents.begin(), contents.end(), 0);
 
-    FileParser file_parser;
-    Cartridge *cartridge;
-    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+    contents[0x100] = 0xAB;
+    contents[0x101] = 0xCD;
+
+    ROMOnly *cartridge = new ROMOnly(contents, 2);
+    EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
 
     MemoryMap mem_map;
     mem_map. load_rom(cartridge);
     CPU cpu(mem_map);
 
     EXPECT_EQ(0x100, cpu.read_register(REG_PC));
-    EXPECT_EQ(file_parser.get_byte(0x100), cpu.fetch_op());
-    EXPECT_EQ(file_parser.get_byte(0x101), cpu.fetch_op());
+    EXPECT_EQ(0xAB, cpu.fetch_op());
+    EXPECT_EQ(0xCD, cpu.fetch_op());
 }
 
 TEST(CPU, InitialFlagRegister) {

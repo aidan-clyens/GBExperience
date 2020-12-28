@@ -8,7 +8,7 @@
 
 
 int main(int argc, char** argv) {
-    std::string rom_file = "roms/DrMario.gb";
+    std::string rom_file = "";
     bool debugger_enabled = false;
 
     if (argc > 1) {

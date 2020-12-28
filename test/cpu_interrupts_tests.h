@@ -156,7 +156,7 @@ TEST(Interrupts, ResetMultipleEnableBits) {
 
 TEST(Interrupts, TriggerVBlankInterrupt) {
     uint16_t PC = 0xA000;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     enable_interrupt_logging();
     enable_cpu_logging();
@@ -196,7 +196,7 @@ TEST(Interrupts, TriggerVBlankInterrupt) {
 
 TEST(Interrupts, TriggerJoypadInterrupt) {
     uint16_t PC = 0xA000;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     enable_interrupt_logging();
     enable_cpu_logging();
@@ -236,7 +236,7 @@ TEST(Interrupts, TriggerJoypadInterrupt) {
 
 TEST(Interrupts, TriggerTimerInterrupt) {
     uint16_t PC = 0xA000;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     enable_interrupt_logging();
     enable_cpu_logging();
@@ -276,7 +276,7 @@ TEST(Interrupts, TriggerTimerInterrupt) {
 
 TEST(Interrupts, TriggerLCDStatusInterrupt) {
     uint16_t PC = 0xA000;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     enable_interrupt_logging();
     enable_cpu_logging();
@@ -316,7 +316,7 @@ TEST(Interrupts, TriggerLCDStatusInterrupt) {
 
 TEST(Interrupts, TriggerSerialTransferInterrupt) {
     uint16_t PC = 0xA000;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
     Cartridge *cartridge = file_parser.load_rom(rom_file);

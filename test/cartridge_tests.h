@@ -61,7 +61,7 @@ TEST(Cartridge, MBC1Init) {
 }
 
 TEST(Cartridge, MBC1LoadFile) {
-    std::string rom_file = "../../test/test-roms/cpu_instrs/cpu_instrs.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -71,7 +71,7 @@ TEST(Cartridge, MBC1LoadFile) {
 }
 
 TEST(Cartridge, MBC1EnableRam) {
-    std::string rom_file = "../../test/test-roms/cpu_instrs/cpu_instrs.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -93,7 +93,7 @@ TEST(Cartridge, MBC1EnableRam) {
 }
 
 TEST(Cartridge, MBC1SelectRomBank) {
-    std::string rom_file = "../../test/test-roms/cpu_instrs/cpu_instrs.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -116,7 +116,7 @@ TEST(Cartridge, MBC1SelectRomBank) {
 }
 
 TEST(Cartridge, MBC1ReadRomBank00) {
-    std::string rom_file = "../../test/test-roms/cpu_instrs/cpu_instrs.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -129,7 +129,7 @@ TEST(Cartridge, MBC1ReadRomBank00) {
 }
 
 TEST(Cartridge, MBC1SwitchToROMMode) {
-    std::string rom_file = "../../test/test-roms/cpu_instrs/cpu_instrs.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -144,7 +144,7 @@ TEST(Cartridge, MBC1SwitchToROMMode) {
 }
 
 TEST(Cartridge, MBC1SwitchToRAMMode) {
-    std::string rom_file = "../../test/test-roms/cpu_instrs/cpu_instrs.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 

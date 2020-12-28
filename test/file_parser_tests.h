@@ -8,7 +8,7 @@ TEST(FileParser, DefaultConstructor) {
 }
 
 TEST(FileParser, LoadRomValidFile) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -26,7 +26,7 @@ TEST(FileParser, LoadRomInvalidFile) {
 }
 
 TEST(FileParser, GetByteOutOfRange) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
@@ -35,9 +35,9 @@ TEST(FileParser, GetByteOutOfRange) {
 }
 
 TEST(FileParser, GetROMSize) {
-    std::string rom_file = "../../roms/DrMario.gb";
-    uint8_t rom_size_byte = 0x0;
-    int rom_size = 2;
+    std::string rom_file = get_test_rom();
+    uint8_t rom_size_byte = 0x1;
+    int rom_size = 4;
 
     FileParser file_parser;
 
@@ -47,19 +47,20 @@ TEST(FileParser, GetROMSize) {
 }
 
 TEST(FileParser, GetRAMSize) {
-    std::string rom_file = "../../roms/DrMario.gb";
-    uint8_t ram_size = 0x0;
+    std::string rom_file = get_test_rom();
+    uint8_t ram_size_byte = 0x0;
+    uint8_t ram_size = 0;
 
     FileParser file_parser;
 
     EXPECT_NO_THROW(file_parser.load_rom(rom_file));
-    EXPECT_EQ(ram_size, file_parser.get_byte(0x149));
-    EXPECT_EQ(0, file_parser.get_ram_size_banks());
+    EXPECT_EQ(ram_size_byte, file_parser.get_byte(0x149));
+    EXPECT_EQ(ram_size, file_parser.get_ram_size_banks());
 }
 
 TEST(FileParser, GetCartridgeType) {
-    std::string rom_file = "../../roms/DrMario.gb";
-    cartridge_type_t type = ROM_ONLY;
+    std::string rom_file = get_test_rom();
+    cartridge_type_t type = ROM_MBC1;
 
     FileParser file_parser;
 
@@ -68,17 +69,16 @@ TEST(FileParser, GetCartridgeType) {
 }
 
 TEST(FileParser, CheckGameBoyColor) {
-    std::string rom_file = "../../roms/DrMario.gb";
-    bool is_gameboy_color = false;
+    std::string rom_file = get_test_rom();
 
     FileParser file_parser;
 
     EXPECT_NO_THROW(file_parser.load_rom(rom_file));
-    EXPECT_EQ(is_gameboy_color, file_parser.is_gb_color());
+    EXPECT_TRUE(file_parser.is_gb_color());
 }
 
 TEST(FileParser, CheckSuperGameBoy) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
     bool is_super_gameboy = false;
 
     FileParser file_parser;
@@ -88,35 +88,15 @@ TEST(FileParser, CheckSuperGameBoy) {
 }
 
 TEST(FileParser, GetTitle) {
-    std::string rom_file = "../../roms/DrMario.gb";
-    std::string title = "DR.MARIO";
+    std::string rom_file = get_test_rom();
+    std::string title = ROM_TITLE;
 
     FileParser file_parser;
 
     EXPECT_TRUE(file_parser.load_rom(rom_file));
     
-    EXPECT_EQ(0x44, file_parser.get_byte(0x134));
+    EXPECT_EQ(0x43, file_parser.get_byte(0x134));
     EXPECT_EQ(0x0, file_parser.get_byte(0x142));
 
     EXPECT_EQ(title, file_parser.get_rom_name());
-}
-
-TEST(FileParser, GetEntireBuffer) {
-    std::string rom_file = "../../roms/DrMario.gb";
-    std::string title = "DR.MARIO";
-    std::vector<uint8_t> buffer_data;
-    uint8_t ram_size = 0x0;
-    uint8_t rom_size = 0x1;
-
-    FileParser file_parser;
-
-    EXPECT_NO_THROW(file_parser.load_rom(rom_file));
-    buffer_data = file_parser.get_buffer_data();
-
-    EXPECT_EQ(0x44, buffer_data[0x134]);
-    EXPECT_EQ(0x0, buffer_data[0x142]);
-
-    for (int i = 0; i < buffer_data.size(); i++) {
-        std::cout << static_cast<int>(buffer_data[i]) << std::endl;
-    }
 }
