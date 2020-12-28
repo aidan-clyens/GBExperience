@@ -1,11 +1,12 @@
 #include "video.h"
 
 
-Video::Video(MemoryMap &mem_map, UI &ui):
+Video::Video(MemoryMap &mem_map, UI &ui, bool headless):
 m_memory_map(mem_map),
 m_ui(ui),
 m_cycle_counter(0),
-m_buffer(MAP_SIZE, MAP_SIZE)
+m_buffer(MAP_SIZE, MAP_SIZE),
+m_headless(headless)
 {
     m_current_video_mode = this->get_video_mode();
 }
@@ -15,6 +16,8 @@ Video::~Video() {
 }
 
 void Video::tick(int cycles) {
+    if (m_headless) return;
+
     m_cycle_counter += cycles;
 
     if (m_current_video_mode != this->get_video_mode()) {

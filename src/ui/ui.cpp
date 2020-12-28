@@ -1,10 +1,11 @@
 #include "ui.h"
 
 
-UI::UI(MemoryMap &mem_map):
+UI::UI(MemoryMap &mem_map, bool headless):
 m_memory_map(mem_map),
 m_display_open(false),
-m_display_initialized(false)
+m_display_initialized(false),
+m_headless(headless)
 {
 
 }
@@ -16,6 +17,11 @@ UI::~UI() {
 }
 
 void UI::init_display(const std::string &title) {
+    if (m_headless) {
+        m_display_open = true;
+        return;
+    }
+
     sf::VideoMode window_bounds(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
     bool fullscreen = false;
     unsigned framerate_limit = 60;
@@ -44,6 +50,8 @@ void UI::init_display(const std::string &title) {
 void UI::render(FrameBuffer &buffer) {
     this->poll_events();
 
+    if (m_headless) return;
+
     m_main_window->clear();
     
     this->draw_pixels(buffer);
@@ -61,7 +69,7 @@ void UI::poll_events() {
     while (m_main_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             m_display_open = false;
-            m_main_window->close();
+            if (!m_headless) m_main_window->close();
         }
         else if (event.type == sf::Event::KeyPressed) {
             sf::Keyboard::Key key = event.key.code;
@@ -143,4 +151,12 @@ void UI::set_display_enabled(bool enabled) {
 
 bool UI::is_display_enabled() const {
     return m_display_open;
+}
+
+void UI::set_headless(bool value) {
+    m_headless = value;
+}
+
+bool UI::is_headless() const {
+    return m_headless;
 }
