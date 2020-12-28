@@ -30,54 +30,64 @@ TEST(MemoryMap, WriteInternalRAM) {
 }
 
 TEST(MemoryMap, ReadRom) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    uint16_t address = 0x134;
+    uint8_t data = 0xAB;
 
-    FileParser file_parser;
+    std::vector<char> contents;
+    contents.resize(BUFFER_SIZE);
+    std::fill(contents.begin(), contents.end(), 0);
+    contents[address] = data;
 
-    Cartridge *cartridge;
-    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+    ROMOnly *cartridge = new ROMOnly(contents, 2);
     EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
-    uint16_t address_1 = 0x134;
-    uint8_t data_1 = 0x44;
+    EXPECT_EQ(data, mem_map.read(address));
 
-    EXPECT_EQ(data_1, mem_map.read(address_1));
+    delete cartridge;
 }
 
 
 TEST(MemoryMap, LoadRom) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::vector<char> contents;
+    contents.resize(BUFFER_SIZE);
+    std::fill(contents.begin(), contents.end(), 0);
 
-    FileParser file_parser;
-    Cartridge *cartridge;
-    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+    for (int i = 0; i < BUFFER_SIZE / 2; i++) {
+        contents[i] = i & 0xFF;
+    }
+
+    ROMOnly *cartridge = new ROMOnly(contents, 2);
     EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
-    for (int i = 0; i < file_parser.get_buffer_size(); i++) {
-        EXPECT_EQ(file_parser.get_byte((uint16_t)i), mem_map.read((uint16_t)i));
+    for (int i = 0; i < BUFFER_SIZE / 2; i++) {
+        EXPECT_EQ((i & 0xFF), mem_map.read((uint16_t)i));
     }
+
+    delete cartridge;
 }
 
 TEST(MemoryMap, WriteToRom) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::vector<char> contents;
+    contents.resize(BUFFER_SIZE);
+    std::fill(contents.begin(), contents.end(), 0);
 
-    FileParser file_parser;
-    Cartridge *cartridge;
-    EXPECT_NO_THROW(cartridge = file_parser.load_rom(rom_file));
+    ROMOnly *cartridge = new ROMOnly(contents, 2);
+    EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
 
     MemoryMap mem_map;
     EXPECT_NO_THROW(mem_map.load_rom(cartridge));
 
-    uint16_t address_1 = 0x134;
-    uint8_t data_1 = 0xFF;
+    uint16_t address = 0x134;
+    uint8_t data = 0xFF;
 
-    EXPECT_EQ(0, mem_map.write(address_1, data_1));
+    EXPECT_EQ(0, mem_map.write(address, data));
+    EXPECT_EQ(0, mem_map.read(address));
 }
 
 TEST(MemoryMap, ReadFromUnimplementedSpace) {

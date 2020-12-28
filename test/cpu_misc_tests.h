@@ -145,7 +145,7 @@ TEST(CPU_MISC, NOP) {
 // HALT
 TEST(CPU_MISC, HALT) {
     uint8_t opcode = 0x76;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     enable_interrupt_logging();
 
@@ -177,7 +177,7 @@ TEST(CPU_MISC, HALT) {
 // STOP
 TEST(CPU_MISC, STOP) {
     uint8_t opcode = 0x10;
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::string rom_file = get_test_rom();
 
     enable_interrupt_logging();
 
