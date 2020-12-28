@@ -13,7 +13,7 @@ const int PIXEL_SIZE = 4;
 
 class UI {
     public:
-        UI(MemoryMap &);
+        UI(MemoryMap &, bool=false);
         virtual ~UI();
 
         void init_display(const std::string &);
@@ -30,6 +30,9 @@ class UI {
         bool is_display_enabled() const;
         void set_display_enabled(bool);
 
+        void set_headless(bool);
+        bool is_headless() const;
+
     private:
         sf::RenderWindow *m_main_window;
         sf::ContextSettings m_window_settings;
@@ -42,4 +45,5 @@ class UI {
 
         bool m_display_open;
         bool m_display_initialized;
+        bool m_headless;
 };

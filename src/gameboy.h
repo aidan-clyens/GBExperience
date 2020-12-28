@@ -13,7 +13,7 @@
 
 class GameBoy {
     public:
-        GameBoy(bool=false);
+        GameBoy(bool=false, bool=false);
         virtual ~GameBoy();
 
         void tick();

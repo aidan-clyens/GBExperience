@@ -1,10 +1,10 @@
 #include "gameboy.h"
 
 
-GameBoy::GameBoy(bool debug):
-m_ui(m_memory_map),
+GameBoy::GameBoy(bool debug, bool headless):
+m_ui(m_memory_map, headless),
 m_cpu(m_memory_map),
-m_video(m_memory_map, m_ui),
+m_video(m_memory_map, m_ui, headless),
 m_timer(m_memory_map),
 m_debugger(m_ui, m_cpu),
 m_debugger_enabled(debug),

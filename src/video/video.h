@@ -11,7 +11,7 @@
 
 class Video {
     public:
-        Video(MemoryMap &, UI &);
+        Video(MemoryMap &, UI &, bool=false);
         virtual ~Video();
 
         void tick(int);
@@ -71,6 +71,8 @@ class Video {
         UI &m_ui;
         int m_cycle_counter;
         int m_lines_drawn;
+
+        bool m_headless;
 
         VideoMode_t m_current_video_mode;
 

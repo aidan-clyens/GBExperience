@@ -10,6 +10,7 @@
 int main(int argc, char** argv) {
     std::string rom_file = "";
     bool debugger_enabled = false;
+    bool headless = false;
 
     if (argc > 1) {
         rom_file = argv[1];
@@ -27,9 +28,12 @@ int main(int argc, char** argv) {
         else if (arg == "--trace") {
             enable_cpu_logging();
         }
+        else if (arg == "--headless") {
+            headless = true;
+        }
     }
 
-    GameBoy gb(debugger_enabled);
+    GameBoy gb(debugger_enabled, headless);
     gb.load_rom(rom_file);
 
     while (gb.is_display_open()) {
