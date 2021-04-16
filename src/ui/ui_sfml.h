@@ -19,13 +19,6 @@ class UI_SFML {
         void init_display(const std::string &);
 
         void render(FrameBuffer &);
-        void poll_events();
-        void draw_pixels(FrameBuffer &);
-        void set_pixel(int, int, sf::Color);
-
-        void set_key_pressed(sf::Keyboard::Key, bool);
-
-        sf::Color get_pixel_colour(Colour_t);
 
         bool is_display_enabled() const;
         void set_display_enabled(bool);
@@ -34,6 +27,13 @@ class UI_SFML {
         bool is_headless() const;
 
     private:
+        void poll_events();
+        void draw_pixels(FrameBuffer &);
+        void set_pixel(int, int, sf::Color);
+
+        void set_key_pressed(sf::Keyboard::Key, bool);
+
+        sf::Color get_pixel_colour(Colour_t);
         sf::RenderWindow *m_main_window;
         sf::ContextSettings m_window_settings;
 
