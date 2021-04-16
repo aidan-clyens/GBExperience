@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
 
 
-TEST(UI, Initui) {
+TEST(UI_SFML, Initui) {
     MemoryMap mem_map;
-    UI ui(mem_map);
+    UI_SFML ui(mem_map);
     ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
@@ -14,9 +14,9 @@ TEST(UI, Initui) {
 }
 
 
-TEST(UI, SetPixel) {
+TEST(UI_SFML, SetPixel) {
     MemoryMap mem_map;
-    UI ui(mem_map);
+    UI_SFML ui(mem_map);
     ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
@@ -28,9 +28,9 @@ TEST(UI, SetPixel) {
 }
 
 
-TEST(UI, SetPixelAllPixels) {
+TEST(UI_SFML, SetPixelAllPixels) {
     MemoryMap mem_map;
-    UI ui(mem_map);
+    UI_SFML ui(mem_map);
     ui.init_display("TEST");
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);

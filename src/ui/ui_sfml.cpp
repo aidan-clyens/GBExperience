@@ -1,7 +1,7 @@
 #include "ui_sfml.h"
 
 
-UI::UI(MemoryMap &mem_map, bool headless):
+UI_SFML::UI_SFML(MemoryMap &mem_map, bool headless):
 m_memory_map(mem_map),
 m_display_open(false),
 m_display_initialized(false),
@@ -10,13 +10,13 @@ m_headless(headless)
 
 }
 
-UI::~UI() {
+UI_SFML::~UI_SFML() {
     if (m_display_initialized) {
         delete m_main_window;
     }
 }
 
-void UI::init_display(const std::string &title) {
+void UI_SFML::init_display(const std::string &title) {
     if (m_headless) {
         m_display_open = true;
         return;
@@ -47,7 +47,7 @@ void UI::init_display(const std::string &title) {
     m_display_initialized = true;
 }
 
-void UI::render(FrameBuffer &buffer) {
+void UI_SFML::render(FrameBuffer &buffer) {
     if (m_headless) return;
 
     this->poll_events();
@@ -63,7 +63,7 @@ void UI::render(FrameBuffer &buffer) {
     m_main_window->display();
 }
 
-void UI::poll_events() {
+void UI_SFML::poll_events() {
     sf::Event event;
 
     while (m_main_window->pollEvent(event)) {
@@ -82,7 +82,7 @@ void UI::poll_events() {
     }
 }
 
-void UI::draw_pixels(FrameBuffer &buffer) {
+void UI_SFML::draw_pixels(FrameBuffer &buffer) {
     for (int y = 0; y < LCD_HEIGHT; y++) {
         for (int x = 0; x < LCD_WIDTH; x++) {
             Colour_t colour = buffer.get_pixel(x, y);
@@ -92,7 +92,7 @@ void UI::draw_pixels(FrameBuffer &buffer) {
     }    
 }
 
-void UI::set_pixel(int x, int y, sf::Color colour) {
+void UI_SFML::set_pixel(int x, int y, sf::Color colour) {
     for (int h = 0; h < PIXEL_SIZE; h++) {
         for (int w = 0; w < PIXEL_SIZE; w++) {
             m_image.setPixel(x * PIXEL_SIZE + w, y * PIXEL_SIZE + h, colour);
@@ -100,7 +100,7 @@ void UI::set_pixel(int x, int y, sf::Color colour) {
     }
 }
 
-void UI::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
+void UI_SFML::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
     switch (key) {
         case sf::Keyboard::Key::W:
             m_memory_map.set_button_pressed(UP, pressed);
@@ -129,7 +129,7 @@ void UI::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
     }
 }
 
-sf::Color UI::get_pixel_colour(Colour_t colour) {
+sf::Color UI_SFML::get_pixel_colour(Colour_t colour) {
     switch (colour) {
         case WHITE:
             return sf::Color(255, 255, 255);
@@ -144,19 +144,19 @@ sf::Color UI::get_pixel_colour(Colour_t colour) {
         }
 }
 
-void UI::set_display_enabled(bool enabled) {
+void UI_SFML::set_display_enabled(bool enabled) {
     m_display_open = enabled;
 }
 
 
-bool UI::is_display_enabled() const {
+bool UI_SFML::is_display_enabled() const {
     return m_display_open;
 }
 
-void UI::set_headless(bool value) {
+void UI_SFML::set_headless(bool value) {
     m_headless = value;
 }
 
-bool UI::is_headless() const {
+bool UI_SFML::is_headless() const {
     return m_headless;
 }

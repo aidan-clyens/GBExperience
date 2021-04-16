@@ -11,7 +11,7 @@
 
 class Video {
     public:
-        Video(MemoryMap &, UI &, bool=false);
+        Video(MemoryMap &, UI_SFML &, bool=false);
         virtual ~Video();
 
         void tick(int);
@@ -68,7 +68,7 @@ class Video {
 
     private:
         MemoryMap &m_memory_map;
-        UI &m_ui;
+        UI_SFML &m_ui;
         int m_cycle_counter;
         int m_lines_drawn;
 

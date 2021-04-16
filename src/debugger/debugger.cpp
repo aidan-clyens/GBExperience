@@ -1,7 +1,7 @@
 #include "debugger.h"
 
 
-Debugger::Debugger(UI &ui, CPU &cpu):
+Debugger::Debugger(UI_SFML &ui, CPU &cpu):
 m_ui(ui),
 m_cpu(cpu)
 {

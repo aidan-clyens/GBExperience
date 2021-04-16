@@ -11,10 +11,10 @@
 const int PIXEL_SIZE = 4;
 
 
-class UI {
+class UI_SFML {
     public:
-        UI(MemoryMap &, bool=false);
-        virtual ~UI();
+        UI_SFML(MemoryMap &, bool=false);
+        virtual ~UI_SFML();
 
         void init_display(const std::string &);
 

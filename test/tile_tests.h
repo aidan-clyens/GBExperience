@@ -208,7 +208,7 @@ TEST(Tile, DrawTileHorizontal) {
     Tile tile(starting_address, memory_map);
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
-    UI ui(memory_map);
+    UI_SFML ui(memory_map);
     Video video(memory_map, ui);
     ui.init_display("TEST");
 
@@ -240,7 +240,7 @@ TEST(Tile, DrawTileVertical) {
     Tile tile(starting_address, memory_map);
 
     FrameBuffer buffer(LCD_WIDTH, LCD_HEIGHT);
-    UI ui(memory_map);
+    UI_SFML ui(memory_map);
     Video video(memory_map, ui);
     ui.init_display("TEST");
 
