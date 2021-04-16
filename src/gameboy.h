@@ -6,7 +6,7 @@
 #include "memory/memory_map.h"
 #include "file_parser/file_parser.h"
 #include "video/video.h"
-#include "ui/ui.h"
+#include "ui/ui_sfml.h"
 #include "timer/timer.h"
 #include "debugger/debugger.h"
 

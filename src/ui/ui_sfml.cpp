@@ -1,4 +1,4 @@
-#include "ui.h"
+#include "ui_sfml.h"
 
 
 UI::UI(MemoryMap &mem_map, bool headless):

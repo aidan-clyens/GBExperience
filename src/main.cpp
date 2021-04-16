@@ -3,7 +3,6 @@
 
 #include "debugger/logger.h"
 #include "utils/string_utils.h"
-#include "ui/ui.h"
 #include "gameboy.h"
 
 
