@@ -14,7 +14,7 @@
 #include "video/video.h"
 #include "video/tile.h"
 #include "video/sprite.h"
-#include "ui/ui.h"
+#include "ui/ui_sfml.h"
 #include "debugger/logger.h"
 #include "gameboy.h"
 
