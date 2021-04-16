@@ -22,7 +22,7 @@ typedef enum DebugAction {
 
 class Debugger {
     public:
-        Debugger(UI &, CPU &);
+        Debugger(UI_SFML &, CPU &);
         virtual ~Debugger();
 
         void tick(uint16_t);
@@ -39,7 +39,7 @@ class Debugger {
     private:
         Registers_t register_from_string(const std::string &) const;
 
-        UI &m_ui;
+        UI_SFML &m_ui;
         CPU &m_cpu;
 
         std::string m_arg;
