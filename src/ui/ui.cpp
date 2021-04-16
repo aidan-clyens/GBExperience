@@ -48,9 +48,9 @@ void UI::init_display(const std::string &title) {
 }
 
 void UI::render(FrameBuffer &buffer) {
-    this->poll_events();
-
     if (m_headless) return;
+
+    this->poll_events();
 
     m_main_window->clear();
     
@@ -69,7 +69,7 @@ void UI::poll_events() {
     while (m_main_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             m_display_open = false;
-            if (!m_headless) m_main_window->close();
+            m_main_window->close();
         }
         else if (event.type == sf::Event::KeyPressed) {
             sf::Keyboard::Key key = event.key.code;
