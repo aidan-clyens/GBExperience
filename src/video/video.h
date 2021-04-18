@@ -9,9 +9,14 @@
 #include "framebuffer.h"
 
 
+#ifndef HEADLESS
+#define UI      UI_SFML
+#endif
+
+
 class Video {
     public:
-        Video(MemoryMap &, UI_SFML &, bool=false);
+        Video(MemoryMap &, UI &, bool=false);
         virtual ~Video();
 
         void tick(int);
@@ -68,7 +73,7 @@ class Video {
 
     private:
         MemoryMap &m_memory_map;
-        UI_SFML &m_ui;
+        UI &m_ui;
         int m_cycle_counter;
         int m_lines_drawn;
 

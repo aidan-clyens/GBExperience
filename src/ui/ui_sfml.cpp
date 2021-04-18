@@ -2,23 +2,20 @@
 
 
 UI_SFML::UI_SFML(MemoryMap &mem_map, bool headless):
-m_memory_map(mem_map),
-m_display_open(false),
-m_display_initialized(false),
-m_headless(headless)
+UI(mem_map, headless)
 {
 
 }
 
 UI_SFML::~UI_SFML() {
-    if (m_display_initialized) {
+    if (this->is_display_initialized()) {
         delete m_main_window;
     }
 }
 
 void UI_SFML::init_display(const std::string &title) {
-    if (m_headless) {
-        m_display_open = true;
+    if (this->is_headless()) {
+        this->set_display_enabled(true);
         return;
     }
 
@@ -43,12 +40,12 @@ void UI_SFML::init_display(const std::string &title) {
 
     m_image.create(PIXEL_SIZE * LCD_WIDTH, PIXEL_SIZE * LCD_HEIGHT);
 
-    m_display_open = true;
-    m_display_initialized = true;
+    this->set_display_enabled(true);
+    this->set_display_initialized(true);
 }
 
 void UI_SFML::render(FrameBuffer &buffer) {
-    if (m_headless) return;
+    if (this->is_headless()) return;
 
     this->poll_events();
 
@@ -68,7 +65,7 @@ void UI_SFML::poll_events() {
 
     while (m_main_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
-            m_display_open = false;
+            this->set_display_enabled(false);
             m_main_window->close();
         }
         else if (event.type == sf::Event::KeyPressed) {
@@ -103,28 +100,28 @@ void UI_SFML::set_pixel(int x, int y, sf::Color colour) {
 void UI_SFML::set_key_pressed(sf::Keyboard::Key key, bool pressed) {
     switch (key) {
         case sf::Keyboard::Key::W:
-            m_memory_map.set_button_pressed(UP, pressed);
+            this->set_button_pressed(UP, pressed);
             break;
         case sf::Keyboard::Key::A:
-            m_memory_map.set_button_pressed(LEFT, pressed);
+            this->set_button_pressed(LEFT, pressed);
             break;
         case sf::Keyboard::Key::S:
-            m_memory_map.set_button_pressed(DOWN, pressed);
+            this->set_button_pressed(DOWN, pressed);
             break;
         case sf::Keyboard::Key::D:
-            m_memory_map.set_button_pressed(RIGHT, pressed);
+            this->set_button_pressed(RIGHT, pressed);
             break;
         case sf::Keyboard::Key::Comma:
-            m_memory_map.set_button_pressed(A, pressed);
+            this->set_button_pressed(A, pressed);
             break;
         case sf::Keyboard::Key::Period:
-            m_memory_map.set_button_pressed(B, pressed);
+            this->set_button_pressed(B, pressed);
             break;
         case sf::Keyboard::Key::Return:
-            m_memory_map.set_button_pressed(START, pressed);
+            this->set_button_pressed(START, pressed);
             break;
         case sf::Keyboard::Key::BackSpace:
-            m_memory_map.set_button_pressed(SELECT, pressed);
+            this->set_button_pressed(SELECT, pressed);
             break;
     }
 }
@@ -142,21 +139,4 @@ sf::Color UI_SFML::get_pixel_colour(Colour_t colour) {
         default:
             return sf::Color(255, 255, 255);
         }
-}
-
-void UI_SFML::set_display_enabled(bool enabled) {
-    m_display_open = enabled;
-}
-
-
-bool UI_SFML::is_display_enabled() const {
-    return m_display_open;
-}
-
-void UI_SFML::set_headless(bool value) {
-    m_headless = value;
-}
-
-bool UI_SFML::is_headless() const {
-    return m_headless;
 }
