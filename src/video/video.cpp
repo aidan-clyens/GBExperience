@@ -1,7 +1,7 @@
 #include "video.h"
 
 
-Video::Video(MemoryMap &mem_map, UI_SFML &ui, bool headless):
+Video::Video(MemoryMap &mem_map, UI &ui, bool headless):
 m_memory_map(mem_map),
 m_ui(ui),
 m_cycle_counter(0),

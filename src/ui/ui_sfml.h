@@ -7,11 +7,13 @@
 #include "../video/definitions.h"
 #include "../memory/memory_map.h"
 
+#include "ui.h"
+
 
 const int PIXEL_SIZE = 4;
 
 
-class UI_SFML {
+class UI_SFML : public UI {
     public:
         UI_SFML(MemoryMap &, bool=false);
         virtual ~UI_SFML();
@@ -19,12 +21,6 @@ class UI_SFML {
         void init_display(const std::string &);
 
         void render(FrameBuffer &);
-
-        bool is_display_enabled() const;
-        void set_display_enabled(bool);
-
-        void set_headless(bool);
-        bool is_headless() const;
 
     private:
         void poll_events();
@@ -40,10 +36,4 @@ class UI_SFML {
         sf::Image m_image;
         sf::Texture m_texture;
         sf::Sprite m_sprite;
-
-        MemoryMap &m_memory_map;
-
-        bool m_display_open;
-        bool m_display_initialized;
-        bool m_headless;
 };
