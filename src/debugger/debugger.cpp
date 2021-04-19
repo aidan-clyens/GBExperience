@@ -11,7 +11,7 @@ Debugger::~Debugger() {
 
 }
 
-void Debugger::tick(uint16_t pc) {
+void Debugger::tick(uint16_t pc, uint8_t opcode) {
     if (m_first_started) {
         this->help();
         m_first_started = false;
@@ -20,11 +20,17 @@ void Debugger::tick(uint16_t pc) {
     }
     
     if (!m_stopped) {
-        if (!this->check_breakpoints(pc)) {
-            return;
+        if (!this->check_breakpoints(pc, LINE)) {
+            if (!this->check_breakpoints(opcode, OPCODE)) {
+                return;
+            }
+            else {
+                log_debug("Stopped at opcode 0x%X", opcode);
+                m_stopped = true;
+            }
         }
         else {
-            log_debug("Stopped at 0x%X", pc);
+            log_debug("Stopped at line 0x%X", pc);
             m_stopped = true;
         }
     }
@@ -40,10 +46,16 @@ void Debugger::tick(uint16_t pc) {
             m_step = true;
             m_stopped = false;
             break;
-        case BREAKPOINT: {
+        case BREAKPOINT_LINE: {
             uint16_t line_num = get_input_hex(m_arg);
-            this->set_breakpoint((uint16_t)line_num);
-            log_debug("Set breakpoint at 0x%X", line_num);
+            this->set_breakpoint((uint16_t)line_num, LINE);
+            log_debug("Set breakpoint at line 0x%X", line_num);
+            break;
+        }
+        case BREAKPOINT_OPCODE: {
+            uint16_t opcode = get_input_hex(m_arg);
+            this->set_breakpoint((uint16_t)opcode, OPCODE);
+            log_debug("Set breakpoint at opcode 0x%X", opcode);
             break;
         }
         case PRINT:
@@ -85,8 +97,11 @@ DebugAction_t Debugger::get_input() {
     else if (args.size() == 2) {
         std::string cmd = args[0];
         m_arg = args[1];
-        if (cmd == "b") {
-            return BREAKPOINT;
+        if (cmd == "bl") {
+            return BREAKPOINT_LINE;
+        }
+        else if (cmd == "bo") {
+            return BREAKPOINT_OPCODE;
         }
         else if (cmd == "p") {
             return PRINT;
@@ -96,13 +111,28 @@ DebugAction_t Debugger::get_input() {
     return NONE;
 }
 
-void Debugger::set_breakpoint(uint16_t pc) {
-    m_breakpoints.push_back(pc);
+void Debugger::set_breakpoint(uint16_t val, BreakpointType_t type) {
+    switch (type) {
+        case LINE:
+            m_line_breakpoints.push_back(val);
+            break;
+        case OPCODE:
+            m_opcode_breakpoints.push_back(val);
+            break;
+    }
 }
 
-bool Debugger::check_breakpoints(uint16_t pc) {
-    auto it = std::find(m_breakpoints.begin(), m_breakpoints.end(), pc);
-    return it !=m_breakpoints.end();
+bool Debugger::check_breakpoints(uint16_t val, BreakpointType_t type) {
+    switch (type) {
+        case LINE: {
+            auto it = std::find(m_line_breakpoints.begin(), m_line_breakpoints.end(), val);
+            return it !=m_line_breakpoints.end();
+        }
+        case OPCODE: {
+            auto it = std::find(m_opcode_breakpoints.begin(), m_opcode_breakpoints.end(), val);
+            return it != m_opcode_breakpoints.end();
+        }
+    }
 }
 
 void Debugger::print_reg(const std::string &reg_str) {
@@ -112,7 +142,7 @@ void Debugger::print_reg(const std::string &reg_str) {
 
 void Debugger::help() {
     log_debug("Debugger Commands:");
-    log_debug("'s': step\n'c': continue\n'b': add breakpoint\n'p': print register\n'h': help\n'q': quit");
+    log_debug("'s': step\n'c': continue\n'bl': add line breakpoint\n'bo': add opcode breakpoint\n'p': print register\n'h': help\n'q': quit");
 }
 
 bool Debugger::step() const {
