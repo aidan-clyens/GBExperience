@@ -27,7 +27,8 @@ void GameBoy::tick() {
     uint16_t pc = m_cpu.read_register(REG_PC);
 
     if (m_debugger_enabled) {
-        m_debugger.tick(pc);
+        uint8_t opcode = m_cpu.read_memory(REG_PC);
+        m_debugger.tick(pc, opcode);
 
         if (m_debugger.quit()) {
             this->quit();

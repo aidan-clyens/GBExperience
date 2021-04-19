@@ -13,11 +13,18 @@ typedef enum DebugAction {
     NONE,
     STEP,
     CONTINUE,
-    BREAKPOINT,
+    BREAKPOINT_LINE,
+    BREAKPOINT_OPCODE,
     PRINT,
     HELP,
     QUIT
 } DebugAction_t;
+
+
+typedef enum BreakpointType {
+    LINE,
+    OPCODE
+} BreakpointType_t;
 
 
 class Debugger {
@@ -25,11 +32,11 @@ class Debugger {
         Debugger(CPU &);
         virtual ~Debugger();
 
-        void tick(uint16_t);
+        void tick(uint16_t, uint8_t);
         DebugAction_t get_input();
 
-        void set_breakpoint(uint16_t);
-        bool check_breakpoints(uint16_t);
+        void set_breakpoint(uint16_t, BreakpointType_t);
+        bool check_breakpoints(uint16_t, BreakpointType_t);
 
         void print_reg(const std::string &);
         void help();
@@ -48,5 +55,6 @@ class Debugger {
         bool m_step = false;
         bool m_quit = false;
 
-        std::vector<uint16_t> m_breakpoints;
+        std::vector<uint16_t> m_line_breakpoints;
+        std::vector<uint16_t> m_opcode_breakpoints;
 };
