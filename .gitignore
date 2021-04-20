@@ -4,5 +4,7 @@ roms
 build
 Testing
 tools
+test/__pycache__
 venv
 *.csv
+.pytest_cache
