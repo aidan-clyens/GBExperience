@@ -3,6 +3,7 @@ import shlex
 import os
 import threading
 import queue
+import pytest
 
 
 test_directory = "test/test-roms/cpu_instrs/individual/"
@@ -13,20 +14,6 @@ args = ["--debug", "--headless"]
 
 def get_test_files():
     return sorted([os.path.join(test_directory, d) for d in os.listdir(test_directory)])
-
-
-def build(build_type):
-    os.chdir("build")
-
-    cmd = f"cmake .. -DCMAKE_BUILD_TYPE={build_type}"
-    print(cmd)
-    subprocess.call(shlex.split(cmd), shell=False)
-
-    cmd = f"make"
-    print(cmd)
-    subprocess.call(shlex.split(cmd), shell=False)
-
-    os.chdir("..")
 
 
 def stdin_write(proc, line):
@@ -43,7 +30,9 @@ def stdin_write(proc, line):
     return ret
 
 
-def run_test(file):
+files = get_test_files()
+@pytest.mark.parametrize("file", files)
+def test_blargg(file):
     file = file.replace(" ", "\ ")
     print(f"Testing: {os.path.basename(file)}")
 
@@ -89,18 +78,4 @@ def run_test(file):
     proc.kill()
     proc.wait()
 
-    return test_passed
-
-
-def main():
-    files = get_test_files()
-
-    # build("Debug")
-
-    for f in files:
-        passed = run_test(f)
-        print(passed)
-
-
-if __name__ == '__main__':
-    main()
+    assert test_passed
