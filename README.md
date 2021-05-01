@@ -29,6 +29,23 @@ cd build
 make
 ```
 
+### Testing
+Run all GoogleTest and Pytest test cases:
+```
+cd build
+make test
+```
+
+Run GoogleTest unit tests:
+```
+./build/test/Gameboy_tests
+```
+
+Run Blargg Test ROMs using pytest:
+```
+pytest test/run_blargg_tests.py
+```
+
 ### Usage
 Example: `./build/src/GameBoy_run roms/DrMario.gb`
 
@@ -44,6 +61,9 @@ Options:\
 ![](docs/img/DrMarioMenu2.png)
 ### Tetris:
 ![](docs/img/TetrisMenu.png)
+
+## References
+[Blargg Tests](https://gbdev.gg8.se/files/roms/blargg-gb-tests/)
 
 ## Author
 Aidan Clyens
