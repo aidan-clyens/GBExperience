@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.10)
 project(GameBoy)
 
 enable_testing()
+set(PYTEST
+    ${PROJECT_SOURCE_DIR}/venv/bin/python3
+    ${PROJECT_SOURCE_DIR}/venv/bin/pytest
+)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

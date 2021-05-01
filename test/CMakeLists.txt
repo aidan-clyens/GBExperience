@@ -4,5 +4,10 @@ add_executable(${PROJECT_NAME} main.cpp includes.h file_parser_tests.h memory_ma
 
 target_link_libraries(${PROJECT_NAME} PRIVATE GameBoy_lib ui_lib file_parser_lib memory_lib cpu_lib video_lib debugger_lib gtest)
 
+add_test(NAME blargg_tests
+COMMAND ${PYTEST} test/run_blargg_tests.py
+WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/..
+)
+
 include(GoogleTest)
-gtest_discover_tests(${PROJECT_NAME})
+gtest_add_tests(TARGET ${PROJECT_NAME})
