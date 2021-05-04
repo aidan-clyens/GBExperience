@@ -7,6 +7,7 @@ m_cpu(m_memory_map),
 m_video(m_memory_map, m_ui, headless),
 m_timer(m_memory_map),
 m_debugger(m_cpu),
+m_framerate_observer(&m_video),
 m_debugger_enabled(debug),
 m_rom_name("")
 {
