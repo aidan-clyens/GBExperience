@@ -63,6 +63,8 @@ void Video::tick(int cycles) {
                     if (this->lcd_display_enabled()) {
                         this->draw_sprites();
                         this->draw();
+
+                        this->notify();
                     }
 
                     this->reset_line();

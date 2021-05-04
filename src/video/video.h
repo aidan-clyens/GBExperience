@@ -7,6 +7,7 @@
 #include "tile.h"
 #include "sprite.h"
 #include "framebuffer.h"
+#include "video_subject.h"
 
 
 #ifndef HEADLESS
@@ -14,7 +15,7 @@
 #endif
 
 
-class Video {
+class Video : public VideoSubject {
     public:
         Video(MemoryMap &, UI &, bool=false);
         virtual ~Video();

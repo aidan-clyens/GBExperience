@@ -6,6 +6,7 @@
 #include "memory/memory_map.h"
 #include "file_parser/file_parser.h"
 #include "video/video.h"
+#include "video/video_observer.h"
 #include "ui/ui_sfml.h"
 #include "timer/timer.h"
 #include "debugger/debugger.h"
@@ -33,6 +34,7 @@ class GameBoy {
         Timer m_timer;
 
         Debugger m_debugger;
+        VideoObserver m_framerate_observer;
 
         bool m_debugger_enabled;
 
