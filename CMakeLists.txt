@@ -20,8 +20,6 @@ if (CMAKE_BUILD_TYPE EQUAL "Release")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 endif()
 
-find_package(SFML 2 COMPONENTS audio graphics window system network REQUIRED)
-
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(lib/googletest)
