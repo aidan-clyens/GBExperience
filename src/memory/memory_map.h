@@ -3,7 +3,7 @@
 #include <exception>
 
 #include "memory.h"
-#include "io.h"
+#include "mem_io.h"
 #include "../file_parser/cartridge.h"
 #include "../video/definitions.h"
 #include "../debugger/logger.h"
