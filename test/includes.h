@@ -19,9 +19,15 @@
 #include "gameboy.h"
 
 #include <stdio.h>
-#include <unistd.h>
 #include <iostream>
 
+#ifdef _WIN32
+#include <direct.h>
+#define GetCWD _getcwd
+#else
+#include <unistd.h>
+#define GetCWD getcwd
+#endif
 
 const int DISPLAY_TIME = 50;
 
@@ -36,7 +42,7 @@ const bool SGB_SUPPORTED = false;
 
 std::string get_current_dir() {
     char buff[FILENAME_MAX];
-    getcwd(buff, FILENAME_MAX);
+    GetCWD(buff, FILENAME_MAX);
     std::string current_working_dir(buff);
     return current_working_dir;
 }
