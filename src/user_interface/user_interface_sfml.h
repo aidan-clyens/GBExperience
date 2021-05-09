@@ -7,7 +7,7 @@
 #include "../video/definitions.h"
 #include "../memory/memory_map.h"
 
-#include "ui.h"
+#include "user_interface.h"
 
 
 const int PIXEL_SIZE = 4;

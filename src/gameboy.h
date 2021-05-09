@@ -7,7 +7,7 @@
 #include "file_parser/file_parser.h"
 #include "video/video.h"
 #include "video/video_observer.h"
-#include "ui/ui_sfml.h"
+#include "user_interface/user_interface_sfml.h"
 #include "timer/timer.h"
 #include "debugger/debugger.h"
 

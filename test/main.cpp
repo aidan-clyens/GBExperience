@@ -18,7 +18,7 @@
 #include "sprite_tests.h"
 #include "framebuffer_tests.h"
 #include "integration_tests.h"
-#include "ui_tests.h"
+#include "user_interface_tests.h"
 #include "cartridge_tests.h"
 
 
