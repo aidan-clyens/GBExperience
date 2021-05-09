@@ -10,12 +10,3 @@ install(
     TARGETS ${PROJECT_NAME}
     DESTINATION lib
 )
-
-if (NOT SFML_STATIC_LIBRARIES)
-    file(GLOB SFML_DLL_FILES ${SFML_BIN_DIR}/*.dll)
-
-    install(
-        FILES ${SFML_DLL_FILES}
-        DESTINATION bin
-    )
-endif()
