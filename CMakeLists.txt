@@ -5,6 +5,8 @@ project(GameBoy)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 ###### SFML ######
 set(SFML_ROOT "C:/SFML/install")
 set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
@@ -26,6 +28,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(QT5_ROOT "C:/Qt/5.14.2/mingw73_32")
 set(QT5_INCLUDE_DIR "${QT5_ROOT}/include")
+set(QT5_BIN_DIR "${QT5_ROOT}/bin")
 
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${QT5_INCLUDE_DIR}" CACHE STRING "Qt5 include path" FORCE)
