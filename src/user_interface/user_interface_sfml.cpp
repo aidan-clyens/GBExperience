@@ -1,4 +1,4 @@
-#include "ui_sfml.h"
+#include "user_interface_sfml.h"
 
 
 UI_SFML::UI_SFML(MemoryMap &mem_map, bool headless):

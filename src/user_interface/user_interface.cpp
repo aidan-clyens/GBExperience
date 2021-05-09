@@ -1,4 +1,4 @@
-#include "ui.h"
+#include "user_interface.h"
 
 
 UI::UI(MemoryMap &mem_map, bool headless):

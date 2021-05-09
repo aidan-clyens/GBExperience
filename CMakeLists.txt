@@ -20,6 +20,10 @@ find_package(SFML 2 COMPONENTS audio graphics window system network REQUIRED)
 set(CMAKE_CXX_FLAGS "-I${SFML_INCLUDE_DIR}" CACHE STRING "SFML include path" FORCE)
 
 ###### Qt ######
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 set(QT5_ROOT "C:/Qt/5.14.2/mingw73_32")
 set(QT5_INCLUDE_DIR "${QT5_ROOT}/include")
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../memory/memory_map.h"
-#include "../ui/ui_sfml.h"
+#include "../user_interface/user_interface_sfml.h"
 #include "../debugger/logger.h"
 #include "definitions.h"
 #include "tile.h"

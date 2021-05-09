@@ -5,11 +5,15 @@
 
 #include "debugger/logger.h"
 #include "utils/string_utils.h"
+#include "user_interface/launch_window.h"
 #include "gameboy.h"
 
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
+    LaunchWindow window;
+
+    window.show();
 
     return app.exec();
 }

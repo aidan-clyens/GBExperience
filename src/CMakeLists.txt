@@ -1,6 +1,6 @@
 project(GameBoy)
 
-add_subdirectory(ui)
+add_subdirectory(user_interface)
 add_subdirectory(file_parser)
 add_subdirectory(memory)
 add_subdirectory(cpu)
@@ -13,7 +13,7 @@ add_library(${PROJECT_NAME}_lib STATIC main.cpp gameboy.h gameboy.cpp)
 target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(${PROJECT_NAME} main.cpp gameboy.h gameboy.cpp)
-target_link_libraries(${PROJECT_NAME} ui_lib file_parser_lib memory_lib cpu_lib video_lib timer_lib debugger_lib utils_lib)
+target_link_libraries(${PROJECT_NAME} user_interface_lib file_parser_lib memory_lib cpu_lib video_lib timer_lib debugger_lib utils_lib)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 
 install(

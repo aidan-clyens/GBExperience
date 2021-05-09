@@ -6,7 +6,7 @@
 
 #include "../utils/string_utils.h"
 #include "../cpu/cpu.h"
-#include "../ui/ui_sfml.h"
+#include "../user_interface/user_interface_sfml.h"
 
 
 typedef enum DebugAction {
