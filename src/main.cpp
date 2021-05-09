@@ -1,11 +1,12 @@
 #include <fstream>
 #include <iostream>
 
-#include <QtWidgets/QApplication>
+#include <QApplication>
 
 #include "debugger/logger.h"
 #include "utils/string_utils.h"
 #include "gameboy.h"
+
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
