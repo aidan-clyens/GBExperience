@@ -5,6 +5,7 @@ project(GameBoy)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+###### SFML ######
 set(SFML_ROOT "C:/SFML/install")
 set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
 set(SFML_INCLUDE_DIR "${SFML_ROOT}/include")
@@ -17,6 +18,13 @@ endif()
 
 find_package(SFML 2 COMPONENTS audio graphics window system network REQUIRED)
 set(CMAKE_CXX_FLAGS "-I${SFML_INCLUDE_DIR}" CACHE STRING "SFML include path" FORCE)
+
+###### Qt ######
+set(QT5_ROOT "C:/Qt/5.14.2/mingw73_32")
+set(QT5_INCLUDE_DIR "${QT5_ROOT}/include")
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${QT5_INCLUDE_DIR}" CACHE STRING "Qt5 include path" FORCE)
 
 if (CMAKE_BUILD_TYPE EQUAL "Debug")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -g")
