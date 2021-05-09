@@ -27,3 +27,12 @@ endif()
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(lib/googletest)
+
+include(InstallRequiredSystemLibraries)
+set(CPACK_GENERATOR NSIS)
+set(CPACK_PACKAGE_NAME ${CMAKE_PROJECT_NAME})
+set(CPACK_PACKAGE_VERSION "1.1")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "1")
+
+include(CPack)

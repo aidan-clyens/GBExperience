@@ -14,3 +14,8 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR
 
 add_executable(${PROJECT_NAME} main.cpp gameboy.h gameboy.cpp)
 target_link_libraries(${PROJECT_NAME} ui_lib file_parser_lib memory_lib cpu_lib video_lib timer_lib debugger_lib utils_lib)
+
+install(
+    TARGETS ${PROJECT_NAME}
+    DESTINATION bin
+)
