@@ -10,9 +10,6 @@
 #include "user_interface.h"
 
 
-const int PIXEL_SIZE = 4;
-
-
 class UI_SFML : public UI {
     public:
         UI_SFML(MemoryMap &, bool=false);
