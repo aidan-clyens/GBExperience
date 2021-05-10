@@ -8,7 +8,7 @@ import pytest
 
 test_directory = "test/test-roms/cpu_instrs/individual/"
 
-gameboy_exe = "build/src/GameBoy_run"
+gameboy_exe = "build/src/GameBoy_cli"
 args = ["--debug", "--headless"]
 
 
