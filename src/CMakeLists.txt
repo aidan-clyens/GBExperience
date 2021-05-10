@@ -13,7 +13,7 @@ add_library(${PROJECT_NAME}_lib STATIC gameboy.h gameboy.cpp)
 target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 if (GAMEBOY_EXE_CLI)
-    add_executable(${PROJECT_NAME}_cli WIN32 main_cli.cpp gameboy.h gameboy.cpp)
+    add_executable(${PROJECT_NAME}_cli main_cli.cpp gameboy.h gameboy.cpp)
     target_link_libraries(${PROJECT_NAME}_cli user_interface_lib file_parser_lib memory_lib cpu_lib video_lib timer_lib debugger_lib utils_lib)
     target_link_libraries(${PROJECT_NAME}_cli Qt5::Widgets)
 endif()
