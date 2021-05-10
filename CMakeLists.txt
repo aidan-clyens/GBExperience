@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++" CACHE STRING "GCC static library flags" FORCE)
 
 set(GAMEBOY_EXE_CLI CACHE BOOL True "Build CLI Executable")
 set(GAMEBOY_EXE_GUI CACHE BOOL True "Build GUI Executable")
@@ -22,7 +23,7 @@ if (SFML_STATIC_LIBRARIES)
 endif()
 
 find_package(SFML 2 COMPONENTS audio graphics window system network REQUIRED)
-set(CMAKE_CXX_FLAGS "-I${SFML_INCLUDE_DIR}" CACHE STRING "SFML include path" FORCE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${SFML_INCLUDE_DIR}" CACHE STRING "SFML include path" FORCE)
 
 ###### Qt ######
 set(CMAKE_AUTOMOC ON)
@@ -53,7 +54,21 @@ add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(lib/googletest)
 
+if (MINGW)
+    message( STATUS "    Installing system-libraries: MinGW DLLs." )
+    get_filename_component(CMAKE_CXX_COMPILER_PATH ${CMAKE_CXX_COMPILER} PATH )
+    set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS ${CMAKE_CXX_COMPILER_PATH}/libgcc_s_dw2-1.dll ${CMAKE_CXX_COMPILER_PATH}/libstdc++-6.dll ${CMAKE_CXX_COMPILER_PATH}/libwinpthread-1.dll)
+endif()
+
 include(InstallRequiredSystemLibraries)
+
+if(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS)
+    install(
+        PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+        DESTINATION bin
+    )
+endif()
+
 set(CPACK_GENERATOR NSIS)
 set(CPACK_PACKAGE_NAME ${CMAKE_PROJECT_NAME})
 set(CPACK_PACKAGE_VERSION "1.1")
