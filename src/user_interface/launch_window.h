@@ -2,6 +2,12 @@
 
 #include <QMainWindow>
 #include <QDir>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QFrame>
+
+#include "../video/definitions.h"
+#include "game_thread.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -23,4 +29,9 @@ private slots:
 private:
     Ui::LaunchWindow *m_ui;
     QDir m_rom_folder;
+    QString m_rom_file;
+
+    GameThread *m_game_thread;
+
+    bool m_game_started;
 };
