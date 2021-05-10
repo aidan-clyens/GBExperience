@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+set(GAMEBOY_EXE_CLI CACHE BOOL True "Build CLI Executable")
+set(GAMEBOY_EXE_GUI CACHE BOOL True "Build GUI Executable")
+
 ###### SFML ######
 set(SFML_ROOT "C:/SFML/install")
 set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
