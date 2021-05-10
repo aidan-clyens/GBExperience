@@ -13,6 +13,8 @@ const int VBLANK_SCANLINE_CLOCKS = VBLANK_CLOCKS / 10;
 const int LCD_WIDTH = 160;
 const int LCD_HEIGHT = 144;
 
+const int PIXEL_SIZE = 4;
+
 const int MAP_SIZE = 256;
 const int TILES_PER_LINE = 32;
 
