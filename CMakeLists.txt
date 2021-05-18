@@ -12,6 +12,7 @@ set(GAMEBOY_EXE_CLI CACHE BOOL True "Build CLI Executable")
 set(GAMEBOY_EXE_GUI CACHE BOOL True "Build GUI Executable")
 
 ###### SFML ######
+# CHANGE TO YOUR SFML ROOT DIRECTORY
 set(SFML_ROOT "C:/SFML/install")
 set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
 set(SFML_INCLUDE_DIR "${SFML_ROOT}/include")
@@ -30,6 +31,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+# CHANGE TO YOUR QT5 ROOT DIRECTORY
 set(QT5_ROOT "C:/Qt/5.14.2/mingw73_32")
 set(QT5_INCLUDE_DIR "${QT5_ROOT}/include")
 set(QT5_BIN_DIR "${QT5_ROOT}/bin")

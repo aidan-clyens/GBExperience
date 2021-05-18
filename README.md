@@ -9,6 +9,12 @@ This emulator currently only supports original GameBoy cartridges which use ROM 
 ## Building
 This project uses the [CMake](https://cmake.org/download/) build system to ensure compatibility cross-platform. Ensure your CMake version is greater than 3.10. [SFML](https://www.sfml-dev.org/download/sfml/2.5.1/) and [Qt](https://www.qt.io/download) are also required to build this project. Make sure that the SFML and Qt versions are compatible with your compiler (for example, SFML is only compatible with MinGW version 7.3.0).
 
+Note: For Linux, install the following packages
+```
+sudo apt-get install qt5-default
+sudo apt-get install libsfml-dev
+```
+
 Note: For Windows, ensure the following are added to your PATH environment variable (replace with the applicable installation directories for CMake, SFML, Qt, and your compiler e.g. MinGW)
 ```
 C:\Program Files\CMake\bin
@@ -17,6 +23,8 @@ C:\SFML-2.5.1\lib
 C:\Qt\5.14.2\mingw73_32\bin
 C:\Qt\5.14.2\mingw73_32\lib
 ```
+
+For Windows, also ensure to change `SFML_DIR` and `QT5_DIR` in *CMakeLists.txt* in the project root directory.
 
 In a terminal, clone this repo from GitHub and update submodules.
 ```
@@ -36,6 +44,7 @@ In CMake's GUI, click **Configure** and select the generator (e.g. MinGW Makefil
 
 Build project in the *build* directory
 ```
+cd build
 make
 ```
 
@@ -70,13 +79,15 @@ pytest test/run_blargg_tests.py
 
 
 ## Installing
-Install GameBoyEmu in the *build* directory using:
+Install GameBoyEmu using:
 ```
+cd build
 make install
 ```
 
-To create a Windows installer, in the *build* directory use:
+To create a Windows installer, use:
 ```
+cd build
 cpack -C Release
 ```
 
