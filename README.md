@@ -89,6 +89,3 @@ cpack -C Release
 
 ## References
 [Blargg Tests](https://gbdev.gg8.se/files/roms/blargg-gb-tests/)
-
-## Author
-Aidan Clyens
