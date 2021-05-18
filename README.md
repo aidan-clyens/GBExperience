@@ -94,9 +94,15 @@ cpack -C Release
 ## Screenshots
 ### Dr. Mario:
 ![](docs/img/DrMarioMenu.png)
-![](docs/img/DrMarioMenu2.png)
+![](docs/img/DrMarioGame.png)
 ### Tetris:
 ![](docs/img/TetrisMenu.png)
+![](docs/img/TetrisGame.png)
+### Super Mario Land:
+![](docs/img/SuperMarioLandMenu.png)
+![](docs/img/SuperMarioLand.png)
+### File Explorer
+![](docs/img/file_explorer.png)
 
 ## References
 [Blargg Tests](https://gbdev.gg8.se/files/roms/blargg-gb-tests/)
