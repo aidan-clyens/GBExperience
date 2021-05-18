@@ -20,7 +20,7 @@ C:\Qt\5.14.2\mingw73_32\lib
 
 In a terminal, clone this repo from GitHub and update submodules.
 ```
-git clone git@github.com:aidanc21/GameBoyEmu.git
+git clone git@github.com:aidan-clyens/GameBoyEmu.git
 cd GameBoyEmu
 git submodule update --init
 ```
