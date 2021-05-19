@@ -1,4 +1,4 @@
-# GameBoy Emulator
+# GBExperience: GameBoy Emulator
 This is an emulator of Nintendo's original GameBoy handheld console. This was written as an exercise to explore the architecture of the GameBoy hardware, learn how a CPU functions, and how simple 2D graphics are rendered. This project also allowed me to practice development of a large C++ project through proper project structure and test-driven development. The source code is covered by unit tests written using Google Test.
 
 ## Support
@@ -28,8 +28,8 @@ For Windows, also ensure to change `SFML_DIR` and `QT5_DIR` in *CMakeLists.txt* 
 
 In a terminal, clone this repo from GitHub and update submodules.
 ```
-git clone git@github.com:aidan-clyens/GameBoyEmu.git
-cd GameBoyEmu
+git clone git@github.com:aidan-clyens/GBExperience.git
+cd GBExperience
 git submodule update --init
 ```
 
@@ -49,16 +49,16 @@ make
 ```
 
 ## Running
-There are two executables built GameBoyEmu, a CLI and GUI version. The CLI version requires you to provide the path of the ROM file, and the GUI version opens a file explorer.
+There are two executables built GBExperience, a CLI and GUI version. The CLI version requires you to provide the path of the ROM file, and the GUI version opens a file explorer.
 
-Example: `./build/src/GameBoy`\
-Example: `./build/src/GameBoy_cli roms/DrMario.gb --trace`
+Example: `./build/src/GBExperience`\
+Example: `./build/src/GBExperience_cli roms/DrMario.gb --trace`
 
 CLI Options:\
 --trace: Print out instructions executing by CPU line by line\
 --warnings: Only print out warnings\
 --debug: Enable step-by-step debugger\
---headless: Run GameBoy Emulator without GUI
+--headless: Run emulator without GUI
 
 ## Testing
 Run all GoogleTest and Pytest test cases:
@@ -69,7 +69,7 @@ make test
 
 Run GoogleTest unit tests:
 ```
-./build/test/Gameboy_tests
+./build/test/GBExperience_tests
 ```
 
 Run Blargg Test ROMs using pytest:
@@ -79,7 +79,7 @@ pytest test/run_blargg_tests.py
 
 
 ## Installing
-Install GameBoyEmu using:
+Install GBExperience using:
 ```
 cd build
 make install

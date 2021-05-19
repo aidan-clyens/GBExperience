@@ -1,4 +1,4 @@
-project(GameBoy)
+project(${CMAKE_PROJECT_NAME})
 
 add_subdirectory(user_interface)
 add_subdirectory(file_parser)
