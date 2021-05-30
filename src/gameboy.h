@@ -30,7 +30,7 @@ class GameBoy {
         CPU m_cpu;
         MemoryMap m_memory_map;
         Video m_video;
-        UI m_ui;
+        UI_SFML m_ui;
         Timer m_timer;
 
         Debugger m_debugger;

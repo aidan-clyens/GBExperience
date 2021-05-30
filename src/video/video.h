@@ -10,9 +10,9 @@
 #include "video_subject.h"
 
 
-#ifndef HEADLESS
-#define UI      UI_SFML
-#endif
+// #ifndef HEADLESS
+// #define UI      UI_SFML
+// #endif
 
 
 class Video : public VideoSubject {
