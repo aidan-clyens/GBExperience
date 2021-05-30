@@ -46,7 +46,7 @@ TEST(Memory, WriteFirstAddress) {
 
 TEST(Memory, WriteLastAddress) {
     int mem_size = 1024;
-    uint16_t address = mem_size;
+    uint16_t address = mem_size - 1;
     uint8_t data = 0x12;
 
     Memory mem(mem_size);
@@ -58,7 +58,7 @@ TEST(Memory, WriteLastAddress) {
 
 TEST(Memory, ReadInvalidAddress) {
     int mem_size = 1024;
-    uint16_t address = mem_size;
+    uint16_t address = mem_size - 1;
     uint16_t read_address = 0xFFFF;
     uint8_t data = 0x12;
 
