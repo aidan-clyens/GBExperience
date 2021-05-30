@@ -1,6 +1,5 @@
 project(${CMAKE_PROJECT_NAME}_tests)
 
-enable_testing()
 set(PYTEST
     ${PROJECT_SOURCE_DIR}/venv/bin/python3
     ${PROJECT_SOURCE_DIR}/venv/bin/pytest

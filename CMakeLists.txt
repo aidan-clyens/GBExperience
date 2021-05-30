@@ -11,6 +11,8 @@ set(CMAKE_CXX_FLAGS "-static-libgcc -static-libstdc++" CACHE STRING "GCC static 
 set(GAMEBOY_EXE_CLI CACHE BOOL True "Build CLI Executable")
 set(GAMEBOY_EXE_GUI CACHE BOOL True "Build GUI Executable")
 
+enable_testing()
+
 ###### SFML ######
 # CHANGE TO YOUR SFML ROOT DIRECTORY
 set(SFML_ROOT "C:/SFML/install")
