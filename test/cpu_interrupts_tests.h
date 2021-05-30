@@ -351,69 +351,69 @@ TEST(Interrupts, TriggerSerialTransferInterrupt) {
 }
 
 
-TEST(Interrupts, TriggerMultipleInterrupts) {
-    uint16_t PC = 0xA000;
-    std::string rom_file = "../../roms/DrMario.gb";
-    
-    enable_interrupt_logging();
-    enable_cpu_logging();
+// TEST(Interrupts, TriggerMultipleInterrupts) {
+//     uint16_t PC = 0xA000;
+//     std::string rom_file = get_test_rom();
 
-    FileParser file_parser;
-    Cartridge *cartridge = file_parser.load_rom(rom_file);
-    MemoryMap mem_map;
-    mem_map.load_rom(cartridge);
-    CPU cpu(mem_map);
+//     enable_interrupt_logging();
+//     enable_cpu_logging();
 
-    // Enable Timer Overflow and Joypad interrupts
-    cpu.set_interrupt_enable_bit(TIMER, true);
-    cpu.set_interrupt_enable_bit(JOYPAD, true);
-    EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
-    EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
+//     FileParser file_parser;
+//     Cartridge *cartridge = file_parser.load_rom(rom_file);
+//     MemoryMap mem_map;
+//     mem_map.load_rom(cartridge);
+//     CPU cpu(mem_map);
 
-    cpu.write_register(REG_PC, PC);
-    EXPECT_EQ(PC, cpu.read_register(REG_PC));
+//     // Enable Timer Overflow and Joypad interrupts
+//     cpu.set_interrupt_enable_bit(TIMER, true);
+//     cpu.set_interrupt_enable_bit(JOYPAD, true);
+//     EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
+//     EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
 
-    // Trigger Timer Overflow and Joypad interrupts
-    cpu.set_interrupt_flag_bit(TIMER, true);
-    cpu.set_interrupt_flag_bit(JOYPAD, true);
-    EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
-    EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
+//     cpu.write_register(REG_PC, PC);
+//     EXPECT_EQ(PC, cpu.read_register(REG_PC));
 
-    cpu.handle_interrupts();
+//     // Trigger Timer Overflow and Joypad interrupts
+//     cpu.set_interrupt_flag_bit(TIMER, true);
+//     cpu.set_interrupt_flag_bit(JOYPAD, true);
+//     EXPECT_TRUE(cpu.get_interrupt_enable_bit(TIMER));
+//     EXPECT_TRUE(cpu.get_interrupt_enable_bit(JOYPAD));
 
-    // Current PC should be pushed to stack
-    uint16_t SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
-    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
+//     cpu.handle_interrupts();
 
-    // Should handle the Timer Overflow interrupt first
-    EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register(REG_PC));
-    // Corresponding bit in IF register should be cleared
-    EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
-    // Interrupts should be disabled until reenabled at the end of the ISR
-    EXPECT_FALSE(cpu.interrupts_enabled());
+//     // Current PC should be pushed to stack
+//     uint16_t SP = cpu.read_register(REG_SP);
+//     EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+//     EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
 
-    while (!cpu.interrupts_enabled()) {
-        cpu.tick();
-    }
+//     // Should handle the Timer Overflow interrupt first
+//     EXPECT_EQ((uint16_t)TIMER_ISR, cpu.read_register(REG_PC));
+//     // Corresponding bit in IF register should be cleared
+//     EXPECT_FALSE(cpu.get_interrupt_flag_bit(TIMER));
+//     // Interrupts should be disabled until reenabled at the end of the ISR
+//     EXPECT_FALSE(cpu.interrupts_enabled());
 
-    // Interrupts should be reenabled
-    EXPECT_TRUE(cpu.interrupts_enabled());
+//     while (!cpu.interrupts_enabled()) {
+//         cpu.tick();
+//     }
 
-    // Get current PC
-    PC = cpu.read_register(REG_PC);
+//     // Interrupts should be reenabled
+//     EXPECT_TRUE(cpu.interrupts_enabled());
 
-    cpu.handle_interrupts();
+//     // Get current PC
+//     PC = cpu.read_register(REG_PC);
 
-    // Current PC should be pushed to stack
-    SP = cpu.read_register(REG_SP);
-    EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
-    EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
+//     cpu.handle_interrupts();
 
-    // Should handle the Joypad interrupt next
-    EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register(REG_PC));
-    // Corresponoding bit in IF register should be cleared
-    EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
-    // Interrupts should be disabled until reenabled at the end of the ISR
-    EXPECT_FALSE(cpu.interrupts_enabled());
-}
+//     // Current PC should be pushed to stack
+//     SP = cpu.read_register(REG_SP);
+//     EXPECT_EQ((PC & 0xFF), mem_map.read(SP));
+//     EXPECT_EQ((PC >> 8), mem_map.read(SP + 1));
+
+//     // Should handle the Joypad interrupt next
+//     EXPECT_EQ((uint16_t)JOYPAD_ISR, cpu.read_register(REG_PC));
+//     // Corresponoding bit in IF register should be cleared
+//     EXPECT_FALSE(cpu.get_interrupt_flag_bit(JOYPAD));
+//     // Interrupts should be disabled until reenabled at the end of the ISR
+//     EXPECT_FALSE(cpu.interrupts_enabled());
+// }
