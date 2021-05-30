@@ -104,5 +104,16 @@ cpack -C Release
 ### File Explorer
 ![](docs/img/file_explorer.png)
 
+## Changelog
+### v1.1.1
+- Added CI to GitHub
+- Fixed broken unit tests
+### v1.1
+- Added support for Windows
+- Implemented launcher using Qt5
+### v1.0
+- Initial working release
+- CLI application only supported on Linux
+
 ## References
 [Blargg Tests](https://gbdev.gg8.se/files/roms/blargg-gb-tests/)
