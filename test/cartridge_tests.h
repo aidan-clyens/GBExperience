@@ -1,5 +1,13 @@
 #include "gtest/gtest.h"
 
+
+void create_test_vector(std::vector<char> &contents, int size) {
+    for (int i = 0; i < size; i++) {
+        contents.push_back((char)(i % 255));
+    }
+}
+
+
 // ROM Only
 TEST(Cartridge, ROMOnlyInit) {
     std::vector<char> contents;
@@ -9,46 +17,72 @@ TEST(Cartridge, ROMOnlyInit) {
     EXPECT_EQ(ROM_ONLY, cartridge.get_cartridge_type());
 }
 
-TEST(Cartridge, ROMOnlyLoadFile) {
-    std::string rom_file = "../../roms/DrMario.gb";
-
-    FileParser file_parser;
-
-    ROMOnly* cartridge = (ROMOnly*)file_parser.load_rom(rom_file);
-    EXPECT_EQ(ROM_ONLY, cartridge->get_cartridge_type());
-    EXPECT_EQ(2, cartridge->get_num_rom_banks());
-}
-
 TEST(Cartridge, ROMOnlyRead) {
-    std::string rom_file = "../../roms/DrMario.gb";
-
-    FileParser file_parser;
+    std::vector<char> contents;
+    int size = 1024;
 
     uint16_t address0 = 0x134;
-    uint8_t data0 = 0x44;
-    uint16_t address1 = 0x4000;
-    uint8_t data1 = 0x88;
+    uint8_t data0 = 0x35;
+    uint16_t address1 = 0x300;
+    uint8_t data1 = 0x03;
 
-    ROMOnly* cartridge = (ROMOnly*)file_parser.load_rom(rom_file);
-    EXPECT_EQ(data0, cartridge->read(address0));
-    EXPECT_EQ(data1, cartridge->read(address1));
+    create_test_vector(contents, size);
+    ROMOnly cartridge(contents, 1);
+
+    EXPECT_EQ(data0, cartridge.read(address0));
+    EXPECT_EQ(data1, cartridge.read(address1));
+}
+
+TEST(Cartridge, ROMOnlyReadFirstAddress) {
+    std::vector<char> contents;
+    int size = 1024;
+
+    uint16_t address = 0x00;
+    uint8_t data = 0x00;
+
+    create_test_vector(contents, size);
+    ROMOnly cartridge(contents, 1);
+
+    EXPECT_EQ(data, cartridge.read(address));
+}
+
+TEST(Cartridge, ROMOnlyReadLastAddress) {
+    std::vector<char> contents;
+    int size = 1024;
+
+    uint16_t address = size - 1;
+    uint8_t data = 0x03;
+
+    create_test_vector(contents, size);
+    ROMOnly cartridge(contents, 1);
+
+    EXPECT_EQ(data, cartridge.read(address));
 }
 
 TEST(Cartridge, ROMOnlyInvalidRead) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::vector<char> contents;
+    int size = 1024;
 
-    FileParser file_parser;
+    create_test_vector(contents, size);
+    ROMOnly cartridge(contents, 1);
 
-    ROMOnly* cartridge = (ROMOnly*)file_parser.load_rom(rom_file);
-    EXPECT_ANY_THROW(cartridge->read(0xFFFF));
+    EXPECT_ANY_THROW(cartridge.read(0xFFFF));
 }
 
 TEST(Cartridge, ROMOnlyWrite) {
-    std::string rom_file = "../../roms/DrMario.gb";
+    std::vector<char> contents;
+    int size = 1024;
 
-    FileParser file_parser;
+    uint16_t address = 0x134;
+    uint8_t data = 0x35;
+    uint8_t new_data = 0xAB;
 
-    ROMOnly* cartridge = (ROMOnly*)file_parser.load_rom(rom_file);
+    create_test_vector(contents, size);
+    ROMOnly cartridge(contents, 1);
+
+    EXPECT_EQ(data, cartridge.read(address));
+    EXPECT_EQ(0, cartridge.write(address, new_data));
+    EXPECT_EQ(data, cartridge.read(address));
 }
 
 // MBC1

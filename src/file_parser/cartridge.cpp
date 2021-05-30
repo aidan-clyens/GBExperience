@@ -21,7 +21,7 @@ m_num_rom_banks(num_rom_banks)
 
         m_rom_banks.push_back(mem);
     }
-    std::cout << "initialized " << m_rom_banks.size() << " ROM banks" << std::endl;
+    // std::cout << "Initialized " << m_rom_banks.size() << " ROM banks" << std::endl;
 
     if (m_rom_banks.size() != m_num_rom_banks) {
         std::cerr << "Cartridge initialization failed!" << std::endl;
