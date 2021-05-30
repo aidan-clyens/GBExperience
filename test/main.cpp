@@ -17,7 +17,6 @@
 #include "tile_tests.h"
 #include "sprite_tests.h"
 #include "framebuffer_tests.h"
-#include "integration_tests.h"
 #include "cartridge_tests.h"
 
 
